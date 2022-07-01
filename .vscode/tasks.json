@@ -1,0 +1,119 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Tailwindcss",
+			"type": "npm",
+			"script": "css:build",
+			"problemMatcher": [],
+			"detail": "tailwindcss -i ./styles/main.css -o styles/.tailwind.dev.css --minify",
+			"group": "build"
+		},
+		{
+			"label": "Start Tailwindcss",
+			"type": "npm",
+			"script": "css:start",
+			"isBackground": true,
+			"problemMatcher": [],
+			"detail": "tailwindcss -i ./styles/main.css -o styles/.tailwind.dev.css --watch",
+			"group": "build"
+		},
+		{
+			"label": "Build Relay",
+			"type": "npm",
+			"script": "relay",
+			"problemMatcher": [],
+			"detail": "mkdir -p src/__generated__ && rescript-relay-compiler"
+		},
+		{
+			"label": "Start Relay",
+			"type": "npm",
+			"script": "relay:watch",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": [],
+			"detail": "rescript-relay-compiler --watch"
+		},
+		{
+			"label": "Clean ReScript",
+			"type": "npm",
+			"script": "res:clean",
+			"problemMatcher": [],
+			"detail": "rescript clean",
+			"group": "build"
+		},
+		{
+			"label": "Start ReScript",
+			"type": "npm",
+			"script": "res:start",
+			"isBackground": true,
+			"problemMatcher": [],
+			"detail": "rescript build -w",
+			"group": "build"
+		},
+		{
+			"label": "Start Next",
+			"type": "npm",
+			"script": "dev",
+			"isBackground": true,
+			"problemMatcher": [],
+			"detail": "next",
+			"group": "build",
+		},
+		{
+			"label": "Make the world",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Build Tailwindcss",
+				"Build Relay",
+				"Clean ReScript",
+			],
+			"problemMatcher": [],
+			"group": {
+				"kind": "build"
+			}
+		},
+		{
+			"label": "Watch the world",
+			"dependsOn": [
+				"Start Tailwindcss",
+				"Start Relay",
+				"Start Next",
+				"Start ReScript",
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+			}
+		},
+		{
+			"label": "Start the project",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Make the world",
+				"Watch the world",
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Introspect API",
+			"type": "npm",
+			"script": "api-introspect",
+			"problemMatcher": [],
+			"detail": "set -o allexport && source .env.development && set +o allexport && graphql-codegen --config codegen.yml"
+		},
+		{
+			"label": "Format ReScript",
+			"type": "npm",
+			"script": "format",
+			"problemMatcher": [],
+			"detail": "rescript format -all"
+		}
+	]
+}

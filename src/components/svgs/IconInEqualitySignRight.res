@@ -1,0 +1,10 @@
+@react.component
+let make = (~width, ~height) =>
+  <svg width height viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M5.66797 13.333L11.0013 7.99968L5.66797 2.66635"
+      stroke="#262626"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>

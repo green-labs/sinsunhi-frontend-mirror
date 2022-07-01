@@ -1,0 +1,22 @@
+name: deploy client to vercel PREVIEW
+on:
+  workflow_dispatch:
+    inputs:
+      deployArgs:
+        description: 'vercel deploy args'
+        required: false
+        default: '--force'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v20
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_DEV}} #Required 
+          scope: greenlabs
+          vercel-args: ${{ github.event.inputs.deployArgs }}

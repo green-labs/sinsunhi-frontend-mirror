@@ -1,0 +1,8 @@
+overwrite: true
+schema:
+  - ${NEXT_PUBLIC_GRAPHQL_API_URL:https://api.sinsunhi.com/graphql}
+  - ${NEXT_PUBLIC_FMB_GRAPHQL_API_URL:https://api.sinsunhi.com/farmmorning-bridge/graphql}
+generates:
+  ./schema.graphql:
+    plugins:
+      - schema-ast

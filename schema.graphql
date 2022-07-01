@@ -1,0 +1,4621 @@
+"""신선마켓 관리자"""
+type AdminUser implements FreshmarketUser & Node {
+  """담당하는 안심판매 신청 목록"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """이메일 주소"""
+  emailAddress: EmailAddress!
+
+  """ID"""
+  id: ID!
+
+  """이름"""
+  name: String!
+}
+
+type AdminUserConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [AdminUserEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type AdminUserEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: AdminUser!
+}
+
+"""연 평균 판매량 구간"""
+enum AverageAnnualSalesRange {
+  """3천만원 미만"""
+  FROM_0_TO_30M
+
+  """3천만원 이상 1억 미만"""
+  FROM_30M_TO_100M
+
+  """1억 이상 3억 미만"""
+  FROM_100M_TO_300M
+
+  """3억 이상 5억 미만"""
+  FROM_300M_TO_500M
+
+  """5억 이상"""
+  FROM_500M_TO_INF
+}
+
+"""은행 코드 정보"""
+type Bank {
+  kcpCode: String
+
+  """kcp의 가상계좌 채번용 은행코드. kcp 가상계좌의 은행정보로 사용됩니다."""
+  kcpVirtualCode: String
+
+  """은행 식별용 은행명칭. ('은행'은 표기하지 않습니다. 다만 '뱅크'는 영문 고유명사로 판단하고 표기됩니다.)"""
+  name: String!
+  tossPaymentsCode: String
+}
+
+type Banner implements Node {
+  """배너 노드 ID"""
+  id: ID!
+
+  """모바일에서 사용자가 보게 되는 배너 이미지 주소"""
+  imageUrlMobile: String!
+
+  """PC에서 사용자가 보게 되는 배너 이미지 주소"""
+  imageUrlPc: String!
+
+  """모바일에서 클릭시 새 탭 생성 여부"""
+  isNewTabMobile: Boolean!
+
+  """PC에서 클릭시 새 탭 생성 여부"""
+  isNewTabPc: Boolean!
+
+  """사용자가 클릭시 랜딩하게 되는 페이지의 주소"""
+  landingUrl: String!
+}
+
+type BannerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [BannerEdge!]!
+  pageInfo: PageInfo!
+}
+
+type BannerEdge implements Edge {
+  cursor: String!
+  node: Banner!
+}
+
+"""브릭스 (당도)"""
+scalar Brix
+
+"""신청자가 선택한 작물의 판매 정보"""
+type BulkSaleAnnualProductSalesInfo implements Node {
+  """연 평균 판매량"""
+  averageAnnualSales: AverageAnnualSalesRange!
+
+  """연도"""
+  baseYear: Int!
+
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """ID"""
+  id: ID!
+
+  """시장 판매 경험 여부"""
+  isExperiencedInMarket: Boolean!
+
+  """온라인 판매 경험 여부"""
+  isExperiencedInOnline: Boolean!
+
+  """품종"""
+  productCategory: ProductCategory!
+}
+
+type BulkSaleAnnualProductSalesInfoConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleAnnualProductSalesInfoEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleAnnualProductSalesInfoEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleAnnualProductSalesInfo!
+}
+
+"""안심판매 신청"""
+type BulkSaleApplication implements Node {
+  """신청자명"""
+  applicantName: String!
+
+  """신청 일시"""
+  appliedAt: DateTime!
+
+  """신청자가 선택한 작물의 판매 정보"""
+  bulkSaleAnnualProductSalesInfo(after: ID, before: ID, first: Int, last: Int): BulkSaleAnnualProductSalesInfoConnection!
+
+  """안심판매 캠페인"""
+  bulkSaleCampaign: BulkSaleCampaign
+
+  """안심판매 평가들"""
+  bulkSaleEvaluations(after: ID, before: ID, first: Int, last: Int, orderBy: BulkSaleEvaluationOrderBy, orderDirection: OrderDirection): BulkSaleEvaluationConnection!
+
+  """안심판매 시장 판매 정보들"""
+  bulkSaleMarketSalesInfo(after: ID, before: ID, first: Int, last: Int): BulkSaleMarketSalesInfoConnection!
+
+  """안심판매 온라인 판매 정보들"""
+  bulkSaleOnlineSalesInfo(after: ID, before: ID, first: Int, last: Int): BulkSaleOnlineSalesInfoConnection!
+
+  """관리자가 입력한 판매원표들"""
+  bulkSaleProductSaleLedgers(after: ID, before: ID, first: Int, last: Int): BulkSaleProductSaleLedgerConnection!
+
+  """신청자가 입력한 온라인 판매 정보"""
+  bulkSaleRawOnlineSale: BulkSaleRawOnlineSale
+
+  """신청자가 입력한 판매원표들"""
+  bulkSaleRawProductSaleLedgers(after: ID, before: ID, first: Int, last: Int): BulkSaleRawProductSaleLedgerConnection!
+
+  """안심판매 샘플 품평들"""
+  bulkSaleSampleReviews(after: ID, before: ID, first: Int, last: Int): BulkSaleSampleReviewConnection!
+
+  """신청 취소 일시"""
+  canceledAt: DateTime
+
+  """등록 일시"""
+  createdAt: DateTime!
+
+  """농장"""
+  farm: Farm!
+
+  """신청자"""
+  farmmorningUser: FarmmorningUser!
+
+  """ID"""
+  id: ID!
+
+  """신청건이 테스트인지 여부"""
+  isTest: Boolean!
+
+  """관리자가 자유롭게 작성하는 메모"""
+  memo: String!
+
+  """품종"""
+  productCategory: ProductCategory!
+
+  """진행 상태"""
+  progress: BulkSaleApplicationProgress!
+
+  """담당자"""
+  staff: AdminUser
+
+  """담당자"""
+  staffKey: StaffKey
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """농가 사업 지원"""
+  userBusinessSupportInfo: UserBusinessSupportInfo!
+}
+
+type BulkSaleApplicationConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleApplicationEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleApplicationEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleApplication!
+}
+
+"""안심판매 변경 내용"""
+type BulkSaleApplicationMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleApplication
+}
+
+"""정렬 기준"""
+enum BulkSaleApplicationOrderBy {
+  """등록 일시"""
+  CREATED_AT
+
+  """ID"""
+  ID
+
+  """수정 일시"""
+  UPDATED_AT
+}
+
+"""안심판매 신청 진행 상태"""
+enum BulkSaleApplicationProgress {
+  """접수중"""
+  APPLIED
+
+  """판매진행"""
+  CONFIRMED
+
+  """현장미팅예정"""
+  ON_SITE_MEETING_SCHEDULED
+
+  """보류"""
+  REJECTED
+
+  """샘플요청"""
+  SAMPLE_REQUESTED
+
+  """품평회진행중"""
+  SAMPLE_REVIEWING
+
+  """협의중"""
+  UNDER_DISCUSSION
+
+  """신청 취소"""
+  WITHDRAWN
+}
+
+"""안심판매 신청 상태 입력"""
+input BulkSaleApplicationProgressInput {
+  """진행 상태"""
+  progress: BulkSaleApplicationProgress!
+
+  """보류 사유"""
+  reason: String
+}
+
+"""안심판매 신청 통계"""
+type BulkSaleApplicationStatistics implements Node & Statistics {
+  """전체 개수"""
+  count: Int!
+
+  """ID"""
+  id: ID!
+
+  """접수중 개수"""
+  progressAppliedCount: Int!
+
+  """판매진행 수"""
+  progressConfirmedCount: Int!
+
+  """현장미팅예정"""
+  progressOnSiteMeetingScheduledCount: Int!
+
+  """보류 수"""
+  progressRejectedCount: Int!
+
+  """샘플요청 개수"""
+  progressSampleRequestedCount: Int!
+
+  """품평회 진행중 수"""
+  progressSampleReviewingCount: Int!
+
+  """협의중 개수"""
+  progressUnderDiscussionCount: Int!
+
+  """신청 취소 개수"""
+  progressWithdrawnCount: Int!
+
+  """테스트 개수"""
+  testCount: Int!
+}
+
+type BulkSaleApplicationStatisticsConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleApplicationStatisticsEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleApplicationStatisticsEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleApplicationStatistics!
+}
+
+"""안심판매 업데이트의 입력값"""
+input BulkSaleApplicationUpdateInput {
+  """메모"""
+  memo: String
+
+  """담당자의 node id"""
+  staffId: ID
+}
+
+"""전량판매 캠페인"""
+type BulkSaleCampaign implements Node {
+  """전량판매 신청들"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """전량판매 평가들"""
+  bulkSaleEvaluations(after: ID, before: ID, first: Int, last: Int): BulkSaleEvaluationConnection!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """노출 순서"""
+  displayOrder: PositiveInt
+
+  """매입 예상 최고 가격"""
+  estimatedPurchasePriceMax: Price!
+
+  """매입 예상 최소 가격"""
+  estimatedPurchasePriceMin: Price!
+
+  """판매자 예상 수익률"""
+  estimatedSellerEarningRate: Rate!
+
+  """ID"""
+  id: ID!
+
+  """모집 상태"""
+  isOpen: Boolean!
+
+  """희망 상품포장규격 등급"""
+  preferredGrade: ProductPackageGrade!
+
+  """희망 상품포장규격 질량"""
+  preferredQuantity: ProductPackageMass!
+
+  """품종"""
+  productCategory: ProductCategory!
+
+  """담당자"""
+  staffKey: StaffKey!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+}
+
+type BulkSaleCampaignConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleCampaignEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""전량판매 캠페인 입력"""
+input BulkSaleCampaignCreateInput {
+  """노출 순서"""
+  displayOrder: PositiveInt
+
+  """매입 예상 최고 가격"""
+  estimatedPurchasePriceMax: Int!
+
+  """매입 예상 최소 가격"""
+  estimatedPurchasePriceMin: Int!
+
+  """판매자 예상 수익률"""
+  estimatedSellerEarningRate: Float!
+
+  """모집 상태"""
+  isOpen: Boolean
+
+  """희망 등급"""
+  preferredGrade: String!
+
+  """희망 상품포장규격 질량"""
+  preferredQuantity: ProductPackageMassInput!
+
+  """품종 ID"""
+  productCategoryId: String!
+}
+
+type BulkSaleCampaignEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleCampaign!
+}
+
+"""전량판매 캠페인 변경 내용"""
+type BulkSaleCampaignMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleCampaign
+}
+
+"""정렬 기준"""
+enum BulkSaleCampaignOrderBy {
+  """등록 일시"""
+  CREATED_AT
+
+  """노출 순서"""
+  DISPLAY_ORDER
+
+  """ID"""
+  ID
+
+  """수정 일시"""
+  UPDATED_AT
+}
+
+"""전량판매 캠페인 통계"""
+type BulkSaleCampaignStatistics implements Node & Statistics {
+  """전체 개수"""
+  count: Int!
+
+  """ID"""
+  id: ID!
+
+  """비모집중 캠페인 수"""
+  notOpenCount: Int!
+
+  """모집중 캠페인 수"""
+  openCount: Int!
+}
+
+type BulkSaleCampaignStatisticsConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleCampaignStatisticsEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleCampaignStatisticsEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleCampaignStatistics!
+}
+
+"""전량판매 캠페인 수정"""
+input BulkSaleCampaignUpdateInput {
+  """노출 순서"""
+  displayOrder: PositiveInt
+
+  """매입 예상 최고 가격"""
+  estimatedPurchasePriceMax: Int
+
+  """매입 예상 최소 가격"""
+  estimatedPurchasePriceMin: Int
+
+  """판매자 예상 수익률"""
+  estimatedSellerEarningRate: Float
+
+  """모집 상태"""
+  isOpen: Boolean
+
+  """희망 등급"""
+  preferredGrade: ProductPackageGrade
+
+  """희망 상품포장규격 질량"""
+  preferredQuantity: ProductPackageMassInput
+}
+
+"""전량판매 평가"""
+type BulkSaleEvaluation implements Node {
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """전량판매 캠페인"""
+  bulkSaleCampaign: BulkSaleCampaign!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """평가일"""
+  date: Date!
+
+  """판매자"""
+  farmmorningUser: FarmmorningUser!
+
+  """ID"""
+  id: ID!
+
+  """평가 사유"""
+  reason: String!
+
+  """평가 결과"""
+  result: BulkSaleEvaluationResult!
+
+  """담당자"""
+  staffKey: StaffKey!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+}
+
+type BulkSaleEvaluationConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleEvaluationEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""전량판매 평가 입력"""
+input BulkSaleEvaluationCreateInput {
+  """전량판매 신청 ID"""
+  bulkSaleApplicationId: ID!
+
+  """평가일"""
+  date: Date!
+
+  """평가 사유"""
+  reason: String!
+}
+
+type BulkSaleEvaluationEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleEvaluation!
+}
+
+"""전량판매 평가 입력 내용"""
+type BulkSaleEvaluationMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleEvaluation
+}
+
+"""정렬 기준"""
+enum BulkSaleEvaluationOrderBy {
+  """ID"""
+  ID
+}
+
+"""전량판매 평가 결과 유형"""
+enum BulkSaleEvaluationResult {
+  """구매결정"""
+  CONFIRMED
+
+  """구매보류"""
+  REJECTED
+}
+
+"""전량판매 시장 판매 정보"""
+type BulkSaleMarketSalesInfo implements Node {
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """농작물 거래처"""
+  farmMarket: FarmMarket!
+
+  """ID"""
+  id: ID!
+}
+
+type BulkSaleMarketSalesInfoConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleMarketSalesInfoEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleMarketSalesInfoEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleMarketSalesInfo!
+}
+
+"""정렬 기준"""
+enum BulkSaleMarketSalesInfoOrderBy {
+  """ID"""
+  ID
+}
+
+"""전량판매 온라인 판매 정보"""
+type BulkSaleOnlineSalesInfo implements Node {
+  """평점"""
+  averageReviewScore: Float!
+
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """배송회사"""
+  deliveryCompany: DeliveryCompany
+
+  """ID"""
+  id: ID!
+
+  """판매처"""
+  market: OnlineMarket!
+
+  """댓글수"""
+  numberOfComments: Int!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """판매상품 URL"""
+  url: Url!
+}
+
+type BulkSaleOnlineSalesInfoConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleOnlineSalesInfoEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""전량판매 온라인 판매 입력"""
+input BulkSaleOnlineSalesInfoCreateInput {
+  """평점"""
+  averageReviewScore: Float!
+
+  """전량판매 신청 ID"""
+  bulkSaleApplicationId: ID!
+
+  """택배사 ID"""
+  deliveryCompanyId: ID!
+
+  """판매처"""
+  market: OnlineMarket!
+
+  """댓글수"""
+  numberOfComments: Int!
+
+  """판매상품 URL"""
+  url: Url!
+}
+
+type BulkSaleOnlineSalesInfoEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleOnlineSalesInfo!
+}
+
+"""전량판매 온라인 판매 정보 변경 내용"""
+type BulkSaleOnlineSalesInfoMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleOnlineSalesInfo
+}
+
+"""정렬 기준"""
+enum BulkSaleOnlineSalesInfoOrderBy {
+  """ID"""
+  ID
+}
+
+"""전량판매 온라인 판매 수정"""
+input BulkSaleOnlineSalesInfoUpdateInput {
+  """평점"""
+  averageReviewScore: Float
+
+  """택배사 ID"""
+  deliveryCompanyId: ID!
+
+  """판매처"""
+  market: OnlineMarket
+
+  """댓글수"""
+  numberOfComments: Int
+
+  """판매상품 URL"""
+  url: Url
+}
+
+"""관리자가 입력한 판매원표"""
+type BulkSaleProductSaleLedger implements Node {
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """판매원표 항목"""
+  bulkSaleProductSaleLedgerEntries(after: ID, before: ID, first: Int, last: Int): BulkSaleProductSaleLedgerEntryConnection!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """판매일자"""
+  date: Date!
+
+  """ID"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """파일 경로"""
+  path: String!
+
+  """도매법인"""
+  wholesaler: Wholesaler
+}
+
+type BulkSaleProductSaleLedgerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleProductSaleLedgerEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""판매원표 입력"""
+input BulkSaleProductSaleLedgerCreateInput {
+  """전량판매 신청 ID"""
+  bulkSaleApplicationId: ID!
+  bulkSaleProductSaleLedgerEntries: [BulkSaleProductSaleLedgerEntryCreateInput!]!
+
+  """판매일자"""
+  date: Date!
+
+  """파일 경로"""
+  path: String!
+
+  """도매법인 ID"""
+  wholesalerId: ID!
+}
+
+type BulkSaleProductSaleLedgerEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleProductSaleLedger!
+}
+
+"""Admin에서 입력한 판매원표 항목"""
+type BulkSaleProductSaleLedgerEntry implements Node {
+  """전량판매 신청"""
+  bulkSaleProductSaleLedger: BulkSaleProductSaleLedger!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """등급"""
+  grade: String!
+
+  """ID"""
+  id: ID!
+
+  """경락단가"""
+  price: Int!
+
+  """상품포장규격 질량"""
+  quantity: ProductPackageMass!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """거래량"""
+  volume: Int!
+}
+
+type BulkSaleProductSaleLedgerEntryConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleProductSaleLedgerEntryEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""판매원표 항목 입력"""
+input BulkSaleProductSaleLedgerEntryCreateInput {
+  """등급"""
+  grade: String!
+
+  """경락단가"""
+  price: Int!
+
+  """상품포장규격 질량"""
+  quantity: ProductPackageMassInput!
+
+  """거래량"""
+  volume: Int!
+}
+
+type BulkSaleProductSaleLedgerEntryEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleProductSaleLedgerEntry!
+}
+
+"""판매원표 변경 내용"""
+type BulkSaleProductSaleLedgerMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleProductSaleLedger
+}
+
+"""판매원표 입력"""
+input BulkSaleProductSaleLedgerUpdateInput {
+  bulkSaleProductSaleLedgerEntries: [BulkSaleProductSaleLedgerEntryCreateInput!]!
+
+  """판매일자"""
+  date: Date
+
+  """파일 경로"""
+  path: String
+
+  """도매법인 ID"""
+  wholesalerId: ID
+}
+
+"""신청자가 입력한 온라인 판매 정보"""
+type BulkSaleRawOnlineSale implements Node {
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """배송회사"""
+  deliveryCompany: DeliveryCompany
+
+  """ID"""
+  id: ID!
+
+  """신청자가 입력한 판매처"""
+  market: OnlineMarket!
+
+  """신청자가 입력한 판매 Url"""
+  url: String!
+}
+
+type BulkSaleRawOnlineSaleConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleRawOnlineSaleEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleRawOnlineSaleEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleRawOnlineSale!
+}
+
+"""신청자가 입력한 판매원표"""
+type BulkSaleRawProductSaleLedger implements Node {
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """ID"""
+  id: ID!
+
+  """파일 경로"""
+  path: String!
+}
+
+type BulkSaleRawProductSaleLedgerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleRawProductSaleLedgerEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type BulkSaleRawProductSaleLedgerEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleRawProductSaleLedger!
+}
+
+"""전량판매 샘플 품평"""
+type BulkSaleSampleReview implements Node {
+  """브릭스 (당도)"""
+  brix: Brix
+
+  """전량판매 신청"""
+  bulkSaleApplication: BulkSaleApplication!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """ID"""
+  id: ID!
+
+  """상품성 점수"""
+  marketabilityScore: ReviewScore!
+
+  """포장 점수"""
+  packageScore: ReviewScore!
+
+  """상품포장규격 질량"""
+  quantity: ProductPackageMass!
+
+  """담당자"""
+  staffKey: StaffKey!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+}
+
+type BulkSaleSampleReviewConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [BulkSaleSampleReviewEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+"""전량판매 샘플 품평 입력"""
+input BulkSaleSampleReviewCreateInput {
+  """브릭스"""
+  brix: Brix
+
+  """전량판매 신청 ID"""
+  bulkSaleApplicationId: ID!
+
+  """상품성 점수"""
+  marketabilityScore: ReviewScore
+
+  """포장 점수"""
+  packageScore: ReviewScore
+
+  """상품포장규격 질량"""
+  quantity: ProductPackageMassInput!
+}
+
+type BulkSaleSampleReviewEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: BulkSaleSampleReview!
+}
+
+"""전량판매 샘플 품평 변경 내용"""
+type BulkSaleSampleReviewMutationPayload implements MutationPayload {
+  """결과"""
+  result: BulkSaleSampleReview
+}
+
+"""정렬 기준"""
+enum BulkSaleSampleReviewOrderBy {
+  """ID"""
+  ID
+}
+
+"""전량판매 샘플 품평 수정"""
+input BulkSaleSampleReviewUpdateInput {
+  """브릭스"""
+  brix: Brix
+
+  """상품성 점수"""
+  marketabilityScore: ReviewScore
+
+  """포장 점수"""
+  packageScore: ReviewScore
+
+  """상품포장규격 질량"""
+  quantity: ProductPackageMassInput
+}
+
+"""사업자등록번호"""
+scalar BusinessRegistrationNumber
+
+type Category implements Node {
+  children: [Category!]!
+
+  """스스로를 포함한 전체 표준 카테고리 (ex [{최상위 카테고리} {차상위 카테고리} ... self])"""
+  fullyQualifiedName: [Category!]!
+
+  """표준 카테고리 ID"""
+  id: ID!
+
+  """작물"""
+  item: String
+
+  """품종"""
+  kind: String
+
+  """표준 카테고리 이름"""
+  name: String!
+  parent: Category
+}
+
+type CategoryConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [CategoryEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CategoryEdge implements Edge {
+  cursor: String!
+  node: Category!
+}
+
+type ChannelIO {
+  bootEvent: ChannelIOBootEvent
+}
+
+type ChannelIOBootEvent {
+  memberId: String!
+  pluginKey: String!
+  profile: ChannelIOBootEventProfile!
+  unsubscribeEmail: Boolean!
+  unsubscribeTexting: Boolean!
+}
+
+type ChannelIOBootEventProfile {
+  """
+  joinTime 필드에 epochMillis 를 넣어야,
+                               채널톡 > 고객DB 목록에 바로 업데이트 되어 보였습니다.
+  
+                               채널톡 쪽 문서에서 어떤 값으로 넣으면 된다는 문구를 찾기 힘듭니다.
+                               그러니 경험칙으로 그렇다고 생각하는 것이 편합니다.
+  """
+  joinTime: Float
+  mobileNumber: String!
+  name: String!
+  purchasedAmount: DecimalNumber!
+  purchasedCount: Int!
+}
+
+"""Connection"""
+interface Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [Edge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+union CreatePresignedUrlForImagePayload = CreatePresignedUrlForImageResult | Error
+
+type CreatePresignedUrlForImageResult {
+  """추가될 Image"""
+  image: Image!
+
+  """s3 presigned url"""
+  url: String!
+}
+
+"""
+일반 상품을 생성합니다. 
+    - 견적 생성 기준 전달받지 않는 필드: 등급(grade)
+    - 견적 생성 기준 추가 전달 필드: 타입(type)/배송(is-courier-available)/과세여부(price_tax)/가격(price)
+"""
+input CreateProductInput {
+  """표준 카테고리 node ID"""
+  categoryId: ID!
+
+  """상품 설명 editor HTML"""
+  description: String!
+
+  """전시 카테고리 node ID"""
+  displayCategoryIds: [ID!]!
+
+  """바이어용 상품명"""
+  displayName: String!
+
+  """대표 이미지"""
+  image: ImageInput!
+
+  """배송 가능 여부"""
+  isCourierAvailable: Boolean!
+
+  """과면세 여부"""
+  isVat: Boolean!
+
+  """생산자용 상품명"""
+  name: String!
+
+  """공지사항"""
+  notice: String
+
+  """공지사항 적용 기간"""
+  noticeEndAt: DateTime
+
+  """공지사항 적용 기간"""
+  noticeStartAt: DateTime
+
+  """원산지"""
+  origin: String!
+
+  """기준 가격"""
+  price: Int!
+
+  """농민 node ID"""
+  producerId: ID!
+
+  """판매 자료 문서 url"""
+  salesDocument: String
+
+  """운영 상태"""
+  status: ProductStatus!
+
+  """일반 상품 타입"""
+  type: NormalProductType!
+}
+
+"""단품 등록시 원가정보를 생성하기 위한 input입니다. 원가시작일(fromDate)은 항상 생성 시점입니다."""
+input CreateProductOptionCostInput {
+  """생산자 공급가 타입 지정 안할 시 온라인"""
+  contractType: ProductOptionContractType!
+
+  """생산자 택배비"""
+  deliveryCost: Int!
+
+  """생산자 원물원가"""
+  rawCost: Int!
+
+  """생산자 포장작업비"""
+  workingCost: Int!
+}
+
+input CreateProductOptionInput {
+  """포장당 입수 최대"""
+  countPerPackageMax: Int
+
+  """포장당 입수 최소"""
+  countPerPackageMin: Int
+
+  """출고 기준 시간"""
+  cutOffTime: String
+
+  """등급(용도)"""
+  grade: String
+
+  """출고 기준 시간 메모"""
+  memo: String
+
+  """단품명"""
+  optionName: String!
+
+  """포장재질"""
+  packageType: String
+
+  """개당 길이 최대"""
+  perSizeMax: Float
+
+  """개당 길이 최소"""
+  perSizeMin: Float
+
+  """개당 크기 단위"""
+  perSizeUnit: SizeUnit
+
+  """개당 무게 최대"""
+  perWeightMax: Float
+
+  """개당 무게 최소"""
+  perWeightMin: Float
+
+  """개당 무게 단위"""
+  perWeightUnit: WeightUnit
+
+  """바이어 판매가"""
+  price: Int!
+
+  """상품 node ID"""
+  productId: ID!
+  productOptionCost: CreateProductOptionCostInput!
+
+  """운영상태"""
+  status: ProductOptionStatus!
+
+  """중량 gram"""
+  weight: Float!
+
+  """무게 단위"""
+  weightUnit: WeightUnit!
+}
+
+union CreateProductPayload = CreateProductResult | Error
+
+type CreateProductResult {
+  """등록된 상품 정보"""
+  product: Product!
+}
+
+"""
+견적 상품을 생성합니다.
+    - 일반 생성 기준 전달받지 않는 필드: 배송(is-courier-available)/과세여부(price_tax)/가격(price)
+    - 일반 생성 기준 추가 전달 필드: 등급(grade)
+"""
+input CreateQuotedProductInput {
+  """표준 카테고리 node ID"""
+  categoryId: ID!
+
+  """상품 설명 editor HTML"""
+  description: String!
+
+  """전시 카테고리 node ID"""
+  displayCategoryIds: [ID!]!
+
+  """바이어용 상품명"""
+  displayName: String!
+
+  """견적상품 등급정보"""
+  grade: String!
+
+  """대표 이미지"""
+  image: ImageInput!
+
+  """생산자용 상품명"""
+  name: String!
+
+  """공지사항"""
+  notice: String
+
+  """공지사항 적용 기간"""
+  noticeEndAt: DateTime
+
+  """공지사항 적용 기간"""
+  noticeStartAt: DateTime
+
+  """원산지"""
+  origin: String!
+
+  """농민 node ID"""
+  producerId: ID!
+
+  """판매 자료 문서 url"""
+  salesDocument: String
+
+  """운영 상태"""
+  status: ProductStatus!
+}
+
+union CreateQuotedProductPayload = CreateQuotedProductResult | Error
+
+type CreateQuotedProductResult {
+  """등록된 견적 상품 정보"""
+  product: Product!
+}
+
+"""임시 웹주문서 생성 요청 input"""
+input CreateTempWosOrderInput {
+  """배송 방법"""
+  deliveryType: WosDeliveryType!
+  productOptions: [TempWosOrderProductOptionsInput!]!
+}
+
+union CreateTempWosOrderPayload = Error | TempWosOrder
+
+"""주문서를 생성하기 위한 input입니다."""
+input CreateWosOrderInput {
+  """구매자 ID"""
+  orderUserId: Int!
+
+  """결제 목적"""
+  paymentPurpose: String!
+
+  """상품 정보 리스트"""
+  productOptions: [WosProductOptionInput!]!
+
+  """총 배송비"""
+  totalDeliveryCost: Int!
+
+  """총 주문 금액"""
+  totalOrderPrice: Int!
+}
+
+union CreateWosOrderPayload = CreateWosOrderResult | Error | WosError | WosOrder
+
+type CreateWosOrderResult {
+  """주문서 번호"""
+  orderNo: String!
+
+  """임시 주문서 번호(ID)"""
+  tempOrderId: Int!
+}
+
+"""품목(작물)"""
+type Crop implements Node {
+  """상위 분류"""
+  category: CropCategory!
+
+  """ID"""
+  id: ID!
+
+  """이름"""
+  name: String!
+
+  """품종들 (하위 분류)"""
+  productCategories(after: ID, before: ID, first: Int, last: Int): ProductCategoryConnection!
+}
+
+"""품목 분류"""
+enum CropCategory {
+  """소"""
+  BEEF
+
+  """닭"""
+  CHICKEN
+
+  """양곡"""
+  CROP
+
+  """수산"""
+  FISH
+
+  """화훼"""
+  FLOWER
+
+  """돼지"""
+  FORK
+
+  """과일"""
+  FRUIT
+
+  """특용/약용"""
+  HERB
+
+  """버섯"""
+  MUSHROOM
+
+  """채소"""
+  VEGETABLE
+}
+
+type CropConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [CropEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type CropEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: Crop!
+}
+
+"""정렬 기준"""
+enum CropOrderBy {
+  """ID"""
+  ID
+
+  """작물명"""
+  NAME
+}
+
+"""ISO8601 형식의 date YYYY-MM-DD"""
+scalar Date
+
+"""
+ISO8601 형식의 UTC 기준 datetime (YYYY-MM-DDTHH:mm:ssZ, 소수점 이하는 있어도 무방)
+                 (참고: https://github.com/green-labs/web-adr/blob/main/DateTime.md)
+"""
+scalar DateTime
+
+"""실수. 부동소수점 수 오차 방지. 텍스트로 통신."""
+scalar DecimalNumber
+
+"""삭제 성공시 페이로드"""
+type DeleteSuccess {
+  deletedId: ID!
+}
+
+"""배송회사"""
+type DeliveryCompany implements Node {
+  """코드"""
+  code: String!
+
+  """ID"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """회사명"""
+  name: String!
+}
+
+type DeliveryCompanyConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [DeliveryCompanyEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type DeliveryCompanyEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: DeliveryCompany!
+}
+
+"""정렬 기준"""
+enum DeliveryCompanyOrderBy {
+  """ID"""
+  ID
+
+  """회사명"""
+  NAME
+
+  """수치순"""
+  NUMERIC_ORDER
+}
+
+"""사용자 디바이스"""
+enum Device {
+  MOBILE
+  PC
+}
+
+type DisplayCategory implements Node {
+  children: [DisplayCategory!]!
+
+  """[{최상위} {차상위} ... self]"""
+  fullyQualifiedName: [DisplayCategory!]!
+  id: ID!
+  image: Image
+  name: String!
+  parent: DisplayCategory
+  products(
+    """pagination cursor 이 id 이후의 product에 대해서 조회합니다"""
+    after: ID
+
+    """최대 몇개를 조회할 지 페이지 사이즈를 지정합니다.  기본적으로 최대 25개를 조회합니다"""
+    first: Int
+
+    """True일 경우 노출되는 단품이 없는 일반상품을 제외하고 조회합니다."""
+    onlyBuyable: Boolean
+
+    """상품의 순서를 지정합니다.  기본값은 UPDATED_DESC입니다"""
+    sort: DisplayCategoryProductsSort
+
+    """상품 유형을 지정합니다."""
+    type: [ProductType!]
+  ): ProductConnection!
+  type: DisplayCategoryType!
+}
+
+type DisplayCategoryConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [DisplayCategoryEdge!]!
+  pageInfo: PageInfo!
+}
+
+type DisplayCategoryEdge implements Edge {
+  cursor: String!
+  node: DisplayCategory!
+}
+
+enum DisplayCategoryProductsSort {
+  PRICE_ASC
+  PRICE_DESC
+  UPDATED_ASC
+  UPDATED_DESC
+}
+
+enum DisplayCategoryType {
+  NORMAL
+  SHOWCASE
+}
+
+"""Edge"""
+interface Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: Node!
+}
+
+"""이메일 주소"""
+scalar EmailAddress
+
+type Error {
+  code: ErrorCode!
+  message: String
+}
+
+"""Mutation 공통 에러"""
+enum ErrorCode {
+  """요청값이 올바르지 않은 경우"""
+  INVALID_REQUEST
+
+  """요청한, 또는 수정 대상이 되는 객체에 접근 및 수정할 권한이 없는 경우 (ex. admin기능에 farmer가 요청한 경우)"""
+  NOT_ALLOWED
+
+  """로그인이 되어있지 않은 경우"""
+  NOT_AUTHENTICATED
+
+  """권한 이외 다른 필드의 값에 의해 객체의 값을 수정할 수 없는 경우 (ex. 서비스 정책적으로 가능하지 않은 케이스)"""
+  NOT_AVAILABLE
+
+  """요청한, 또는 수정 대상이 되는 객체가 존재하지 않거나 접근할 수 없는 경우"""
+  NOT_EXIST
+
+  """기타 서버 에러"""
+  UNKNOWN_ERROR
+}
+
+"""경력 타입"""
+enum ExperienceYearsRange {
+  """1년 미만"""
+  FROM_0_TO_1
+
+  """1년 이상 5년 미만"""
+  FROM_1_TO_5
+
+  """5년 이상 10년 미만"""
+  FROM_5_TO_10
+
+  """10년 이상 20년 미만"""
+  FROM_10_TO_20
+
+  """20년 이상"""
+  FROM_20_TO_INF
+
+  """경력없음"""
+  NEWCOMER
+}
+
+"""농장"""
+type Farm implements Node {
+  """주소"""
+  address: String
+
+  """상세주소"""
+  addressDetail: String
+
+  """전량판매 신청들"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """등록 일시"""
+  createdAt: DateTime!
+
+  """ID"""
+  id: ID!
+
+  """우편번호"""
+  zipCode: String
+}
+
+type FarmConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [FarmEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type FarmEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: Farm!
+}
+
+"""농작물 거래처"""
+type FarmMarket implements Node {
+  """전량판매 시장 판매 정보"""
+  bulkSaleMarketSalesInfo(after: ID, before: ID, first: Int, last: Int): BulkSaleMarketSalesInfoConnection!
+
+  """농작물 거래처 코드"""
+  code: String!
+
+  """ID"""
+  id: ID!
+
+  """농작물 거래처 코드 사용 유무"""
+  isAvailable: Boolean!
+
+  """농작물 거래처명"""
+  name: String!
+
+  """농작물 거래처명 (deprecated)"""
+  wholesaleCompanyName: String!
+}
+
+type FarmMarketConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [FarmMarketEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type FarmMarketEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: FarmMarket!
+}
+
+"""정렬 기준"""
+enum FarmMarketOrderBy {
+  """ID"""
+  ID
+}
+
+"""정렬 기준"""
+enum FarmOrderBy {
+  """ID"""
+  ID
+}
+
+"""팜모닝 사용자"""
+type FarmmorningUser implements Node {
+  """전량판매 신청들"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """전량판매 평가들"""
+  bulkSaleEvaluations(after: ID, before: ID, first: Int, last: Int): BulkSaleEvaluationConnection!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """삭제 일시"""
+  deletedAt: DateTime
+
+  """이메일 주소"""
+  emailAddress: EmailAddress!
+
+  """ID"""
+  id: ID!
+
+  """삭제 여부"""
+  isDeleted: Boolean!
+
+  """이름"""
+  name: String!
+
+  """전화번호"""
+  phoneNumber: PhoneNumber!
+
+  """신청자 사업 정보"""
+  userBusinessRegistrationInfo: UserBusinessRegistrationInfo!
+}
+
+type FarmmorningUserConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [FarmmorningUserEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type FarmmorningUserEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: FarmmorningUser!
+}
+
+"""정렬 기준"""
+enum FarmmorningUserOrderBy {
+  """ID"""
+  ID
+}
+
+"""신선마켓 사용자"""
+interface FreshmarketUser {
+  """이메일 주소"""
+  emailAddress: EmailAddress!
+
+  """이름"""
+  name: String!
+}
+
+type GnbBanner implements Node {
+  id: ID!
+
+  """모바일에서 새 탭 생성 여부"""
+  isNewTabMobile: Boolean!
+
+  """PC에서 새 탭 생성 여부"""
+  isNewTabPc: Boolean!
+
+  """랜딩페이지 url"""
+  landingUrl: String!
+
+  """GNB 배너 제목"""
+  title: String!
+}
+
+type GnbBannerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [GnbBannerEdge!]!
+  pageInfo: PageInfo!
+}
+
+type GnbBannerEdge implements Edge {
+  cursor: String!
+  node: GnbBanner!
+}
+
+"""공휴일"""
+type Holiday {
+  """날짜"""
+  date: Date!
+
+  """이름"""
+  name: String!
+
+  """종류"""
+  type: HolidayType!
+}
+
+"""공휴일 종류"""
+enum HolidayType {
+  """사내 휴일"""
+  IN_HOUSE_HOLIDAY
+
+  """국가기념일"""
+  NATIONAL_ANNIVERSARY
+
+  """국경일"""
+  NATIONAL_HOLIDAY
+}
+
+type Image {
+  """원본 이미지"""
+  original: String!
+
+  """100x100"""
+  thumb100x100: String!
+
+  """400x400"""
+  thumb400x400: String!
+
+  """800x800"""
+  thumb800x800: String!
+
+  """1000x1000"""
+  thumb1000x1000: String!
+
+  """1920x1920"""
+  thumb1920x1920: String!
+}
+
+input ImageInput {
+  """원본 이미지"""
+  original: String!
+
+  """100x100"""
+  thumb100x100: String!
+
+  """400x400"""
+  thumb400x400: String!
+
+  """800x800"""
+  thumb800x800: String!
+
+  """1000x1000"""
+  thumb1000x1000: String!
+
+  """1920x1920"""
+  thumb1920x1920: String!
+}
+
+"""개인/법인 유형"""
+enum IndividualOrCompany {
+  """법인"""
+  COMPANY
+
+  """개인"""
+  INDIVIDUAL
+}
+
+"""field 제약이 없는 기본 맵 타입"""
+scalar Map
+
+"""육류 브랜드"""
+type MeatBrand implements Node {
+  """생성일시"""
+  createdAt: DateTime!
+
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """육류 축종"""
+  meatSpecies: MeatSpecies!
+
+  """이름"""
+  name: String!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+type MeatBrandConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [MeatBrandEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MeatBrandEdge implements Edge {
+  cursor: String!
+  node: MeatBrand!
+}
+
+"""정렬 기준"""
+enum MeatBrandOrderBy {
+  """등록 일시"""
+  CREATED_AT
+
+  """ID"""
+  ID
+
+  """이름"""
+  NAME
+
+  """수정 일시"""
+  UPDATED_AT
+}
+
+"""육류 등급"""
+type MeatGrade implements Node {
+  """등급"""
+  grade: String!
+
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """국내산여부"""
+  isDomestic: Boolean!
+
+  """원산지"""
+  madeIn: MeatMadeIn!
+
+  """육류 축종"""
+  meatSpecies: MeatSpecies!
+}
+
+type MeatGradeConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [MeatGradeEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MeatGradeEdge implements Edge {
+  cursor: String!
+  node: MeatGrade!
+}
+
+"""정렬 기준"""
+enum MeatGradeOrderBy {
+  """등급"""
+  GRADE
+
+  """ID"""
+  ID
+
+  """순위"""
+  RANKING
+}
+
+"""육류 원산지"""
+enum MeatMadeIn {
+  """호주"""
+  AU
+
+  """캐나다"""
+  CA
+
+  """한국"""
+  KR
+
+  """뉴질랜드"""
+  NZ
+
+  """기타"""
+  OTHER
+
+  """미국"""
+  US
+}
+
+"""육류 부위"""
+type MeatPart implements Node {
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """국내산 여부"""
+  isDomestic: Boolean!
+
+  """육류 축종"""
+  meatSpecies: MeatSpecies!
+
+  """이름"""
+  name: String!
+}
+
+type MeatPartConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [MeatPartEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MeatPartEdge implements Edge {
+  cursor: String!
+  node: MeatPart!
+}
+
+"""정렬 기준"""
+enum MeatPartOrderBy {
+  """ID"""
+  ID
+
+  """이름"""
+  NAME
+}
+
+"""육류 축종 ex) 소/돼지/닭"""
+type MeatSpecies implements Node {
+  """식별부호, id와 내용은 같음"""
+  code: String!
+
+  """식별자이며 의미를 가지는 ID"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """관련 육류 브랜드들"""
+  meatBrands(after: ID, before: ID, first: Int, last: Int): MeatBrandConnection!
+
+  """관련 육류 등급들"""
+  meatGrades(after: ID, before: ID, first: Int, last: Int, orderBy: MeatGradeOrderBy, orderDirection: OrderDirection): MeatGradeConnection!
+
+  """관련 육류 부위들"""
+  meatParts(after: ID, before: ID, first: Int, last: Int): MeatPartConnection!
+
+  """관련 육류 용도들"""
+  meatUsages(after: ID, before: ID, first: Int, last: Int): MeatUsageConnection!
+
+  """이름"""
+  name: String!
+
+  """짧은 이름"""
+  shortName: String!
+}
+
+type MeatSpeciesConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [MeatSpeciesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MeatSpeciesEdge implements Edge {
+  cursor: String!
+  node: MeatSpecies!
+}
+
+"""정렬 기준"""
+enum MeatSpeciesOrderBy {
+  """ID"""
+  ID
+
+  """이름"""
+  NAME
+
+  """우선순위"""
+  PRIORITY
+}
+
+"""육류 용도"""
+type MeatUsage implements Node {
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """육류 축종"""
+  meatSpecies: MeatSpecies!
+
+  """이름"""
+  name: String!
+}
+
+type MeatUsageConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [MeatUsageEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MeatUsageEdge implements Edge {
+  cursor: String!
+  node: MeatUsage!
+}
+
+"""정렬 기준"""
+enum MeatUsageOrderBy {
+  """ID"""
+  ID
+
+  """이름"""
+  NAME
+}
+
+type Mutation {
+  """안심판매 신청 진행 상태 변경"""
+  changeBulkSaleApplicationProgress(id: ID!, input: BulkSaleApplicationProgressInput!): BulkSaleApplicationMutationPayload
+
+  """전량판매 캠페인 등록"""
+  createBulkSaleCampaign(input: BulkSaleCampaignCreateInput!): BulkSaleCampaignMutationPayload
+
+  """전량판매 온라인 판매 정보 등록"""
+  createBulkSaleOnlineSalesInfo(input: BulkSaleOnlineSalesInfoCreateInput!): BulkSaleOnlineSalesInfoMutationPayload
+
+  """판매원표 등록"""
+  createBulkSaleProductSaleLedger(input: BulkSaleProductSaleLedgerCreateInput!): BulkSaleProductSaleLedgerMutationPayload
+
+  """전량판매 샘플 품평 등록"""
+  createBulkSaleSampleReview(input: BulkSaleSampleReviewCreateInput!): BulkSaleSampleReviewMutationPayload
+  createPresignedUrlForImage(filename: String!): CreatePresignedUrlForImagePayload!
+
+  """상품 등록"""
+  createProduct(input: CreateProductInput!): CreateProductPayload!
+
+  """견적 상품 등록"""
+  createQuotedProduct(input: CreateQuotedProductInput!): CreateQuotedProductPayload!
+  createRfqOrder(input: RfqOrderCreateInput!): RfqOrderCreateResponse!
+  createRfqQuotationMeat(input: RfqQuotationMeatInput!): RfqQuotationMeatCreateResponse!
+  createRfqRequest(input: RfqRequestCreateInput!): RfqRequestCreateResponse!
+  createRfqRequestItemsMeat(input: RfqRequestItemMeatCreateInput!): RfqRequestItemMeatCreateResponse!
+
+  """임시 웹주문서 생성 요청"""
+  createTempWosOrder(input: CreateTempWosOrderInput!): CreateTempWosOrderPayload
+  createTerm(input: TermCreateInput!): TermMutationResponse!
+
+  """주문서 생성 요청"""
+  createWosOrder(input: CreateWosOrderInput!): CreateWosOrderPayload
+
+  """판매원표 삭제"""
+  deleteBulkSaleProductSaleLedger(id: ID!): BulkSaleProductSaleLedgerMutationPayload
+  deleteRfqQuotationMeat(id: ID!): RfqQuotationMeatDeleteResponse!
+  deleteRfqRequest(id: ID!): RfqRequestDeleteResponse!
+  deleteRfqRequestItemsMeat(id: ID!): RfqRequestItemMeatDeleteResponse!
+
+  """결제요청 - 결제요청정보를 등록 후, 등록된 정보를 반환합니다."""
+  requestPayment(input: RequestPaymentInput!): RequestPaymentPayload
+
+  """KCP 결제승인요청"""
+  requestPaymentApprovalKCP(input: RequestPaymentApprovalKCPInput!): RequestPaymentApprovalKCPPayload
+
+  """토스페이먼츠 결제승인요청"""
+  requestPaymentApprovalTossPayments(input: RequestPaymentApprovalTossPaymentsInput!): RequestPaymentApprovalTossPaymentsPayload
+
+  """안심판매 신청 업데이트"""
+  updateBulkSaleApplication(id: ID!, input: BulkSaleApplicationUpdateInput!): BulkSaleApplicationMutationPayload
+
+  """전량판매 캠페인 수정"""
+  updateBulkSaleCampaign(id: ID!, input: BulkSaleCampaignUpdateInput!): BulkSaleCampaignMutationPayload
+
+  """전량판매 온라인 판매 정보 수정"""
+  updateBulkSaleOnlineSalesInfo(id: ID!, input: BulkSaleOnlineSalesInfoUpdateInput!): BulkSaleOnlineSalesInfoMutationPayload
+
+  """판매원표 수정"""
+  updateBulkSaleProductSaleLedger(id: ID!, input: BulkSaleProductSaleLedgerUpdateInput!): BulkSaleProductSaleLedgerMutationPayload
+
+  """전량판매 샘플 품평 수정"""
+  updateBulkSaleSampleReview(id: ID!, input: BulkSaleSampleReviewUpdateInput!): BulkSaleSampleReviewMutationPayload
+
+  """상품 수정"""
+  updateProduct(input: UpdateProductInput!): UpdateProductPayload!
+
+  """견적 상품 수정"""
+  updateQuotedProduct(input: UpdateQuotedProductInput!): UpdateQuotedProductPayload!
+  updateRfqQuotationMeat(id: ID!, input: RfqQuotationMeatInput!): RfqQuotationMeatUpdateResponse!
+  updateRfqRequest(id: ID!, input: RfqRequestUpdateInput!): RfqRequestUpdateResponse!
+  updateRfqRequestItemsMeat(id: ID!, input: RfqRequestItemMeatUpdateInput!): RfqRequestItemMeatUpdateResponse!
+
+  """단품 복수 등록 및 수정"""
+  upsertProductOptions(input: UpsertProductOptionsInput!): UpsertProductOptionsPayload
+}
+
+"""변경 내용"""
+interface MutationPayload {
+  """결과"""
+  result: Node
+}
+
+"""Node"""
+interface Node {
+  """ID"""
+  id: ID!
+}
+
+"""일반상품 중 서로 변경이 호환되는 상품 타입"""
+enum NormalProductType {
+  """일반상품"""
+  NORMAL
+
+  """견적 요청이 가능한 일반 상품"""
+  QUOTABLE
+}
+
+"""온라인 판매처"""
+enum OnlineMarket {
+  """옥션"""
+  AUCTION
+
+  """쿠팡"""
+  COUPANG
+
+  """지마켓"""
+  GMARKET
+
+  """지에스샵"""
+  GSSHOP
+
+  """인터파크"""
+  INTERPARK
+
+  """네이버"""
+  NAVER
+
+  """기타"""
+  OTHER
+
+  """SSG"""
+  SSG
+
+  """11번가"""
+  ST11
+
+  """티몬"""
+  TMON
+
+  """위메프"""
+  WEMAKEPRICE
+}
+
+"""Order Direction"""
+enum OrderDirection {
+  """low to high"""
+  ASC
+
+  """high to low"""
+  DESC
+}
+
+"""Page information"""
+type PageInfo {
+  """Cursor of the last edge in this page"""
+  endCursor: String!
+
+  """Does it have next page?"""
+  hasNextPage: Boolean!
+
+  """Does it have previous page?"""
+  hasPreviousPage: Boolean!
+
+  """Cursor of the first edge in this page"""
+  startCursor: String!
+}
+
+"""결제정보"""
+type Payment implements Node {
+  """결제금액"""
+  amount: Int
+  createdAt: DateTime!
+  id: ID!
+
+  """결제 일시"""
+  paidAt: DateTime
+
+  """결제수단"""
+  paymentMethod: PaymentMethod
+
+  """PG코드"""
+  pgCode: PgCode
+
+  """PG사 거래 고유번호"""
+  pgPaymentId: String
+
+  """PG사에서 전달된 최종적인 거래 응답"""
+  pgResponse: Map
+  status: PaymentStatus!
+  updatedAt: DateTime!
+  virtualAccount: VirtualAccount
+}
+
+type PaymentConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [PaymentEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PaymentEdge implements Edge {
+  cursor: String!
+  node: Payment!
+}
+
+"""결제 수단"""
+enum PaymentMethod {
+  """신용카드"""
+  CREDIT_CARD
+
+  """계좌이체(enum-value)"""
+  TRANSFER
+
+  """가상계좌"""
+  VIRTUAL_ACCOUNT
+}
+
+"""결제용도 (결제하여 얻는 것)"""
+enum PaymentPurpose {
+  """주문"""
+  ORDER
+
+  """신선캐시"""
+  SINSUN_CASH
+}
+
+"""결제 상태"""
+enum PaymentStatus {
+  """결제 완료"""
+  COMPLETE
+
+  """결제 실패"""
+  FAILURE
+
+  """결제 대기 상태"""
+  PENDING
+}
+
+"""PG사 구분 정보"""
+enum PgCode {
+  KCP
+  TOSS_PAYMENTS
+}
+
+"""전화번호"""
+scalar PhoneNumber
+
+"""양의 정수"""
+scalar PositiveInt
+
+"""가격"""
+scalar Price
+
+"""상품"""
+type Product implements Node {
+  """표준 카테고리 (작물 코드)"""
+  category: Category!
+
+  """상품 설명 html 문자열"""
+  description: String!
+
+  """전시 카테고리"""
+  displayCategories: [DisplayCategory!]!
+
+  """전시 상품명"""
+  displayName: String!
+
+  """상품 등급, 견적상품에만 필수로 존재합니다."""
+  grade: String
+  id: ID!
+
+  """대표이미지"""
+  image: Image!
+
+  """배송 가능 여부"""
+  isCourierAvailable: Boolean!
+
+  """과면세 여부"""
+  isVat: Boolean!
+
+  """담당 md"""
+  md: User
+
+  """생산자 작명 상품명"""
+  name: String!
+
+  """공지사항"""
+  notice: String
+
+  """ISO 8601 공지사항 만료 시점"""
+  noticeEndAt: DateTime
+
+  """ISO 8601 공지사항 시작 시점"""
+  noticeStartAt: DateTime
+
+  """원산지"""
+  origin: String
+
+  """판매가격"""
+  price: Int
+
+  """생산자"""
+  producer: User!
+
+  """상품번호"""
+  productId: Int!
+
+  """연관 단품 리스트입니다. connection 타입을 따르지만 파라미터에 따라 스펙이 적용되어있지 않습니다."""
+  productOptions(
+    """N/A"""
+    after: ID
+
+    """N/A"""
+    first: Int
+  ): ProductOptionConnection!
+
+  """판매 자료 문서 url"""
+  salesDocument: String
+
+  """운영상태"""
+  status: ProductStatus!
+
+  """상품 타입"""
+  type: ProductType!
+}
+
+"""품종"""
+type ProductCategory implements Node {
+  """전량판매 신청들"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """전량판매 캠페인들"""
+  bulkSaleCampaigns(after: ID, before: ID, first: Int, last: Int): BulkSaleCampaignConnection!
+
+  """품목 (상위 분류)"""
+  crop: Crop!
+
+  """선택 가능 상품포장규격 등급들 (예: ["특", "상", "기타"])"""
+  grades: [ProductPackageGrade!]!
+
+  """ID"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """이름"""
+  name: String!
+
+  """자주 거래되는 상품포장규격 등급들 (예: ["특", "상", "기타"])"""
+  popularGrades: [ProductPackageGrade!]!
+
+  """자주 거래되는 상품포장규격 질량들"""
+  popularQuantities: [ProductPackageMass!]!
+
+  """선택 가능 상품포장규격 질량들"""
+  quantities: [ProductPackageMass!]!
+}
+
+type ProductCategoryConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [ProductCategoryEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type ProductCategoryEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: ProductCategory!
+}
+
+"""정렬 기준"""
+enum ProductCategoryOrderBy {
+  """ID"""
+  ID
+
+  """품목명"""
+  NAME
+}
+
+type ProductConnection {
+  edges: [ProductEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ProductEdge {
+  cursor: String!
+  node: Product!
+}
+
+"""단품 상품 정보가 html 태그가 포함된 상태로 노출됩니다."""
+type ProductOption implements Node {
+  """포장당 입수 최대"""
+  countPerPackageMax: Int
+
+  """포장당 입수 최소"""
+  countPerPackageMin: Int
+
+  """출고 기준 시간"""
+  cutOffTime: String
+
+  """등급"""
+  grade: String
+  id: ID!
+
+  """출고 기준 시간 메모"""
+  memo: String
+
+  """단품 이름"""
+  optionName: String!
+
+  """포장 재질"""
+  packageType: String
+
+  """개당 크기 최대"""
+  perSizeMax: Float
+
+  """개당 크기 최소"""
+  perSizeMin: Float
+
+  """개당 크기 단위"""
+  perSizeUnit: SizeUnit
+
+  """개당 무게 최대"""
+  perWeightMax: Float
+
+  """개당 무게 최소"""
+  perWeightMin: Float
+
+  """개당 무게 단위"""
+  perWeightUnit: WeightUnit
+
+  """바이어(구매자)에게 보이는 판매가"""
+  price: Int
+
+  """포함된 상품"""
+  product: Product!
+
+  """현재시점 기준 적용되는 원가 정보"""
+  productOptionCost: ProductOptionCost!
+
+  """판매 상태 ex 판매중, 매진, ..."""
+  status: ProductOptionStatus!
+
+  """단품 번호"""
+  stockSku: String!
+
+  """단위 중량"""
+  weight: Float
+
+  """무게 단위"""
+  weightUnit: WeightUnit
+}
+
+type ProductOptionConnection {
+  edges: [ProductOptionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+"""생산자 공급가 타입"""
+enum ProductOptionContractType {
+  """전량판매"""
+  BULKSALE
+
+  """온라인 택배"""
+  ONLINE
+}
+
+type ProductOptionCost {
+  """배송 비용"""
+  deliveryCost: Int!
+
+  """원가 시작일"""
+  fromDate: DateTime!
+
+  """현재 원물원가; 배송비나 작업비용이 빠진 물건만의 비용"""
+  rawCost: Int!
+
+  """작업 비용"""
+  workingCost: Int!
+}
+
+type ProductOptionEdge implements Edge {
+  cursor: String!
+  node: ProductOption!
+}
+
+enum ProductOptionSort {
+  """sku 번호 기준 오름차순"""
+  SKU_ASC
+
+  """sku 번호 기준 내림차순"""
+  SKU_DESC
+}
+
+enum ProductOptionStatus {
+  HIDDEN_SALE
+  NOSALE
+  RETIRE
+  SALE
+  SOLDOUT
+}
+
+"""상품포장규격 등급"""
+scalar ProductPackageGrade
+
+"""상품포장규격 질량"""
+type ProductPackageMass {
+  """양"""
+  amount: Float!
+
+  """표현"""
+  display: String!
+
+  """단위"""
+  unit: ProductPackageMassUnit!
+}
+
+"""상품포장규격 질량 입력"""
+input ProductPackageMassInput {
+  """양"""
+  amount: Float!
+
+  """단위"""
+  unit: ProductPackageMassUnit!
+}
+
+"""상품포장규격 질량 단위"""
+enum ProductPackageMassUnit {
+  """그램"""
+  G
+
+  """킬로그램"""
+  KG
+
+  """밀리그램"""
+  MG
+}
+
+enum ProductStatus {
+  HIDDEN_SALE
+  NOSALE
+  RETIRE
+  SALE
+  SOLDOUT
+}
+
+enum ProductType {
+  """일반상품"""
+  NORMAL
+
+  """견적 요청이 가능한 일반 상품"""
+  QUOTABLE
+
+  """견적상품"""
+  QUOTED
+}
+
+enum ProductsQueryInputSort {
+  PRICE_ASC
+  PRICE_DESC
+  UPDATED_ASC
+  UPDATED_DESC
+}
+
+type Query {
+  """신선마켓 관리자 검색"""
+  adminUsers(after: ID, before: ID, first: Int, last: Int, name: String): AdminUserConnection!
+
+  """안심판매 신청 통계"""
+  bulkSaleApplicationStatistics(applicantNameMatch: String, appliedDateGe: Date, appliedDateGt: Date, appliedDateLe: Date, appliedDateLt: Date, businessNameMatch: String, cropIds: [ID!], farmAddressMatch: String, ids: [ID!], isTest: Boolean, productCategoryIds: [ID!], productCategoryNameMatch: String, progresses: [BulkSaleApplicationProgress!], staffIds: [ID!], staffKeys: [StaffKey!]): BulkSaleApplicationStatistics!
+
+  """안심판매 취소 사유 목록"""
+  bulkSaleApplicationWithdrawalReasons(applicationId: ID!): [String!]!
+
+  """안심판매 신청 조회"""
+  bulkSaleApplications(after: ID, applicantNameMatch: String, appliedDateGe: Date, appliedDateGt: Date, appliedDateLe: Date, appliedDateLt: Date, before: ID, businessNameMatch: String, cropIds: [ID!], farmAddressMatch: String, first: Int, ids: [ID!], isTest: Boolean, last: Int, orderBy: BulkSaleApplicationOrderBy, orderDirection: OrderDirection, productCategoryIds: [ID!], productCategoryNameMatch: String, progresses: [BulkSaleApplicationProgress!], staffIds: [ID!], staffKeys: [StaffKey!]): BulkSaleApplicationConnection!
+
+  """전량판매 캠페인 통계"""
+  bulkSaleCampaignStatistics: BulkSaleCampaignStatistics!
+
+  """전량판매 캠페인 조회"""
+  bulkSaleCampaigns(after: ID, before: ID, first: Int, ids: [ID!], isOpen: Boolean, last: Int, orderBy: BulkSaleCampaignOrderBy, orderDirection: OrderDirection): BulkSaleCampaignConnection!
+
+  """전량판매 평가 조회"""
+  bulkSaleEvaluations(after: ID, before: ID, first: Int, ids: [ID!], last: Int, orderBy: BulkSaleEvaluationOrderBy, orderDirection: OrderDirection, results: [BulkSaleEvaluationResult!]): BulkSaleEvaluationConnection!
+
+  """전량판매 시장 판매 정보 조회"""
+  bulkSaleMarketSalesInfo(after: ID, before: ID, bulkSaleApplicationIds: [ID!], first: Int, ids: [ID!], last: Int, orderBy: BulkSaleMarketSalesInfoOrderBy, orderDirection: OrderDirection): BulkSaleMarketSalesInfoConnection!
+
+  """전량판매 온라인 판매 정보 조회"""
+  bulkSaleOnlineSalesInfo(after: ID, before: ID, bulkSaleApplicationIds: [ID!], first: Int, ids: [ID!], last: Int, orderBy: BulkSaleOnlineSalesInfoOrderBy, orderDirection: OrderDirection): BulkSaleOnlineSalesInfoConnection!
+
+  """전량판매 샘플 품평 조회"""
+  bulkSaleSampleReviews(after: ID, before: ID, bulkSaleApplicationIds: [ID!], first: Int, ids: [ID!], last: Int, orderBy: BulkSaleSampleReviewOrderBy, orderDirection: OrderDirection): BulkSaleSampleReviewConnection!
+  categories(
+    """부모 표준 카테고리의 id, null일 경우 최상위 표준 카테고리를 조회한다"""
+    parentId: ID
+  ): [Category!]!
+
+  """ChannelIO 의 `boot` event 에 넣을 value 를 조회합니다"""
+  channelIO: ChannelIO
+
+  """품목 조회"""
+  crops(after: ID, before: ID, categories: [CropCategory!], first: Int, ids: [ID!], last: Int, nameMatch: String, orderBy: CropOrderBy, orderDirection: OrderDirection): CropConnection!
+
+  """배송회사 목록 조회"""
+  deliveryCompanies(after: ID, before: ID, codes: [String!], first: Int, ids: [String!], isAvailable: Boolean, last: Int, names: [String!], orderBy: DeliveryCompanyOrderBy, orderDirection: OrderDirection): DeliveryCompanyConnection!
+  displayCategories(
+    """true일 경우, 노출 여부가 활성화된 전시 카테고리만 조회된다"""
+    onlyDisplayable: Boolean
+
+    """부모 전시 카테고리의 id, null일 경우 최상위 전시 카테고리를 조회한다"""
+    parentId: ID
+
+    """조회할 전시 카테고리의 타입, null일 경우 타입제한 없이 조회한다"""
+    types: [DisplayCategoryType!]
+  ): [DisplayCategory!]!
+
+  """농작물 거래처 조회"""
+  farmMarkets(after: ID, before: ID, first: Int, ids: [ID!], last: Int, orderBy: FarmMarketOrderBy, orderDirection: OrderDirection): FarmMarketConnection!
+
+  """팜모닝 사용자 조회"""
+  farmmorningUsers(after: ID, before: ID, first: Int, ids: [ID!], last: Int, orderBy: FarmmorningUserOrderBy, orderDirection: OrderDirection): FarmmorningUserConnection!
+
+  """농장 조회"""
+  farms(after: ID, before: ID, first: Int, ids: [ID!], last: Int, orderBy: FarmOrderBy, orderDirection: OrderDirection): FarmConnection!
+  gnbBanners: [GnbBanner!]!
+
+  """공휴일 목록"""
+  holidays(endDate: Date!, startDate: Date!): [Holiday!]!
+  mainBanners: [Banner!]!
+  mainDisplayCategories(
+    """true일 경우, 노출 여부가 활성화된 전시 카테고리만 조회된다"""
+    onlyDisplayable: Boolean
+  ): [DisplayCategory!]!
+
+  """육류 브랜드 조회"""
+  meatBrands(after: ID, before: ID, first: Int, last: Int, meatSpeciesIds: [ID!], orderBy: MeatBrandOrderBy, orderDirection: OrderDirection): MeatBrandConnection!
+
+  """육류 등급 조회"""
+  meatGrades(after: ID, before: ID, first: Int, isDomestic: Boolean, last: Int, meatSpeciesIds: [ID!], orderBy: MeatGradeOrderBy, orderDirection: OrderDirection): MeatGradeConnection!
+
+  """육류 부위 조회"""
+  meatParts(after: ID, before: ID, first: Int, isDomestic: Boolean, last: Int, meatSpeciesIds: [ID!], orderBy: MeatPartOrderBy, orderDirection: OrderDirection): MeatPartConnection!
+
+  """육류 축종 조회"""
+  meatSpecies(after: ID, before: ID, first: Int, last: Int, orderBy: MeatSpeciesOrderBy, orderDirection: OrderDirection): MeatSpeciesConnection!
+
+  """육류 용도 조회"""
+  meatUsages(after: ID, before: ID, first: Int, last: Int, meatSpeciesIds: [ID!], orderBy: MeatUsageOrderBy, orderDirection: OrderDirection): MeatUsageConnection!
+  node(id: ID!): Node
+
+  """충전내역을 조회합니다."""
+  payments(paymentMethod: PaymentMethod!, status: PaymentStatus!): [Payment!]!
+
+  """품종 목록 조회"""
+  productCategories(after: ID, before: ID, cropIds: [ID!], first: Int, ids: [ID!], isAvailable: Boolean, last: Int, nameMatch: String, orderBy: ProductCategoryOrderBy, orderDirection: OrderDirection): ProductCategoryConnection!
+  productOptions(
+    after: String
+    before: String
+
+    """표준카테고리 id"""
+    categoryId: Int
+    first: Int
+    last: Int
+    offset: Int
+
+    """생산자명"""
+    producerName: String
+
+    """상품 아이디"""
+    productIds: [Int!]
+
+    """상품명"""
+    productName: String
+
+    """판매상태"""
+    productOptionStatus: ProductOptionStatus
+
+    """단품 스큐번호"""
+    skuNos: [String!]
+
+    """정렬 기준"""
+    sort: ProductOptionSort
+  ): ProductOptionConnection!
+  products(
+    """after + first"""
+    after: String
+
+    """before + last"""
+    before: String
+
+    """표준카테고리"""
+    categoryId: ID
+
+    """전시카테고리"""
+    displayCategoryId: ID
+
+    """first 단독 사용도 가능"""
+    first: Int
+
+    """택배 가능 여부"""
+    isCourierAvailable: Boolean
+    last: Int
+
+    """상품명"""
+    name: String
+
+    """offset + first"""
+    offset: Int
+
+    """True일 경우 노출되는 단품이 없는 일반상품을 제외하고 조회합니다."""
+    onlyBuyable: Boolean
+
+    """생산자번호"""
+    producerCodes: [String!]
+
+    """생산자 이름"""
+    producerName: String
+
+    """상품번호들"""
+    productNos: [Int!]
+    sort: ProductsQueryInputSort!
+
+    """판매상태"""
+    statuses: [ProductStatus!]
+
+    """상품 유형을 지정합니다."""
+    type: [ProductType!]
+  ): ProductConnection!
+
+  """RFQ 배송지 조회"""
+  rfqDeliveryPlaces(after: ID, before: ID, first: Int, last: Int, orderDirection: OrderDirection): RfqDeliveryPlaceConnection!
+  rfqNextAcceptableDeliveryDate: RfqNextAcceptableDeliveryDate!
+  rfqOrders(after: ID, before: ID, first: Int, last: Int, orderDirection: OrderDirection): RfqOrderConnection!
+  rfqQuotationsMeat(after: ID, before: ID, first: Int, last: Int, orderDirection: OrderDirection): RfqQuotationMeatConnection!
+  rfqRecommendedPriceForMeat(
+    """[RFQ] 견적요청 상품 ID"""
+    rfqRequestItemId: ID!
+  ): RfqRecommendedPrice!
+  rfqRequestItemsMeat(after: ID, before: ID, first: Int, last: Int, orderBy: RfqRequestItemMeatOrderBy, orderDirection: OrderDirection, requestIds: [ID!]): RfqRequestItemMeatConnection!
+  rfqRequests(after: ID, before: ID, first: Int, last: Int, orderDirection: OrderDirection): RfqRequestConnection!
+  rfqSelectedQuotationsMeat(after: ID, before: ID, buyerIds: [ID!], first: Int, last: Int, orderDirection: OrderDirection, requestIds: [ID!], requestItemIds: [ID!]): RfqSelectedQuotationMeatConnection!
+
+  """RFQ 판매자 조회"""
+  rfqSellerItems(after: ID, before: ID, first: Int, last: Int, meatSpeciesIds: [ID!], orderDirection: OrderDirection): RfqSellerItemConnection!
+
+  """RFQ 판매자 조회"""
+  rfqSellers(after: ID, before: ID, first: Int, last: Int, orderDirection: OrderDirection): RfqSellerConnection!
+  seasonDisplayCategory: DisplayCategory
+  specialDisplayCategories(
+    """true일 경우, 노출 여부가 활성화된 전시 카테고리만 조회된다"""
+    onlyDisplayable: Boolean
+  ): [DisplayCategory!]!
+  subBanners: [Banner!]!
+
+  """서비스 점검 스케쥴을 조회합니다."""
+  systemMaintenance: SystemMaintenance
+  termAgreementTypes(after: ID, before: ID, first: Int, last: Int): TermAgreementTypeConnection!
+  terms(after: ID, before: ID, first: Int, last: Int): TermConnection!
+
+  """농가 사업 지원 목록 조회"""
+  userBusinessSupportInfo(after: ID, before: ID, facilities: [UserBusinessSupportFacility!], first: Int, ids: [ID!], last: Int, orderBy: UserBusinessSupportInfoOrderBy, orderDirection: OrderDirection): UserBusinessSupportInfoConnection!
+  users(
+    """검색할 유의 이름 like %{name}%"""
+    name: String
+    roles: [UserRole!]
+  ): UserConnection!
+
+  """요청한 유저 자신의 정보를 조회합니다"""
+  viewer: User
+
+  """도매법인 시장 목록 조회"""
+  wholesalerMarkets(after: ID, before: ID, first: Int, last: Int): WholesalerMarketConnection!
+
+  """도매법인 목록 조회"""
+  wholesalers(after: ID, before: ID, first: Int, last: Int, marketIds: [String!], orderBy: WholesalerOrderBy, orderDirection: OrderDirection): WholesalerConnection!
+  wosOrder(orderNo: String!): WosOrder
+}
+
+"""율"""
+scalar Rate
+
+"""결제승인요청에 필요한 입력값 집합"""
+input RequestPaymentApprovalKCPInput {
+  """결제창 인증결과 암호화 정보"""
+  encData: String!
+
+  """결제창 인증결과 암호화 정보"""
+  encInfo: String!
+
+  """실제 결제요청 금액"""
+  ordrMony: Int!
+
+  """결제 레코드 아이디"""
+  paymentId: Int!
+
+  """KCP 발급 사이트(상점)코드"""
+  siteCd: String!
+
+  """KCP 발급 사이트(상점)키"""
+  siteKey: String!
+
+  """발급받은 임시 주문서 아이디"""
+  tempOrderId: Int
+
+  """KCP에서 정의한 결제요청 타입"""
+  tranCd: String!
+}
+
+union RequestPaymentApprovalKCPPayload = Error | RequestPaymentApprovalKCPResult
+
+"""
+결제 승인 요청 결과
+승인 성공시 필드: res_cd, res_msg, res_en_msg, tno, amount
+승인 실패시 필드: res_cd, res_msg
+"""
+type RequestPaymentApprovalKCPResult {
+  """결제 금액(12자리 정수)"""
+  amount: Int
+
+  """결제 레코드 아이디"""
+  paymentId: Int!
+
+  """결과코드(정상 승인이면 0000)"""
+  resCd: String!
+
+  """영문 결과메시지"""
+  resEnMsg: String
+
+  """결과메시지"""
+  resMsg: String!
+
+  """NHN KCP 거래 고유번호(14자리 정수)"""
+  tno: String
+}
+
+"""토스 페이먼츠 결제 승인 요청에 필요한 입력값 집합"""
+input RequestPaymentApprovalTossPaymentsInput {
+  """실제 결제요청 금액"""
+  amount: Int!
+
+  """결제 아이디"""
+  orderId: String!
+
+  """결제 레코드 아이디"""
+  paymentId: Int!
+
+  """토스 페이먼츠 결제 고유키"""
+  paymentKey: String!
+
+  """발급받은 임시 주문서 아이디"""
+  tempOrderId: Int
+}
+
+union RequestPaymentApprovalTossPaymentsPayload = Error | RequestPaymentApprovalTossPaymentsResult
+
+"""토스페이먼츠 결제 승인 요청 결과"""
+type RequestPaymentApprovalTossPaymentsResult {
+  """결제 금액(12자리 정수)"""
+  amount: Int
+
+  """결제 레코드 아이디"""
+  paymentId: Int!
+
+  """TOSS PAYMENTS 거래 고유 아이디"""
+  paymentKey: String!
+
+  """결과코드(정상 승인이면 DONE)"""
+  status: String!
+}
+
+"""결제요청에 필요한 입력값 집합"""
+input RequestPaymentInput {
+  """결제금액"""
+  amount: Int!
+
+  """사용자 디바이스"""
+  device: Device
+
+  """결제수단"""
+  paymentMethod: PaymentMethod!
+
+  """결제용도 (결제하여 얻는 것)"""
+  purpose: PaymentPurpose!
+}
+
+"""새로운 충전 레코드를 생성하고, KCP 결제창 생성용 고정값을 응답합니다."""
+type RequestPaymentKCPResult {
+  """회원 uid"""
+  buyrName: String!
+
+  """결제 화폐"""
+  currency: String!
+
+  """결제할 주문번호"""
+  ordrIdxx: String!
+
+  """결제ID"""
+  paymentId: Int!
+
+  """회원 아이디"""
+  shopUserId: String!
+
+  """KCP site cd"""
+  siteCd: String!
+
+  """KCP site key"""
+  siteKey: String!
+
+  """커머스 회사 이름(신선마켓)"""
+  siteName: String!
+}
+
+union RequestPaymentPayload = Error | RequestPaymentKCPResult | RequestPaymentTossPaymentsResult
+
+"""새로운 충전 레코드를 생성하고, TossPayments 결제창 생성용 고정값을 응답합니다."""
+type RequestPaymentTossPaymentsResult {
+  """결제 금액(12자리 정수)"""
+  amount: Int!
+
+  """토스 페이먼츠 API 클라이언트 키"""
+  clientKey: String!
+
+  """유저이메일"""
+  customerEmail: String!
+
+  """유저이름"""
+  customerName: String!
+
+  """주문번호"""
+  orderId: ID!
+
+  """결제ID"""
+  paymentId: Int!
+}
+
+"""평점"""
+enum ReviewScore {
+  """불량"""
+  BAD
+
+  """양호"""
+  GOOD
+
+  """매우 불량"""
+  VERY_BAD
+
+  """매우 양호"""
+  VERY_GOOD
+}
+
+"""RFQ 가능 배송 방식"""
+enum RfqDeliveryMethod {
+  """전부 다 가능"""
+  ANY
+
+  """직접 배송"""
+  DIRECT_DELIVERY
+
+  """기타"""
+  OTHER
+
+  """창고 수령"""
+  WAREHOUSE_PICKUP
+
+  """창고 배송"""
+  WAREHOUSE_TRANSFER
+}
+
+"""RFQ 배송지"""
+type RfqDeliveryPlace implements Node {
+  """주소"""
+  address: String!
+
+  """주소 상세"""
+  addressDetail: String!
+
+  """별칭"""
+  alias: String!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """사용자"""
+  user: User!
+
+  """우편번호"""
+  zipCode: String!
+}
+
+type RfqDeliveryPlaceConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqDeliveryPlaceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type RfqDeliveryPlaceEdge implements Edge {
+  cursor: String!
+  node: RfqDeliveryPlace!
+}
+
+"""육류 포장 방식"""
+enum RfqMeatPackageMethod {
+  """모두"""
+  ANY
+
+  """세절"""
+  CUT
+
+  """그 외"""
+  OTHER
+
+  """원료육(박스육)"""
+  RAW
+
+  """소분"""
+  SPLIT
+}
+
+"""육류 저장 방식"""
+enum RfqMeatStorageMethod {
+  """모두"""
+  ANY
+
+  """냉장"""
+  CHILLED
+
+  """동결"""
+  FREEZE_DRIED
+
+  """냉동"""
+  FROZEN
+
+  """그 외"""
+  OTHER
+}
+
+"""[RFQ] 다음 배송 가능일"""
+type RfqNextAcceptableDeliveryDate {
+  """날짜"""
+  date: Date!
+}
+
+"""RFQ 주문"""
+type RfqOrder implements Node {
+  """구매자"""
+  buyer: User!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """배송 주소"""
+  deliveryAddress: String!
+
+  """배송 주소 상세"""
+  deliveryAddressDetail: String!
+
+  """배송비"""
+  deliveryFee: Int!
+
+  """배송 방식"""
+  deliveryMethod: RfqDeliveryMethod!
+
+  """배송 우편번호"""
+  deliveryZipCode: String!
+
+  """식별자"""
+  id: ID!
+
+  """가격"""
+  price: Int!
+
+  """견적"""
+  quotation: RfqQuotation!
+
+  """견적 요청"""
+  request: RfqRequest!
+
+  """견적 요청 상품"""
+  requestItem: RfqRequestItem!
+
+  """판매자"""
+  seller: User!
+
+  """상태"""
+  status: RfqOrderStatus!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+type RfqOrderConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqOrderEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""[RFQ] 발주 생성 Input"""
+input RfqOrderCreateInput {
+  deliveryMethod: RfqDeliveryMethod!
+  quotationId: ID!
+}
+
+union RfqOrderCreateResponse = Error | RfqOrderMutationPayload
+
+type RfqOrderEdge implements Edge {
+  cursor: String!
+  node: RfqOrder!
+}
+
+"""[RFQ] 발주 Mutation 내용"""
+type RfqOrderMutationPayload implements MutationPayload {
+  result: RfqOrder
+}
+
+"""모름"""
+enum RfqOrderStatus {
+  UNKNOWN
+}
+
+interface RfqQuotation {
+  """구매자"""
+  buyer: User!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """배송비"""
+  deliveryFee: Int!
+
+  """노드 ID"""
+  id: ID!
+
+  """[RFQ] 주문"""
+  order: RfqOrder
+
+  """가격"""
+  price: Int!
+
+  """중량 단위(1kg)당 가격"""
+  pricePerKg: DecimalNumber!
+
+  """[RFQ] 견적 요청"""
+  request: RfqRequest!
+
+  """[RFQ] 견적 요청 상품"""
+  requestItem: RfqRequestItem!
+
+  """판매자"""
+  seller: User!
+
+  """[RFQ] 견적 상태"""
+  status: RfqQuotationStatus!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """중량(kg)"""
+  weightKg: DecimalNumber!
+}
+
+"""RfqQuotation Connection"""
+type RfqQuotationConnection {
+  count: Int!
+  edges: [RfqQuotationEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""RfqQuotation Edge"""
+type RfqQuotationEdge {
+  cursor: String!
+  node: RfqQuotation!
+}
+
+"""RFQ 견적 - 고기"""
+type RfqQuotationMeat implements Node & RfqQuotation {
+  """브랜드"""
+  brand: String!
+
+  """구매자"""
+  buyer: User!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """배송비"""
+  deliveryFee: Int!
+
+  """등급"""
+  grade: MeatGrade!
+
+  """식별자"""
+  id: ID!
+
+  """[RFQ] 주문"""
+  order: RfqOrder
+
+  """가격"""
+  price: Int!
+
+  """중량 단위(1kg)당 가격"""
+  pricePerKg: DecimalNumber!
+
+  """견적 요청"""
+  request: RfqRequest!
+
+  """견적 요청 상품"""
+  requestItem: RfqRequestItemMeat!
+
+  """판매자"""
+  seller: User!
+
+  """견적 상태"""
+  status: RfqQuotationStatus!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """중량(kg)"""
+  weightKg: DecimalNumber!
+}
+
+type RfqQuotationMeatConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqQuotationMeatEdge!]!
+  pageInfo: PageInfo!
+}
+
+union RfqQuotationMeatCreateResponse = Error | RfqQuotationMeatMutationPayload
+
+union RfqQuotationMeatDeleteResponse = DeleteSuccess | Error
+
+type RfqQuotationMeatEdge implements Edge {
+  cursor: String!
+  node: RfqQuotationMeat!
+}
+
+"""RFQ 견적 입력"""
+input RfqQuotationMeatInput {
+  brand: String!
+  deliveryFee: Int
+  meatGradeId: ID!
+  pricePerKg: DecimalNumber!
+  rfqRequestItemId: ID!
+}
+
+"""RFQ 견적<육류> 뮤테이션 결과"""
+type RfqQuotationMeatMutationPayload implements MutationPayload {
+  result: RfqQuotationMeat
+}
+
+union RfqQuotationMeatUpdateResponse = Error | RfqQuotationMeatMutationPayload
+
+"""견적 상태"""
+enum RfqQuotationStatus {
+  DROPPED_BY_SYSTEM
+  DROPPED_BY_USER
+  ORDERED
+  SELECTED_BY_SYSTEM
+  WAITING_FOR_SELECTION
+}
+
+"""RFQ 추천가"""
+type RfqRecommendedPrice {
+  """중량단위(1kg)당 추천가"""
+  pricePerKg: DecimalNumber!
+}
+
+"""RFQ 견적 요청"""
+type RfqRequest implements Node {
+  """구매자"""
+  buyer: User!
+
+  """취소일시"""
+  canceledAt: DateTime
+
+  """마감일시"""
+  closedAt: DateTime!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """배송주소"""
+  deliveryAddress: String!
+
+  """정기공급주기"""
+  deliveryCycle: String!
+
+  """배송방식"""
+  deliveryMethod: RfqDeliveryMethod!
+
+  """희망최초납품일"""
+  desiredDeliveryDate: DateTime!
+
+  """식별자"""
+  id: ID!
+
+  """견적 요청 상품 목록"""
+  items(after: ID, before: ID, first: Int, last: Int): RfqRequestItemConnection!
+
+  """주문 목록"""
+  orders(after: ID, before: ID, first: Int, last: Int): RfqOrderConnection!
+
+  """견적 목록"""
+  quotations(after: ID, before: ID, first: Int, last: Int): RfqQuotationConnection!
+
+  """견적 요청의 남은 유효 시간"""
+  remainSecondsUntilQuotationExpired: Int!
+
+  """신청일시"""
+  requestedAt: DateTime!
+
+  """선정된 견적 목록"""
+  selectedQuotations(after: ID, before: ID, first: Int, last: Int): RfqSelectedQuotationConnection!
+
+  """상태"""
+  status: RfqRequestStatus!
+
+  """수정일시"""
+  updatedAt: DateTime!
+}
+
+type RfqRequestConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqRequestEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""RFQ 요청 생성 Input"""
+input RfqRequestCreateInput {
+  status: RfqRequestStatus!
+}
+
+union RfqRequestCreateResponse = Error | RfqRequestMutationPayload
+
+union RfqRequestDeleteResponse = DeleteSuccess | Error
+
+type RfqRequestEdge implements Edge {
+  cursor: String!
+  node: RfqRequest!
+}
+
+interface RfqRequestItem {
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """노드 ID"""
+  id: ID!
+
+  """기타 요청사항"""
+  otherRequirements: String!
+
+  """RFQ 견적 요청"""
+  request: RfqRequest!
+
+  """작성 상태"""
+  status: RfqRequestItemStatus!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """중량 (kg 단위)"""
+  weightKg: DecimalNumber
+}
+
+"""RfqRequestItem 인터페이스의 Connection"""
+type RfqRequestItemConnection {
+  count: Int!
+  edges: [RfqRequestItemEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""RfqRequestItem 인터페이스의 Edge"""
+type RfqRequestItemEdge {
+  cursor: String!
+  node: RfqRequestItem!
+}
+
+"""[RFQ] 견적 요청 상품 <고기>"""
+type RfqRequestItemMeat implements Node & RfqRequestItem {
+  """생성일시"""
+  createdAt: DateTime!
+
+  """등급"""
+  grade: MeatGrade
+
+  """식별자"""
+  id: ID!
+
+  """기타 요청사항"""
+  otherRequirements: String!
+
+  """포장 방식"""
+  packageMethod: RfqMeatPackageMethod
+
+  """부위"""
+  part: MeatPart
+
+  """선호 브랜드"""
+  preferredBrand: String!
+
+  """기존 거래 단가"""
+  prevTradePricePerKg: Int
+
+  """기존 거래 업체명"""
+  prevTradeSellerName: String!
+
+  """RFQ 견적 목록 커넥션"""
+  quotations(after: ID, before: ID, first: Int, last: Int): RfqQuotationMeatConnection!
+
+  """RFQ 견적 요청"""
+  request: RfqRequest!
+
+  """선정된 견적 목록"""
+  selectedQuotations(after: ID, before: ID, first: Int, last: Int): RfqSelectedQuotationMeatConnection!
+
+  """축종"""
+  species: MeatSpecies
+
+  """작성 상태"""
+  status: RfqRequestItemStatus!
+
+  """보관 방식"""
+  storageMethod: RfqMeatStorageMethod
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """용도들"""
+  usages(after: ID, before: ID, first: Int, last: Int): MeatUsageConnection!
+
+  """중량 (kg 단위), 주문량"""
+  weightKg: DecimalNumber
+}
+
+type RfqRequestItemMeatConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqRequestItemMeatEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""RFQ 요청 아이템 생성 Input"""
+input RfqRequestItemMeatCreateInput {
+  meatGradeId: ID
+  meatPartId: ID
+  meatSpeciesId: ID
+  meatUsageIds: [ID!]!
+  otherRequirements: String
+  packageMethod: String
+  preferredBrand: String
+  prevTradePricePerKg: String
+  prevTradeSellerName: String
+  rfqRequestId: ID!
+
+  """작성 상태"""
+  status: RfqRequestItemStatus!
+  storageMethod: String
+  weightKg: DecimalNumber
+}
+
+union RfqRequestItemMeatCreateResponse = Error | RfqRequestItemMeatMutationPayload
+
+union RfqRequestItemMeatDeleteResponse = DeleteSuccess | Error
+
+type RfqRequestItemMeatEdge implements Edge {
+  cursor: String!
+  node: RfqRequestItemMeat!
+}
+
+"""RFQ 축산 아이템 Mutation 내용"""
+type RfqRequestItemMeatMutationPayload implements MutationPayload {
+  result: RfqRequestItemMeat
+}
+
+"""견적 요청 상품 <고기> 정렬 기준"""
+enum RfqRequestItemMeatOrderBy {
+  """ID"""
+  ID
+
+  """육류 축종 우선순위"""
+  MEAT_SPECIES_PRIORITY
+}
+
+"""RFQ 요청 아이템 변경 Input"""
+input RfqRequestItemMeatUpdateInput {
+  meatGradeId: ID
+  meatPartId: ID
+  meatSpeciesId: ID
+  meatUsageIds: [ID!]!
+  otherRequirements: String
+  packageMethod: String
+  preferredBrand: String
+  prevTradePricePerKg: String
+  prevTradeSellerName: String
+
+  """작성 상태"""
+  status: RfqRequestItemStatus!
+  storageMethod: String
+  weightKg: DecimalNumber
+}
+
+union RfqRequestItemMeatUpdateResponse = Error | RfqRequestItemMeatMutationPayload
+
+"""견적요청 항목 상태"""
+enum RfqRequestItemStatus {
+  """견적요청 작성중"""
+  DRAFT
+
+  """견적요청 발송 후, 매치 실패"""
+  MATCH_FAILED
+
+  """견적 수신 후, 발주 완료"""
+  ORDERED
+
+  """견적 수신 후, 발주 기한 초과"""
+  ORDER_TIMEOUT
+
+  """견적요청 발송 준비 완료"""
+  READY_TO_REQUEST
+
+  """견적요청 발송 후, 취소"""
+  REQUEST_CANCELED
+
+  """견적 수신 후, 발주 대기중"""
+  WAITING_FOR_ORDER
+
+  """견적요청 발송 후, 견적 대기중"""
+  WAITING_FOR_QUOTATION
+}
+
+"""RFQ 요청 Mutation 내용"""
+type RfqRequestMutationPayload implements MutationPayload {
+  result: RfqRequest
+}
+
+"""견적요청 상태"""
+enum RfqRequestStatus {
+  """견적요청 작성중"""
+  DRAFT
+
+  """견적요청 발송 준비 완료"""
+  READY_TO_REQUEST
+
+  """견적요청 발송 후, 취소"""
+  REQUEST_CANCELED
+
+  """견적요청 처리 완료"""
+  REQUEST_PROCESSED
+
+  """견적요청 발송 후, 견적 대기중"""
+  WAITING_FOR_QUOTATION
+}
+
+"""RFQ 요청 서브 타입"""
+enum RfqRequestSubtype {
+  """축산"""
+  MEAT
+}
+
+"""RFQ 요청 변경 Input"""
+input RfqRequestUpdateInput {
+  deliveryAddress: String
+  deliveryCycle: String
+  deliveryMethod: RfqDeliveryMethod
+  desiredDeliveryDate: DateTime
+  status: RfqRequestStatus!
+}
+
+union RfqRequestUpdateResponse = Error | RfqRequestMutationPayload
+
+"""RFQ 선정된 견적"""
+interface RfqSelectedQuotation {
+  """구매자"""
+  buyer: User!
+
+  """배송비"""
+  deliveryFee: Int!
+
+  """노드 ID"""
+  id: ID!
+
+  """주문"""
+  order: RfqOrder
+
+  """가격"""
+  price: Int!
+
+  """단위 중량(1kg)당 가격"""
+  pricePerKg: DecimalNumber!
+
+  """견적 요청"""
+  request: RfqRequest!
+
+  """견적 요청 상품"""
+  requestItem: RfqRequestItem!
+
+  """중량(kg)"""
+  weightKg: DecimalNumber!
+}
+
+"""RFQ 선정된 견적의 릴레이 커넥션"""
+type RfqSelectedQuotationConnection {
+  count: Int!
+  edges: [RfqSelectedQuotationEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""RFQ 선정된 견적의 릴레이 엣지"""
+type RfqSelectedQuotationEdge {
+  cursor: String!
+  node: RfqSelectedQuotation!
+}
+
+"""RFQ 선정된 견적 <육류>"""
+type RfqSelectedQuotationMeat implements Node & RfqSelectedQuotation {
+  """브랜드"""
+  brand: String!
+
+  """구매자"""
+  buyer: User!
+
+  """배송비"""
+  deliveryFee: Int!
+
+  """등급"""
+  grade: MeatGrade!
+
+  """노드 ID"""
+  id: ID!
+
+  """주문"""
+  order: RfqOrder
+
+  """가격"""
+  price: Int!
+
+  """중량 단위(1kg)당 가격"""
+  pricePerKg: DecimalNumber!
+
+  """견적 요청"""
+  request: RfqRequest!
+
+  """견적 요청 상품"""
+  requestItem: RfqRequestItemMeat!
+
+  """중량(kg)"""
+  weightKg: DecimalNumber!
+}
+
+type RfqSelectedQuotationMeatConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqSelectedQuotationMeatEdge!]!
+  pageInfo: PageInfo!
+}
+
+type RfqSelectedQuotationMeatEdge implements Edge {
+  cursor: String!
+  node: RfqSelectedQuotationMeat!
+}
+
+"""RFQ 판매자"""
+type RfqSeller implements Node {
+  """연간 이익"""
+  annualRevenue: Int!
+
+  """업체명"""
+  companyName: String!
+
+  """생성일시"""
+  createdAt: DateTime!
+
+  """배송 방식들"""
+  deliveryMethods: [String!]!
+
+  """식별자"""
+  id: ID!
+
+  """가용여부"""
+  isAvailable: Boolean!
+
+  """배송 가능 여부"""
+  isDeliverable: Boolean!
+
+  """주문 목록"""
+  orders(after: ID, before: ID, first: Int, last: Int): RfqOrderConnection!
+
+  """견적 목록"""
+  quotations(after: ID, before: ID, first: Int, last: Int): RfqQuotationConnection!
+
+  """수정일시"""
+  updatedAt: DateTime!
+
+  """사용자 ID"""
+  user: User!
+}
+
+type RfqSellerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqSellerEdge!]!
+  pageInfo: PageInfo!
+}
+
+type RfqSellerEdge implements Edge {
+  cursor: String!
+  node: RfqSeller!
+}
+
+"""RFQ 판매자 상품"""
+type RfqSellerItem implements Node {
+  """식별자"""
+  id: ID!
+
+  """견적요청 수신 여부"""
+  isSubscribed: Boolean!
+
+  """육류 원산지"""
+  madeIn: MeatMadeIn!
+
+  """육류 축종"""
+  meatSpecies: MeatSpecies!
+
+  """RFQ 판매자"""
+  rfqSeller: RfqSeller!
+}
+
+type RfqSellerItemConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [RfqSellerItemEdge!]!
+  pageInfo: PageInfo!
+}
+
+type RfqSellerItemEdge implements Edge {
+  cursor: String!
+  node: RfqSellerItem!
+}
+
+enum SizeUnit {
+  CM
+  M
+  MM
+}
+
+"""신선마켓 담당자 ID"""
+scalar StaffKey
+
+"""통계"""
+interface Statistics {
+  """전체 개수"""
+  count: Int!
+}
+
+type SystemMaintenance implements Node {
+  """점검 종료 시간"""
+  endAt: DateTime!
+  id: ID!
+
+  """점검 메시지"""
+  message: String
+
+  """점검 시작 시간"""
+  startAt: DateTime!
+
+  """타켓정보 farmer, buyer, admin"""
+  targets: [String!]!
+}
+
+type SystemMaintenanceConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [SystemMaintenanceEdge!]!
+  pageInfo: PageInfo!
+}
+
+type SystemMaintenanceEdge implements Edge {
+  cursor: String!
+  node: SystemMaintenance!
+}
+
+"""임시 웹주문서"""
+type TempWosOrder {
+  """생성된 임시 주문서 ID"""
+  tempOrderId: Int!
+}
+
+"""임시 웹주문서 생성 요청시 필요한 단품(상품옵션) 정보"""
+input TempWosOrderProductOptionsInput {
+  """단품(상품옵션) 가격"""
+  price: Int!
+
+  """상품 번호"""
+  productId: Int!
+
+  """단품(상품옵션) 번호"""
+  productOptionId: Int!
+}
+
+"""사용자 약관"""
+type Term implements Node {
+  """동의여부"""
+  agreement: String!
+
+  """아이디"""
+  id: ID!
+}
+
+"""사용자 약관 동의 종류"""
+type TermAgreementType implements Node {
+  """설명"""
+  description: String!
+
+  """아이디"""
+  id: ID!
+
+  """종류"""
+  type: String!
+}
+
+type TermAgreementTypeConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [TermAgreementTypeEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TermAgreementTypeEdge implements Edge {
+  cursor: String!
+  node: TermAgreementType!
+}
+
+type TermConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+  edges: [TermEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""사용자 약관 동의 Input"""
+input TermCreateInput {
+  agreement: String!
+}
+
+type TermEdge implements Edge {
+  cursor: String!
+  node: Term!
+}
+
+"""사용자 약관 동의 여부 변경"""
+type TermMutationPayload implements MutationPayload {
+  result: Term
+}
+
+union TermMutationResponse = Error | TermMutationPayload
+
+"""
+일반 상품을 업데이트합니다. 
+    - 견적 업데이트 기준 전달받지 않는 필드: 등급(grade)
+    - 견적 업데이트 기준 추가 전달 필드: 타입(type)/배송(is-courier-available)/가격(price)
+"""
+input UpdateProductInput {
+  """상품 설명 editor HTML"""
+  description: String!
+
+  """전시 카테고리 node ID"""
+  displayCategoryIds: [ID!]!
+
+  """바이어용 상품명"""
+  displayName: String!
+
+  """상품 node ID"""
+  id: ID!
+
+  """대표 이미지"""
+  image: ImageInput!
+
+  """배송 가능 여부"""
+  isCourierAvailable: Boolean!
+
+  """생산자용 상품명"""
+  name: String!
+
+  """공지사항"""
+  notice: String
+
+  """공지사항 적용 기간"""
+  noticeEndAt: DateTime
+
+  """공지사항 적용 기간"""
+  noticeStartAt: DateTime
+
+  """원산지"""
+  origin: String!
+
+  """기준 가격"""
+  price: Int!
+
+  """판매 자료 문서 url"""
+  salesDocument: String
+
+  """운영 상태"""
+  status: ProductStatus!
+  type: NormalProductType!
+}
+
+input UpdateProductOptionInput {
+  """출고 기준 시간"""
+  cutOffTime: String
+
+  """단품 node ID"""
+  id: ID!
+
+  """출고 기준 시간 메모"""
+  memo: String
+
+  """단품명"""
+  optionName: String!
+
+  """운영상태"""
+  status: ProductOptionStatus!
+}
+
+union UpdateProductPayload = Error | UpdateProductResult
+
+type UpdateProductResult {
+  """수정된 상품 정보"""
+  product: Product!
+}
+
+"""
+견적 상품을 업데이트 합니다.
+    - 일반 업데이트 기준 전달받지 않는 필드: 배송(is-courier-available)/가격(price)
+    - 일반 업데이트 기준 추가 전달 필드: 등급(grade)
+"""
+input UpdateQuotedProductInput {
+  """상품 설명 editor HTML"""
+  description: String!
+
+  """전시 카테고리 node ID"""
+  displayCategoryIds: [ID!]!
+
+  """바이어용 상품명"""
+  displayName: String!
+
+  """등급"""
+  grade: String!
+
+  """상품 node ID"""
+  id: ID!
+
+  """대표 이미지"""
+  image: ImageInput!
+
+  """생산자용 상품명"""
+  name: String!
+
+  """공지사항"""
+  notice: String
+
+  """공지사항 적용 기간"""
+  noticeEndAt: DateTime
+
+  """공지사항 적용 기간"""
+  noticeStartAt: DateTime
+
+  """원산지"""
+  origin: String!
+
+  """판매 자료 문서 url"""
+  salesDocument: String
+
+  """운영 상태"""
+  status: ProductStatus!
+}
+
+union UpdateQuotedProductPayload = Error | UpdateQuotedProductResult
+
+type UpdateQuotedProductResult {
+  """수정된 견적 상품 정보"""
+  product: Product!
+}
+
+input UpsertProductOptionsInput {
+  createProductOptions: [CreateProductOptionInput!]
+  updateProductOptions: [UpdateProductOptionInput!]
+}
+
+union UpsertProductOptionsPayload = Error | UpsertProductOptionsResult
+
+type UpsertProductOptionsResult {
+  createdProductOptions: [ProductOption!]!
+  updatedProductOptions: [ProductOption!]!
+}
+
+"""Url"""
+scalar Url
+
+type User implements Node {
+  """대표명"""
+  bossName: String
+  id: ID!
+  name: String!
+  producerCode: String
+  products(input: UserProductsInput): ProductConnection!
+
+  """RFQ 판매자"""
+  rfqSeller: RfqSeller
+  uid: String!
+  userRole: UserRole!
+}
+
+"""신청자 사업 정보"""
+type UserBusinessRegistrationInfo implements Node {
+  """사업자등록번호"""
+  businessRegistrationNumber: BusinessRegistrationNumber!
+
+  """개인/법인 유형"""
+  businessType: IndividualOrCompany!
+
+  """생성 일시"""
+  createdAt: DateTime!
+
+  """신청자"""
+  farmmorningUser: FarmmorningUser!
+
+  """ID"""
+  id: ID!
+
+  """사업자명"""
+  name: String!
+
+  """수정 일시"""
+  updatedAt: DateTime!
+}
+
+type UserBusinessRegistrationInfoConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [UserBusinessRegistrationInfoEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type UserBusinessRegistrationInfoEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: UserBusinessRegistrationInfo!
+}
+
+"""시설 유형"""
+enum UserBusinessSupportFacility {
+  """온실"""
+  GLASS
+
+  """노지"""
+  OPEN_FIELD
+
+  """비닐하우스"""
+  VINYL_HOUSE_FIELD
+
+  """비닐하우스 스마트팜"""
+  VINYL_HOUSE_SMART_FARM
+}
+
+"""농가 사업 지원"""
+type UserBusinessSupportInfo implements Node {
+  """농지 면적"""
+  area: Int
+
+  """전량판매 신청들"""
+  bulkSaleApplications(after: ID, before: ID, first: Int, last: Int): BulkSaleApplicationConnection!
+
+  """경력 타입"""
+  experiencedYearsRange: ExperienceYearsRange
+
+  """시설 유형"""
+  facility: UserBusinessSupportFacility
+
+  """신청자"""
+  farmmorningUser: FarmmorningUser!
+
+  """ID"""
+  id: ID!
+
+  """5년 이내 귀농인 여부"""
+  isJuniorMigrant: Boolean
+
+  """작년 수익"""
+  lastYearIncome: Int
+
+  """수정 일시"""
+  updatedAt: DateTime!
+
+  """신청자 유형 ID"""
+  userTypeId: ID
+}
+
+type UserBusinessSupportInfoConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [UserBusinessSupportInfoEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type UserBusinessSupportInfoEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: UserBusinessSupportInfo!
+}
+
+"""정렬 기준"""
+enum UserBusinessSupportInfoOrderBy {
+  """ID"""
+  ID
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+input UserProductsInput {
+  """after + first"""
+  after: String
+
+  """before + last"""
+  before: String
+
+  """first 단독 사용도 가능"""
+  first: Int
+  last: Int
+
+  """offset + limit"""
+  limit: Int
+
+  """offset + limit"""
+  offset: Int
+  sort: UserProductsInputSort!
+}
+
+enum UserProductsInputSort {
+  PRICE_ASC
+  PRICE_DESC
+  UPDATED_ASC
+  UPDATED_DESC
+}
+
+enum UserRole {
+  ADMIN
+  BUYER
+  PRODUCER
+}
+
+"""가상계좌 정보"""
+type VirtualAccount {
+  accountNo: String!
+  bank: Bank!
+  createdAt: DateTime!
+  expiredAt: DateTime!
+}
+
+enum WeightUnit {
+  G
+  KG
+  T
+}
+
+"""도매법인"""
+type Wholesaler implements Node {
+  """도매법인 코드"""
+  code: String!
+
+  """ID"""
+  id: ID!
+
+  """도매법인명"""
+  name: String!
+
+  """도매법인 시장"""
+  wholesalerMarket: WholesalerMarket!
+}
+
+type WholesalerConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [WholesalerEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type WholesalerEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: Wholesaler!
+}
+
+"""도매법인 시장"""
+type WholesalerMarket implements Node {
+  """시장 코드"""
+  code: String!
+
+  """ID"""
+  id: ID!
+
+  """시장명"""
+  name: String!
+
+  """도매법인들"""
+  wholesalers(after: ID, before: ID, first: Int, last: Int): WholesalerConnection!
+}
+
+type WholesalerMarketConnection implements Connection {
+  """Number of edges"""
+  count: Int!
+
+  """Edges"""
+  edges: [WholesalerMarketEdge!]!
+
+  """Page information"""
+  pageInfo: PageInfo!
+}
+
+type WholesalerMarketEdge implements Edge {
+  """Cursor"""
+  cursor: String!
+
+  """Node"""
+  node: WholesalerMarket!
+}
+
+"""정렬 기준"""
+enum WholesalerOrderBy {
+  """ID"""
+  ID
+}
+
+enum WosDeliveryStatus {
+  CANCEL
+  COMPLETE
+  CREATE
+  DELIVERING
+  DEPARTURE
+  NEGOTIATING
+  PACKING
+  REFUND
+}
+
+enum WosDeliveryType {
+  FREIGHT
+  PARCEL
+  SELF
+}
+
+type WosError {
+  code: WosErrorCode!
+  message: String
+}
+
+"""웹주문서용 Error"""
+enum WosErrorCode {
+  """유효하지 않은 배송 정보"""
+  INVALID_DELIVERY
+
+  """유효하지 않은 주문 정보"""
+  INVALID_ORDER
+
+  """유효하지 않은 결제 목적"""
+  INVALID_PAYMENT_PURPOSE
+
+  """유효하지 않은 상품 정보인 경우 (상품의 가격변경 또는 구매할 수 없는 상태)"""
+  INVALID_PRODUCT
+}
+
+"""주문서"""
+type WosOrder {
+  """주문서 생성자 ID (어드민이 대리 생성할 수 있기 때문)"""
+  createUserId: Int!
+
+  """주문서 번호"""
+  orderNo: String!
+
+  """주문 단품번호 리스트"""
+  orderProducts: [WosOrderProduct]!
+
+  """구매자 ID"""
+  orderUserId: Int!
+
+  """주문서 결제 타입"""
+  payType: WosOrderPayType!
+  paymentMethod: PaymentMethod
+
+  """주문서 상태"""
+  status: WosOrderStatus!
+
+  """총 배송비"""
+  totalDeliveryCost: Int
+
+  """총 주문(상품) 금액"""
+  totalOrderPrice: Int!
+}
+
+enum WosOrderPayType {
+  AFTER_PAY
+  PAID
+}
+
+"""주문 단품"""
+type WosOrderProduct {
+  """배송비"""
+  deliveryCost: Int
+
+  """배송 희망일 (yyyy-MM-dd) KST"""
+  deliveryDesiredDate: String
+
+  """배송 관련 요청사항"""
+  deliveryMessage: String
+
+  """배송 상태"""
+  deliveryStatus: WosDeliveryStatus!
+
+  """배송 방법"""
+  deliveryType: WosDeliveryType!
+
+  """등급"""
+  grade: String
+
+  """이미지 url"""
+  image: Image
+
+  """상품의 과세 유무"""
+  isTaxFree: Boolean!
+
+  """주문서 번호"""
+  orderNo: String!
+
+  """주문 단품번호"""
+  orderProductNo: String!
+
+  """구매자 이름"""
+  ordererName: String!
+
+  """구매자 번호"""
+  ordererPhone: String!
+
+  """바이어(구매자)에게 보이는 판매가"""
+  price: Int!
+
+  """상품 번호"""
+  productId: Int!
+
+  """상품 이름"""
+  productName: String!
+
+  """단품 이름"""
+  productOptionName: String!
+
+  """구매 수량"""
+  quantity: Int!
+
+  """수령자 주소"""
+  receiverAddress: String
+
+  """수령자 이름"""
+  receiverName: String
+
+  """수령자 번호"""
+  receiverPhone: String
+
+  """수령자 우편번호"""
+  receiverZipCode: String
+
+  """단품 번호"""
+  stockSku: String!
+
+  """상품의 과세 금액"""
+  taxAmount: Int
+
+  """단위 중량"""
+  weight: Float
+}
+
+enum WosOrderStatus {
+  FAIL
+  PROCESSING
+  SUCCESS
+  WAITING
+}
+
+"""주문서 생성시 필요한 상품 정보입니다. order_product 테이블 참조하세요"""
+input WosProductOptionInput {
+  """배송비"""
+  deliveryCost: Int
+
+  """배송 희망일 (yyyy-MM-dd) KST"""
+  deliveryDesiredDate: String
+
+  """배송 관련 요청사항"""
+  deliveryMessage: String
+
+  """배송 방법"""
+  deliveryType: WosDeliveryType!
+
+  """등급"""
+  grade: String
+
+  """상품의 과세 유무"""
+  isTaxFree: Boolean!
+
+  """구매자 이름"""
+  ordererName: String!
+
+  """구매자 번호"""
+  ordererPhone: String!
+
+  """바이어(구매자)에게 보이는 판매가"""
+  price: Int!
+
+  """상품 번호"""
+  productId: Int!
+
+  """상품 이름"""
+  productName: String!
+
+  """단품 이름"""
+  productOptionName: String!
+
+  """구매 수량"""
+  quantity: Int!
+
+  """수령자 주소"""
+  receiverAddress: String
+
+  """수령자 이름"""
+  receiverName: String
+
+  """수령자 번호"""
+  receiverPhone: String
+
+  """수령자 우편번호"""
+  receiverZipCode: String
+
+  """단품 번호"""
+  stockSku: String!
+
+  """단위 중량"""
+  weight: Float
+}

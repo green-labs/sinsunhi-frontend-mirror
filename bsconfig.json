@@ -1,0 +1,57 @@
+{
+  "name": "sinsun-market-client",
+  "reason": {
+    "react-jsx": 3
+  },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev"
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".mjs",
+  "namespace": false,
+  "bs-dependencies": [
+    "@greenlabs/garter",
+    "@rescript/react",
+    "bs-css",
+    "bs-css-emotion",
+    "bs-date-fns",
+    "bs-fetch",
+    "rescript-webapi",
+    "@greenlabs/res-daum-postcode",
+    "@rescriptbr/reform",
+    "reschema",
+    "@greenlabs/re-korean-numeral",
+    "rescript-classnames",
+    "@greenlabs/ppx-spice",
+    "rescript-relay"
+  ],
+  "bs-dev-dependencies": ["@glennsl/bs-jest"],
+  "ppx-flags": [
+    ["@greenlabs/res-tailwindcss/ppx", "--path styles/.tailwind.dev.css"],
+    "lenses-ppx/ppx",
+    "@greenlabs/ppx-spice/ppx",
+    "rescript-relay/ppx"
+  ],
+  "warnings": {
+    "error": true,
+    "number": "-48"
+  },
+  "gentypeconfig": {
+    "language": "untyped",
+    "shims": []
+  },
+  "generators": [],
+  "bsc-flags": ["-open Belt", "-open Cx"]
+}

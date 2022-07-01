@@ -1,0 +1,8 @@
+backend:
+  - any: ["server/**/*"]
+
+frontend:
+  - any: ["client/**/*"]
+
+workflow:
+  - any: [".github/**/*"]

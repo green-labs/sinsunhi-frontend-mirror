@@ -1,0 +1,32 @@
+# common
+package-lock.json
+node_modules
+out
+tags
+tags.lock
+tags.temp
+.DS_Store
+
+# rescript
+.merlin
+lib
+.bsb.lock
+
+# test
+.nyc_output
+coverage
+cypress/videos/
+cypress/screenshots/
+
+# relay
+src/__generated__
+
+# tailwindcss
+.tailwind_ppx_cache/
+styles/.tailwind.dev.css
+
+# next.js
+.next/
+.vercel
+
+.env.local

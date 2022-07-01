@@ -1,0 +1,37 @@
+name: deploy client to vercel DEV
+on:
+  workflow_dispatch:
+    inputs:
+      deployArgs:
+        description: 'vercel deploy args'
+        required: false
+        default: '--force --prod'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: amondnet/vercel-action@v20
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_DEV}} #Required 
+          scope: greenlabs
+          vercel-args: ${{ github.event.inputs.deployArgs }}
+
+      # Notify Slack 에서 SLACK_MESSAGE가 정상적으로 가져와지지 않기 때문에
+      # https://github.com/rtCamp/action-slack-notify/issues/74#issuecomment-854626975
+      - name: "[trigger deploy] Get commit message"
+        id: get_commit_message
+        run: echo ::set-output name=commit_message::$(git log --pretty=format:"%d - %s" -n 1)
+
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: ${{ steps.get_commit_message.outputs.commit_message }}
+          SLACK_ICON: tractor
+          SLACK_TITLE: DEV - FrontEnd
+          SLACK_USERNAME: FrontEnd

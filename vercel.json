@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "public": false,
+    "scope": "Greenlabs",
+    "github": {
+        "enabled": true
+    }
+}

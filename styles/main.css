@@ -1,0 +1,780 @@
+@tailwind base;
+@tailwind components;
+
+@import "./_fonts.css";
+@import "../src/bindings/SlickSlider/slick.css";
+@import "../src/bindings/SlickSlider/slick-theme.css";
+
+body {
+  @apply font-sans bg-white;
+}
+
+@tailwind utilities;
+
+@layer utilities {
+  @variants hover {
+    .text-green-gl-dark {
+      color: #0d9b63;
+    }
+    .bg-green-gl {
+      background-color: #12b564;
+    }
+    .bg-green-gl-light {
+      background-color: #ebfded;
+    }
+    .bg-green-gl-dark {
+      background-color: #0d9b63;
+    }
+    .bg-gray-button-gl {
+      background-color: #ececec;
+    }
+    .border-green-gl-dark {
+      border-color: #0d9b63;
+    }
+    .bg-red-gl {
+      background-color: #ffdace;
+    }
+  }
+  @variants focus {
+    .ring-green-gl {
+      --tw-ring-color: rgba(13, 155, 99, var(--tw-ring-opacity));
+    }
+    .ring-gray-gl {
+      --tw-ring-color: rgba(204, 204, 204, var(--tw-ring-opacity));
+    }
+    .ring-red-gl {
+      --tw-ring-color: rgba(255, 218, 206, var(--tw-ring-opacity));
+    }
+    /* 인풋 쉐도우 */
+    .ring-1-gl {
+      box-shadow: var(--tw-ring-inset) 0 4px 8px
+        calc(2px + var(--tw-ring-offset-width)) rgba(0, 0, 0, 0.08);
+    }
+    .text-green-gl {
+      color: #12b564;
+    }
+    /* border color */
+    .border-green-gl {
+      border-color: #12b564;
+    }
+    .border-gray-gl {
+      border-color: #262626;
+    }
+    .border-gray-gl-light {
+      border-color: #cccccc;
+    }
+  }
+  @variants responsive {
+    /* 바이어 센터 GNB, footer 제외 height */
+    .min-h-buyer {
+      min-height: calc(100vh - 324px - 142px);
+    }
+    /* 어드민 페이지 GNB height */
+    .max-h-100 {
+      max-height: 25rem;
+    }
+    .min-h-gnb-admin {
+      min-height: calc(100vh - 64px);
+    }
+    .max-w-gnb-panel {
+      max-width: calc(100vw - 280px);
+    }
+    .gnb-admin-sub-item-padding {
+      padding-left: 108px;
+    }
+    /* 헤더에서 사용하는 쉐도우 */
+    .shadow-inner-b-1 {
+      --box-shadow-color: #000;
+      box-shadow: inset 0 -1px var(--box-shadow-color);
+    }
+    .shadow-inner-b-2 {
+      --box-shadow-color: #000;
+      box-shadow: inset 0 -2px var(--box-shadow-color);
+    }
+    .shadow-inner-b-4 {
+      --box-shadow-color: #000;
+      box-shadow: inset 0 -4px var(--box-shadow-color);
+    }
+    /* 대쉬보드 박스 쉐도우 */
+    .shadow-gl {
+      box-shadow: 0px 10px 40px 10px rgba(0, 0, 0, 0.03);
+    }
+    /* 쉐도우 컬러 */
+    .shadow-gray {
+      --box-shadow-color: #e5e5e5;
+    }
+    .shadow-green {
+      --box-shadow-color: #12b564;
+    }
+    /* 커스텀 색 */
+    .text-black-gl {
+      color: #262626;
+    }
+    .text-gray-gl {
+      color: #727272;
+    }
+    .text-green-gl {
+      color: #12b564;
+    }
+    .text-red-gl {
+      color: #ff2b35;
+    }
+    .border-green-gl {
+      border-color: #12b564;
+    }
+    .border-gray-button-gl {
+      border-color: #cccccc;
+    }
+    /* 백그라운드 색 */
+    .bg-black-gl {
+      background-color: #262626;
+    }
+    .bg-gray-gl {
+      background-color: #f7f7f7;
+    }
+    .bg-gray-button-gl {
+      background-color: #f2f2f2;
+    }
+    .bg-gray-button-gl2 {
+      background-color: #ececec;
+    }
+    .bg-gray-button-gl3 {
+      background-color: #cccccc;
+    }
+    .bg-green-gl {
+      background-color: #12b564;
+    }
+    .bg-green-gl-light {
+      background-color: #ebfded;
+    }
+    .bg-red-gl {
+      background-color: #fff6f2;
+    }
+    .bg-red-button-gl {
+      background-color: #ffeae1;
+    }
+    .remove-spin-button::-webkit-inner-spin-button,
+    .remove-spin-button::-webkit-outer-spin-button,
+    .remove-spin-button::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .max-h-50 {
+      max-height: 50vh;
+    }
+    .grid-cols-3-offline-upload {
+      grid-template-columns: 200px 350px 1fr;
+    }
+    .grid-cols-7-gl {
+      grid-template-columns: 130px 1fr 140px 1fr 1fr 130px 130px;
+    }
+    .grid-cols-9-gl-buyer {
+      grid-template-columns: 52px 200px 1fr 100px 70px 150px 1fr 150px 150px;
+    }
+    .grid-cols-9-buyer-order {
+      grid-template-columns: 52px 200px 450px 132px 70px 150px 450px 150px 150px;
+    }
+    .grid-cols-10-gl-seller {
+      grid-template-columns: 150px 130px 150px 250px 1fr 150px 100px 1fr 150px 150px;
+    }
+    .grid-cols-11-gl-seller {
+      grid-template-columns: 52px 150px 130px 150px 250px 1fr 150px 100px 1fr 150px 150px;
+    }
+    .grid-cols-6-admin-settlement {
+      grid-template-columns: 52px 2fr 1fr 1fr 1fr 1fr;
+    }
+    /* 시연용 전체주문 조회 테이블 */
+    .grid-cols-9-admin-orders-all {
+      grid-template-columns: 150px 150px 100px 200px 200px 150px 150px 150px 1fr;
+    }
+    /* 시연용 전체주문 조회 테이블 END */
+    .grid-cols-8-seller {
+      grid-template-columns: 120px 160px 2fr 2fr 2fr 1fr 2fr 3fr;
+    }
+    .grid-cols-7-buyer-product {
+      grid-template-columns: 120px 150px 1fr 120px 150px 250px 52px;
+    }
+    .grid-cols-7-admin-bulk-sale-product {
+      grid-template-columns: 200px 200px 1fr 300px 150px 100px 200px;
+    }
+    .grid-cols-8-admin-product {
+      grid-template-columns: 150px 350px 120px 250px 400px 1fr 150px 150px;
+    }
+    .grid-cols-9-admin-product {
+      grid-template-columns: 150px 150px 350px 120px 250px 400px 1fr 150px 150px;
+    }
+    .grid-cols-14-admin-cost {
+      grid-template-columns: 52px 150px 150px 1fr 150px 350px 150px 160px 160px 170px 150px 150px 150px 150px;
+    }
+    .grid-cols-9-gl-admin {
+      grid-template-columns: 52px 200px 1fr 100px 70px 150px 1fr 150px 150px;
+    }
+    .grid-cols-15-admin-product {
+      grid-template-columns: 120px 150px 150px 450px 120px 200px 150px 150px 120px 140px 250px 200px;
+    }
+    .grid-cols-8-admin-users-buyer {
+      grid-template-columns: 200px 1fr 100px 200px 150px 1fr 150px 1fr;
+    }
+    .grid-cols-11-admin-bulk-sale-producers {
+      grid-template-columns: 200px 200px 200px 1fr 300px 300px 300px 200px 200px 200px 300px;
+    }
+    .grid-cols-10-gl-admin {
+      grid-template-columns: 52px 200px 200px 450px 132px 70px 150px 450px 150px 150px;
+    }
+    .grid-cols-11-gl-admin {
+      grid-template-columns: 140px 150px 130px 200px 250px 1fr 150px 100px 1fr 150px 200px;
+    }
+    .grid-cols-12-gl-admin {
+      grid-template-columns: 52px 140px 150px 130px 200px 250px 1fr 150px 100px 1fr 150px 200px;
+    }
+    .grid-cols-12-gl-admin-offline {
+      grid-template-columns: 52px 200px 200px 150px 150px 180px 1fr 1fr 120px 200px 200px 200px;
+    }
+    .grid-cols-13-gl-admin-seller {
+      grid-template-columns: 130px 1fr 140px 1fr 1fr 130px 130px 140px 150px 250px 40px 140px 40px;
+    }
+    .grid-cols-2-gl-seller-upload-error {
+      grid-template-columns: 1fr 2fr;
+    }
+    .grid-cols-4-shipment-detail-seller {
+      grid-template-columns: 120px 200px 120px 200px;
+    }
+    .grid-cols-3-shipment-auction-seller {
+      grid-template-columns: 320px 190px 135px;
+    }
+    .grid-cols-4-detail {
+      grid-template-columns: 110px 1fr 110px 1fr;
+    }
+    .grid-cols-2-detail {
+      grid-template-columns: 110px 1fr;
+    }
+    .grid-cols-4-buyer-transaction {
+      grid-template-columns: 150px 1fr 1fr 1fr;
+    }
+    .grid-row-border-2 {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      border-top: 1px solid #e5e5e5;
+      grid-column: 1 / 3;
+    }
+    .grid-row-border-4 {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      border-top: 1px solid #e5e5e5;
+      grid-column: 1 / 5;
+    }
+    .grid-row-border-6 {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      border-top: 1px solid #e5e5e5;
+      grid-column: 1 / 7;
+    }
+    .list-height-seller {
+      max-height: 760px;
+    }
+    .list-height-buyer {
+      max-height: 1000px;
+    }
+    .list-height-admin-buyer {
+      max-height: 1120px;
+    }
+    .list-height-admin-seller {
+      max-height: 760px;
+    }
+    .list-height-seller-error {
+      max-height: 200px;
+    }
+    .list-height-admin-bulk-sale {
+      max-height: calc(100vh - 453px);
+      min-height: calc(100vh - 456px);
+    }
+  }
+
+  /*  상품 상세 에디터 인라인 버전*/
+  #editor-inline * {
+    border-color: inherit;
+    border-style: inherit;
+    box-sizing: unset;
+  }
+
+  #editor-inline h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  #editor-inline h2 {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  #editor-inline h3 {
+    display: block;
+    font-size: 1.17em;
+    font-weight: bold;
+  }
+
+  #editor-inline h4 { 
+    display: block;
+    font-weight: bold;
+  }
+
+  #editor-inline h5 {
+    display: block;
+    font-size: 0.83em;
+    font-weight: bold;
+  }
+
+  #editor-inline h6 {
+    display: block;
+    font-size: 0.67em;
+    font-weight: bold;
+  }
+
+  #editor-inline pre {
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0px;
+  }
+
+  #editor-inline strong {
+    font-weight: bold;
+  }
+
+  #editor-inline em {
+    font-style: italic;
+  }
+
+  #editor-inline img {
+    display: unset;
+  }
+
+  #editor-inline p {
+    display: block;
+  }
+
+  #editor-inline sup {
+    vertical-align: super;
+    font-size: smaller; 
+  }
+
+  #editor-inline sub {
+    vertical-align: sub;
+    font-size: smaller;
+  }
+
+  #editor-inline table{
+    border-collapse: collapse; 
+
+  }
+  /* Apply a default padding if legacy cellpadding attribute is missing */
+  #editor-inline table:not([cellpading]) th, #editor-inline table:not([cellpadding]) td {
+    padding: 0.4rem;
+  }
+
+  /* Set default table styles if a table has a positive border attribute
+    and no inline css */
+  #eidtor-inline table[border]:not([border="0"]):not([style*="border-width"]) th, #editor-inline table[border]:not([border="0"]):not([style*="border-width"]) td {
+    border-width: 1px;
+  }
+
+  /* Set default table styles if a table has a positive border attribute
+    and no inline css */
+  #editor-inline table[border]:not([border="0"]):not([style*="border-style"]) th,
+  #editor-inline table[border]:not([border="0"]):not([style*="border-style"]) td {
+    border-style: solid;
+  }
+  /* Set default table styles if a table has a positive border attribute
+    and no inline css */
+  #eidtor-inline table[border]:not([border="0"]):not([style*="border-color"]) th,
+  #editor-inline table[border]:not([border="0"]):not([style*="border-color"]) td {
+    border-color: #ccc;
+  }
+  #editor-inline figure {
+    display: table;
+    margin: 1rem auto;
+  }
+  #editor-inline figure figcaption {
+    color: #999;
+    display: block;
+    margin-top: 0.25rem;
+    text-align: center;
+  }
+  #editor-inline hr {
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 1px 0 0 0;
+  }
+  #editor-inline code {
+    background-color: #e8e8e8;
+    border-radius: 3px;
+    padding: 0.1rem 0.2rem;
+    font-family: monospace;
+  }
+  #editor-inline .mce-content-body:not([dir=rtl]) blockquote {
+    border-left: 2px solid #ccc;
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+  }
+  #editor-inline .mce-content-body[dir=rtl] blockquote {
+    border-right: 2px solid #ccc;
+    margin-right: 1.5rem;
+    padding-right: 1rem;
+  }
+
+
+}
+
+/* Normal size */
+.btn-level1 {
+  @apply w-full font-bold text-white bg-primary rounded-xl whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1;
+}
+
+.btn-level1-disabled {
+  @apply w-full font-bold text-white bg-disabled-L2 rounded-xl whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1;
+}
+.btn-level4 {
+  @apply w-full font-bold bg-red-100 rounded-xl text-notice whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-red-150 focus:ring-offset-1;
+}
+.btn-level4-disabled {
+  @apply w-full font-bold bg-gray-100 rounded-xl text-disabled-L2 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-enabled-L2 focus:ring-offset-1;
+}
+.btn-level6 {
+  @apply w-full bg-enabled-L5 rounded-xl text-enabled-L1 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-150 focus:ring-offset-1;
+}
+.btn-level6-disabled {
+  @apply w-full bg-enabled-L5 rounded-xl text-enabled-L4 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-1;
+}
+.btn-level2-line-gray {
+  @apply w-full bg-white border rounded-xl text-enabled-L1 border-border-default-L1 focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-1;
+}
+/* Small size*/
+.btn-level1-small {
+  @apply w-full text-white rounded-lg bg-primary whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-1;
+}
+.btn-level1-small-disabled {
+  @apply w-full text-white rounded-lg bg-disabled-L2 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1;
+}
+.btn-level6-small {
+  @apply w-full rounded-lg bg-enabled-L5 text-enabled-L1 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-150 focus:ring-offset-1;
+}
+.btn-level6-small-disabled {
+  @apply w-full rounded-lg bg-enabled-L5 text-enabled-L4 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-100 focus:ring-offset-1;
+}
+
+@keyframes slide-down-and-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-content[data-state="open"] {
+  animation: slide-down-and-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dialog-overlay-show {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.dialog-overlay[data-state="open"] {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  animation: dialog-overlay-show 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+@keyframes dialog-content-show {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.dialog-content[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+.dialog-content-base[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+.dialog-content-memo[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 550px;
+  max-height: 85vh;
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+.dialog-content-detail[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 600px;
+  max-height: 85vh;
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+.dialog-content-fix[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 700px;
+  min-width: 350px;
+  max-height: 85vh;
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+.dialog-content-nosize[data-state="open"] {
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: dialog-content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+}
+@keyframes accordian-open {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes accordian-close {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+.accordian-content[data-state="open"] {
+  overflow: hidden;
+  animation: accordian-open 300ms ease-out;
+}
+.accordian-content[data-state="closed"] {
+  overflow: hidden;
+  animation: accordian-close 300ms ease-out;
+  /* React 18에서 아코디언이 접히면서 깜빡이는 이슈가 있음. 이를 해결하기 위해 애니메이션이 종료된 이후의 값을 유지함 */
+  animation-fill-mode: forwards;
+}
+.accordian-trigger[data-state="open"] .accordian-icon {
+  transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  transform: rotate(180deg);
+}
+.accordian-trigger[data-state="open"] .accordian-icon-degree-90 {
+  transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  transform: rotate(90deg);
+}
+
+@keyframes collabsible-open {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collabsible-close {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.collabsible-content[data-state="open"] {
+  overflow: hidden;
+  animation: collabsible-open 300ms ease-out;
+}
+
+.collabsible-content[data-state="closed"] {
+  overflow: hidden;
+  animation: collabsible-close 300ms ease-out;
+}
+
+.collabsible-trigger[data-state="closed"] svg {
+  transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  transform: rotate(90deg);
+}
+
+@keyframes collabsible-open {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collabsible-close {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.collabsible-content[data-state="open"] {
+  overflow: hidden;
+  animation: collabsible-open 300ms ease-out;
+}
+
+.collabsible-content[data-state="closed"] {
+  overflow: hidden;
+  animation: collabsible-close 300ms ease-out;
+}
+
+.collabsible-trigger[data-state="closed"] svg {
+  transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  transform: rotate(90deg);
+}
+
+.radio-item {
+  all: unset;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1.5px solid #d9d9d9;
+  position: relative;
+  top: 1px;
+}
+.radio-item:hover {
+  background-color: #f7f7f7;
+}
+.radio-item:focus {
+  border: 1.5px solid #12b564;
+  outline: none;
+}
+.radio-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.radio-indicator::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #12b564;
+}
+
+.separator {
+  background-color: #d9d9d9;
+}
+.separator[data-orientation="horizontal"] {
+  height: 1px;
+  width: 100%;
+}
+.separator[data-orientation="vertical"] {
+  height: 100%;
+  width: 1px;
+}
+
+.DS_tab_leftTab {
+  -ms-overflow-style: none;
+}
+.DS_tab_leftTab::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-tarnsition {
+  transition: bottom ease-out 0.3s;
+}
+
+.gradient-cta-t {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+}
+
+.rfq-radio-item {
+  all: unset;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1.5px solid #d9d9d9;
+  position: relative;
+  top: 1px;
+}
+
+.rfq-radio-item:hover {
+  background-color: #f7f7f7;
+}
+.rfq-radio-item:focus {
+  border: 1.5px solid #12b564;
+  outline: none;
+}
+.rfq-radio-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.rfq-radio-indicator::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #12b564;
+}
+
+.tab-highlight-color {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.word-keep-all {
+  word-break: keep-all;
+}
