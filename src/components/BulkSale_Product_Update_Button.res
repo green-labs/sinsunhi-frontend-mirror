@@ -75,7 +75,7 @@ let make = (~product: BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.Type
 
   let (cropId, setCropId) = React.Uncurried.useState(_ => ReactSelect.Selected({
     value: product.productCategory.crop.id,
-    label: product.productCategory.name,
+    label: product.productCategory.crop.name,
   }))
   let (
     productCategoryId,
@@ -84,6 +84,8 @@ let make = (~product: BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.Type
     value: product.productCategory.id,
     label: product.productCategory.name,
   }))
+  ("asf", productCategoryId, product.productCategory.name)->Js.log
+
   let (preferredGrade, setPreferredGrade) = React.Uncurried.useState(_ => Some(
     product.preferredGrade,
   ))

@@ -33,7 +33,7 @@ module Template = {
         <IconArrow
           height="20"
           width="20"
-          fill={isDisabledLeft ? "#CCCCCC" : "#727272"}
+          stroke={isDisabledLeft ? "#CCCCCC" : "#727272"}
           className=%twc("relative -right-0.5")
         />
       </button>
@@ -57,7 +57,7 @@ module Template = {
         <IconArrow
           height="20"
           width="20"
-          fill={isDisabledRight ? "#CCCCCC" : "#727272"}
+          stroke={isDisabledRight ? "#CCCCCC" : "#727272"}
           className=%twc("relative -right-0.5")
         />
       </button>

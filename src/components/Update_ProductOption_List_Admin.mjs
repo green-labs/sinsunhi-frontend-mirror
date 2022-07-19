@@ -3,75 +3,36 @@
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
-import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as ReactHookForm from "react-hook-form";
-import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
-import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Add_ProductOption_Admin from "./Add_ProductOption_Admin.mjs";
 import * as Update_ProductOption_Admin from "./Update_ProductOption_Admin.mjs";
-import * as UpdateProductOptionListAdminFragment_graphql from "../__generated__/UpdateProductOptionListAdminFragment_graphql.mjs";
-
-function use(fRef) {
-  var data = Hooks.useFragment(UpdateProductOptionListAdminFragment_graphql.node, fRef);
-  return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionListAdminFragment_graphql.Internal.convertFragment, data);
-}
-
-function useOpt(opt_fRef) {
-  var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionListAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
-  var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
-  return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
-                if (rawFragment !== undefined) {
-                  return UpdateProductOptionListAdminFragment_graphql.Internal.convertFragment(rawFragment);
-                }
-                
-              }), data);
-}
-
-var Fragment_productOptionStatus_decode = UpdateProductOptionListAdminFragment_graphql.Utils.productOptionStatus_decode;
-
-var Fragment_productOptionStatus_fromString = UpdateProductOptionListAdminFragment_graphql.Utils.productOptionStatus_fromString;
-
-var Fragment_getConnectionNodes = UpdateProductOptionListAdminFragment_graphql.Utils.getConnectionNodes;
-
-var Fragment = {
-  productOptionStatus_decode: Fragment_productOptionStatus_decode,
-  productOptionStatus_fromString: Fragment_productOptionStatus_fromString,
-  getConnectionNodes: Fragment_getConnectionNodes,
-  Types: undefined,
-  use: use,
-  useOpt: useOpt
-};
 
 var formName = "product-options";
 
 function Update_ProductOption_List_Admin(Props) {
-  var query = Props.query;
   var productDisplayName = Props.productDisplayName;
   var isCourierAvailable = Props.isCourierAvailable;
-  var match = use(query);
-  var match$1 = match.productOptions;
-  var edges = match$1.edges;
-  var match$2 = React.useState(function () {
+  var options = Props.options;
+  var edges = options.edges;
+  var match = React.useState(function () {
         return false;
       });
-  var setApplyAll = match$2[1];
-  var applyAll = match$2[0];
-  var match$3 = ReactHookForm.useFormContext({
+  var setApplyAll = match[1];
+  var applyAll = match[0];
+  var match$1 = ReactHookForm.useFormContext({
         mode: "onChange"
       }, undefined);
-  var setValue = match$3.setValue;
-  var match$4 = ReactHookForm.useFieldArray({
+  var setValue = match$1.setValue;
+  var match$2 = ReactHookForm.useFieldArray({
         name: formName + ".create",
-        control: match$3.control,
+        control: match$1.control,
         shouldUnregister: true
       });
-  var remove = match$4.remove;
-  var prepend = match$4.prepend;
-  var fields = match$4.fields;
-  var listId = match$3.register("product-options.connection-id", undefined);
+  var remove = match$2.remove;
+  var prepend = match$2.prepend;
+  var fields = match$2.fields;
+  var listId = match$1.register("product-options.connection-id", undefined);
   var isOnlyOneRemained = (fields.length + edges.length | 0) === 1;
   var handleOnClickAdd = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -133,7 +94,7 @@ function Update_ProductOption_List_Admin(Props) {
                           className: "text-sm text-green-gl ml-2 font-normal"
                         }, "단품 " + String(fields.length + edges.length | 0) + "개")), React.createElement("input", {
                       ref: listId.ref,
-                      defaultValue: match$1.__id,
+                      defaultValue: options.__id,
                       id: listId.name,
                       name: listId.name,
                       type: "hidden",
@@ -180,7 +141,6 @@ function Update_ProductOption_List_Admin(Props) {
 var make = Update_ProductOption_List_Admin;
 
 export {
-  Fragment ,
   formName ,
   make ,
   

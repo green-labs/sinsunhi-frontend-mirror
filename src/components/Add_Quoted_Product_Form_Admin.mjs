@@ -17,14 +17,19 @@ import * as DatePicker from "./DatePicker.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ProductForm from "../utils/ProductForm.mjs";
+import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as ReactSelect from "./common/ReactSelect.mjs";
+import * as Router from "next/router";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ReactHookForm$1 from "react-hook-form";
+import EndOfDay from "date-fns/endOfDay";
 import * as Hooks from "react-relay/hooks";
 import Async from "react-select/async";
+import StartOfDay from "date-fns/startOfDay";
 import * as Product_Detail_Editor from "./Product_Detail_Editor.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Upload_Thumbnail_Admin from "./Upload_Thumbnail_Admin.mjs";
@@ -32,9 +37,88 @@ import * as ErrorMessage from "@hookform/error-message";
 import * as Select_Product_Category from "./Select_Product_Category.mjs";
 import * as Select_Display_Categories from "./Select_Display_Categories.mjs";
 import * as Select_Product_Categories from "./Select_Product_Categories.mjs";
+import * as ReactToastNotifications from "react-toast-notifications";
+import * as Product_Detail_Basic_Admin from "./Product_Detail_Basic_Admin.mjs";
 import * as Select_Product_Operation_Status from "./Select_Product_Operation_Status.mjs";
+import * as Product_Detail_Description_Admin from "./Product_Detail_Description_Admin.mjs";
 import * as Product_Detail_Display_Categories from "./Product_Detail_Display_Categories.mjs";
+import * as AddQuotedProductFormAdminMutation_graphql from "../__generated__/AddQuotedProductFormAdminMutation_graphql.mjs";
 import * as AddQuotedProductFormAdminSelectProducerInputQuery_graphql from "../__generated__/AddQuotedProductFormAdminSelectProducerInputQuery_graphql.mjs";
+
+var makeVariables = AddQuotedProductFormAdminMutation_graphql.Utils.makeVariables;
+
+function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
+  return RelayRuntime.commitMutation(environment, {
+              mutation: AddQuotedProductFormAdminMutation_graphql.node,
+              variables: AddQuotedProductFormAdminMutation_graphql.Internal.convertVariables(variables),
+              onCompleted: (function (res, err) {
+                  if (onCompleted !== undefined) {
+                    return Curry._2(onCompleted, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(res), (err == null) ? undefined : Caml_option.some(err));
+                  }
+                  
+                }),
+              onError: (function (err) {
+                  if (onError !== undefined) {
+                    return Curry._1(onError, (err == null) ? undefined : Caml_option.some(err));
+                  }
+                  
+                }),
+              optimisticResponse: optimisticResponse !== undefined ? AddQuotedProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
+              optimisticUpdater: optimisticUpdater,
+              updater: updater !== undefined ? (function (store, r) {
+                    return Curry._2(updater, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                  }) : undefined,
+              uploadables: uploadables
+            });
+}
+
+function use(param) {
+  var match = Hooks.useMutation(AddQuotedProductFormAdminMutation_graphql.node);
+  var mutate = match[0];
+  return [
+          React.useMemo((function () {
+                  return function (param, param$1, param$2, param$3, param$4, param$5, param$6, param$7, param$8) {
+                    return Curry._1(mutate, {
+                                onError: param,
+                                onCompleted: param$1 !== undefined ? (function (r, errors) {
+                                      return Curry._2(param$1, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                    }) : undefined,
+                                onUnsubscribe: param$2,
+                                optimisticResponse: param$3 !== undefined ? AddQuotedProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
+                                optimisticUpdater: param$4,
+                                updater: param$5 !== undefined ? (function (store, r) {
+                                      return Curry._2(param$5, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                                    }) : undefined,
+                                variables: AddQuotedProductFormAdminMutation_graphql.Internal.convertVariables(param$6),
+                                uploadables: param$7
+                              });
+                  };
+                }), [mutate]),
+          match[1]
+        ];
+}
+
+var Mutation_errorCode_decode = AddQuotedProductFormAdminMutation_graphql.Utils.errorCode_decode;
+
+var Mutation_errorCode_fromString = AddQuotedProductFormAdminMutation_graphql.Utils.errorCode_fromString;
+
+var Mutation_productStatus_decode = AddQuotedProductFormAdminMutation_graphql.Utils.productStatus_decode;
+
+var Mutation_productStatus_fromString = AddQuotedProductFormAdminMutation_graphql.Utils.productStatus_fromString;
+
+var Mutation_make_imageInput = AddQuotedProductFormAdminMutation_graphql.Utils.make_imageInput;
+
+var Mutation = {
+  errorCode_decode: Mutation_errorCode_decode,
+  errorCode_fromString: Mutation_errorCode_fromString,
+  productStatus_decode: Mutation_productStatus_decode,
+  productStatus_fromString: Mutation_productStatus_fromString,
+  make_imageInput: Mutation_make_imageInput,
+  makeVariables: makeVariables,
+  Types: undefined,
+  commitMutation: commitMutation,
+  use: use
+};
 
 function submit_encode(v) {
   return Js_dict.fromArray([
@@ -330,7 +414,7 @@ function getTextInputStyle(disabled) {
   }
 }
 
-function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
+function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
   var data = Hooks.useLazyLoadQuery(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
@@ -409,7 +493,7 @@ var Query = {
   userRole_fromString: Query_userRole_fromString,
   makeVariables: Query_makeVariables,
   Types: undefined,
-  use: use,
+  use: use$1,
   useLoader: useLoader,
   $$fetch: $$fetch,
   fetchPromised: fetchPromised,
@@ -1111,60 +1195,246 @@ var EditorInput = {
   make: Add_Quoted_Product_Form_Admin$EditorInput
 };
 
+function Add_Quoted_Product_Form_Admin$QuotedSuccessDialog(Props) {
+  var isShow = Props.isShow;
+  var router = Router.useRouter();
+  return React.createElement(Dialog.make, {
+              isShow: isShow,
+              children: React.createElement("div", {
+                    className: "flex flex-col"
+                  }, React.createElement("span", undefined, "견적상품등록이 완료되었습니다.")),
+              onCancel: (function (param) {
+                  router.push("/admin/products");
+                  
+                }),
+              textOnCancel: "확인",
+              kindOfConfirm: /* Positive */0,
+              boxStyle: "text-center rounded-2xl"
+            });
+}
+
+var QuotedSuccessDialog = {
+  make: Add_Quoted_Product_Form_Admin$QuotedSuccessDialog
+};
+
+function makeQuotedProductVariables(form) {
+  var match = form.operationStatus;
+  var tmp;
+  switch (match) {
+    case /* SALE */0 :
+        tmp = "SALE";
+        break;
+    case /* SOLDOUT */1 :
+        tmp = "SOLDOUT";
+        break;
+    case /* NOSALE */2 :
+        tmp = "NOSALE";
+        break;
+    case /* RETIRE */3 :
+        tmp = "RETIRE";
+        break;
+    case /* HIDDEN_SALE */4 :
+        tmp = "HIDDEN_SALE";
+        break;
+    
+  }
+  return Curry.app(makeVariables, [
+              ProductForm.makeCategoryId(form.productCategory.c5),
+              form.editor,
+              ProductForm.makeDisplayCategoryIds(form.displayCategories),
+              form.buyerProductName,
+              {
+                original: form.thumbnail.original,
+                thumb100x100: form.thumbnail.thumb100x100,
+                thumb400x400: form.thumbnail.thumb400x400,
+                thumb800x800: form.thumbnail.thumb800x800,
+                thumb1000x1000: form.thumbnail.thumb1000x1000,
+                thumb1920x1920: form.thumbnail.thumb1920x1920
+              },
+              form.producerProductName,
+              Belt_Option.keep(form.notice, (function (str) {
+                      return str !== "";
+                    })),
+              ProductForm.makeNoticeDate(form.noticeEndAt, (function (prim) {
+                      return EndOfDay(prim);
+                    })),
+              ProductForm.makeNoticeDate(form.noticeStartAt, (function (prim) {
+                      return StartOfDay(prim);
+                    })),
+              form.origin,
+              form.grade,
+              form.producerName.value,
+              Belt_Option.keep(form.documentURL, (function (str) {
+                      return str !== "";
+                    })),
+              tmp,
+              undefined
+            ]);
+}
+
 function Add_Quoted_Product_Form_Admin(Props) {
-  return React.createElement(React.Fragment, undefined, React.createElement("section", {
-                  className: "p-7 mx-4 bg-white rounded-b-md"
-                }, React.createElement("h2", {
-                      className: "text-text-L1 text-lg font-bold"
-                    }, "기본정보"), React.createElement("div", {
-                      className: "divide-y text-sm"
-                    }, React.createElement("div", {
-                          className: "flex flex-col space-y-6 py-6"
-                        }, React.createElement(Add_Quoted_Product_Form_Admin$SelectProducerInput, {
-                              name: "producer-name"
-                            }), React.createElement(Add_Quoted_Product_Form_Admin$Category, {
-                              name: "product-category"
-                            }), React.createElement(Add_Quoted_Product_Form_Admin$DisplayCategory, {
-                              name: "display-categories"
-                            })), React.createElement("div", {
-                          className: "flex flex-col space-y-6 py-6"
-                        }, React.createElement(Add_Quoted_Product_Form_Admin$ProductNameInputs, {
-                              producerProductName: "producer-product-name",
-                              buyerProductName: "buyer-product-name"
-                            }), React.createElement(Add_Quoted_Product_Form_Admin$ReadOnlyProductId, {})), React.createElement("div", {
-                          className: "py-6 flex flex-col space-y-6"
-                        }, React.createElement("div", {
-                              className: "flex gap-2"
-                            }, React.createElement(Add_Quoted_Product_Form_Admin$OperationStatusInput, {
-                                  name: "product-operation-status"
-                                }), React.createElement(Add_Quoted_Product_Form_Admin$OriginInput, {
-                                  name: "origin"
-                                })), React.createElement("div", {
-                              className: "flex gap-2"
-                            }, React.createElement(Add_Quoted_Product_Form_Admin$GradeInput, {
-                                  name: "grade"
-                                }))))), React.createElement("section", {
-                  className: "p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl"
-                }, React.createElement("h2", {
-                      className: "text-text-L1 text-lg font-bold"
-                    }, "상품상세설명"), React.createElement("div", {
-                      className: "text-sm py-6 flex flex-col space-y-6"
-                    }, React.createElement(Add_Quoted_Product_Form_Admin$NoticeAndDateInput, {
-                          noticeName: "notice",
-                          noticeFromName: "notice-date-from",
-                          noticeToName: "notice-date-to"
-                        }), React.createElement(Add_Quoted_Product_Form_Admin$ThumbnailUploadInput, {
-                          name: "thumbnail"
-                        }), React.createElement(Add_Quoted_Product_Form_Admin$SalesDocumentURLInput, {
-                          name: "document-url"
-                        }), React.createElement(Add_Quoted_Product_Form_Admin$EditorInput, {
-                          name: "description-html"
-                        }))));
+  var match = use(undefined);
+  var isQuotedMutating = match[1];
+  var quotedMutate = match[0];
+  var match$1 = ReactToastNotifications.useToasts();
+  var addToast = match$1.addToast;
+  var methods = ReactHookForm$1.useForm({
+        mode: "onChange",
+        defaultValues: Js_dict.fromArray([
+              [
+                Product_Detail_Basic_Admin.Form.formName.displayCategories,
+                [Select_Display_Categories.Form.defaultDisplayCategory(/* Normal */0)]
+              ],
+              [
+                Product_Detail_Description_Admin.Form.formName.thumbnail,
+                ""
+              ]
+            ])
+      }, undefined);
+  var reset = methods.reset;
+  var match$2 = React.useState(function () {
+        return /* Hide */1;
+      });
+  var setShowReset = match$2[1];
+  var match$3 = React.useState(function () {
+        return /* Hide */1;
+      });
+  var setShowQuotedSucess = match$3[1];
+  var onSubmit = function (data, param) {
+    console.log(data);
+    var result = Belt_Result.map(submit_decode(data), (function (data$p) {
+            Curry.app(quotedMutate, [
+                  undefined,
+                  (function (param, param$1) {
+                      var createQuotedProduct = param.createQuotedProduct;
+                      if (typeof createQuotedProduct === "object" && createQuotedProduct.NAME === "CreateQuotedProductResult") {
+                        return setShowQuotedSucess(function (param) {
+                                    return /* Show */0;
+                                  });
+                      }
+                      
+                    }),
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  makeQuotedProductVariables(data$p),
+                  undefined,
+                  undefined
+                ]);
+            
+          }));
+    if (result.TAG === /* Ok */0) {
+      return ;
+    }
+    console.log(result._0);
+    return addToast(React.createElement("div", {
+                    className: "flex items-center"
+                  }, React.createElement(IconError.make, {
+                        width: "24",
+                        height: "24",
+                        className: "mr-2"
+                      }), "오류가 발생하였습니다. 등록내용을 확인하세요."), {
+                appearance: "error"
+              });
+  };
+  var handleReset = function (param) {
+    return ReactEvents.interceptingHandler((function (param) {
+                  return setShowReset(function (param) {
+                              return /* Show */0;
+                            });
+                }), param);
+  };
+  return React.createElement(ReactHookForm.Provider.make, {
+              children: React.createElement("form", {
+                    onSubmit: methods.handleSubmit(onSubmit)
+                  }, React.createElement("section", {
+                        className: "p-7 mx-4 bg-white rounded-b-md"
+                      }, React.createElement("h2", {
+                            className: "text-text-L1 text-lg font-bold"
+                          }, "기본정보"), React.createElement("div", {
+                            className: "divide-y text-sm"
+                          }, React.createElement("div", {
+                                className: "flex flex-col space-y-6 py-6"
+                              }, React.createElement(Add_Quoted_Product_Form_Admin$SelectProducerInput, {
+                                    name: "producer-name"
+                                  }), React.createElement(Add_Quoted_Product_Form_Admin$Category, {
+                                    name: "product-category"
+                                  }), React.createElement(Add_Quoted_Product_Form_Admin$DisplayCategory, {
+                                    name: "display-categories"
+                                  })), React.createElement("div", {
+                                className: "flex flex-col space-y-6 py-6"
+                              }, React.createElement(Add_Quoted_Product_Form_Admin$ProductNameInputs, {
+                                    producerProductName: "producer-product-name",
+                                    buyerProductName: "buyer-product-name"
+                                  }), React.createElement(Add_Quoted_Product_Form_Admin$ReadOnlyProductId, {})), React.createElement("div", {
+                                className: "py-6 flex flex-col space-y-6"
+                              }, React.createElement("div", {
+                                    className: "flex gap-2"
+                                  }, React.createElement(Add_Quoted_Product_Form_Admin$OperationStatusInput, {
+                                        name: "product-operation-status"
+                                      }), React.createElement(Add_Quoted_Product_Form_Admin$OriginInput, {
+                                        name: "origin"
+                                      })), React.createElement("div", {
+                                    className: "flex gap-2"
+                                  }, React.createElement(Add_Quoted_Product_Form_Admin$GradeInput, {
+                                        name: "grade"
+                                      }))))), React.createElement("section", {
+                        className: "p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl"
+                      }, React.createElement("h2", {
+                            className: "text-text-L1 text-lg font-bold"
+                          }, "상품상세설명"), React.createElement("div", {
+                            className: "text-sm py-6 flex flex-col space-y-6"
+                          }, React.createElement(Add_Quoted_Product_Form_Admin$NoticeAndDateInput, {
+                                noticeName: "notice",
+                                noticeFromName: "notice-date-from",
+                                noticeToName: "notice-date-to"
+                              }), React.createElement(Add_Quoted_Product_Form_Admin$ThumbnailUploadInput, {
+                                name: "thumbnail"
+                              }), React.createElement(Add_Quoted_Product_Form_Admin$SalesDocumentURLInput, {
+                                name: "document-url"
+                              }), React.createElement(Add_Quoted_Product_Form_Admin$EditorInput, {
+                                name: "description-html"
+                              }))), React.createElement("div", {
+                        className: "relative h-16 max-w-gnb-panel bg-white flex items-center gap-2 justify-end pr-5"
+                      }, React.createElement("button", {
+                            className: "px-3 py-2 bg-div-shape-L1 rounded-lg focus:outline-none",
+                            disabled: isQuotedMutating,
+                            type: "reset",
+                            onClick: handleReset
+                          }, "초기화"), React.createElement("button", {
+                            className: "px-3 py-2 bg-green-gl text-white rounded-lg hover:bg-green-gl-dark focus:outline-none",
+                            disabled: isQuotedMutating,
+                            type: "submit"
+                          }, "상품 등록")), React.createElement(Dialog.make, {
+                        isShow: match$2[0],
+                        children: React.createElement("p", undefined, "모든 내용을 초기화 하시겠어요?"),
+                        onCancel: (function (param) {
+                            return setShowReset(function (param) {
+                                        return /* Hide */1;
+                                      });
+                          }),
+                        onConfirm: (function (param) {
+                            reset(undefined);
+                            return setShowReset(function (param) {
+                                        return /* Hide */1;
+                                      });
+                          }),
+                        textOnCancel: "닫기",
+                        textOnConfirm: "초기화",
+                        kindOfConfirm: /* Negative */1,
+                        boxStyle: "text-center rounded-2xl"
+                      }), React.createElement(Add_Quoted_Product_Form_Admin$QuotedSuccessDialog, {
+                        isShow: match$3[0]
+                      })),
+              methods: methods
+            });
 }
 
 var make = Add_Quoted_Product_Form_Admin;
 
 export {
+  Mutation ,
   Form ,
   getTextInputStyle ,
   SelectProducerInput ,
@@ -1180,6 +1450,8 @@ export {
   ThumbnailUploadInput ,
   SalesDocumentURLInput ,
   EditorInput ,
+  QuotedSuccessDialog ,
+  makeQuotedProductVariables ,
   make ,
   
 }

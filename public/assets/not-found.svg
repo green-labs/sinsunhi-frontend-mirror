@@ -1,0 +1,68 @@
+<svg width
+     height
+     viewBox="0 0 160 160"
+     fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <rect width
+        height
+        fill="white" />
+  <g filter="url(#filter0_i_2702_20597)">
+    <path fillRule="evenodd"
+          clipRule="evenodd"
+          d="M80 142C114.242 142 142 114.242 142 80C142 45.7583 114.242 18 80 18C45.7583 18 18 45.7583 18 80C18 91.1315 20.9335 101.578 26.0696 110.608L20.0309 133.145C19.7078 134.351 20.8112 135.454 22.017 135.131L42.7583 129.573C53.1277 137.376 66.0238 142 80 142Z"
+          fill="url(#paint0_linear_2702_20597)" />
+  </g>
+  <circle cx="80"
+          cy="80"
+          r="6"
+          fill="white" />
+  <circle cx="60"
+          cy="80"
+          r="6"
+          fill="white" />
+  <circle cx="100"
+          cy="80"
+          r="6"
+          fill="white" />
+  <defs>
+    <filter id="filter0_i_2702_20597"
+            x="18"
+            y="18"
+            width="124"
+            height="124"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB">
+      <feFlood floodOpacity="0"
+               result="BackgroundImageFix" />
+      <feBlend mode="normal"
+               in_="SourceGraphic"
+               in2="BackgroundImageFix"
+               result="shape" />
+      <feColorMatrix in_="SourceAlpha"
+                     type_="matrix"
+                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                     result="hardAlpha" />
+      <feOffset dx="2"
+                dy="-5" />
+      <feComposite in2="hardAlpha"
+                   operator="arithmetic"
+                   k2="-1"
+                   k3="1" />
+      <feColorMatrix type_="matrix"
+                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0" />
+      <feBlend mode="normal"
+               in2="shape"
+               result="effect1_innerShadow_2702_20597" />
+    </filter>
+    <linearGradient id="paint0_linear_2702_20597"
+                    x1="80"
+                    y1="18"
+                    x2="80"
+                    y2="142"
+                    gradientUnits="userSpaceOnUse">
+      <stop stopColor="#5BEDA5" />
+      <stop offset="0.802083"
+            stopColor="#4FCF8F" />
+    </linearGradient>
+  </defs>
+</svg>

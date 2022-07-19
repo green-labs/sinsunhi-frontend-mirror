@@ -8,6 +8,7 @@ import * as Dialog from "../../components/common/Dialog.mjs";
 import * as Global from "../../components/Global.mjs";
 import * as Helper from "../../utils/Helper.mjs";
 import * as Checkbox from "../../components/common/Checkbox.mjs";
+import * as Redirect from "../../components/Redirect.mjs";
 import Head from "next/head";
 import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
@@ -66,10 +67,9 @@ function SignIn_Seller(Props) {
             Curry._1(LocalStorageHooks.RefreshToken.set, res$1.refreshToken);
             var user = CustomHooks.Auth.user_decode(JwtDecode(res$1.token));
             if (user.TAG === /* Ok */0) {
-              Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, "sinsunhi-" + String(user._0.id));
+              Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, String(user._0.id));
             }
-            router.push(redirectUrl);
-            
+            return Redirect.setHref(redirectUrl);
           }), (function (param) {
             return setShowForError(function (param) {
                         return /* Show */0;

@@ -43,7 +43,7 @@ function ShopMainSpecialShowcaseList_Buyer$PC$Placeholder(Props) {
                                 key: "showcase-skeleton-" + String(categoryIdx),
                                 className: containerStyle
                               }, React.createElement("div", {
-                                    className: "w-[1280px] mx-auto"
+                                    className: "w-[1280px] mx-auto px-5"
                                   }, React.createElement("div", {
                                         className: "w-[155px] h-[38px] animate-pulse bg-gray-150 rounded-lg"
                                       }), React.createElement("ol", {
@@ -64,32 +64,9 @@ function ShopMainSpecialShowcaseList_Buyer$PC(Props) {
   var query = Props.query;
   var router = Router.useRouter();
   var match = use(query);
-  var makeOnClick = function (id, name) {
-    return function (param) {
-      return ReactEvents.interceptingHandler((function (param) {
-                    var prim1_query = Js_dict.fromArray([
-                          [
-                            "category-id",
-                            id
-                          ],
-                          [
-                            "category-name",
-                            encodeURIComponent(name)
-                          ]
-                        ]);
-                    var prim1 = {
-                      pathname: "/buyer/products",
-                      query: prim1_query
-                    };
-                    router.push(prim1);
-                    
-                  }), param);
-    };
-  };
   return Belt_Array.mapWithIndex(match.specialDisplayCategories, (function (idx, param) {
                 var match = param.products;
                 var edges = match.edges;
-                var name = param.name;
                 var id = param.id;
                 var containerStyle = idx === 0 ? "w-full bg-[#F9F9F9] py-16 mb-[144px] text-gray-800" : "w-full mb-[144px] bg-white text-gray-800";
                 if (edges.length !== 0) {
@@ -97,10 +74,10 @@ function ShopMainSpecialShowcaseList_Buyer$PC(Props) {
                               key: "main-special-category-" + id + "-pc",
                               className: containerStyle
                             }, React.createElement("div", {
-                                  className: "w-[1280px] mx-auto"
+                                  className: "w-[1280px] mx-auto px-5"
                                 }, React.createElement("h1", {
                                       className: "text-2xl font-bold"
-                                    }, name), React.createElement("ol", {
+                                    }, param.name), React.createElement("ol", {
                                       className: "mt-12 grid grid-cols-4 gap-x-10 gap-y-16"
                                     }, Belt_Array.map(edges, (function (param) {
                                             return React.createElement(React.Suspense, {
@@ -114,11 +91,24 @@ function ShopMainSpecialShowcaseList_Buyer$PC(Props) {
                                         className: "mt-12 flex items-center justify-center"
                                       }, React.createElement("button", {
                                             className: "px-6 py-3 bg-gray-100 rounded-full text-sm flex items-center",
-                                            onClick: makeOnClick(id, name)
+                                            onClick: (function (param) {
+                                                return ReactEvents.interceptingHandler((function (param) {
+                                                              var prim1_query = Js_dict.fromArray([[
+                                                                      "category-id",
+                                                                      id
+                                                                    ]]);
+                                                              var prim1 = {
+                                                                pathname: "/buyer/products",
+                                                                query: prim1_query
+                                                              };
+                                                              router.push(prim1);
+                                                              
+                                                            }), param);
+                                              })
                                           }, "전체보기", React.createElement(IconArrow.make, {
                                                 height: "16",
                                                 width: "16",
-                                                fill: "#262626",
+                                                stroke: "#262626",
                                                 className: "ml-1"
                                               }))) : null));
                 } else {
@@ -159,32 +149,9 @@ function ShopMainSpecialShowcaseList_Buyer$MO(Props) {
   var query = Props.query;
   var router = Router.useRouter();
   var match = use(query);
-  var makeOnClick = function (id, name) {
-    return function (param) {
-      return ReactEvents.interceptingHandler((function (param) {
-                    var prim1_query = Js_dict.fromArray([
-                          [
-                            "category-id",
-                            id
-                          ],
-                          [
-                            "category-name",
-                            encodeURIComponent(name)
-                          ]
-                        ]);
-                    var prim1 = {
-                      pathname: "/buyer/products",
-                      query: prim1_query
-                    };
-                    router.push(prim1);
-                    
-                  }), param);
-    };
-  };
   return Belt_Array.map(match.specialDisplayCategories, (function (param) {
                 var match = param.products;
                 var edges = match.edges;
-                var name = param.name;
                 var id = param.id;
                 if (edges.length !== 0) {
                   return React.createElement("section", {
@@ -194,7 +161,7 @@ function ShopMainSpecialShowcaseList_Buyer$MO(Props) {
                                   className: "w-full"
                                 }, React.createElement("h1", {
                                       className: "text-lg font-bold"
-                                    }, name), React.createElement("ol", {
+                                    }, param.name), React.createElement("ol", {
                                       className: "mt-4 grid grid-cols-2 gap-x-4 gap-y-8"
                                     }, Belt_Array.map(edges, (function (param) {
                                             return React.createElement(React.Suspense, {
@@ -208,11 +175,24 @@ function ShopMainSpecialShowcaseList_Buyer$MO(Props) {
                                         className: "mt-8 flex items-center justify-center"
                                       }, React.createElement("button", {
                                             className: "px-[18px] py-[10px] bg-gray-100 rounded-full text-sm flex items-center",
-                                            onClick: makeOnClick(id, name)
+                                            onClick: (function (param) {
+                                                return ReactEvents.interceptingHandler((function (param) {
+                                                              var prim1_query = Js_dict.fromArray([[
+                                                                      "category-id",
+                                                                      id
+                                                                    ]]);
+                                                              var prim1 = {
+                                                                pathname: "/buyer/products",
+                                                                query: prim1_query
+                                                              };
+                                                              router.push(prim1);
+                                                              
+                                                            }), param);
+                                              })
                                           }, "전체보기", React.createElement(IconArrow.make, {
                                                 height: "16",
                                                 width: "16",
-                                                fill: "#262626",
+                                                stroke: "#262626",
                                                 className: "ml-1"
                                               }))) : null));
                 } else {

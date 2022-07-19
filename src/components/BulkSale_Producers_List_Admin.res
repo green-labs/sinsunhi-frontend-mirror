@@ -61,7 +61,7 @@ module Header = {
         "grid grid-cols-11-admin-bulk-sale-producers bg-gray-50 text-gray-500 h-12 divide-y divide-gray-100"
       )>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
-        {j`생성일자`->React.string}
+        {j`신청일자`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
         {j`상태`->React.string}
@@ -76,19 +76,55 @@ module Header = {
         {j`예상판매가`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
-        {j`생산자정보`->React.string}
+        {j`연평균 판매량`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
-        {j`농사 경력/판매량`->React.string}
+        {j`택배 가능 여부`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
-        {j`구분`->React.string}
+        {j`포장 무게 단위`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
-        {j`시장출하 여부`->React.string}
+        {j`하루 수확 생산량`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`수확 주기`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`예상 출하 시점`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`톤백, 콘티 거래 가능 여부`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`재배 시설`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`농산물 관련 인증`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`농산물 등급`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`출하시장 정보`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
         {j`온라인판매 여부`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`생산 작물 사진`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`생산자정보`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`직접 농사 여부`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`농사 경력`->React.string}
+      </div>
+      <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
+        {j`생산자만의 특별함`->React.string}
       </div>
       <div className=%twc("h-full px-4 flex items-center whitespace-nowrap")>
         {j`메모`->React.string}

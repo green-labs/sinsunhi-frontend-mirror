@@ -96,20 +96,6 @@ function Web_Order_Complete_Payment_Info_Buyer$Placeholder(Props) {
                         }, "결제 수단"), React.createElement(Skeleton.Box.make, {
                           className: "h-6 my-0 w-20 text-base font-bold xl:text-sm"
                         })), React.createElement("li", {
-                      key: "product-price",
-                      className: "flex justify-between items-center"
-                    }, React.createElement("span", {
-                          className: "text-text-L2"
-                        }, "총 상품금액"), React.createElement(Skeleton.Box.make, {
-                          className: "h-6 my-0 w-20 text-base font-bold xl:text-sm"
-                        })), React.createElement("li", {
-                      key: "delivery-cost",
-                      className: "flex justify-between items-center"
-                    }, React.createElement("span", {
-                          className: "text-text-L2"
-                        }, "배송비"), React.createElement(Skeleton.Box.make, {
-                          className: "h-6 my-0 w-20 text-base font-bold xl:text-sm"
-                        })), React.createElement("li", {
                       key: "total-price",
                       className: "flex justify-between items-center"
                     }, React.createElement("span", {
@@ -143,8 +129,6 @@ function Web_Order_Complete_Payment_Info_Buyer(Props) {
       ], (function (d) {
           return makePrice(totalOrderPrice, Belt_Option.getWithDefault(totalDeliveryCost, 0), d);
         }));
-  var deliveryPrice = match$1[1];
-  var productPrice = match$1[0];
   return React.createElement("section", {
               className: "flex flex-col rounded-sm bg-white w-full p-7 gap-7"
             }, React.createElement("span", {
@@ -159,27 +143,13 @@ function Web_Order_Complete_Payment_Info_Buyer(Props) {
                         }, "결제 수단"), React.createElement("span", {
                           className: "text-base font-bold xl:text-sm"
                         }, paymentMethodToString(wosOrder.paymentMethod))), React.createElement("li", {
-                      key: "product-price",
-                      className: "flex justify-between items-center h-6"
-                    }, React.createElement("span", {
-                          className: "text-text-L2"
-                        }, "총 상품금액"), React.createElement("span", {
-                          className: "text-base font-bold xl:text-sm"
-                        }, Locale.Int.show(undefined, productPrice) + "원")), React.createElement("li", {
-                      key: "delivery-cost",
-                      className: "flex justify-between items-center h-6"
-                    }, React.createElement("span", {
-                          className: "text-text-L2"
-                        }, "배송비"), React.createElement("span", {
-                          className: "text-base font-bold xl:text-sm"
-                        }, Locale.Int.show(undefined, deliveryPrice) + "원")), React.createElement("li", {
                       key: "total-price",
                       className: "flex justify-between items-center h-6"
                     }, React.createElement("span", {
                           className: "text-text-L2"
                         }, "총 결제금액"), React.createElement("span", {
                           className: "text-xl xl:text-lg text-primary font-bold"
-                        }, Locale.Int.show(undefined, productPrice + deliveryPrice | 0) + "원"))));
+                        }, Locale.Int.show(undefined, match$1[0] + match$1[1] | 0) + "원"))));
 }
 
 var make = Web_Order_Complete_Payment_Info_Buyer;

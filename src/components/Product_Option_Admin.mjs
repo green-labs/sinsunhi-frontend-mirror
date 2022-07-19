@@ -100,7 +100,9 @@ function Product_Option_Admin$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block"
-                        }, productOption.product.producer.name)), React.createElement("div", {
+                        }, Belt_Option.mapWithDefault(productOption.product.producer, null, (function (param) {
+                                return param.name;
+                              })))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block"

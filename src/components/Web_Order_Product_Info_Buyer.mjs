@@ -65,7 +65,7 @@ function Web_Order_Product_Info_Buyer(Props) {
   var fragments = use(query);
   var productNode$p = fragments.productNode;
   var match;
-  if (productNode$p !== undefined && typeof productNode$p === "object" && productNode$p.NAME === "Product") {
+  if (productNode$p !== undefined && typeof productNode$p === "object" && productNode$p.NAME === "NormalProduct") {
     var product = productNode$p.VAL;
     match = [
       product.displayName,

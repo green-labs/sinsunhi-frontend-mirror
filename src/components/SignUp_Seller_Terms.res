@@ -76,7 +76,7 @@ let make = (~onConfirmed, ~isMarketing, ~setMarketing) => {
         </span>
       </div>
       <Next.Link href="/terms">
-        <span> <IconArrow height="20" width="20" fill="#DDDDDD" /> </span>
+        <span> <IconArrow height="20" width="20" stroke="#DDDDDD" /> </span>
       </Next.Link>
     </div>
     <div className=%twc("flex justify-between items-center mt-2")>
@@ -94,7 +94,7 @@ let make = (~onConfirmed, ~isMarketing, ~setMarketing) => {
         </span>
       </div>
       <Next.Link href="/privacy">
-        <span> <IconArrow height="20" width="20" fill="#DDDDDD" /> </span>
+        <span> <IconArrow height="20" width="20" stroke="#DDDDDD" /> </span>
       </Next.Link>
     </div>
     <div className=%twc("flex items-center mt-2")>

@@ -1,8 +1,5 @@
-/**
- * 수기 주문데이터 관리자 업로드 시연용 컴포넌트
- * TODO: 시연이 끝나면 지워도 된다.
- */
-
+// 수기 주문데이터 관리자 업로드 시연용 컴포넌트
+// TODO: 시연이 끝나면 지워도 된다.
 module List = Order_All_List_Admin_Buyer
 
 external unsafeAsFile: Webapi.Blob.t => Webapi.File.t = "%identity"

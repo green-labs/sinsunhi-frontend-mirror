@@ -13,25 +13,35 @@ import * as IconClose from "./svgs/IconClose.mjs";
 import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
-import * as IconNotice from "./svgs/IconNotice.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as DetectBrowser from "detect-browser";
-import * as IconRadioFilled from "./svgs/IconRadioFilled.mjs";
 import * as ReactHookForm$1 from "react-hook-form";
-import * as IconRadioDefault from "./svgs/IconRadioDefault.mjs";
 import * as Hooks from "react-relay/hooks";
 import * as InputWithAdornment from "./common/InputWithAdornment.mjs";
-import * as IconCheckBoxChecked from "./svgs/IconCheckBoxChecked.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
-import * as IconCheckBoxUnChecked from "./svgs/IconCheckBoxUnChecked.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as Webapi__Dom__HtmlInputElement from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__HtmlInputElement.mjs";
+import NoticeSvg from "../../public/assets/notice.svg";
 import * as Buyer_Deposit_Detail_Button_Admin from "./Buyer_Deposit_Detail_Button_Admin.mjs";
+import RadioFilledSvg from "../../public/assets/radio-filled.svg";
+import RadioDefaultSvg from "../../public/assets/radio-default.svg";
 import * as CashChargeButtonBuyerMutation_graphql from "../__generated__/CashChargeButtonBuyerMutation_graphql.mjs";
+import CheckboxCheckedSvg from "../../public/assets/checkbox-checked.svg";
+import CheckboxUncheckedSvg from "../../public/assets/checkbox-unchecked.svg";
+
+var checkboxCheckedIcon = CheckboxCheckedSvg;
+
+var checkboxUncheckedIcon = CheckboxUncheckedSvg;
+
+var radioDefaultIcon = RadioDefaultSvg;
+
+var radioFilledIcon = RadioFilledSvg;
+
+var noticeIcon = NoticeSvg;
 
 function paymentMethod_encode(v) {
   if (v === "CREDIT_CARD") {
@@ -281,10 +291,8 @@ function Cash_Charge_Button_Buyer(Props) {
           }));
     return reset(undefined);
   };
-  var errorElement = React.createElement(React.Fragment, undefined, React.createElement(IconNotice.make, {
-            width: "1.25rem",
-            height: "1.25rem",
-            fill: "none"
+  var errorElement = React.createElement(React.Fragment, undefined, React.createElement("img", {
+            src: noticeIcon
           }), React.createElement("div", {
             className: "ml-1.5 text-sm"
           }, "최소 결제금액(1,000원 이상)을 입력해주세요."));
@@ -340,7 +348,7 @@ function Cash_Charge_Button_Buyer(Props) {
                   return window.tossPayments.requestPayment(paymentMethodToTossValue(data$p$1.paymentMethod), {
                               amount: requestPaymentTossPaymentsResult.amount,
                               orderId: requestPaymentTossPaymentsResult.orderId,
-                              orderName: "신선캐시 " + String(requestPaymentTossPaymentsResult.amount),
+                              orderName: "신선하이 " + String(requestPaymentTossPaymentsResult.amount),
                               customerName: requestPaymentTossPaymentsResult.customerName,
                               successUrl: window.location.origin + "/buyer/toss-payments/success?payment-id=" + String(requestPaymentTossPaymentsResult.paymentId),
                               failUrl: window.location.origin + "/buyer/toss-payments/fail",
@@ -533,15 +541,9 @@ function Cash_Charge_Button_Buyer(Props) {
                                                                     e.stopPropagation();
                                                                     return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, v));
                                                                   })
-                                                              }, Caml_obj.caml_equal(value, v) ? React.createElement(IconRadioFilled.make, {
-                                                                      width: "1.25rem",
-                                                                      height: "1.25rem",
-                                                                      fill: "none"
-                                                                    }) : React.createElement(IconRadioDefault.make, {
-                                                                      width: "1.25rem",
-                                                                      height: "1.25rem",
-                                                                      fill: "none"
-                                                                    }), name);
+                                                              }, React.createElement("img", {
+                                                                    src: Caml_obj.caml_equal(value, v) ? radioFilledIcon : radioDefaultIcon
+                                                                  }), name);
                                                   })));
                                 }),
                               defaultValue: "card",
@@ -555,13 +557,9 @@ function Cash_Charge_Button_Buyer(Props) {
                                                     return !prev;
                                                   });
                                       })
-                                  }, match$3[0] ? React.createElement(IconCheckBoxChecked.make, {
-                                          width: "20",
-                                          height: "20"
-                                        }) : React.createElement(IconCheckBoxUnChecked.make, {
-                                          width: "20",
-                                          height: "20"
-                                        }), React.createElement("span", {
+                                  }, React.createElement("img", {
+                                        src: match$3[0] ? checkboxCheckedIcon : checkboxUncheckedIcon
+                                      }), React.createElement("span", {
                                         className: "ml-2 text-sm"
                                       }, "신선하이 이용약관 동의(필수)")), React.createElement("a", {
                                     href: "/terms",
@@ -569,7 +567,7 @@ function Cash_Charge_Button_Buyer(Props) {
                                   }, React.createElement(IconArrow.make, {
                                         height: "20",
                                         width: "20",
-                                        fill: "#B2B2B2",
+                                        stroke: "#B2B2B2",
                                         className: "cursor-pointer"
                                       }))) : null, React.createElement("div", {
                               className: "flex justify-between gap-3 mt-10 text-lg"
@@ -590,6 +588,11 @@ function Cash_Charge_Button_Buyer(Props) {
 var make = Cash_Charge_Button_Buyer;
 
 export {
+  checkboxCheckedIcon ,
+  checkboxUncheckedIcon ,
+  radioDefaultIcon ,
+  radioFilledIcon ,
+  noticeIcon ,
   paymentMethod_encode ,
   paymentMethod_decode ,
   paymentMethodToKCPValue ,
@@ -603,4 +606,4 @@ export {
   make ,
   
 }
-/* react Not a pure module */
+/* checkboxCheckedIcon Not a pure module */

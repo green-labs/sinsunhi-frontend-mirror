@@ -393,7 +393,7 @@ let make = (~requestId: option<string>) => {
 
   switch requestId {
   | Some(id) =>
-    <Authorization.Buyer fallback={React.null} title=j`바이어 견적 요청`>
+    <Authorization.Buyer fallback={React.null} title={j`바이어 견적 요청`}>
       <React.Suspense fallback={<div />}>
         <RfqCommon.CheckBuyerRequestStatus requestId={id}>
           <List requestId={id} />

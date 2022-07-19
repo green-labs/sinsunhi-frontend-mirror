@@ -783,7 +783,7 @@ function fetchWithRetryForRelay(fetcher, url, body, count) {
                 return Promise.resolve(json);
               });
   };
-  return retry(Caml_option.some(undefined), fn, count, 200);
+  return retry(Caml_option.some(undefined), fn, count, 0);
 }
 
 function requestWithRetry(fetcher, url, body, count, onSuccess, onFailure) {

@@ -72,10 +72,22 @@ function makePerWeightLabel(max, unit) {
               }));
 }
 
-function makePriceLabel(price, deliveryCost) {
-  return Belt_Option.mapWithDefault(price, "", (function (price$p) {
-                return Locale.Float.show(undefined, price$p - deliveryCost | 0, 0) + "원";
-              }));
+function makeOptionPrice(price, deliveryCost, isFreeShipping) {
+  if (isFreeShipping) {
+    return price;
+  } else {
+    return Belt_Option.map(price, (function (price$p) {
+                  return price$p - deliveryCost | 0;
+                }));
+  }
+}
+
+function makeOptionDeliveryCost(deliveryCost, isFreeShipping) {
+  if (isFreeShipping) {
+    return 0;
+  } else {
+    return deliveryCost;
+  }
 }
 
 var ProductOption = {
@@ -83,7 +95,8 @@ var ProductOption = {
   makeCountPerPkgLabel: makeCountPerPkgLabel,
   makePerSizeLabel: makePerSizeLabel,
   makePerWeightLabel: makePerWeightLabel,
-  makePriceLabel: makePriceLabel
+  makeOptionPrice: makeOptionPrice,
+  makeOptionDeliveryCost: makeOptionDeliveryCost
 };
 
 function makeWeightLabel$1(weightOptions) {
@@ -138,11 +151,8 @@ var Normal = {
   makeNoticeDateLabel: makeNoticeDateLabel
 };
 
-var Quatable = {};
-
 var Product = {
-  Normal: Normal,
-  Quatable: Quatable
+  Normal: Normal
 };
 
 export {

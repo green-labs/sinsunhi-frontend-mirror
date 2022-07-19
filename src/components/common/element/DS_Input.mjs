@@ -18,9 +18,9 @@ function DS_Input$InputText1(Props) {
   var onFocus = Props.onFocus;
   var onBlur = Props.onBlur;
   var tmp = {
-    className: Belt_Option.mapWithDefault(className, "w-full outline-none text-xl placeholder:text-gray-400 pl-1 disabled:bg-white leading-8", (function (className$p) {
+    className: Belt_Option.mapWithDefault(className, "w-full outline-none text-xl placeholder:text-gray-400 disabled:bg-white leading-8", (function (className$p) {
             return Cx.cx([
-                        "w-full outline-none text-xl placeholder:text-gray-400 pl-1 disabled:bg-white leading-8",
+                        "w-full outline-none text-xl placeholder:text-gray-400 disabled:bg-white leading-8",
                         className$p
                       ]);
           })),

@@ -5,13 +5,19 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Input from "../../components/common/Input.mjs";
 import * as React from "react";
 import * as Dialog from "../../components/common/Dialog.mjs";
+import * as Global from "../../components/Global.mjs";
+import * as DataGtm from "../../utils/DataGtm.mjs";
+import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Checkbox from "../../components/common/Checkbox.mjs";
+import * as Redirect from "../../components/Redirect.mjs";
 import * as IconArrow from "../../components/svgs/IconArrow.mjs";
 import * as IconCheck from "../../components/svgs/IconCheck.mjs";
 import Head from "next/head";
 import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import JwtDecode from "jwt-decode";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as CustomHooks from "../../utils/CustomHooks.mjs";
 import * as FetchHelper from "../../utils/FetchHelper.mjs";
 import * as ReactEvents from "../../utils/ReactEvents.mjs";
 import * as Router from "next/router";
@@ -121,9 +127,56 @@ function SignUp_Buyer(Props) {
                 });
     }
   };
+  var signIn = function (param) {
+    var state = param.state;
+    var email = SignUp_Buyer_Form.FormFields.get(state.values, /* Email */0);
+    var password = SignUp_Buyer_Form.FormFields.get(state.values, /* Password */1);
+    var urlSearchParams = new URLSearchParams([
+            [
+              "grant-type",
+              "password"
+            ],
+            [
+              "username",
+              email
+            ],
+            [
+              "password",
+              password
+            ]
+          ]).toString();
+    FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
+            var redirectUrlWithWelcome = Belt_Option.getWithDefault(Belt_Option.map(Js_dict.get(router.query, "redirect"), (function (url) {
+                        if (url.includes("?")) {
+                          return url + "&welcome";
+                        } else {
+                          return url + "?welcome";
+                        }
+                      })), "/?welcome");
+            var res$1 = FetchHelper.responseToken_decode(res);
+            if (res$1.TAG === /* Ok */0) {
+              var res$2 = res$1._0;
+              Curry._1(LocalStorageHooks.AccessToken.set, res$2.token);
+              Curry._1(LocalStorageHooks.RefreshToken.set, res$2.refreshToken);
+              ChannelTalkHelper.bootWithProfile(undefined);
+              var user = CustomHooks.Auth.user_decode(JwtDecode(res$2.token));
+              if (user.TAG === /* Ok */0) {
+                Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, String(user._0.id));
+              }
+              return Redirect.setHref(redirectUrlWithWelcome);
+            }
+            router.push("/buyer/signin");
+            
+          }), (function (param) {
+            router.push("/buyer/signin");
+            
+          }));
+    
+  };
   var handleSubmit = function (formApi) {
+    var state = formApi.state;
     if (emailExisted !== undefined && emailExisted && phoneNumberStatus === 2 && phoneNumberExistedStatus !== undefined && phoneNumberExistedStatus && !businessNumberStatus && isRequiredTermsAgreed) {
-      var init = formApi.state.values;
+      var init = state.values;
       var payload_email = init.email;
       var payload_password = init.password;
       var payload_name = init.name;
@@ -152,42 +205,13 @@ function SignUp_Buyer(Props) {
                                         }), "회원가입이 완료되었습니다."), {
                                   appearance: "success"
                                 });
-                            var state = formApi.state;
-                            var email = SignUp_Buyer_Form.FormFields.get(state.values, /* Email */0);
-                            var password = SignUp_Buyer_Form.FormFields.get(state.values, /* Password */1);
-                            var urlSearchParams = new URLSearchParams([
-                                    [
-                                      "grant-type",
-                                      "password"
-                                    ],
-                                    [
-                                      "username",
-                                      email
-                                    ],
-                                    [
-                                      "password",
-                                      password
-                                    ]
-                                  ]).toString();
-                            FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
-                                    var res$p = FetchHelper.responseToken_decode(res);
-                                    if (res$p.TAG === /* Ok */0) {
-                                      var res$p$1 = res$p._0;
-                                      Curry._1(LocalStorageHooks.AccessToken.set, res$p$1.token);
-                                      Curry._1(LocalStorageHooks.RefreshToken.set, res$p$1.refreshToken);
-                                      ChannelTalkHelper.bootWithProfile(undefined);
-                                      var prim1 = "/buyer?welcome";
-                                      var prim2 = "/buyer";
-                                      router.push(prim1, prim2);
-                                      return ;
-                                    }
-                                    router.push("/buyer/signin");
-                                    
-                                  }), (function (param) {
-                                    router.push("/buyer/signin");
-                                    
-                                  }));
-                            
+                            signIn(formApi);
+                            var businessRegistrationNumber = SignUp_Buyer_Form.FormFields.get(state.values, /* BusinessRegistrationNumber */5);
+                            return DataGtm.push({
+                                        method: "normal",
+                                        business_number: businessRegistrationNumber,
+                                        marketing: Belt_SetString.has(agreedTerms, "marketing")
+                                      });
                           }), (function (param) {
                             return setShowErr(function (param) {
                                         return /* Show */0;
@@ -249,6 +273,25 @@ function SignUp_Buyer(Props) {
                   return Curry._1(form.submit, undefined);
                 }), param);
   };
+  var user = CustomHooks.Auth.use(undefined);
+  React.useEffect((function () {
+          if (typeof user !== "number") {
+            var match = user._0.role;
+            switch (match) {
+              case /* Seller */0 :
+                  router.push("/seller");
+                  break;
+              case /* Buyer */1 :
+                  router.push("/");
+                  break;
+              case /* Admin */2 :
+                  router.push("/admin");
+                  break;
+              
+            }
+          }
+          
+        }), [user]);
   var partial_arg = Curry._1(form.handleChange, /* Password */1);
   var partial_arg$1 = Curry._1(form.handleChange, /* Name */2);
   var partial_arg$2 = Curry._1(form.handleChange, /* Manager */3);
@@ -387,8 +430,10 @@ function SignUp_Buyer(Props) {
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
-                                                height: "20",
-                                                width: "20",
+                                                height: "18",
+                                                width: "18",
+                                                stroke: "#DDDDDD",
+                                                strokeWidth: "0",
                                                 fill: "#DDDDDD"
                                               }))
                                     })), React.createElement("div", {
@@ -409,8 +454,10 @@ function SignUp_Buyer(Props) {
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
-                                                height: "20",
-                                                width: "20",
+                                                height: "18",
+                                                width: "18",
+                                                stroke: "#DDDDDD",
+                                                strokeWidth: "0",
                                                 fill: "#DDDDDD"
                                               }))
                                     })), React.createElement("div", {
@@ -429,8 +476,10 @@ function SignUp_Buyer(Props) {
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
-                                                height: "20",
-                                                width: "20",
+                                                height: "18",
+                                                width: "18",
+                                                stroke: "#DDDDDD",
+                                                strokeWidth: "0",
                                                 fill: "#DDDDDD"
                                               }))
                                     })), React.createElement("span", {

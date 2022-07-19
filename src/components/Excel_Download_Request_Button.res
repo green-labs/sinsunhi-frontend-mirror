@@ -1,3 +1,6 @@
+@module("../../public/assets/download.svg")
+external downloadIcon: string = "default"
+
 @react.component
 let make = (~userType: CustomHooks.Auth.role, ~requestUrl, ~buttonText=?, ~bodyOption=?) => {
   let router = Next.Router.useRouter()
@@ -21,8 +24,8 @@ let make = (~userType: CustomHooks.Auth.role, ~requestUrl, ~buttonText=?, ~bodyO
   }
 
   let download = () => {
-    bodyOption ->
-    Option.getWithDefault(router.query)
+    bodyOption
+    ->Option.getWithDefault(router.query)
     ->Js.Json.stringifyAny
     ->Option.map(body => {
       FetchHelper.requestWithRetry(
@@ -48,10 +51,12 @@ let make = (~userType: CustomHooks.Auth.role, ~requestUrl, ~buttonText=?, ~bodyO
   }
   <>
     <button
-      className=%twc("h-9 px-3 text-black-gl bg-gray-button-gl rounded-lg flex items-center min-w-max")
+      className=%twc(
+        "h-9 px-3 text-black-gl bg-gray-button-gl rounded-lg flex items-center min-w-max"
+      )
       onClick={_ => setIsShowRequest(._ => Dialog.Show)}>
-      <IconDownload height="16" width="16" fill="#121212" className=%twc("relative mr-1") />
-      {buttonText -> Option.getWithDefault(j`엑셀 다운로드 요청`)->React.string}
+      <img src=downloadIcon className=%twc("relative mr-1") />
+      {buttonText->Option.getWithDefault(j`엑셀 다운로드 요청`)->React.string}
     </button>
     <Dialog
       isShow=isShowRequest

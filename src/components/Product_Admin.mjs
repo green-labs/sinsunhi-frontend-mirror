@@ -13,6 +13,7 @@ import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ProductAdminFragment_graphql from "../__generated__/ProductAdminFragment_graphql.mjs";
 import * as Product_Operation_Status_Badge from "./Product_Operation_Status_Badge.mjs";
+import * as ProductAdminTypedProductFragment_graphql from "../__generated__/ProductAdminTypedProductFragment_graphql.mjs";
 
 function use(fRef) {
   var data = Hooks.useFragment(ProductAdminFragment_graphql.node, fRef);
@@ -31,19 +32,36 @@ function useOpt(opt_fRef) {
               }), data);
 }
 
-var Fragment_productType_decode = ProductAdminFragment_graphql.Utils.productType_decode;
-
-var Fragment_productType_fromString = ProductAdminFragment_graphql.Utils.productType_fromString;
-
 var Fragment = {
-  productType_decode: Fragment_productType_decode,
-  productType_fromString: Fragment_productType_fromString,
   Types: undefined,
   use: use,
   useOpt: useOpt
 };
 
-function Product_Admin$Product_Option_Link_Button(Props) {
+function use$1(fRef) {
+  var data = Hooks.useFragment(ProductAdminTypedProductFragment_graphql.node, fRef);
+  return RescriptRelay_Internal.internal_useConvertedValue(ProductAdminTypedProductFragment_graphql.Internal.convertFragment, data);
+}
+
+function useOpt$1(opt_fRef) {
+  var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
+  var nullableFragmentData = Hooks.useFragment(ProductAdminTypedProductFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
+  return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
+                if (rawFragment !== undefined) {
+                  return ProductAdminTypedProductFragment_graphql.Internal.convertFragment(rawFragment);
+                }
+                
+              }), data);
+}
+
+var TypedProductFragment = {
+  Types: undefined,
+  use: use$1,
+  useOpt: useOpt$1
+};
+
+function Product_Admin$Product_Option_Link_Button$Link_Button(Props) {
   var productId = Props.productId;
   var isOptionEmpty = Props.isOptionEmpty;
   var defaultStyle = "max-w-min  py-0.5 px-2 rounded mr-2 whitespace-nowrap";
@@ -70,13 +88,37 @@ function Product_Admin$Product_Option_Link_Button(Props) {
   }
 }
 
+var Link_Button = {
+  make: Product_Admin$Product_Option_Link_Button$Link_Button
+};
+
+function Product_Admin$Product_Option_Link_Button(Props) {
+  var typedProduct = Props.typedProduct;
+  var variant = typedProduct.NAME;
+  if (variant === "MatchingProduct" || variant === "QuotedProduct") {
+    return React.createElement("button", {
+                className: Cx.cx(["max-w-min  py-0.5 px-2 rounded mr-2 whitespace-nowrap text-disabled-L2 bg-gray-gl"])
+              }, "추가하기");
+  }
+  if (variant === "UnselectedUnionMember") {
+    return null;
+  }
+  var normalProduct = typedProduct.VAL;
+  return React.createElement(Product_Admin$Product_Option_Link_Button$Link_Button, {
+              productId: normalProduct.id,
+              isOptionEmpty: Garter_Array.isEmpty(normalProduct.productOptions.edges)
+            });
+}
+
 var Product_Option_Link_Button = {
+  Link_Button: Link_Button,
   make: Product_Admin$Product_Option_Link_Button
 };
 
 function Product_Admin(Props) {
   var query = Props.query;
   var product = use(query);
+  var typedProduct = use$1(product.fragmentRefs);
   var displayCategoriesToTextes = function (categories) {
     return Belt_Array.map(categories, (function (param) {
                   return [
@@ -92,9 +134,9 @@ function Product_Admin(Props) {
                   return f.name;
                 }));
   };
-  var match = product._type;
-  var match$1 = product._type;
-  var match$2 = product._type;
+  var variant = typedProduct.NAME;
+  var variant$1 = typedProduct.NAME;
+  var variant$2 = typedProduct.NAME;
   return React.createElement(React.Fragment, undefined, React.createElement("li", {
                   className: "grid grid-cols-9-admin-product text-gray-700"
                 }, React.createElement("div", {
@@ -103,9 +145,11 @@ function Product_Admin(Props) {
                           query: product.fragmentRefs
                         })), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
-                    }, match === "NORMAL" ? "일반 상품" : (
-                        match === "QUOTABLE" ? "일반+견적 상품" : (
-                            match === "QUOTED" ? "견적 상품" : "일반 상품"
+                    }, variant === "QuotableProduct" ? "일반+견적 상품" : (
+                        variant === "QuotedProduct" ? "견적 상품" : (
+                            variant === "UnselectedUnionMember" ? "" : (
+                                variant === "MatchingProduct" ? "매칭 상품" : "일반 상품"
+                              )
                           )
                       )), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
@@ -116,16 +160,15 @@ function Product_Admin(Props) {
                               }, product.displayName + "(" + String(product.productId) + ")")
                         })), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
-                    }, match$1 === "QUOTED" ? React.createElement("button", {
-                            className: Cx.cx(["max-w-min  py-0.5 px-2 rounded mr-2 whitespace-nowrap text-disabled-L2 bg-gray-gl"])
-                          }, "추가하기") : React.createElement(Product_Admin$Product_Option_Link_Button, {
-                            productId: product.id,
-                            isOptionEmpty: Garter_Array.isEmpty(product.productOptions.edges)
-                          })), React.createElement("div", {
+                    }, React.createElement(Product_Admin$Product_Option_Link_Button, {
+                          typedProduct: typedProduct
+                        })), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block"
-                        }, product.producer.name + "(" + Belt_Option.getWithDefault(product.producer.producerCode, "") + ")")), React.createElement("div", {
+                        }, Belt_Option.mapWithDefault(product.producer, "-", (function (param) {
+                                return param.name + "(" + Belt_Option.getWithDefault(param.producerCode, "") + ")";
+                              })))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block"
@@ -141,14 +184,22 @@ function Product_Admin(Props) {
                       className: "h-full flex flex-col px-4 pl-8 py-2"
                     }, React.createElement("span", {
                           className: "block"
-                        }, Belt_Option.getWithDefault(Belt_Option.map(product.price, (function (p) {
-                                    return Locale.Float.show(undefined, p, 0) + "원";
-                                  })), "-"))), React.createElement("div", {
+                        }, Belt_Option.getWithDefault(variant$1 === "QuotableProduct" ? Belt_Option.map(typedProduct.VAL.price, (function (p$p) {
+                                      return Locale.Float.show(undefined, p$p, 0) + "원";
+                                    })) : (
+                                variant$1 === "MatchingProduct" || variant$1 === "UnselectedUnionMember" || variant$1 === "QuotedProduct" ? undefined : Belt_Option.map(typedProduct.VAL.price, (function (p$p) {
+                                          return Locale.Float.show(undefined, p$p, 0) + "원";
+                                        }))
+                              ), "-"))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 pl-9 py-2"
                     }, React.createElement("span", {
                           className: "block"
-                        }, match$2 === "QUOTED" ? "-" : (
-                            product.isCourierAvailable ? "가능" : "불가능"
+                        }, variant$2 === "QuotableProduct" ? (
+                            typedProduct.VAL.isCourierAvailable ? "가능" : "불가능"
+                          ) : (
+                            variant$2 === "MatchingProduct" || variant$2 === "UnselectedUnionMember" || variant$2 === "QuotedProduct" ? "-" : (
+                                typedProduct.VAL.isCourierAvailable ? "가능" : "불가능"
+                              )
                           )))));
 }
 
@@ -156,6 +207,7 @@ var make = Product_Admin;
 
 export {
   Fragment ,
+  TypedProductFragment ,
   Product_Option_Link_Button ,
   make ,
   

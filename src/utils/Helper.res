@@ -85,11 +85,9 @@ module PhoneNumber = {
     }
   }
 
-  /**
-   * ## Parse ##
-   * "01051973097"->Helper.PhoneNumber.parse // Some(Mobile(01051973097))
-   * "02051973097"->Helper.PhoneNumber.parse // None
-   */
+  // ## Parse ##
+  // "01051973097"->Helper.PhoneNumber.parse // Some(Mobile(01051973097))
+  // "02051973097"->Helper.PhoneNumber.parse // None
   let parse = s => {
     regexs->Array.reduce(None, (acc, regex) => {
       Option.alt(acc, extract(regex, s))
@@ -103,10 +101,8 @@ module PhoneNumber = {
     ->Option.flatMap(Option.sequence)
     ->Option.map(arr => arr->Array.sliceToEnd(1)->Js.Array2.joinWith("-"))
 
-  /**
-   * ## Format ##
-   * Some(Mobile(01051973097))->Option.flatMap(Helper.PhoneNumber.format) // Some("010-5197-3097")
-   */
+  // ## Format ##
+  // Some(Mobile(01051973097))->Option.flatMap(Helper.PhoneNumber.format) // Some("010-5197-3097")
   let format = (kind: t) => {
     switch kind {
     | Mobile(phoneNumber) => phoneNumber->formatByRe(regexOfMobile)

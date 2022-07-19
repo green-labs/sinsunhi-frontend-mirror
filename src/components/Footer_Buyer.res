@@ -1,7 +1,11 @@
+@module("../../public/assets/kakao.svg")
+external kakaoIcon: string = "default"
+
 module PC = {
   type linkItem = {
     title: string,
     url: string,
+    className: option<string>,
   }
 
   @react.component
@@ -34,24 +38,28 @@ module PC = {
                 {
                   title: `회사소개`,
                   url: "https://greenlabs.co.kr",
+                  className: None,
                 },
                 {
                   title: `이용약관`,
                   url: "https://greenlabs.notion.site/a9f5ca479dda4a34929c60e1ce1dfbe5",
+                  className: None,
                 },
                 {
                   title: `개인정보 처리방침`,
-                  url: "https://greenlabs.notion.site/7d92008918ba4ca6a806f83ec8f6c335",
+                  url: "https://sinsun-policy.oopy.io/3335fdb0-c235-4e17-8ecc-1c4977c506f9",
+                  className: Some(%twc("font-bold")),
                 },
                 {
                   title: `저작권 보호 안내`,
                   url: "https://greenlabs.notion.site/ec15d857fcea4509806fc1a7a645f02d",
+                  className: None,
                 },
               ]
-              ->Array.mapWithIndex((idx, {title, url}) => {
+              ->Array.mapWithIndex((idx, {title, url, className}) => {
                 <li key={`footer-link-${idx->Int.toString}`}>
                   <Next.Link href=url>
-                    <a target="_blank" className=%twc("font-bold")> {title->React.string} </a>
+                    <a target="_blank" ?className> {title->React.string} </a>
                   </Next.Link>
                 </li>
               })
@@ -70,7 +78,7 @@ module PC = {
                   <span className=%twc("text-sm text-gray-800 underline")>
                     {`사업자 정보 확인`->React.string}
                   </span>
-                  <IconArrow width="16" height="16" fill=`#262626` className=%twc("mt-[2px]") />
+                  <img src="/assets/arrow-right.svg" className=%twc("w-[16px] h-[16px] mt-[2px]") />
                 </a>
               </Next.Link>
             </div>
@@ -92,7 +100,7 @@ module PC = {
               <a
                 target="_blank"
                 className=%twc("h-12 ml-3 bg-[#FADE33] rounded-lg flex items-center px-4")>
-                <IconKakao />
+                <img src=kakaoIcon />
                 <span className=%twc("font-bold ml-2")>
                   {`카카오톡 문의`->React.string}
                 </span>
@@ -175,7 +183,7 @@ module MO = {
             <Next.Link href=businessLisenceUrl>
               <a target="_blank" className=%twc("flex")>
                 <span className=%twc("underline")> {`사업자 정보 확인`->React.string} </span>
-                <IconArrow width="12" height="12" fill=`#262626` className=%twc("mt-1") />
+                <img src="/assets/arrow-right.svg" className=%twc("w-3 h-3 mt-1") />
               </a>
             </Next.Link>
           </div>
@@ -207,7 +215,7 @@ module MO = {
                 className=%twc(
                   "px-4 flex flex-1 bg-[#FADE33] rounded-lg items-center justify-center"
                 )>
-                <IconKakao />
+                <img src=kakaoIcon />
                 <span className=%twc("font-bold ml-2")>
                   {`카카오톡 문의`->React.string}
                 </span>

@@ -79,30 +79,59 @@ module Fragment = %relay(`
       name
       emailAddress
     }
+    bulkSaleProducerDetail {
+      id
+      hasOnlineExperience
+      experienceYearType
+      handsOn
+      name
+      phoneNumber
+      producerComment
+    }
+    userPccProduction {
+      id
+      grade
+      images
+      certificates
+      facilityType
+    }
+    userPccSalesCondition {
+      id
+      canDeliver
+      deliveryWeightUnit
+      deliveryDailyCapacity
+      deliveryPackages
+      supplyFrequency
+      averageAnnualSales
+      supplyBegin {
+        dayOfMonth
+        month
+      }
+      supplyEnd {
+        dayOfMonth
+        month
+      }
+    }
     staffKey
     isTest
     ...BulkSaleProducerSampleReviewButtonAdminFragment
     ...BulkSaleMarketSalesInfoButtonAdminFragment
-    ...BulkSaleRawProductSaleLedgersAdminFragment
-    ...BulkSaleProductSaleLedgersButtonAdminFragment
-    ...BulkSaleProducerOnlineMarketInfoAdminFragment
   }
 `)
 
 let formatDate = d => d->Js.Date.fromString->DateFns.format("yyyy/MM/dd HH:mm")
 
-let displayExperiencedYearRange = (
-  s: BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Types.enum_ExperienceYearsRange,
-) =>
+let displayExperiencedYearRange = (s: int) =>
   switch s {
-  | #NEWCOMER => `경력없음`
-  | #FROM_0_TO_1 => `1년 미만`
-  | #FROM_1_TO_5 => `1~5년 미만`
-  | #FROM_5_TO_10 => `5~10년 미만`
-  | #FROM_10_TO_20 => `10~20년 미만`
-  | #FROM_20_TO_INF => `20년 이상`
-  | _ => `-`
+  | 0 => `경력없음`
+  | 1 => `1년 미만`
+  | 5 => `1~5년`
+  | 10 => `5~10년`
+  | 20 => `10~20년`
+  | 40 => `~20년이상`
+  | _ => ``
   }
+
 let displayAnnualProductSalesInfo = (
   s: BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Types.enum_AverageAnnualSalesRange,
 ) =>
@@ -124,7 +153,111 @@ let displayBusinessType = (
   | _ => `-`
   }
 
+let displayFacilityType = facilityType =>
+  switch facilityType {
+  | #GLASS => `유리온실`
+  | #OPEN_FIELD => `노지`
+  | #VINYL_HOUSE_FIELD => `비닐하우스(토지)`
+  | #VINYL_HOUSE_SMART_FARM => `비닐하우스(스마트팜)`
+  | _ => ""
+  }
+
+let displayCertificate = (
+  certificate: BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Types.enum_ProductionCertificate,
+) =>
+  switch certificate {
+  | #ECO_FRIENDLY => `친환경`
+  | #GAP => "GAP"
+  | #LOW_CARBON => `저탄소`
+  | _ => ""
+  }
+
+let displaySupplyFrequency = f => {
+  switch f {
+  | #DAILY => `매일`
+  | #ONCE_A_WEEK => `주 1~2회`
+  | #THREE_TIMES_A_WEEK => `주 3~5회`
+  | #MONTHLY => `월 1~2회`
+  | _ => ``
+  }
+}
+
+let displayDeliveryPackage = f => {
+  switch f {
+  | #TON_BAG => `톤백`
+  | #CONTI => `콘티`
+  | _ => ``
+  }
+}
+
 let getEmailId = x => x->Js.String2.split("@")->Garter_Array.firstExn
+
+let months = list{
+  (1, `1월`),
+  (2, `2월`),
+  (3, `3월`),
+  (4, `4월`),
+  (5, `5월`),
+  (6, `6월`),
+  (7, `7월`),
+  (8, `8월`),
+  (9, `9월`),
+  (10, `10월`),
+  (11, `11월`),
+  (12, `12월`),
+}
+
+let displaySupplyDays = d =>
+  switch d {
+  | #EARLY => `초순`
+  | #MIDDLE => `중순`
+  | #LATE => `하순`
+  | _ => ``
+  }
+
+let displaySupplyBeginToEnd = (
+  s1: BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Types.fragment_userPccSalesCondition_supplyBegin,
+  s2: BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Types.fragment_userPccSalesCondition_supplyEnd,
+) => {
+  let m1 = months->List.getAssoc(s1.month, (a, b) => a === b)->Option.getWithDefault("")
+  let m2 = months->List.getAssoc(s2.month, (a, b) => a === b)->Option.getWithDefault("")
+  let d1 = s1.dayOfMonth->displaySupplyDays
+  let d2 = s2.dayOfMonth->displaySupplyDays
+
+  `${m1} ${d1} ~ ${m2} ${d2}`
+}
+
+module Gallery = {
+  @react.component
+  let make = (~imageUrls) => {
+    open ReactImagesViewer
+    let (imageIndex, setImageIndex) = React.Uncurried.useState(_ => 0)
+    let (isOpen, setIsOpen) = React.Uncurried.useState(_ => false)
+
+    <>
+      <span
+        className=%twc("underline")
+        onClick={_ => {
+          setIsOpen(._ => true)
+        }}>
+        {`사진 보기`->React.string}
+      </span>
+      <ReactImagesViewer
+        imgs={imageUrls->Array.map(url => {
+          {src: Some(url)}
+        })}
+        isOpen={isOpen}
+        currImg={imageIndex}
+        showThumbnails={true}
+        onClickThumbnail={idx => setImageIndex(._ => idx)}
+        onClose={() => setIsOpen(._ => false)}
+        onClickPrev={() => setImageIndex(.idx => Js.Math.max_int(0, idx - 1))}
+        onClickNext={() =>
+          setImageIndex(.idx => Js.Math.min_int(idx + 1, imageUrls->Array.length - 1))}
+      />
+    </>
+  }
+}
 
 module Item = {
   module Table = {
@@ -197,6 +330,90 @@ module Item = {
             )}
           </p>
         </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.flatMap(c => c.averageAnnualSales)
+          ->Option.mapWithDefault("", averageAnnualSales =>
+            averageAnnualSales->displayAnnualProductSalesInfo
+          )
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.mapWithDefault(``, c => c.canDeliver ? `예` : `아니오`)
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.flatMap(c => c.deliveryWeightUnit)
+          ->Option.getWithDefault("")
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.flatMap(c => c.deliveryDailyCapacity)
+          ->Option.getWithDefault("")
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.mapWithDefault("", c => c.supplyFrequency->displaySupplyFrequency)
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.mapWithDefault("", c => {
+            switch (c.supplyBegin, c.supplyEnd) {
+            | (_, None)
+            | (None, _) => `상시 출하`
+            | (Some(s1), Some(s2)) => displaySupplyBeginToEnd(s1, s2)
+            }
+          })
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccSalesCondition
+          ->Option.mapWithDefault("", p =>
+            p.deliveryPackages->Array.map(p => p->displayDeliveryPackage) |> Js.Array.joinWith(", ")
+          )
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccProduction
+          ->Option.mapWithDefault("", p => p.facilityType->displayFacilityType)
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccProduction
+          ->Option.mapWithDefault("", p =>
+            p.certificates->Array.map(c => c->displayCertificate) |> Js.Array.joinWith(", ")
+          )
+          ->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.userPccProduction->Option.mapWithDefault("", p => p.grade)->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
+          <BulkSale_Producer_MarketSales_Admin query=application.fragmentRefs />
+        </div>
+        <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
+          {(
+            application.bulkSaleProducerDetail
+            ->Option.flatMap(d => d.hasOnlineExperience)
+            ->Option.getWithDefault(false)
+              ? `예`
+              : `아니오`
+          )->React.string}
+        </div>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {
+            let imageUrls = application.userPccProduction->Option.mapWithDefault([], p => p.images)
+
+            imageUrls->Garter_Array.isEmpty
+              ? <span> {`사진 없음`->React.string} </span>
+              : <Gallery imageUrls={imageUrls} />
+          }
+        </div>
         <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
           <div className=%twc("flex")>
             <p>
@@ -215,11 +432,18 @@ module Item = {
             }}
           </div>
           <p>
-            {if application.farmmorningUser.userBusinessRegistrationInfo.name == "" {
-              React.null
-            } else {
-              `사업자: ${application.farmmorningUser.userBusinessRegistrationInfo.name}`->React.string
-            }}
+            {
+              let name =
+                application.farmmorningUser.userBusinessRegistrationInfo->Option.mapWithDefault(
+                  "",
+                  i => i.name,
+                )
+              if name == "" {
+                React.null
+              } else {
+                `사업자: ${name}`->React.string
+              }
+            }
           </p>
           <p>
             {`(${application.farmmorningUser.phoneNumber
@@ -242,42 +466,25 @@ module Item = {
             }->React.string}
           </p>
         </div>
-        <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
-          <p>
-            {j`농사경력 ${application.userBusinessSupportInfo.experiencedYearsRange->Option.mapWithDefault(
-                `-`,
-                displayExperiencedYearRange,
-              )}`->React.string}
-          </p>
-          <p>
-            {application.bulkSaleAnnualProductSalesInfo.edges
-            ->Array.map(edge =>
-              `연평균 ${edge.node.averageAnnualSales->displayAnnualProductSalesInfo}`->React.string
-            )
-            ->React.array}
-          </p>
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.bulkSaleProducerDetail
+          ->Option.flatMap(d => d.handsOn)
+          ->Option.mapWithDefault(``, handsOn => handsOn ? `예` : `아니오`)
+          ->React.string}
         </div>
         <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
           <p>
-            {application.farmmorningUser.userBusinessRegistrationInfo.businessRegistrationNumber->React.string}
-          </p>
-          <p>
-            {application.farmmorningUser.userBusinessRegistrationInfo.businessType
-            ->displayBusinessType
+            {application.bulkSaleProducerDetail
+            ->Option.flatMap(d => d.experienceYearType)
+            ->Option.mapWithDefault(``, displayExperiencedYearRange)
             ->React.string}
           </p>
         </div>
-        <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
-          <BulkSale_Producer_MarketSales_Admin
-            farmmorningUserId=application.farmmorningUser.id
-            applicationId={application.id}
-            query=application.fragmentRefs
-          />
-        </div>
-        <div className=%twc("h-full flex flex-col justify-center px-4 py-2")>
-          <BulkSale_Producer_OnlineMarketInfo_Admin
-            applicationId={application.id} query=application.fragmentRefs
-          />
+        <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
+          {application.bulkSaleProducerDetail
+          ->Option.flatMap(d => d.producerComment)
+          ->Option.getWithDefault("")
+          ->React.string}
         </div>
         <div className=%twc("h-full flex flex-row justify-between px-4 py-3")>
           <p className=%twc("h-[105px] pr-4 text-ellipsis line-clamp-5")>

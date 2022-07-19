@@ -55,64 +55,67 @@ module Grade = {
           title1={`찾으시는 상품의`} title2={`등급을 선택해주세요`}
         />
       </DS_Title.Normal1.Root>
-      <DS_Tab.LeftTab.Root className=%twc("mt-8 space-x-0")>
-        {isDomestic
-          ? <DS_Tab.LeftTab.Item>
-              <DS_Button.Chip.TextSmall1
-                className=%twc("text-sm")
-                label={`국내산`}
-                onClick={_ => setMadeIn(._ => #KR)}
-                selected={madeIn === #KR}
-              />
-            </DS_Tab.LeftTab.Item>
-          : {
-              switch isBeef {
-              | true => <>
+      <article className=%twc("px-5")>
+        <DS_Tab.LeftTab.Root className=%twc("mt-8 space-x-0")>
+          {isDomestic
+            ? <DS_Tab.LeftTab.Item>
+                <DS_Button.Chip.TextSmall1
+                  className=%twc("text-sm")
+                  label={`국내산`}
+                  onClick={_ => setMadeIn(._ => #KR)}
+                  selected={madeIn === #KR}
+                />
+              </DS_Tab.LeftTab.Item>
+            : {
+                switch isBeef {
+                | true =>
+                  <>
+                    <DS_Tab.LeftTab.Item>
+                      <DS_Button.Chip.TextSmall1
+                        className=%twc("text-sm")
+                        label={`미국산`}
+                        onClick={_ => setMadeIn(._ => #US)}
+                        selected={madeIn === #US}
+                      />
+                    </DS_Tab.LeftTab.Item>
+                    <DS_Tab.LeftTab.Item>
+                      <DS_Button.Chip.TextSmall1
+                        className=%twc("text-sm")
+                        label={`호주산`}
+                        onClick={_ => setMadeIn(._ => #AU)}
+                        selected={madeIn === #AU}
+                      />
+                    </DS_Tab.LeftTab.Item>
+                    <DS_Tab.LeftTab.Item>
+                      <DS_Button.Chip.TextSmall1
+                        className=%twc("text-sm")
+                        label={`캐나다산`}
+                        onClick={_ => setMadeIn(._ => #CA)}
+                        selected={madeIn === #CA}
+                      />
+                    </DS_Tab.LeftTab.Item>
+                    <DS_Tab.LeftTab.Item>
+                      <DS_Button.Chip.TextSmall1
+                        className=%twc("text-sm")
+                        label={`뉴질랜드산`}
+                        onClick={_ => setMadeIn(._ => #NZ)}
+                        selected={madeIn === #NZ}
+                      />
+                    </DS_Tab.LeftTab.Item>
+                  </>
+                | false =>
                   <DS_Tab.LeftTab.Item>
                     <DS_Button.Chip.TextSmall1
                       className=%twc("text-sm")
-                      label={`미국산`}
-                      onClick={_ => setMadeIn(._ => #US)}
-                      selected={madeIn === #US}
+                      label={`수입산`}
+                      onClick={_ => setMadeIn(._ => #OTHER)}
+                      selected={madeIn === #OTHER}
                     />
                   </DS_Tab.LeftTab.Item>
-                  <DS_Tab.LeftTab.Item>
-                    <DS_Button.Chip.TextSmall1
-                      className=%twc("text-sm")
-                      label={`호주산`}
-                      onClick={_ => setMadeIn(._ => #AU)}
-                      selected={madeIn === #AU}
-                    />
-                  </DS_Tab.LeftTab.Item>
-                  <DS_Tab.LeftTab.Item>
-                    <DS_Button.Chip.TextSmall1
-                      className=%twc("text-sm")
-                      label={`캐나다산`}
-                      onClick={_ => setMadeIn(._ => #CA)}
-                      selected={madeIn === #CA}
-                    />
-                  </DS_Tab.LeftTab.Item>
-                  <DS_Tab.LeftTab.Item>
-                    <DS_Button.Chip.TextSmall1
-                      className=%twc("text-sm")
-                      label={`뉴질랜드산`}
-                      onClick={_ => setMadeIn(._ => #NZ)}
-                      selected={madeIn === #NZ}
-                    />
-                  </DS_Tab.LeftTab.Item>
-                </>
-              | false =>
-                <DS_Tab.LeftTab.Item>
-                  <DS_Button.Chip.TextSmall1
-                    className=%twc("text-sm")
-                    label={`수입산`}
-                    onClick={_ => setMadeIn(._ => #OTHER)}
-                    selected={madeIn === #OTHER}
-                  />
-                </DS_Tab.LeftTab.Item>
-              }
-            }}
-      </DS_Tab.LeftTab.Root>
+                }
+              }}
+        </DS_Tab.LeftTab.Root>
+      </article>
       <DS_ListItem.Normal1.Root className=%twc("space-y-8 mt-11 tab-highlight-color")>
         <List edges madeIn handleOnChangeGrade grade />
       </DS_ListItem.Normal1.Root>
@@ -123,7 +126,7 @@ module Grade = {
 module OrderAmount = {
   @react.component
   let make = (~weightKg, ~handleOnChangeWeightKg) => {
-    let minimumAmount = 100
+    let minimumAmount = 50
 
     <section className=%twc("pt-7")>
       <DS_Title.Normal1.Root>

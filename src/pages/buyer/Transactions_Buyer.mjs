@@ -397,7 +397,7 @@ function Transactions_Buyer$Transactions(Props) {
                       id: "good_name",
                       name: "good_name",
                       type: "hidden",
-                      value: "신선캐시"
+                      value: "신선하이"
                     }), React.createElement("input", {
                       id: "good_mny",
                       maxLength: 12,

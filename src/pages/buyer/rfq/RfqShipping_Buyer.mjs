@@ -30,25 +30,26 @@ import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Intern
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
 import * as RfqShippingBuyer_Holidays_Query_graphql from "../../../__generated__/RfqShippingBuyer_Holidays_Query_graphql.mjs";
+import * as RfqShippingBuyer_RfqTerms_Query_graphql from "../../../__generated__/RfqShippingBuyer_RfqTerms_Query_graphql.mjs";
 import * as RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql from "../../../__generated__/RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.mjs";
 import * as RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql from "../../../__generated__/RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.mjs";
-import * as RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql from "../../../__generated__/RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.mjs";
+import * as RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql from "../../../__generated__/RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertVariables(variables)), {
+  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
       });
-  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertResponse, data);
+  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse, data);
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node);
+  var match = Hooks.useQueryLoader(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
-            return Curry._2(loadQueryFn, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertVariables(param), {
+            return Curry._2(loadQueryFn, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(param), {
                         fetchPolicy: param$1,
                         networkCacheConfig: param$2
                       });
@@ -62,14 +63,14 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertVariables(variables), {
+  Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
             return Curry._1(onResult, {
                         TAG: /* Ok */0,
-                        _0: RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertResponse(res)
+                        _0: RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res)
                       });
           }),
         error: (function (err) {
@@ -83,29 +84,29 @@ function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPoli
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertVariables(variables), {
+  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
   return __x.then(function (res) {
-              return Promise.resolve(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertResponse(res));
+              return Promise.resolve(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res));
             });
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node, queryRef);
-  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertResponse, data);
+  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, queryRef);
+  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse, data);
 }
 
 function retain(environment, variables) {
-  var operationDescriptor = RelayRuntime.createOperationDescriptor(RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Internal.convertVariables(variables));
+  var operationDescriptor = RelayRuntime.createOperationDescriptor(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables));
   return environment.retain(operationDescriptor);
 }
 
-var RfqNextAcceptableDeliveryDateAndTerm_makeVariables = RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query_graphql.Utils.makeVariables;
+var RfqNextAcceptableDeliveryDate_makeVariables = RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Utils.makeVariables;
 
-var RfqNextAcceptableDeliveryDateAndTerm = {
-  makeVariables: RfqNextAcceptableDeliveryDateAndTerm_makeVariables,
+var RfqNextAcceptableDeliveryDate = {
+  makeVariables: RfqNextAcceptableDeliveryDate_makeVariables,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -116,6 +117,87 @@ var RfqNextAcceptableDeliveryDateAndTerm = {
 };
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
+  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables)), {
+        fetchKey: fetchKey,
+        fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
+        networkCacheConfig: networkCacheConfig
+      });
+  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse, data);
+}
+
+function useLoader$1(param) {
+  var match = Hooks.useQueryLoader(RfqShippingBuyer_RfqTerms_Query_graphql.node);
+  var loadQueryFn = match[1];
+  var loadQuery = React.useMemo((function () {
+          return function (param, param$1, param$2, param$3) {
+            return Curry._2(loadQueryFn, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(param), {
+                        fetchPolicy: param$1,
+                        networkCacheConfig: param$2
+                      });
+          };
+        }), [loadQueryFn]);
+  return [
+          Caml_option.nullable_to_opt(match[0]),
+          loadQuery,
+          match[2]
+        ];
+}
+
+function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
+  Hooks.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
+          networkCacheConfig: networkCacheConfig,
+          fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
+        }).subscribe({
+        next: (function (res) {
+            return Curry._1(onResult, {
+                        TAG: /* Ok */0,
+                        _0: RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res)
+                      });
+          }),
+        error: (function (err) {
+            return Curry._1(onResult, {
+                        TAG: /* Error */1,
+                        _0: err
+                      });
+          })
+      });
+  
+}
+
+function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
+  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
+          networkCacheConfig: networkCacheConfig,
+          fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
+        }).toPromise();
+  return __x.then(function (res) {
+              return Promise.resolve(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res));
+            });
+}
+
+function usePreloaded$1(queryRef, param) {
+  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, queryRef);
+  return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse, data);
+}
+
+function retain$1(environment, variables) {
+  var operationDescriptor = RelayRuntime.createOperationDescriptor(RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables));
+  return environment.retain(operationDescriptor);
+}
+
+var RfqTerms_makeVariables = RfqShippingBuyer_RfqTerms_Query_graphql.Utils.makeVariables;
+
+var RfqTerms = {
+  makeVariables: RfqTerms_makeVariables,
+  Types: undefined,
+  use: use$1,
+  useLoader: useLoader$1,
+  $$fetch: $$fetch$1,
+  fetchPromised: fetchPromised$1,
+  usePreloaded: usePreloaded$1,
+  retain: retain$1
+};
+
+function use$2(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
   var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_Holidays_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
@@ -124,7 +206,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
   return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse, data);
 }
 
-function useLoader$1(param) {
+function useLoader$2(param) {
   var match = Hooks.useQueryLoader(RfqShippingBuyer_Holidays_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
@@ -142,7 +224,7 @@ function useLoader$1(param) {
         ];
 }
 
-function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
+function $$fetch$2(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
   Hooks.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
@@ -163,7 +245,7 @@ function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPo
   
 }
 
-function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
+function fetchPromised$2(environment, variables, networkCacheConfig, fetchPolicy, param) {
   var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
@@ -173,12 +255,12 @@ function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy
             });
 }
 
-function usePreloaded$1(queryRef, param) {
+function usePreloaded$2(queryRef, param) {
   var data = Hooks.usePreloadedQuery(RfqShippingBuyer_Holidays_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse, data);
 }
 
-function retain$1(environment, variables) {
+function retain$2(environment, variables) {
   var operationDescriptor = RelayRuntime.createOperationDescriptor(RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables));
   return environment.retain(operationDescriptor);
 }
@@ -188,16 +270,17 @@ var Holidays_makeVariables = RfqShippingBuyer_Holidays_Query_graphql.Utils.makeV
 var Holidays = {
   makeVariables: Holidays_makeVariables,
   Types: undefined,
-  use: use$1,
-  useLoader: useLoader$1,
-  $$fetch: $$fetch$1,
-  fetchPromised: fetchPromised$1,
-  usePreloaded: usePreloaded$1,
-  retain: retain$1
+  use: use$2,
+  useLoader: useLoader$2,
+  $$fetch: $$fetch$2,
+  fetchPromised: fetchPromised$2,
+  usePreloaded: usePreloaded$2,
+  retain: retain$2
 };
 
 var Query = {
-  RfqNextAcceptableDeliveryDateAndTerm: RfqNextAcceptableDeliveryDateAndTerm,
+  RfqNextAcceptableDeliveryDate: RfqNextAcceptableDeliveryDate,
+  RfqTerms: RfqTerms,
   Holidays: Holidays
 };
 
@@ -226,7 +309,7 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
             });
 }
 
-function use$2(param) {
+function use$3(param) {
   var match = Hooks.useMutation(RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.node);
   var mutate = match[0];
   return [
@@ -279,7 +362,7 @@ var UpdateDeliveryAddress = {
   makeVariables: UpdateDeliveryAddress_makeVariables,
   Types: undefined,
   commitMutation: commitMutation,
-  use: use$2
+  use: use$3
 };
 
 function commitMutation$1(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
@@ -307,7 +390,7 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
             });
 }
 
-function use$3(param) {
+function use$4(param) {
   var match = Hooks.useMutation(RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.node);
   var mutate = match[0];
   return [
@@ -345,7 +428,7 @@ var UpdateTermAgreement = {
   makeVariables: UpdateTermAgreement_makeVariables,
   Types: undefined,
   commitMutation: commitMutation$1,
-  use: use$3
+  use: use$4
 };
 
 var Mutation = {
@@ -506,10 +589,9 @@ function RfqShipping_Buyer$SearchAddress(Props) {
   React.useLayoutEffect((function () {
           if (isShow) {
             var iframeWrapper = document.getElementById("iframe-embed-addr");
-            var bodyElement = document.querySelector("body");
-            if (!(iframeWrapper == null) && !(bodyElement == null)) {
+            if (!(iframeWrapper == null)) {
               var w = iframeWrapper.clientWidth;
-              var h = bodyElement.clientHeight - 56 | 0;
+              var h = window.innerHeight - 56 | 0;
               var option = {
                 oncomplete: onComplete,
                 width: w,
@@ -698,8 +780,9 @@ function RfqShipping_Buyer$Shipping(Props) {
               });
           
         }), []);
-  var match$1 = use(undefined, undefined, undefined, undefined, undefined);
-  var minDateString = match$1.rfqNextAcceptableDeliveryDate.date;
+  var match$1 = use$1(undefined, undefined, undefined, undefined, undefined);
+  var match$2 = use(undefined, undefined, undefined, undefined, undefined);
+  var minDateString = match$2.rfqNextAcceptableDeliveryDate.date;
   var isTermAgree = Belt_Array.keep(Belt_Array.map(match$1.terms.edges, (function (x) {
               return x.node.agreement;
             })), (function (x) {
@@ -708,31 +791,31 @@ function RfqShipping_Buyer$Shipping(Props) {
   var minDate = new Date(minDateString);
   var maxDate = AddDays(minDate, 30);
   var maxDateString = Format(maxDate, "yyyy-MM-dd");
-  var match$2 = use$1({
+  var match$3 = use$2({
         startDate: minDateString,
         endDate: maxDateString
       }, undefined, undefined, undefined, undefined);
-  var match$3 = use$2(undefined);
-  var updateRfqRequest = match$3[0];
   var match$4 = use$3(undefined);
-  var updateTermAgreement = match$4[0];
-  var match$5 = React.useState(function () {
+  var updateRfqRequest = match$4[0];
+  var match$5 = use$4(undefined);
+  var updateTermAgreement = match$5[0];
+  var match$6 = React.useState(function () {
         return false;
       });
-  var setIsAddressDrawerShow = match$5[1];
-  var match$6 = React.useState(function () {
+  var setIsAddressDrawerShow = match$6[1];
+  var match$7 = React.useState(function () {
         
       });
-  var selectedDeliveryDate = match$6[0];
-  var match$7 = React.useState(function () {
+  var selectedDeliveryDate = match$7[0];
+  var match$8 = React.useState(function () {
         return {
                 method: "",
                 title: "선택해주세요",
                 text: ""
               };
       });
-  var selectedDeliveryMethod = match$7[0];
-  var match$8 = React.useState(function () {
+  var selectedDeliveryMethod = match$8[0];
+  var match$9 = React.useState(function () {
         return {
                 key: "none",
                 text: "선택해주세요",
@@ -740,17 +823,17 @@ function RfqShipping_Buyer$Shipping(Props) {
                 dayCount: ""
               };
       });
-  var deliveryCycle = match$8[0];
-  var match$9 = React.useState(function () {
+  var deliveryCycle = match$9[0];
+  var match$10 = React.useState(function () {
         return "";
       });
-  var setDeliveryAddress = match$9[1];
-  var deliveryAddress = match$9[0];
-  var match$10 = React.useState(function () {
+  var setDeliveryAddress = match$10[1];
+  var deliveryAddress = match$10[0];
+  var match$11 = React.useState(function () {
         return false;
       });
-  var setIsAgreedPrivacyPolicy = match$10[1];
-  var isAgreedPrivacyPolicy = match$10[0];
+  var setIsAgreedPrivacyPolicy = match$11[1];
+  var isAgreedPrivacyPolicy = match$11[0];
   var deliveryMethodRef = React.useRef(null);
   var deliveryCycleRef = React.useRef(null);
   var scrollToTargetItem = function (text) {
@@ -791,7 +874,7 @@ function RfqShipping_Buyer$Shipping(Props) {
               });
   };
   var onCompleteAddressDrawer = function (data) {
-    var newAddress = (data.sido + " " + data.sigungu + " " + data.bname).trim();
+    var newAddress = (data.sido + " " + data.sigungu + " " + data.bname).replace(/[ ]{2,}/, " ").trim();
     setDeliveryAddress(function (param) {
           return newAddress;
         });
@@ -800,11 +883,11 @@ function RfqShipping_Buyer$Shipping(Props) {
               });
   };
   var validDeliveryCycle = convertNumberInputValue(deliveryCycle.dayCount);
-  var match$11 = selectedDeliveryMethod.method !== "";
-  var match$12 = validDeliveryCycle !== "0" && validDeliveryCycle !== "";
-  var match$13 = deliveryAddress !== "";
-  var match$14 = isAgreedPrivacyPolicy || isTermAgree;
-  var isValidItems = selectedDeliveryDate !== undefined && match$11 && match$12 && match$13 && match$14 ? true : false;
+  var match$12 = selectedDeliveryMethod.method !== "";
+  var match$13 = validDeliveryCycle !== "0" && validDeliveryCycle !== "";
+  var match$14 = deliveryAddress !== "";
+  var match$15 = isAgreedPrivacyPolicy || isTermAgree;
+  var isValidItems = selectedDeliveryDate !== undefined && match$12 && match$13 && match$14 && match$15 ? true : false;
   var handleUpdateRfqRequest = function (param) {
     DataGtm.push({
           event: "Click_RFQ_Livestock_ShippingInfo"
@@ -828,7 +911,7 @@ function RfqShipping_Buyer$Shipping(Props) {
             return date.toISOString();
           }));
     Curry.app(updateRfqRequest, [
-          (function (param) {
+          (function (err) {
               return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
                           appearance: "error"
                         });
@@ -882,7 +965,7 @@ function RfqShipping_Buyer$Shipping(Props) {
                                   className: "relative"
                                 }))
                       }),
-                  className: "bg-white z-[1000]"
+                  className: "bg-white z-[5]"
                 }), React.createElement("div", {
                   className: "p-5"
                 }, React.createElement("h2", {
@@ -900,10 +983,10 @@ function RfqShipping_Buyer$Shipping(Props) {
                               children: React.createElement(RfqShipping_Buyer$CalendarListitem, {
                                     leftText: "최초 납품 희망일",
                                     currentDate: selectedDeliveryDate,
-                                    handleChangeDate: match$6[1],
+                                    handleChangeDate: match$7[1],
                                     minDate: minDate,
                                     maxDate: maxDate,
-                                    holidays: match$2.holidays
+                                    holidays: match$3.holidays
                                   }),
                               value: "desiredDeliveryDate"
                             }), React.createElement(DS_Accordion.Item.make, {
@@ -922,7 +1005,7 @@ function RfqShipping_Buyer$Shipping(Props) {
                                 }), React.createElement(DS_Accordion.Content.make, {
                                   children: React.createElement(RfqShipping_Buyer$DeliveryMethodContent, {
                                         currentDeliveryMethod: selectedDeliveryMethod,
-                                        handleChangeDeliveryMethod: match$7[1]
+                                        handleChangeDeliveryMethod: match$8[1]
                                       })
                                 })), React.createElement(DS_Accordion.Item.make, {
                               children: React.createElement(RfqShipping_Buyer$AddressButton, {
@@ -948,7 +1031,7 @@ function RfqShipping_Buyer$Shipping(Props) {
                                 }), React.createElement(DS_Accordion.Content.make, {
                                   children: React.createElement(RfqShipping_Buyer$DeliveryCycleContent, {
                                         currentDeliveryCycle: deliveryCycle,
-                                        handleChangeDeliveryCycle: match$8[1]
+                                        handleChangeDeliveryCycle: match$9[1]
                                       })
                                 })))), isTermAgree ? null : React.createElement(React.Fragment, undefined, React.createElement("div", {
                             className: "h-3 bg-border-default-L2"
@@ -975,12 +1058,12 @@ function RfqShipping_Buyer$Shipping(Props) {
                                     title: "개인정보 제공에 동의해주세요",
                                     content: React.createElement("p", {
                                           className: "pl-8 text-[13px] text-enabled-L2 leading-5 tracking-tight"
-                                        }, React.createElement("div", undefined, "(주)그린랩스는 다음과 같은 목적으로 개인정보를 수집합니다."), React.createElement("div", undefined, "1. 개인정보 수집 항목 : 주소"), React.createElement("div", undefined, "2. 개인정보 수집 목적 : 견적요청 서비스 이용 (농산, 축산, 수산)"), React.createElement("div", undefined, "3. 개인정보의 보유 및 이용 기간 : ", React.createElement("span", {
-                                                  className: "font-bold text-base"
-                                                }, "회원탈퇴 시 즉시 파기"), " 이용자는 동의를 거부할 권리가 있습니다. 다만, 이에 동의하지 않을 경우 견적요청 서비스 이용이 어려울 수 있습니다."))
+                                        }, React.createElement("div", undefined, "(주)그린랩스는 다음과 같은 목적으로 개인정보를 수집합니다."), React.createElement("div", undefined, "1. 개인정보 수집 항목 : 주소"), React.createElement("div", undefined, "2. 개인정보 수집 목적 : 견적 매칭 서비스 및 구매상품 배송"), React.createElement("div", undefined, "3. 개인정보의 보유 및 이용 기간 : ", React.createElement("span", {
+                                                  className: "font-bold"
+                                                }, "회원탈퇴 시 즉시 파기"), " 이용자는 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 다만, 이에 동의하지 않을 경우 신선매칭 서비스 이용이 어려울 수 있습니다."))
                                   }))))), React.createElement(DS_ButtonContainer.Floating1.make, {
                   label: "견적요청하기",
-                  disabled: !isValidItems || match$3[1],
+                  disabled: !isValidItems || match$4[1],
                   onClick: (function (param) {
                       if (isTermAgree) {
                         return handleUpdateRfqRequest(undefined);
@@ -1018,7 +1101,7 @@ function RfqShipping_Buyer$Shipping(Props) {
                 }), React.createElement(RfqShipping_Buyer$AddressDrawer, {
                   onComplete: onCompleteAddressDrawer,
                   closeDrawer: toggleDrawer,
-                  isShow: match$5[0]
+                  isShow: match$6[0]
                 }));
 }
 

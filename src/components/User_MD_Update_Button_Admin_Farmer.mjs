@@ -6,7 +6,6 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
-import * as IconEdit from "./svgs/IconEdit.mjs";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
 import * as IconError from "./svgs/IconError.mjs";
@@ -21,6 +20,9 @@ import Async from "react-select/async";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
+import EditSvg from "../../public/assets/edit.svg";
+
+var editIcon = EditSvg;
 
 function User_MD_Update_Button_Admin_Farmer(Props) {
   var user = Props.user;
@@ -106,9 +108,8 @@ function User_MD_Update_Button_Admin_Farmer(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, {
-                        width: "20",
-                        height: "20"
+                  children: React.createElement("img", {
+                        src: editIcon
                       }),
                   className: "block text-left mb-1 underline focus:outline-none"
                 }), React.createElement(ReactDialog.Content, {
@@ -168,7 +169,8 @@ function User_MD_Update_Button_Admin_Farmer(Props) {
 var make = User_MD_Update_Button_Admin_Farmer;
 
 export {
+  editIcon ,
   make ,
   
 }
-/* Env Not a pure module */
+/* editIcon Not a pure module */

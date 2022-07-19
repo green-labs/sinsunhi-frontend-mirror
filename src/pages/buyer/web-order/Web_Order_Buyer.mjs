@@ -328,7 +328,7 @@ function Web_Order_Buyer$Container(Props) {
                 Web_Order_Buyer_Form.name,
                 Js_dict.fromArray(match$5 !== undefined ? (
                         typeof match$5 === "object" ? (
-                            match$5.NAME === "Product" ? [
+                            match$5.NAME === "NormalProduct" ? [
                                 [
                                   "payment-method",
                                   "card"

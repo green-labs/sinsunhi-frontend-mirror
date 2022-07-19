@@ -1,6 +1,9 @@
 open RadixUI
 open Webapi
 
+@module("../../public/assets/edit.svg")
+external editIcon: string = "default"
+
 module FormFields = %lenses(
   type state = {
     rep: string,
@@ -152,7 +155,7 @@ let make = (~user: CustomHooks.QueryUser.Farmer.user, ~className: option<string>
   <Dialog.Root onOpenChange=prefill>
     <Dialog.Overlay className=%twc("dialog-overlay") />
     <Dialog.Trigger className=%twc("block text-left mb-1 underline focus:outline-none")>
-      <IconEdit height="20" width="20" ?className />
+      <img src=editIcon ?className />
     </Dialog.Trigger>
     <Dialog.Content className=%twc("dialog-content overflow-y-auto")>
       <div className=%twc("p-5")>

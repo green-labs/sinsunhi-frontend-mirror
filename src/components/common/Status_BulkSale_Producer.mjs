@@ -94,19 +94,19 @@ function stringifyStatus(s) {
 function displayStatus(s) {
   switch (s) {
     case /* APPLIED */0 :
-        return "접수중";
+        return "신청 접수 중";
     case /* UNDER_DISCUSSION */1 :
-        return "협의중";
+        return "판매 협의 중";
     case /* ON_SITE_MEETING_SCHEDULED */2 :
-        return "현장미팅예정";
+        return "현장 미팅 예정";
     case /* SAMPLE_REQUESTED */3 :
-        return "샘플요청";
+        return "샘플 요청";
     case /* SAMPLE_REVIEWING */4 :
-        return "품평회 진행중";
+        return "품평회 진행 중";
     case /* REJECTED */5 :
-        return "보류";
+        return "추후 판매";
     case /* CONFIRMED */6 :
-        return "판매진행";
+        return "판매 확정";
     case /* WITHDRAWN */7 :
         return "고객 취소";
     

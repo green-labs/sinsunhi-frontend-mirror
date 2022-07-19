@@ -55,44 +55,6 @@ module Form = {
   }
 }
 
-let encodeQualifiedNameValue = query => {
-  let generateForm: array<
-    UpdateProductDetailAdminFragment_graphql.Types.fragment_displayCategories_fullyQualifiedName,
-  > => Form.submit = categories => {
-    categoryType: switch categories->Garter.Array.first->Option.map(({type_}) => type_) {
-    | Some(#NORMAL) => ReactSelect.Selected({value: "normal", label: `일반`})
-    | Some(#SHOWCASE) => ReactSelect.Selected({value: "showcase", label: `기획전`})
-    | _ => ReactSelect.NotSelected
-    },
-    c1: categories
-    ->Array.get(0)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c2: categories
-    ->Array.get(1)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c3: categories
-    ->Array.get(2)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c4: categories
-    ->Array.get(3)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c5: categories
-    ->Array.get(4)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-  }
-  query->generateForm
-}
-
 let categoryTypeOptions = [
   ReactSelect.Selected({value: "normal", label: `일반`}),
   ReactSelect.Selected({value: "showcase", label: `기획전`}),

@@ -3,6 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Dialog from "./common/Dialog.mjs";
+import * as DataGtm from "../utils/DataGtm.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
@@ -88,6 +89,9 @@ function Upload_Orders(Props) {
                               disabled: Belt_Option.isNone(file),
                               onClick: (function (param) {
                                   if (file !== undefined) {
+                                    DataGtm.push({
+                                          event: "select_purchase_order"
+                                        });
                                     UploadFileToS3PresignedUrl.upload(undefined, /* Buyer */1, Caml_option.valFromOption(file), (function (param) {
                                             handleResetFile(undefined);
                                             return Curry._1(onSuccess, undefined);

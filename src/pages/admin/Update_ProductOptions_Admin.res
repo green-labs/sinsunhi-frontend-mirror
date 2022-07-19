@@ -1,8 +1,12 @@
+@module("../../../public/assets/inequality-sign-right.svg")
+external inequalitySignRightIcon: string = "default"
+
 module Query = %relay(`
   query UpdateProductOptionsAdminQuery($id: ID!) {
     node(id: $id) {
       ... on Product {
         ...UpdateProductOptionsAdminFragment
+        ...UpdateProductOptionsAdminProductTypeFragment
       }
     }
   }
@@ -12,9 +16,48 @@ module Fragment = %relay(`
   fragment UpdateProductOptionsAdminFragment on Product {
     id
     displayName
-    isCourierAvailable
     ...ProductSummaryAdminFragment
-    ...UpdateProductOptionListAdminFragment
+  
+    ... on NormalProduct {
+      isCourierAvailable
+      productOptions(first: 20)
+        @connection(key: "UpdateProductOptionsAdmin_productOptions") {
+        __id
+        edges {
+          node {
+            id
+            status
+            ...UpdateProductOptionAdminFragment
+          }
+        }
+      }
+    }
+  
+    ... on QuotableProduct {
+      isCourierAvailable
+      productOptions(first: 20)
+        @connection(key: "UpdateProductOptionsAdmin_productOptions") {
+        __id
+        edges {
+          node {
+            id
+            status
+            ...UpdateProductOptionAdminFragment
+          }
+        }
+      }
+    }
+  }
+`)
+
+module ProductTypeFragment = %relay(`
+  fragment UpdateProductOptionsAdminProductTypeFragment on Product {
+    ... on NormalProduct {
+      id
+    }
+    ... on QuotableProduct {
+      id
+    }
   }
 `)
 
@@ -169,6 +212,12 @@ let makeUpdateOption: Update_ProductOption_Admin.Form.submit => UpdateProductOpt
   | SOLDOUT => #SOLDOUT
   | RETIRE => #RETIRE
   },
+  productOptionCost: {
+    isFreeShipping: switch option.isFreeShipping {
+    | FREE => true
+    | NOTFREE => false
+    },
+  },
 }
 
 let makeCreateOption: (
@@ -183,6 +232,10 @@ let makeCreateOption: (
     deliveryCost: option.cost.deliveryCost->Option.getWithDefault(0),
     rawCost: option.cost.rawCost,
     workingCost: option.cost.workingCost,
+    isFreeShipping: switch option.isFreeShipping {
+    | FREE => true
+    | NOTFREE => false
+    },
   },
   grade: option.grade->Option.keep(nonEmptyString),
   //--- 입수정보
@@ -275,7 +328,7 @@ module Title = {
     <header className=%twc("flex flex-col items-baseline px-5 py-4 pb-0 gap-1")>
       <div className=%twc("flex items-center gap-1 text-text-L1 text-sm")>
         <span className=%twc("font-bold")> {`상품 조회·수정`->React.string} </span>
-        <IconInEqualitySignRight width="16" height="16" />
+        <img src=inequalitySignRightIcon />
         <span> {`단품 수정`->React.string} </span>
       </div>
       <h1 className=%twc("text-text-L1 text-xl font-bold")>
@@ -313,8 +366,14 @@ module Presenter = {
   @react.component
   let make = (~query) => {
     let queryData = Fragment.use(query)
+    let productType = ProductTypeFragment.use(query)
     let router = Next.Router.useRouter()
-    let {displayName: productDisplayName, id: productNodeId, isCourierAvailable} = queryData
+    let {
+      displayName: productDisplayName,
+      id: productNodeId,
+      isCourierAvailable,
+      productOptions,
+    } = queryData
     let {addToast} = ReactToastNotifications.useToasts()
     let (isShowUpdateSuccess, setShowUpdateSuccess) = React.Uncurried.useState(_ => Dialog.Hide)
     let (isShowInitalize, setShowInitialize) = React.Uncurried.useState(_ => Dialog.Hide)
@@ -378,55 +437,66 @@ module Presenter = {
       setShowInitialize(._ => Dialog.Show)
     })
 
-    <ReactHookForm.Provider methods>
-      <form onSubmit={handleSubmit(. onSubmit)}>
-        <div className=%twc("max-w-gnb-panel overflow-auto bg-div-shape-L1 min-h-screen")>
-          <Title productDisplayName />
-          <Product_Summary_Admin query={queryData.fragmentRefs} />
-          <section className=%twc("p-7 mt-4 mx-4 mb-20 bg-white rounded shadow-gl")>
-            <Update_ProductOption_List_Admin
-              productDisplayName={productDisplayName}
-              query={queryData.fragmentRefs}
-              isCourierAvailable
-            />
-          </section>
-        </div>
-        <Bottom onReset={handleReset} />
-      </form>
-      <Dialog
-        boxStyle=%twc("text-center rounded-2xl")
-        isShow={isShowInitalize}
-        textOnCancel=`닫기`
-        textOnConfirm=`초기화`
-        kindOfConfirm=Dialog.Negative
-        onConfirm={_ => {
-          reset(. None)
-          // validation 을 호출하지 않는한 폼의 내용이 비어있다.
-          trigger(. "")
-          setShowInitialize(._ => Dialog.Hide)
-        }}
-        onCancel={_ => {
-          setShowInitialize(._ => Dialog.Hide)
-        }}>
-        <p className=%twc("text-gray-500 text-center whitespace-pre-wrap")>
-          {`단품 등록 페이지를`->React.string}
-          <br />
-          {`초기화 하시겠습니까?`->React.string}
-        </p>
-      </Dialog>
-      <Dialog
-        boxStyle=%twc("text-center rounded-2xl")
-        isShow={isShowUpdateSuccess}
-        textOnCancel=`확인`
-        onCancel={_ => {
-          setShowUpdateSuccess(._ => Dialog.Hide)
-          router->Next.Router.reload(router.pathname)
-        }}>
-        <p className=%twc("text-gray-500 text-center whitespace-pre-wrap")>
-          {`단품정보가 수정되었습니다.`->React.string}
-        </p>
-      </Dialog>
-    </ReactHookForm.Provider>
+    switch productType {
+    | #NormalProduct(_)
+    | #QuotableProduct(_) =>
+      switch productOptions {
+      | Some(options) =>
+        <ReactHookForm.Provider methods>
+          <form onSubmit={handleSubmit(. onSubmit)}>
+            <div className=%twc("max-w-gnb-panel overflow-auto bg-div-shape-L1 min-h-screen")>
+              <Title productDisplayName />
+              <Product_Summary_Admin query={queryData.fragmentRefs} />
+              <section className=%twc("p-7 mt-4 mx-4 mb-20 bg-white rounded shadow-gl")>
+                <Update_ProductOption_List_Admin
+                  productDisplayName={productDisplayName}
+                  options
+                  isCourierAvailable={isCourierAvailable->Option.getWithDefault(false)}
+                />
+              </section>
+            </div>
+            <Bottom onReset={handleReset} />
+          </form>
+          <Dialog
+            boxStyle=%twc("text-center rounded-2xl")
+            isShow={isShowInitalize}
+            textOnCancel=`닫기`
+            textOnConfirm=`초기화`
+            kindOfConfirm=Dialog.Negative
+            onConfirm={_ => {
+              reset(. None)
+              // validation 을 호출하지 않는한 폼의 내용이 비어있다.
+              trigger(. "")
+              setShowInitialize(._ => Dialog.Hide)
+            }}
+            onCancel={_ => {
+              setShowInitialize(._ => Dialog.Hide)
+            }}>
+            <p className=%twc("text-gray-500 text-center whitespace-pre-wrap")>
+              {`단품 등록 페이지를`->React.string}
+              <br />
+              {`초기화 하시겠습니까?`->React.string}
+            </p>
+          </Dialog>
+          <Dialog
+            boxStyle=%twc("text-center rounded-2xl")
+            isShow={isShowUpdateSuccess}
+            textOnCancel=`확인`
+            onCancel={_ => {
+              setShowUpdateSuccess(._ => Dialog.Hide)
+              router->Next.Router.reload(router.pathname)
+            }}>
+            <p className=%twc("text-gray-500 text-center whitespace-pre-wrap")>
+              {`단품정보가 수정되었습니다.`->React.string}
+            </p>
+          </Dialog>
+        </ReactHookForm.Provider>
+      | None => React.null
+      }
+
+    | #UnselectedUnionMember(_) =>
+      <div> {`지원하지 않은 상품 타입 입니다`->React.string} </div>
+    }
   }
 }
 

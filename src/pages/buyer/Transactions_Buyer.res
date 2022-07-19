@@ -352,7 +352,7 @@ module Transactions = {
         // KCP 결제를 처리할 숨겨진 주문정보 form
         // 우리 API에 주문을 생성을 요청하고 응답 데이터로 채울 input들
         <input type_="hidden" id="ordr_idxx" name="ordr_idxx" value="TEST12345" maxLength=40 />
-        <input type_="hidden" id="good_name" name="good_name" value=`신선캐시` />
+        <input type_="hidden" id="good_name" name="good_name" value=`신선하이` />
         <input type_="hidden" id="good_mny" name="good_mny" value="0" maxLength=12 />
         <input type_="hidden" id="currency" name="currency" value="0" maxLength=9 />
         <input type_="hidden" id="shop_user_id" name="shop_user_id" value="" />

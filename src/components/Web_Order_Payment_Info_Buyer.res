@@ -9,6 +9,7 @@ module Fragment = %relay(`
               price
               productOptionCost {
                 deliveryCost
+                isFreeShipping
               }
             }
           }
@@ -58,26 +59,31 @@ let make = (~query, ~quantity) => {
     (),
   )
 
-  let (totalProductPrice, totalDeliveryCost, isFreightDelivery) = switch (
-    fragments.node,
-    deliveryType,
-  ) {
-  | (Some({price, productOptionCost: {deliveryCost}}), Some(deliveryType')) =>
+  let optionPrice = fragments.node->Option.flatMap(option => option.price)->Option.getWithDefault(0)
+
+  let (totalProductPrice, totalDeliveryCost) = switch (fragments.node, deliveryType) {
+  | (Some({price, productOptionCost: {deliveryCost, isFreeShipping}}), Some(deliveryType')) =>
     switch deliveryType'->Js.Json.string->Form.deliveryType_decode {
     | Ok(decode) =>
       switch decode {
-      | #FREIGHT => (price->Option.getWithDefault(0) * quantity, 0, true)
-      | #SELF => (price->Option.getWithDefault(0) * quantity, 0, false)
-      | #PARCEL => (
-          (price->Option.getWithDefault(0) - deliveryCost) * quantity,
-          deliveryCost * quantity,
-          false,
+      | #FREIGHT => (
+          `${(price->Option.getWithDefault(0) * quantity)->Locale.Int.show}원`,
+          `협의`,
         )
+      | #SELF => (`${(price->Option.getWithDefault(0) * quantity)->Locale.Int.show}원`, `0원`)
+      | #PARCEL =>
+        switch isFreeShipping {
+        | true => (`${(price->Option.getWithDefault(0) * quantity)->Locale.Int.show}원`, `무료`)
+        | false => (
+            `${((price->Option.getWithDefault(0) - deliveryCost) * quantity)->Locale.Int.show}원`,
+            `${(deliveryCost * quantity)->Locale.Int.show}원`,
+          )
+        }
       }
-    | Error(_) => (0, 0, false)
+    | Error(_) => (`-`, `-`)
     }
-  | (Some({productOptionCost: {deliveryCost}}), None) => (0, deliveryCost * quantity, false)
-  | _ => (0, 0, false)
+  | (Some(_), None) => (`-`, `-`)
+  | _ => (`-`, `-`)
   }
 
   let (_, _, _, scrollY) = CustomHooks.Scroll.useScrollObserver(Px(50.0), ~sensitive=None)
@@ -116,19 +122,19 @@ let make = (~query, ~quantity) => {
       <li key="product-price" className=%twc("flex justify-between items-center")>
         <span className=%twc("text-text-L2")> {`총 상품금액`->React.string} </span>
         <span className=%twc("text-base font-bold xl:text-sm xl:font-normal")>
-          {`${totalProductPrice->Locale.Int.show}원`->React.string}
+          {totalProductPrice->React.string}
         </span>
       </li>
       <li key="delivery-cost" className=%twc("flex justify-between items-center")>
         <span className=%twc("text-text-L2")> {`배송비`->React.string} </span>
         <span className=%twc("text-base font-bold xl:text-sm xl:font-normal")>
-          {(isFreightDelivery ? `협의` : totalDeliveryCost->Locale.Int.show ++ `원`)->React.string}
+          {totalDeliveryCost->React.string}
         </span>
       </li>
       <li key="total-price" className=%twc("flex justify-between items-center")>
         <span className=%twc("text-text-L2")> {`총 결제금액`->React.string} </span>
         <span className=%twc("text-xl xl:text-lg text-primary font-bold")>
-          {`${(totalProductPrice + totalDeliveryCost)->Locale.Int.show}원`->React.string}
+          {`${(optionPrice * quantity)->Locale.Int.show}원`->React.string}
         </span>
       </li>
     </ul>

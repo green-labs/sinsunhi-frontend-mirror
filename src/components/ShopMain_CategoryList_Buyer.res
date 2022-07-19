@@ -52,7 +52,7 @@ module PC = {
       </span>
       <ol className=%twc("mt-6 w-full flex items-center")>
         <li className=%twc("mx-6 w-[112px] max-w-[112px]")>
-          <Next.Link href={`/buyer/products/all`}>
+          <Next.Link href={`/buyer/products`}>
             <a>
               <img
                 src="https://public.sinsunhi.com/images/20220512/category_all.png"
@@ -68,9 +68,12 @@ module PC = {
         {mainDisplayCategories
         ->Array.map(({id, name, image}) => {
           let key = `display-category-${id}-pc`
-          let src = image->Option.mapWithDefault(Image.Placeholder.sm, image' => image'.original)
+          let src =
+            image->Option.mapWithDefault(ImageWithPlaceholder.Placeholder.sm, image' =>
+              image'.original
+            )
           let queryStr = {
-            [("category-id", id), ("category-name", name->Js.Global.encodeURIComponent)]
+            [("category-id", id)]
             ->Webapi.Url.URLSearchParams.makeWithArray
             ->Webapi.Url.URLSearchParams.toString
           }
@@ -78,9 +81,9 @@ module PC = {
             <Next.Link href={`/buyer/products?${queryStr}`}>
               <a>
                 <div className=%twc("w-28 aspect-square rounded-lg overflow-hidden")>
-                  <Image
+                  <ImageWithPlaceholder
                     src
-                    placeholder=Image.Placeholder.sm
+                    placeholder=ImageWithPlaceholder.Placeholder.sm
                     className=%twc("w-full h-full object-cover")
                     alt=key
                   />
@@ -130,7 +133,7 @@ module MO = {
       </span>
       <ol className=%twc("mt-6 w-full grid grid-cols-4 gap-y-3")>
         <li className=%twc("w-full flex items-center justify-center")>
-          <Next.Link href={`/buyer/products/all`}>
+          <Next.Link href={`/buyer/products`}>
             <a>
               <div className=%twc("w-[90px] flex flex-col items-center justify-center")>
                 <img
@@ -146,9 +149,12 @@ module MO = {
         {mainDisplayCategories
         ->Array.map(({id, name, image}) => {
           let key = `display-category-${id}-mobile`
-          let src = image->Option.mapWithDefault(Image.Placeholder.sm, image' => image'.original)
+          let src =
+            image->Option.mapWithDefault(ImageWithPlaceholder.Placeholder.sm, image' =>
+              image'.original
+            )
           let queryStr = {
-            [("category-id", id), ("category-name", name->Js.Global.encodeURIComponent)]
+            [("category-id", id)]
             ->Webapi.Url.URLSearchParams.makeWithArray
             ->Webapi.Url.URLSearchParams.toString
           }
@@ -158,9 +164,9 @@ module MO = {
               <a>
                 <div className=%twc("w-[90px] flex flex-col items-center justify-center")>
                   <div className=%twc("w-14 aspect-square rounded-lg overflow-hidden")>
-                    <Image
+                    <ImageWithPlaceholder
                       src
-                      placeholder=Image.Placeholder.sm
+                      placeholder=ImageWithPlaceholder.Placeholder.sm
                       className=%twc("w-full h-full object-cover")
                       alt=key
                     />

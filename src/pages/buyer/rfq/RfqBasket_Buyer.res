@@ -319,7 +319,7 @@ module Basket = {
               title1={`견적요청할 부위를`} title2={`선택해주세요`}
             />
           </DS_Title.Normal1.Root>}
-      <section className={isScrolled ? %twc("sticky top-14 left-0") : %twc("mt-9")}>
+      <section className={isScrolled ? %twc("sticky top-14 left-0 px-5") : %twc("mt-9 px-5")}>
         <DS_Tab.LeftTab.Root>
           {query.meatSpecies.edges
           ->Array.map(({node}) => {
@@ -375,7 +375,7 @@ let make = (~requestId: option<string>, ~from: option<string>) => {
 
   switch requestId {
   | Some(id) =>
-    <Authorization.Buyer fallback={React.null} title=j`바이어 견적 요청`>
+    <Authorization.Buyer fallback={React.null} title={j`바이어 견적 요청`}>
       <React.Suspense>
         <RfqCommon.CheckBuyerRequestStatus requestId={id}>
           <Basket requestId={id} from />

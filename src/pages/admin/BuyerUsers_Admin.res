@@ -7,9 +7,7 @@ module Users = {
   let make = () => {
     let router = Next.Router.useRouter()
 
-    let status = CustomHooks.QueryUser.Buyer.use(// 최초 랜딩 시 role 쿼리 파라미터를 farmer로 설정한다
-
-    {
+    let status = CustomHooks.QueryUser.Buyer.use({
       let rq = router.query
       rq->Js.Dict.set("role", "buyer")
       rq->Webapi.Url.URLSearchParams.makeWithDict->Webapi.Url.URLSearchParams.toString
@@ -40,6 +38,6 @@ module Users = {
 
 @react.component
 let make = () =>
-  <Authorization.Admin title=j`관리자 바이어 사용자 조회`>
+  <Authorization.Admin title={j`관리자 바이어 사용자 조회`}>
     <Users />
   </Authorization.Admin>

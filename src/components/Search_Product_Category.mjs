@@ -531,7 +531,7 @@ function Search_Product_Category(Props) {
     "전체",
     "대분류선택",
     "부류선택",
-    "작물선택",
+    "품목선택",
     "품종선택"
   ];
   return React.createElement(Category.make, {

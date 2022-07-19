@@ -8,6 +8,34 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as Webapi__Dom__Document from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Document.mjs";
 
+function modifyPaperformZIndex(param) {
+  var element = document.querySelector(".Paperform__popupwrapper");
+  if (!(element == null)) {
+    element.setAttribute("style", "z-index: 20;");
+    return ;
+  }
+  
+}
+
+function removeBodyScrollLock(param) {
+  var body = document.querySelector("body");
+  if (body == null) {
+    return ;
+  }
+  var bodyClassList = body.classList;
+  bodyClassList.remove("blockScroll");
+  bodyClassList.remove("ab-pause-scrolling");
+  
+}
+
+function makeScriptTag(param) {
+  return Webapi__Dom__Element.asHtmlElement(document.createElement("script"));
+}
+
+function getPaperformBtn(paperFormId) {
+  return Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById(paperFormId)), Webapi__Dom__Element.asHtmlElement);
+}
+
 function Paperform(Props) {
   var paperFormId = Props.paperFormId;
   var prefill = Props.prefill;
@@ -21,16 +49,20 @@ function Paperform(Props) {
   };
   React.useEffect((function () {
           var script = Webapi__Dom__Element.asHtmlElement(document.createElement("script"));
-          var btn = Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById(paperFormId)), Webapi__Dom__Element.asHtmlElement);
+          var paperformBtn = getPaperformBtn(paperFormId);
           var body = Belt_Option.flatMap(Webapi__Dom__Document.asHtmlDocument(document), (function (prim) {
                   return Caml_option.nullable_to_opt(prim.body);
                 }));
-          if (body !== undefined && script !== undefined && btn !== undefined) {
-            var btn$p = Caml_option.valFromOption(btn);
+          if (body !== undefined && script !== undefined && paperformBtn !== undefined) {
+            var paperformBtn$p = Caml_option.valFromOption(paperformBtn);
             var script$p = Caml_option.valFromOption(script);
             script$p.setAttribute("src", Env.paperformEmbedUrl);
             script$p.addEventListener("load", (function (param) {
-                    btn$p.click();
+                    paperformBtn$p.click();
+                    setTimeout((function (param) {
+                            modifyPaperformZIndex(undefined);
+                            return removeBodyScrollLock(undefined);
+                          }), 500);
                     
                   }));
             Caml_option.valFromOption(body).appendChild(script$p);
@@ -46,6 +78,10 @@ function Paperform(Props) {
 var make = Paperform;
 
 export {
+  modifyPaperformZIndex ,
+  removeBodyScrollLock ,
+  makeScriptTag ,
+  getPaperformBtn ,
   make ,
   
 }

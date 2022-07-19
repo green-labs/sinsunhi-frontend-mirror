@@ -755,7 +755,7 @@ function RfqBasket_Buyer$Basket(Props) {
                         }),
                     className: "pt-3"
                   }), React.createElement("section", {
-                  className: isScrolled ? "sticky top-14 left-0" : "mt-9"
+                  className: isScrolled ? "sticky top-14 left-0 px-5" : "mt-9 px-5"
                 }, React.createElement(DS_Tab.LeftTab.Root.make, {
                       children: Belt_Array.map(query.meatSpecies.edges, (function (param) {
                               var node = param.node;

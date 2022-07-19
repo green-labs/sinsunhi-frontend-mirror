@@ -1,6 +1,12 @@
 open ReactHookForm
 module Select_Unit = Select_Product_Option_Unit
 
+@module("../../public/assets/checkbox-checked.svg")
+external checkboxCheckedIcon: string = "default"
+
+@module("../../public/assets/checkbox-unchecked.svg")
+external checkboxUncheckedIcon: string = "default"
+
 module Form = {
   @spice
   type cost = {
@@ -24,6 +30,7 @@ module Form = {
     @spice.key("cut-off-time") cutOffTime: option<string>,
     @spice.key("memo") memo: option<string>,
     @spice.key("show-each") showEach: bool,
+    @spice.key("is-free-shipping") isFreeShipping: Select_Product_Shipping_Type.status,
   }
 
   type inputNames = {
@@ -34,6 +41,7 @@ module Form = {
     weight: string,
     weightUnit: string,
     operationStatus: string,
+    isFreeShipping: string,
     buyerPrice: string,
     cost: string,
     rawCost: string,
@@ -54,6 +62,7 @@ module Form = {
     weight: `${prefix}.weight`,
     weightUnit: `${prefix}.weight-unit`,
     operationStatus: `${prefix}.operation-status`,
+    isFreeShipping: `${prefix}.is-free-shipping`,
     buyerPrice: `${prefix}.cost.buyer-price`,
     cost: `${prefix}.cost.cost`,
     rawCost: `${prefix}.cost.raw-cost`,
@@ -74,6 +83,7 @@ module Form = {
     weight: "weight",
     weightUnit: "weight-unit",
     operationStatus: "operation-status",
+    isFreeShipping: "is-free-shipping",
     buyerPrice: "cost.buyer-price",
     cost: "cost.cost",
     rawCost: "cost.raw-cost",
@@ -95,6 +105,7 @@ module Form = {
       // (names.weight, Js.Json.null),
       (names.weightUnit, Select_Unit.WeightStatus.KG->Select_Unit.Weight.status_encode),
       (names.operationStatus, Js.Json.null),
+      (names.isFreeShipping, Js.Json.null),
       (names.buyerPrice, Js.Json.null),
       (
         "cost",
@@ -499,6 +510,62 @@ module OptionStatusSelect = {
   }
 }
 
+module IsFreeShipping = {
+  @react.component
+  let make = (~inputName) => {
+    let {control, formState: {errors}} = Hooks.Context.use(.
+      ~config=Hooks.Form.config(~mode=#onChange, ()),
+      (),
+    )
+
+    let toStatus = statusFromSelect => {
+      statusFromSelect
+      ->Select_Product_Shipping_Type.status_decode
+      ->Result.mapWithDefault(None, v => Some(v))
+    }
+
+    <div className=%twc("flex flex-col w-[158px] min-w-[158px]")>
+      <label className=%twc("block")>
+        <span className=%twc("font-bold")> {`배송비 타입`->React.string} </span>
+        <span className=%twc("text-red-500")> {`*`->React.string} </span>
+      </label>
+      <span className=%twc("mt-2 w-full h-9")>
+        <Controller
+          name=inputName
+          control
+          rules={Rules.make(~required=true, ())}
+          render={({field: {ref, name, value, onChange}}) => {
+            <div>
+              <Select_Product_Shipping_Type
+                forwardRef=ref
+                status={value->toStatus}
+                onChange={selected => {
+                  selected
+                  ->Select_Product_Shipping_Type.status_encode
+                  ->Controller.OnChangeArg.value
+                  ->onChange
+                }}
+              />
+              <ErrorMessage
+                errors
+                name
+                render={_ => {
+                  <span className=%twc("flex")>
+                    <IconError width="20" height="20" />
+                    <span className=%twc("text-sm text-notice ml-1")>
+                      {`배송비 타입을 입력해주세요.`->React.string}
+                    </span>
+                  </span>
+                }}
+              />
+            </div>
+          }}
+        />
+      </span>
+    </div>
+  }
+}
+
 module RawCostInput = {
   @react.component
   let make = (~inputName) => {
@@ -885,7 +952,7 @@ let make = (
               <div className=%twc("flex items-center cursor-pointer relative gap-1")>
                 <span className=%twc("underline")> {`단품정보 접기`->React.string} </span>
                 <IconArrow
-                  height="15" width="15" fill="#000000" className=%twc("transform -rotate-90")
+                  height="15" width="15" stroke="#000000" className=%twc("transform -rotate-90")
                 />
               </div>
             </RadixUI.Collapsible.Trigger>
@@ -919,11 +986,12 @@ let make = (
             }
           }
           <div className=%twc("flex flex-col gap-6 py-6 w-full")>
-            // 바이어판매가, 공급원가, 원가시작일, 운영상태
+            // 바이어판매가, 공급원가, 운영상태, 배송비 타입
             <div className=%twc("flex gap-4 items-center justify-start")>
               <PriceInput inputName=inputNames.buyerPrice />
               <TotalRawCost inputNames />
               <OptionStatusSelect inputName=inputNames.operationStatus />
+              <IsFreeShipping inputName=inputNames.isFreeShipping />
             </div>
             // 원물원가, 포장작업비, 배송비, 공급가타입
             <div className=%twc("flex gap-4 items-center justify-start")>
@@ -943,9 +1011,7 @@ let make = (
             | 0 =>
               <div className=%twc("flex gap-2 items-center")>
                 <button onClick=onClickApplyAll>
-                  {applyAll
-                    ? <IconCheckBoxChecked width="20" height="20" />
-                    : <IconCheckBoxUnChecked width="20" height="20" />}
+                  <img src={applyAll ? checkboxCheckedIcon : checkboxUncheckedIcon} />
                 </button>
                 <span>
                   {`[${productDisplayName}] 전체 단품에 출고기준시간과 메모 동일하게 적용하기`->React.string}

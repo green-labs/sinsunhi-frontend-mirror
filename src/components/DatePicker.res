@@ -1,5 +1,8 @@
 type align = Left | Right
 
+@module("../../public/assets/calendar.svg")
+external calendarIcon: string = "default"
+
 module Styles = {
   open CssJs
   let wrapper = style(. [
@@ -100,6 +103,6 @@ let make = (
       | None => "right"
       }}
     />
-    <IconCalendar height="20" width="20" fill="#262626" className=%twc("absolute top-2 right-3") />
+    <img src=calendarIcon className=%twc("absolute top-2 right-3") />
   </label>
 }

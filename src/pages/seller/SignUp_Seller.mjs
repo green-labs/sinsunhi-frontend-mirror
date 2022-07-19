@@ -316,7 +316,7 @@ function SignUp_Seller(Props) {
                             }, React.createElement(IconArrow.make, {
                                   height: "24",
                                   width: "24",
-                                  fill: "#262626",
+                                  stroke: "#262626",
                                   className: "transform rotate-180"
                                 }))), React.createElement("form", {
                           onSubmit: handleOnSubmit

@@ -7,8 +7,10 @@ import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as FetchHelper from "../utils/FetchHelper.mjs";
 import * as Router from "next/router";
-import * as IconDownload from "./svgs/IconDownload.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
+import DownloadSvg from "../../public/assets/download.svg";
+
+var downloadIcon = DownloadSvg;
 
 function Excel_Download_Request_Button(Props) {
   var userType = Props.userType;
@@ -72,11 +74,9 @@ function Excel_Download_Request_Button(Props) {
                                   return /* Show */0;
                                 });
                     })
-                }, React.createElement(IconDownload.make, {
-                      width: "16",
-                      height: "16",
-                      fill: "#121212",
-                      className: "relative mr-1"
+                }, React.createElement("img", {
+                      className: "relative mr-1",
+                      src: downloadIcon
                     }), Belt_Option.getWithDefault(buttonText, "엑셀 다운로드 요청")), React.createElement(Dialog.make, {
                   isShow: match$1[0],
                   children: React.createElement("span", {
@@ -139,7 +139,8 @@ function Excel_Download_Request_Button(Props) {
 var make = Excel_Download_Request_Button;
 
 export {
+  downloadIcon ,
   make ,
   
 }
-/* Env Not a pure module */
+/* downloadIcon Not a pure module */

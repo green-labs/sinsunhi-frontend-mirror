@@ -3,8 +3,65 @@ module Query = %relay(`
     ...WebOrderCompleteProductInfoBuyerFragment @arguments(orderNo: $orderNo)
     ...WebOrderCompleteDeliveryInfoBuyerFragment @arguments(orderNo: $orderNo)
     ...WebOrderCompletePaymentInfoBuyerFragment @arguments(orderNo: $orderNo)
+    wosOrder(orderNo: $orderNo) {
+      orderNo
+      totalDeliveryCost
+      totalOrderPrice
+      orderProducts {
+        productName
+        productId
+        stockSku
+        productOptionName
+        quantity
+        price
+      }
+    }
   }
 `)
+
+@spice
+type item = {
+  @spice.key("item_id") itemId: string, // 상품 코드
+  @spice.key("item_name") itemName: string, // 상품명
+  currency: string, // "KRW" 고정
+  @spice.key("item_variant") itemVariant: string, // 상품 sku
+  price: int,
+  quantity: int,
+}
+
+@spice
+type ecommerce = {
+  @spice.key("transaction_id") transactionId: string, // 주문번호
+  currency: string, // "KRW" 고정
+  @spice.key("purchase_revenue") purchaseRevenue: int, // 총 결제 금액
+  @spice.key("shipping_value") shippingValue: int, // 총 배송비
+}
+
+let toEcommerce = (w: WebOrderCompleteBuyerQuery_graphql.Types.response_wosOrder) =>
+  {
+    transactionId: w.orderNo,
+    currency: "KRW",
+    purchaseRevenue: w.totalOrderPrice,
+    shippingValue: w.totalDeliveryCost->Option.getWithDefault(0),
+  }->ecommerce_encode
+
+let toItems = (
+  {
+    productId,
+    productName,
+    stockSku,
+    price,
+    quantity,
+  }: WebOrderCompleteBuyerQuery_graphql.Types.response_wosOrder_orderProducts,
+) =>
+  {
+    itemId: productId->Int.toString,
+    itemName: productName,
+    currency: "KRW",
+    itemVariant: stockSku,
+    price: price,
+    quantity: quantity,
+  }->item_encode
 
 module Placeholder = {
   @react.component
@@ -71,6 +128,17 @@ module Container = {
       },
       (),
     )
+
+    React.useEffect0(_ => {
+      queryData.wosOrder->Option.forEach(wosOrder => {
+        {
+          "evnet": "purchase",
+          "ecommerce": [wosOrder->toEcommerce],
+          "items": wosOrder.orderProducts->Array.keepMap(Garter.Fn.identity)->Array.map(toItems),
+        }->DataGtm.push
+      })
+      None
+    })
 
     <main className=%twc("flex flex-col gap-5 xl:px-[16%] xl:py-20 bg-surface min-w-[375px]")>
       <label className=%twc("hidden xl:flex ml-5 mb-3 text-3xl font-bold text-enabled-L1")>

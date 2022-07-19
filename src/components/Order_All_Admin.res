@@ -1,7 +1,5 @@
-/**
- * 수기 주문데이터 관리자 업로드 시연용 컴포넌트
- * TODO: 시연이 끝나면 지워도 된다.
- */
+// 수기 주문데이터 관리자 업로드 시연용 컴포넌트
+// TODO: 시연이 끝나면 지워도 된다.
 
 let formatDate = d => d->Js.Date.fromString->Locale.DateTime.formatFromUTC("yyyy/MM/dd")
 

@@ -1,8 +1,6 @@
 type env = {
   "NEXT_PUBLIC_API_URL": string,
   "NEXT_PUBLIC_IMWEB_PAY_URL": string,
-  "NEXT_PUBLIC_GRAPHQL_API_URL": string,
-  "NEXT_PUBLIC_FMB_GRAPHQL_API_URL": string,
   "NEXT_PUBLIC_CHANNEL_TALK_KEY": string,
   "NEXT_PUBLIC_BUYER_SIGNUP_SURVEY_KEY": string,
   "NEXT_PUBLIC_BUYER_UPLOAD_GUIDE_URI": string,
@@ -15,17 +13,21 @@ type env = {
   "NEXT_PUBLIC_KCP_SITE_CD": string,
   "NEXT_PUBLIC_KCP_SITE_KEY": string,
   "NEXT_PUBLIC_AFTER_PAY_API_URL": string,
+  "NEXT_PUBLIC_STATUSPAGE_KEY": string,
+  "NEXT_PUBLIC_STATUSPAGE_PAGE_ID": string,
+  "NEXT_PUBLIC_BRAZE_WEB_API_KEY": string,
 }
 
 @val external env: env = "process.env"
 
-let restApiUrl = env["NEXT_PUBLIC_API_URL"]
+let apiUrl = env["NEXT_PUBLIC_API_URL"]
+let restApiUrl = apiUrl
 // 신선하이 그래프큐엘 API
 // https://api.sinsunhi.com/graphql
-let graphqlApiUrl = env["NEXT_PUBLIC_GRAPHQL_API_URL"]
+let graphqlApiUrl = apiUrl ++ "/graphql"
 // 팜모닝 브릿지 그래프큐엘 API : 안심판매
 // https://api.sinsunhi.com/farmmorning-bridge/graphql
-let fmbGraphqlApiUrl = env["NEXT_PUBLIC_FMB_GRAPHQL_API_URL"]
+let fmbGraphqlApiUrl = apiUrl ++ "/farmmorning-bridge/graphql"
 let channelTalkKey = env["NEXT_PUBLIC_CHANNEL_TALK_KEY"]
 
 // 나중 결제 API
@@ -66,3 +68,8 @@ let buyerSignupSurveyKey = env["NEXT_PUBLIC_BUYER_SIGNUP_SURVEY_KEY"]
 
 // Logo 150x50 uri
 let logo150x50 = env["NEXT_PUBLIC_LOGO_150x50_URI"]
+
+let statusPageKey = env["NEXT_PUBLIC_STATUSPAGE_KEY"]
+
+let statusPagePageId = env["NEXT_PUBLIC_STATUSPAGE_PAGE_ID"]
+let brazeWebApiKey = env["NEXT_PUBLIC_BRAZE_WEB_API_KEY"]

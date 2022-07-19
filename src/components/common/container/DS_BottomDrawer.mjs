@@ -68,7 +68,7 @@ function DS_BottomDrawer$Overlay(Props) {
   };
   var handleClose = React.useContext(context);
   return React.createElement("div", {
-              className: overlayStyle("fixed top-0 left-0 w-full h-full bg-dim transition-opacity z-[1100]"),
+              className: overlayStyle("fixed top-0 left-0 w-full h-full bg-dim transition-opacity z-[12]"),
               onClick: (function (param) {
                   return Curry._1(handleClose, undefined);
                 })
@@ -131,7 +131,7 @@ function DS_BottomDrawer$Root(Props) {
                   "aria-hidden": !isShow,
                   className: showStyle(Cx.cx([
                             full ? "h-full" : "max-h-[85vh]",
-                            "flex flex-col fixed w-full z-[1200] left-1/2 -translate-x-1/2 max-w-3xl mx-auto bg-white rounded-t-2xl drawer-tarnsition"
+                            "flex flex-col fixed w-full z-[13] left-1/2 -translate-x-1/2 max-w-3xl mx-auto bg-white rounded-t-2xl drawer-tarnsition"
                           ]))
                 }, children));
 }

@@ -8,9 +8,11 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Css_Js_Core from "bs-css/src/Css_Js_Core.mjs";
-import * as IconCalendar from "./svgs/IconCalendar.mjs";
 import * as DuetDatePicker from "../bindings/DuetDatePicker.mjs";
 import Format from "date-fns/format";
+import CalendarSvg from "../../public/assets/calendar.svg";
+
+var calendarIcon = CalendarSvg;
 
 var wrapper = CssJs.style([
       CssJs.selector(".duet-date__input-wrapper", [CssJs.width(CssJs.pct(100.0))]),
@@ -131,19 +133,18 @@ function DatePicker(Props) {
   }
   return React.createElement("label", {
               className: wrapper
-            }, React.createElement(DuetDatePicker.make, tmp), React.createElement(IconCalendar.make, {
-                  height: "20",
-                  width: "20",
-                  fill: "#262626",
-                  className: "absolute top-2 right-3"
+            }, React.createElement(DuetDatePicker.make, tmp), React.createElement("img", {
+                  className: "absolute top-2 right-3",
+                  src: calendarIcon
                 }));
 }
 
 var make = DatePicker;
 
 export {
+  calendarIcon ,
   Styles ,
   make ,
   
 }
-/* wrapper Not a pure module */
+/* calendarIcon Not a pure module */

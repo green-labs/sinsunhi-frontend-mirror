@@ -225,15 +225,15 @@ module ItemContent = {
       <div className=%twc("py-[14px] mx-5 bg-gray-100 rounded-xl ")>
         <ul>
           {item.grade->Option.mapWithDefault(React.null, x =>
-            <Listitem.Quotation label=`등급` text={x.grade} />
+            <Listitem.Quotation label={`등급`} text={x.grade} />
           )}
           {item.weightKg->Option.mapWithDefault(React.null, x =>
-            <Listitem.Quotation label=`주문양` text={`${x->numberToComma}kg`} />
+            <Listitem.Quotation label={`주문양`} text={`${x->numberToComma}kg`} />
           )}
           {item.usages.edges->Garter.Array.isEmpty
             ? React.null
             : <Listitem.Quotation
-                label=`사용용도`
+                label={`사용용도`}
                 text={item.usages.edges->Array.map(edge => {
                   edge.node.name
                 }) |> Js.Array.joinWith(", ")}
@@ -257,8 +257,8 @@ module ItemContent = {
           <Listitem.Quotation
             label={`수령방식`} text={item.request.deliveryMethod->displayDeleveryMethod}
           />
-          <Listitem.Quotation label=`배송지역` text={item.request.deliveryAddress} />
-          <Listitem.Quotation label=`정기 배송 여부` text={item.request.deliveryCycle} />
+          <Listitem.Quotation label={`배송지역`} text={item.request.deliveryAddress} />
+          <Listitem.Quotation label={`정기 배송 여부`} text={item.request.deliveryCycle} />
           {item.otherRequirements === ``
             ? React.null
             : <>
@@ -300,6 +300,7 @@ module QuotationContent = {
         let diffPrice = prevTradePricePerKg' * weightKg' - weightKg' * pricePerKg'
         Some(diffPrice / 10000)->Option.keep(x => x > 0)
       }
+
     | _ => None
     }
     let lowCostRate = switch (pricePerKgIntFloat, prevTradePricePerKgFloat) {
@@ -307,13 +308,14 @@ module QuotationContent = {
         let rate = 1. -. currentPrice /. prevPrice
         Some((rate *. 100.)->Js.Math.floor_float)->Option.keep(x => x > 0.)
       }
+
     | _ => None
     }
 
     <div className=%twc("mt-9 mb-[22px]")>
       <ul>
         <Listitem.Quotation
-          label=`총 금액`
+          label={`총 금액`}
           bold=true
           text={`${price->Int.toString->numberToComma}원`}
           highlightContent={lowCostPrice->Option.mapWithDefault(React.null, x => <>
@@ -324,10 +326,10 @@ module QuotationContent = {
           </>)}
         />
         <Divider.List />
-        <Listitem.Quotation label=`등급` text={grade.grade} />
+        <Listitem.Quotation label={`등급`} text={grade.grade} />
         <Divider.List />
         <Listitem.Quotation
-          label=`단가`
+          label={`단가`}
           text={`${pricePerKg->numberToComma}원/kg`}
           highlightContent={lowCostRate->Option.mapWithDefault(React.null, x => <>
             <span> {`기존거래가 보다 `->React.string} </span>
@@ -336,7 +338,7 @@ module QuotationContent = {
             </span>
           </>)}
         />
-        <Listitem.Quotation label=`주문양` text={`${weightKg->numberToComma}kg`} />
+        <Listitem.Quotation label={`주문양`} text={`${weightKg->numberToComma}kg`} />
       </ul>
     </div>
   }
@@ -435,7 +437,7 @@ module ConfirmButton = {
               </DS_Dialog.Popup.Close>
               <DS_Dialog.Popup.Close asChild=true>
                 <DataGtm dataGtm={`Click_Yes_RFQ_Livestock_Quotation_Detail_Check_Popup`}>
-                  <div onClick={_ => ()}>
+                  <div onClick={_ => ()} className=%twc("w-full")>
                     <DS_Button.Normal.Large1
                       label={`네`} onClick={createOrder} disabled={isMutating}
                     />
@@ -884,7 +886,7 @@ let make = (~itemId: option<string>) => {
   // Todo - item id를 바탕으로 자신의 item인지 확인하는 검증 로직 필요
   switch itemId {
   | Some(id) =>
-    <Authorization.Buyer fallback={React.null} title=j`견적서 확인하기`>
+    <Authorization.Buyer fallback={React.null} title={j`견적서 확인하기`}>
       <Detail itemId={id} />
     </Authorization.Buyer>
 

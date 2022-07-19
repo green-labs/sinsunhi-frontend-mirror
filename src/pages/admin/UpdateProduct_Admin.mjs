@@ -8,6 +8,7 @@ import * as Router from "next/router";
 import * as Authorization from "../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
+import * as Product_Parser from "../../utils/Product_Parser.mjs";
 import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
@@ -101,12 +102,17 @@ function UpdateProduct_Admin$Detail(Props) {
         productId: productId
       }, /* StoreAndNetwork */2, undefined, undefined, undefined);
   var node = queryData.node;
-  if (node !== undefined) {
+  if (node === undefined) {
+    return React.createElement("div", undefined, "상품 정보가 존재하지 않습니다.");
+  }
+  var productType = Product_Parser.Type.decode(node.__typename);
+  if (productType !== undefined) {
     return React.createElement(UpdateProduct_Detail_Admin.make, {
-                query: node.fragmentRefs
+                query: node.fragmentRefs,
+                productType: productType
               });
   } else {
-    return React.createElement("div", undefined, "상품 정보가 존재하지 않습니다.");
+    return React.createElement("div", undefined, "지원하지 않은 상품 타입입니다.");
   }
 }
 

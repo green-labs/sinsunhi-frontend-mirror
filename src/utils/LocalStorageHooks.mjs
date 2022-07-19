@@ -109,6 +109,20 @@ var RefreshTokenConfig = {
   toString: toString$5
 };
 
+function fromString$6(str) {
+  return Belt_Option.getWithDefault(str, "");
+}
+
+function toString$6(value) {
+  return value;
+}
+
+var BuyerInfoConfig = {
+  key: "SS_BUYER_INFO_LAST_SHOWN",
+  fromString: fromString$6,
+  toString: toString$6
+};
+
 var PhoneNumber = LocalStorage.Make(PhoneNumberConfig);
 
 var BuyerEmail = LocalStorage.Make(BuyerEmailConfig);
@@ -125,6 +139,8 @@ var AccessToken = LocalStorage.Make(AccessTokenConfig);
 
 var RefreshToken = LocalStorage.Make(RefreshTokenConfig);
 
+var BuyerInfoLastShown = LocalStorage.Make(BuyerInfoConfig);
+
 export {
   PhoneNumberConfig ,
   BuyerEmailConfig ,
@@ -132,12 +148,14 @@ export {
   AdminMenuConfig ,
   AccessTokenConfig ,
   RefreshTokenConfig ,
+  BuyerInfoConfig ,
   PhoneNumber ,
   BuyerEmail ,
   EmailAdmin ,
   AdminMenu ,
   AccessToken ,
   RefreshToken ,
+  BuyerInfoLastShown ,
   
 }
 /* PhoneNumber Not a pure module */

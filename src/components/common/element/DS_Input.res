@@ -16,13 +16,11 @@ module InputText1 = {
     <input
       type_
       className={className->Option.mapWithDefault(
-        %twc(
-          "w-full outline-none text-xl placeholder:text-gray-400 pl-1 disabled:bg-white leading-8"
-        ),
+        %twc("w-full outline-none text-xl placeholder:text-gray-400 disabled:bg-white leading-8"),
         className' =>
           cx([
             %twc(
-              "w-full outline-none text-xl placeholder:text-gray-400 pl-1 disabled:bg-white leading-8"
+              "w-full outline-none text-xl placeholder:text-gray-400 disabled:bg-white leading-8"
             ),
             className',
           ]),

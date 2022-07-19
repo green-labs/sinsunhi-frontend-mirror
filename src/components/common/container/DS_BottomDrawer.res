@@ -41,7 +41,7 @@ module Overlay = {
     let handleClose = React.useContext(BottomDrawerContext.context)
     <div
       className={%twc(
-        "fixed top-0 left-0 w-full h-full bg-dim transition-opacity z-[1100]"
+        "fixed top-0 left-0 w-full h-full bg-dim transition-opacity z-[12]"
       )->overlayStyle}
       onClick={_ => handleClose()}
     />
@@ -82,7 +82,7 @@ module Root = {
         className={cx([
           full ? "h-full" : "max-h-[85vh]",
           %twc(
-            "flex flex-col fixed w-full z-[1200] left-1/2 -translate-x-1/2 max-w-3xl mx-auto bg-white rounded-t-2xl drawer-tarnsition"
+            "flex flex-col fixed w-full z-[13] left-1/2 -translate-x-1/2 max-w-3xl mx-auto bg-white rounded-t-2xl drawer-tarnsition"
           ),
         ])->showStyle}>
         children

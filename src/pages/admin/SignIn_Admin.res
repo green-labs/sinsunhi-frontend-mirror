@@ -86,9 +86,7 @@ let make = () => {
   })
 
   <>
-    <Next.Head>
-      <title> {j`관리자 로그인 - 신선하이`->React.string} </title>
-    </Next.Head>
+    <Next.Head> <title> {j`관리자 로그인 - 신선하이`->React.string} </title> </Next.Head>
     <div
       className=%twc(
         "container mx-auto max-w-lg min-h-screen flex flex-col justify-center items-center relative"

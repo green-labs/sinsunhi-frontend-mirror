@@ -3,7 +3,9 @@
 import * as React from "react";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as IconInputCheck from "../svgs/IconInputCheck.mjs";
+import InputCheckSvg from "../../../public/assets/input-check.svg";
+
+var inputCheckIcon = InputCheckSvg;
 
 function Checkbox(Props) {
   var id = Props.id;
@@ -47,10 +49,8 @@ function Checkbox(Props) {
                   htmlFor: Belt_Option.getWithDefault(id, "")
                 }, Belt_Option.mapWithDefault(checked, null, (function (checked$p) {
                         if (checked$p) {
-                          return React.createElement(IconInputCheck.make, {
-                                      height: "12",
-                                      width: "14",
-                                      fill: "#FFF"
+                          return React.createElement("img", {
+                                      src: inputCheckIcon
                                     });
                         } else {
                           return null;
@@ -94,10 +94,8 @@ function Checkbox$Uncontrolled(Props) {
   return React.createElement(React.Fragment, undefined, React.createElement("input", tmp), React.createElement("label", {
                   className: "w-5 h-5 rounded flex justify-center items-center peer-default:bg-white border-2 peer-default:border-gray-300 peer-checked:bg-green-gl peer-disabled:border-2 peer-disabled:border-gray-200 peer-disabled:bg-gray-100",
                   htmlFor: Belt_Option.getWithDefault(id, "")
-                }, React.createElement(IconInputCheck.make, {
-                      height: "12",
-                      width: "14",
-                      fill: "#FFF"
+                }, React.createElement("img", {
+                      src: inputCheckIcon
                     })));
 }
 
@@ -108,8 +106,9 @@ var Uncontrolled = {
 var make = Checkbox;
 
 export {
+  inputCheckIcon ,
   make ,
   Uncontrolled ,
   
 }
-/* react Not a pure module */
+/* inputCheckIcon Not a pure module */

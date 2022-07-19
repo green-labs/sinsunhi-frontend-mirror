@@ -136,7 +136,7 @@ function SignUp_Seller_Terms(Props) {
                       children: React.createElement("span", undefined, React.createElement(IconArrow.make, {
                                 height: "20",
                                 width: "20",
-                                fill: "#DDDDDD"
+                                stroke: "#DDDDDD"
                               }))
                     })), React.createElement("div", {
                   className: "flex justify-between items-center mt-2"
@@ -156,7 +156,7 @@ function SignUp_Seller_Terms(Props) {
                       children: React.createElement("span", undefined, React.createElement(IconArrow.make, {
                                 height: "20",
                                 width: "20",
-                                fill: "#DDDDDD"
+                                stroke: "#DDDDDD"
                               }))
                     })), React.createElement("div", {
                   className: "flex items-center mt-2"

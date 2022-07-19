@@ -10,7 +10,6 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as ReactSelect from "./common/ReactSelect.mjs";
-import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import ReactSelect$1 from "react-select";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as ReactHookForm$1 from "react-hook-form";
@@ -195,55 +194,6 @@ var Form = {
   submit_decode: submit_decode
 };
 
-function encodeQualifiedNameValue(query) {
-  var match = Belt_Option.map(Garter_Array.first(query), (function (param) {
-          return param.type_;
-        }));
-  return {
-          c5: Belt_Option.mapWithDefault(Belt_Array.get(query, 4), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c4: Belt_Option.mapWithDefault(Belt_Array.get(query, 3), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c3: Belt_Option.mapWithDefault(Belt_Array.get(query, 2), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c2: Belt_Option.mapWithDefault(Belt_Array.get(query, 1), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c1: Belt_Option.mapWithDefault(Belt_Array.get(query, 0), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          categoryType: match !== undefined ? (
-              match === "NORMAL" ? /* Selected */({
-                    value: "normal",
-                    label: "일반"
-                  }) : (
-                  match === "SHOWCASE" ? /* Selected */({
-                        value: "showcase",
-                        label: "기획전"
-                      }) : /* NotSelected */0
-                )
-            ) : /* NotSelected */0
-        };
-}
-
 var categoryTypeOptions = [
   /* Selected */{
     value: "normal",
@@ -346,7 +296,6 @@ var make = Select_Display_Categories;
 
 export {
   Form ,
-  encodeQualifiedNameValue ,
   categoryTypeOptions ,
   Select_CategoryType ,
   make ,

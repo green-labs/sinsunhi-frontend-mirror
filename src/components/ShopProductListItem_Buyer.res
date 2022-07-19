@@ -9,26 +9,42 @@
 module Fragments = {
   module Root = %relay(`
   fragment ShopProductListItemBuyerFragment on Product {
-    type_: type
+    __typename
     ...ShopProductListItemBuyerNormalFragment
     ...ShopProductListItemBuyerQuotedFragment
+    ...ShopProductListItemBuyerMatchingFragment
   }
   `)
 
   module Normal = %relay(`
     fragment ShopProductListItemBuyerNormalFragment on Product {
       id
-      price
       image {
         thumb800x800
       }
       status
       displayName
+      ... on NormalProduct {
+        price
+      }
+      ... on QuotableProduct {
+        price
+      }
     }
   `)
 
   module Quoted = %relay(`
-    fragment ShopProductListItemBuyerQuotedFragment on Product {
+    fragment ShopProductListItemBuyerQuotedFragment on QuotedProduct {
+      id
+      image {
+        thumb800x800
+      }
+      displayName
+    }
+  `)
+
+  module Matching = %relay(`
+    fragment ShopProductListItemBuyerMatchingFragment on MatchingProduct {
       id
       image {
         thumb800x800
@@ -38,7 +54,7 @@ module Fragments = {
   `)
 }
 
-module NormalProduct = {
+module Normal = {
   module PC = {
     @react.component
     let make = (~query) => {
@@ -61,10 +77,10 @@ module NormalProduct = {
 
       <div className=%twc("w-[280px] h-[376px] cursor-pointer") onClick>
         <div className=%twc("w-[280px] aspect-square rounded-xl overflow-hidden relative")>
-          <Image
+          <ImageWithPlaceholder
             src=image.thumb800x800
             className=%twc("w-full h-full object-cover")
-            placeholder=Image.Placeholder.sm
+            placeholder=ImageWithPlaceholder.Placeholder.sm
             alt={`product-${id}`}
           />
           <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl") />
@@ -128,10 +144,10 @@ module NormalProduct = {
 
       <div className=%twc("cursor-pointer") onClick>
         <div className=%twc("rounded-xl overflow-hidden relative aspect-square")>
-          <Image
+          <ImageWithPlaceholder
             src=image.thumb800x800
             className=%twc("w-full h-full object-cover")
-            placeholder=Image.Placeholder.sm
+            placeholder=ImageWithPlaceholder.Placeholder.sm
             alt={`product-${id}`}
           />
           <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl") />
@@ -173,7 +189,7 @@ module NormalProduct = {
   }
 }
 
-module QuotedProduct = {
+module Quoted = {
   module PC = {
     @react.component
     let make = (~query) => {
@@ -188,10 +204,10 @@ module QuotedProduct = {
 
       <div className=%twc("w-[280px] h-[376px] cursor-pointer") onClick>
         <div className=%twc("w-[280px] aspect-square rounded-xl overflow-hidden relative")>
-          <Image
+          <ImageWithPlaceholder
             src=image.thumb800x800
             className=%twc("w-full h-full object-cover")
-            placeholder=Image.Placeholder.sm
+            placeholder=ImageWithPlaceholder.Placeholder.sm
             alt={`product-${id}`}
           />
           <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl") />
@@ -220,10 +236,10 @@ module QuotedProduct = {
 
       <div className=%twc("cursor-pointer") onClick>
         <div className=%twc("rounded-xl overflow-hidden relative aspect-square")>
-          <Image
+          <ImageWithPlaceholder
             src=image.thumb800x800
             className=%twc("w-full h-full object-cover")
-            placeholder=Image.Placeholder.sm
+            placeholder=ImageWithPlaceholder.Placeholder.sm
             alt={`product-${id}`}
           />
           <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl") />
@@ -233,6 +249,74 @@ module QuotedProduct = {
             {displayName->React.string}
           </span>
           <span className=%twc("mt-1 font-bold text-blue-500")>
+            {`최저가 견적받기`->React.string}
+          </span>
+        </div>
+      </div>
+    }
+  }
+}
+
+module Matching = {
+  module PC = {
+    @react.component
+    let make = (~query) => {
+      let {useRouter, push} = module(Next.Router)
+      let router = useRouter()
+
+      let {id, image, displayName} = query->Fragments.Matching.use
+
+      <div
+        className=%twc("w-[280px] h-[376px] cursor-pointer")
+        onClick={_ => {
+          router->push(`/buyer/products/${id}`)
+        }}>
+        <div className=%twc("w-[280px] aspect-square rounded-xl overflow-hidden relative")>
+          <ImageWithPlaceholder
+            src=image.thumb800x800
+            className=%twc("w-full h-full object-cover")
+            placeholder=ImageWithPlaceholder.Placeholder.sm
+            alt={`product-${id}`}
+          />
+          <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl") />
+        </div>
+        <div className=%twc("flex flex-col mt-4")>
+          <span className=%twc("text-gray-800 line-clamp-2")> {displayName->React.string} </span>
+          <span className=%twc("mt-2 font-bold text-lg text-green-500")>
+            {`최저가 견적받기`->React.string}
+          </span>
+        </div>
+      </div>
+    }
+  }
+
+  module MO = {
+    @react.component
+    let make = (~query) => {
+      let {useRouter, push} = module(Next.Router)
+      let router = useRouter()
+
+      let {id, image, displayName} = query->Fragments.Matching.use
+
+      <div
+        className=%twc("cursor-pointer")
+        onClick={_ => {
+          router->push(`/buyer/products/${id}`)
+        }}>
+        <div className=%twc("rounded-xl overflow-hidden relative aspect-square")>
+          <ImageWithPlaceholder
+            src=image.thumb800x800
+            className=%twc("w-full h-full object-cover")
+            placeholder=ImageWithPlaceholder.Placeholder.sm
+            alt={`product-${id}`}
+          />
+          <div className=%twc("w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl") />
+        </div>
+        <div className=%twc("flex flex-col mt-3")>
+          <span className=%twc("text-gray-800 line-clamp-2 text-sm")>
+            {displayName->React.string}
+          </span>
+          <span className=%twc("mt-1 font-bold text-green-500")>
             {`최저가 견적받기`->React.string}
           </span>
         </div>
@@ -255,14 +339,13 @@ module PC = {
 
   @react.component
   let make = (~query) => {
-    let {type_, fragmentRefs} = query->Fragments.Root.use
+    let {__typename, fragmentRefs} = query->Fragments.Root.use
 
-    switch type_ {
-    | #QUOTABLE
-    | #NORMAL =>
-      <NormalProduct.PC query=fragmentRefs />
-    | #QUOTED => <QuotedProduct.PC query=fragmentRefs />
-    | _ => React.null
+    switch __typename->Product_Parser.Type.decode {
+    | Some(Quotable) | Some(Normal) => <Normal.PC query=fragmentRefs />
+    | Some(Quoted) => <Quoted.PC query=fragmentRefs />
+    | Some(Matching) => <Matching.PC query=fragmentRefs />
+    | None => React.null
     }
   }
 }
@@ -281,14 +364,13 @@ module MO = {
 
   @react.component
   let make = (~query) => {
-    let {type_, fragmentRefs} = query->Fragments.Root.use
+    let {__typename, fragmentRefs} = query->Fragments.Root.use
 
-    switch type_ {
-    | #QUOTABLE
-    | #NORMAL =>
-      <NormalProduct.MO query=fragmentRefs />
-    | #QUOTED => <QuotedProduct.MO query=fragmentRefs />
-    | _ => React.null
+    switch __typename->Product_Parser.Type.decode {
+    | Some(Quotable) | Some(Normal) => <Normal.MO query=fragmentRefs />
+    | Some(Quoted) => <Quoted.MO query=fragmentRefs />
+    | Some(Matching) => <Matching.MO query=fragmentRefs />
+    | None => React.null
     }
   }
 }

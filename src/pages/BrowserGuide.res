@@ -1,6 +1,9 @@
 @val @scope("window")
 external jsAlert: string => unit = "alert"
 
+@module("../../public/assets/chrome.svg")
+external chromeIcon: string = "default"
+
 @react.component
 let make = () => {
   React.useEffect0(_ => {
@@ -22,9 +25,7 @@ let make = () => {
     )
 
   <>
-    <Next.Head>
-      <title> {j`IE 접속 가이드 - 신선하이`->React.string} </title>
-    </Next.Head>
+    <Next.Head> <title> {j`IE 접속 가이드 - 신선하이`->React.string} </title> </Next.Head>
     <div className=%twc("flex flex-col h-screen justify-center items-center text-black-gl")>
       <img src="/assets/sinsunhi-logo.svg" width="164" height="42" alt=`신선하이 로고` />
       <div className=%twc("text-center text-lg whitespace-pre font-bold mt-14")>
@@ -40,7 +41,7 @@ Chrome 브라우저에서 쾌적하게 작동합니다.`->React.string}
           className=%twc(
             "flex justify-center items-center py-3 w-80 border border-gray-200 rounded-xl font-bold mt-14"
           )>
-          <IconChrome height="24" width="24" fill="none" />
+          <img src=chromeIcon />
           <span className=%twc("ml-1")> {j`크롬 다운로드`->React.string} </span>
         </div>
       </a>

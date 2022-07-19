@@ -33,7 +33,7 @@ module UserDeposit = {
               }}
             </span>
           </div>
-          <IconArrow height="24" width="24" fill="#262626" className="ml-auto" />
+          <IconArrow height="24" width="24" stroke="#262626" className="ml-auto" />
         </a>
       </Next.Link>
     </div>

@@ -40,14 +40,13 @@ let make = () => {
               // 로그인 성공 시, 웹뷰에 Braze 푸시 기기 토큰 등록을 위한 userId를 postMessage 합니다.
               switch res.token->CustomHooks.Auth.decodeJwt->CustomHooks.Auth.user_decode {
               | Ok(user) =>
-                Global.Window.ReactNativeWebView.PostMessage.storeBrazeUserId(
-                  `sinsunhi-${user.id->Int.toString}`,
-                )
+                Global.Window.ReactNativeWebView.PostMessage.storeBrazeUserId(user.id->Int.toString)
               | Error(_) => ()
               }
 
-              router->push(redirectUrl)
+              Redirect.setHref(redirectUrl)
             }
+
           | Error(_) => setShowForError(._ => Dialog.Show)
           }
         }
@@ -147,13 +146,15 @@ let make = () => {
   ChannelTalkHelper.Hook.use()
 
   <>
-    <Next.Head> <title> {j`생산자 로그인 - 신선하이`->React.string} </title> </Next.Head>
+    <Next.Head>
+      <title> {j`생산자 로그인 - 신선하이`->React.string} </title>
+    </Next.Head>
     <div
       className=%twc(
         "container mx-auto max-w-lg min-h-screen relative flex flex-col justify-center items-center"
       )>
       <div className=%twc("flex-auto flex flex-col justify-center items-center pt-10")>
-        <img src="/assets/sinsunhi-logo.svg" width="164" height="42" alt=`신선하이 로고` />
+        <img src="/assets/sinsunhi-logo.svg" width="164" height="42" alt={`신선하이 로고`} />
         <div className=%twc("text-gray-500 mt-2")>
           <span> {`농축산물 생산자 `->React.string} </span>
           <span className=%twc("font-semibold")> {` 판로개척 플랫폼`->React.string} </span>
@@ -169,7 +170,7 @@ let make = () => {
               type_="text"
               name="phone-number"
               size=Input.Large
-              placeholder=`휴대전화번호`
+              placeholder={`휴대전화번호`}
               value={form.values->FormFields.get(FormFields.Phone)}
               onChange={handleOnChangePhoneNumber}
               error={FormFields.Phone->Form.ReSchema.Field->form.getFieldError}
@@ -178,7 +179,7 @@ let make = () => {
             <Input
               type_="password"
               name="password"
-              placeholder=`비밀번호`
+              placeholder={`비밀번호`}
               size=Input.Large
               onChange={FormFields.Password->form.handleChange->ReForm.Helpers.handleChange}
               error={FormFields.Password->Form.ReSchema.Field->form.getFieldError}

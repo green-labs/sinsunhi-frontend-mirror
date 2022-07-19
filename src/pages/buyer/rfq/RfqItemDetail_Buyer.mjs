@@ -647,6 +647,7 @@ function RfqItemDetail_Buyer$ConfirmButton(Props) {
                                 }), React.createElement(DS_Dialog.Popup.Close.make, {
                                   children: React.createElement(DataGtm.make, {
                                         children: React.createElement("div", {
+                                              className: "w-full",
                                               onClick: (function (param) {
                                                   
                                                 })

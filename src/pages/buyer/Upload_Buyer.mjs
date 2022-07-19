@@ -51,7 +51,7 @@ function Upload_Buyer$UserDeposit(Props) {
                               }, tmp)), React.createElement(IconArrow.make, {
                             height: "24",
                             width: "24",
-                            fill: "#262626",
+                            stroke: "#262626",
                             className: "ml-auto"
                           }))
                 }));

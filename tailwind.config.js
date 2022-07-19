@@ -17,6 +17,7 @@ module.exports = {
       lg: "1024px",
       xl: "1280px",
       "2xl": "1536px",
+      "h-lg": { raw: "(min-height: 900px)" },
     },
     extend: {},
     /* Most of the time we customize the font-sizes,

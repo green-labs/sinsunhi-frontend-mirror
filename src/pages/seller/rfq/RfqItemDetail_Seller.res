@@ -215,7 +215,7 @@ module TimerTitle = {
 
     React.useEffect0(_ => {
       let id = Js.Global.setInterval(_ => {
-        setTime(.time => Js.Math.max_int(0, time - 1))
+        setTime(. time => Js.Math.max_int(0, time - 1))
       }, 1000)
 
       Some(_ => id->Js.Global.clearInterval)
@@ -307,7 +307,8 @@ module Detail = {
             | _ => ``
             }}
           />
-        | false => <>
+        | false =>
+          <>
             <DS_TitleList.Left.TitleSubtitle1 title1={`견적요청서가 도착했어요`} />
             {switch itemMeat.requestItemStatus {
             | #WAITING_FOR_QUOTATION => React.null
@@ -332,7 +333,10 @@ module Detail = {
       }
 
       <div className=%twc("px-5 pt-8")>
-        <div className=%twc("mt-3")> {pageTitle} {pageSubTitle} </div>
+        <div className=%twc("mt-3")>
+          {pageTitle}
+          {pageSubTitle}
+        </div>
       </div>
     }
   }
@@ -510,6 +514,7 @@ module Detail = {
               [("selected_grade_id", selectedGrade')]->Js.Dict.fromArray->makeWithDict->toString
             router->Next.Router.push(`${router.asPath}?${newQueryString}`)
           }
+
         | None => ()
         }
 
@@ -647,7 +652,7 @@ module Apply = {
           mutateUpdate(
             ~variables={
               id: submittedQuotation'.id,
-              input: input,
+              input,
             },
             ~onCompleted={
               ({updateRfqQuotationMeat}, _) => {
@@ -667,6 +672,7 @@ module Apply = {
             (),
           )->ignore
         }
+
       | None => {
           let input: Mutation.CreateRfqQuotationMeat.Types.rfqQuotationMeatInput = {
             meatGradeId: sellerSelectedGradeNode.id,
@@ -825,9 +831,11 @@ module DetailPageRouter = {
                   sellerSelectedGradeNode={sellerSelectedGradeNode'.node}
                 />
               }
+
             | _ => <DS_None.Default message={`잘못된 접근입니다.`} />
             }
           }
+
         | None => {
             DataGtm.push({"event": "Expose_view_RFQ_Livestock_Quotation"})
             <Detail itemMeat={itemMeat} />
@@ -841,7 +849,7 @@ module DetailPageRouter = {
 
 @react.component
 let make = (~itemId: option<string>) => {
-  <Authorization.Seller fallback={React.null} title=`견적 확인`>
+  <Authorization.Seller fallback={React.null} title={`견적 확인`}>
     <React.Suspense>
       {switch itemId {
       | Some(itemId') => <DetailPageRouter itemId={itemId'} />

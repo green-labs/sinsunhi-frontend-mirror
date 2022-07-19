@@ -59,7 +59,7 @@ function Pagination$Template(Props) {
             }, React.createElement("button", tmp, React.createElement(IconArrow.make, {
                       height: "20",
                       width: "20",
-                      fill: isDisabledLeft ? "#CCCCCC" : "#727272",
+                      stroke: isDisabledLeft ? "#CCCCCC" : "#727272",
                       className: "relative -right-0.5"
                     })), Belt_Array.map(Belt_Array.range(start, end), (function (i) {
                     var tmp = {
@@ -75,7 +75,7 @@ function Pagination$Template(Props) {
                   })), React.createElement("button", tmp$1, React.createElement(IconArrow.make, {
                       height: "20",
                       width: "20",
-                      fill: isDisabledRight ? "#CCCCCC" : "#727272",
+                      stroke: isDisabledRight ? "#CCCCCC" : "#727272",
                       className: "relative -right-0.5"
                     })));
 }

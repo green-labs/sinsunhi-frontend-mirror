@@ -6,7 +6,6 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Input from "./common/Input.mjs";
 import * as React from "react";
 import * as ReForm from "@rescriptbr/reform/src/ReForm.mjs";
-import * as IconEdit from "./svgs/IconEdit.mjs";
 import * as Textarea from "./common/Textarea.mjs";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
@@ -21,6 +20,9 @@ import * as ReForm__Helpers from "@rescriptbr/reform/src/ReForm__Helpers.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
+import EditSvg from "../../public/assets/edit.svg";
+
+var editIcon = EditSvg;
 
 function get(values, field) {
   switch (field) {
@@ -166,8 +168,7 @@ function User_Update_Button_Admin_Farmer(Props) {
                 }), param);
   };
   var tmp = {
-    width: "20",
-    height: "20"
+    src: editIcon
   };
   if (className !== undefined) {
     tmp.className = Caml_option.valFromOption(className);
@@ -181,7 +182,7 @@ function User_Update_Button_Admin_Farmer(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, tmp),
+                  children: React.createElement("img", tmp),
                   className: "block text-left mb-1 underline focus:outline-none"
                 }), React.createElement(ReactDialog.Content, {
                   children: React.createElement("div", {
@@ -274,10 +275,11 @@ function User_Update_Button_Admin_Farmer(Props) {
 var make = User_Update_Button_Admin_Farmer;
 
 export {
+  editIcon ,
   FormFields ,
   Form ,
   initialState ,
   make ,
   
 }
-/* Form Not a pure module */
+/* editIcon Not a pure module */

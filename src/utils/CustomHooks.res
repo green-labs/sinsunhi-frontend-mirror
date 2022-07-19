@@ -13,12 +13,21 @@ let useSetPassword = token => {
 }
 
 let useDebounce = (value, delay) => {
+  let timeoutId = React.useRef(Js.Nullable.null)
   let (debouncedValue, setDebouncedValue) = React.Uncurried.useState(_ => value)
 
   React.useEffect1(() => {
-    let handler = Js.Global.setTimeout(() => setDebouncedValue(._ => value), delay)
+    timeoutId.current =
+      Js.Global.setTimeout(() => setDebouncedValue(. _ => value), delay)->Js.Nullable.return
 
-    Some(() => Js.Global.clearTimeout(handler))
+    Some(
+      () => {
+        switch timeoutId.current->Js.Nullable.toOption {
+        | Some(id) => Js.Global.clearTimeout(id)
+        | None => ()
+        }
+      },
+    )
   }, [value])
 
   (debouncedValue, setDebouncedValue)
@@ -37,6 +46,41 @@ module Scroll = {
     | ScrollStop
     | ScrollDown
     | ScrollUp
+
+  let useScrollDirection = () => {
+    open Webapi
+    let prevScrollTop = React.useRef(0.0)
+    let (scrollDirection, setScrollDirection) = React.Uncurried.useState(_ => ScrollStop)
+
+    React.useEffect1(() => {
+      let handleScrollEvent = _ => {
+        let currentScrollTop = Dom.window->Dom.Window.scrollY
+
+        if currentScrollTop > 0.0 {
+          // 애플기기의 scroll bound 효과로 인해 currentScrollTop이 음수 값을 가질 여지가 있음
+          // 바운스효과에는 반응하지 않도록 하기 위해 currentScrollTop이 양수일 때만 처리한다.
+          let direction = switch currentScrollTop -. prevScrollTop.current {
+          | diff' if diff' > 0.0 => ScrollDown
+          | diff' if diff' < 0.0 => ScrollUp
+          | _ => ScrollStop
+          }
+
+          switch direction {
+          | ScrollDown if scrollDirection != ScrollDown => setScrollDirection(._ => ScrollDown)
+          | ScrollUp if scrollDirection != ScrollUp => setScrollDirection(._ => ScrollUp)
+          | _ => ()
+          }
+
+          prevScrollTop.current = currentScrollTop
+        }
+      }
+
+      Dom.window->Dom.Window.addEventListener("scroll", handleScrollEvent)
+      Some(() => Dom.window->Dom.Window.removeEventListener("scroll", handleScrollEvent))
+    }, [scrollDirection])
+
+    scrollDirection
+  }
 
   let useScrollObserver = (thresholds, ~sensitive: option<int>) => {
     open Webapi
@@ -136,9 +180,9 @@ module IntersectionObserver = {
         let observer = makeIntersectionObserver(
           ~onIntersect=entries => {
             if entries->Array.every(e => e.isIntersecting) {
-              setIntersecting(._ => true)
+              setIntersecting(. _ => true)
             } else {
-              setIntersecting(._ => false)
+              setIntersecting(. _ => false)
             }
           },
           ~options={
@@ -388,11 +432,9 @@ module CRMUser = {
 module Orders = {
   type result = Loading | Loaded(Js.Json.t) | Error(FetchHelper.customError)
 
-  /*
-   * PROCESSING = 파일 업로드 대기 & 파일 처리중
-   * SUCCESS = 파일 파싱, 주문생성 성공
-   * FAIL = 엑셀파일 오류
-   */
+  // PROCESSING = 파일 업로드 대기 & 파일 처리중
+  // SUCCESS = 파일 파싱, 주문생성 성공
+  // FAIL = 엑셀파일 오류
   @spice
   type orderStatus =
     | @spice.as("PROCESSING") PROCESSING
@@ -400,15 +442,13 @@ module Orders = {
     | @spice.as("FAIL") FAIL
     | @spice.as("COMPLETE") COMPLETE
 
-  /**
-  - CREATE — 신규 주문 → 바이어가 아임웹에서 결제하고 신선하이 서비스에 발주서 엑셀을 업로드함
-  - PACKING — 상품준비중 → 농민이 주문 들어온거 확인하고 상품 준비중으로 변경함
-  - DEPARTURE — 집하중 → 농민이 택배 보내고 송장번호를 입력함
-  - DELIVERING — 배송중 → 배송추적API를 통해 송장번호 배송상태 연동됨
-  - COMPLETE — 배송완료 → 배송추적API를 통해 송장번호 배송완료 연동됨
-  - CANCEL — 주문취소 → 바이어/어드민이 취소함
-  - ERROR — 송장번호에러 → 송장번호 입력했을때 배송추적API 호출하는데, 여기서 송장번호 유효성검사 실패한 경우
- */
+  // - CREATE — 신규 주문 → 바이어가 아임웹에서 결제하고 신선하이 서비스에 발주서 엑셀을 업로드함
+  // - PACKING — 상품준비중 → 농민이 주문 들어온거 확인하고 상품 준비중으로 변경함
+  // - DEPARTURE — 집하중 → 농민이 택배 보내고 송장번호를 입력함
+  // - DELIVERING — 배송중 → 배송추적API를 통해 송장번호 배송상태 연동됨
+  // - COMPLETE — 배송완료 → 배송추적API를 통해 송장번호 배송완료 연동됨
+  // - CANCEL — 주문취소 → 바이어/어드민이 취소함
+  // - ERROR — 송장번호에러 → 송장번호 입력했을때 배송추적API 호출하는데, 여기서 송장번호 유효성검사 실패한 경우
   @spice
   type status =
     | @spice.as("CREATE") CREATE
@@ -509,11 +549,9 @@ module Orders = {
 module OrdersAdmin = {
   type result = Loading | Loaded(Js.Json.t) | Error(FetchHelper.customError)
 
-  /*
-   * PROCESSING = 파일 업로드 대기 & 파일 처리중
-   * SUCCESS = 파일 파싱, 주문생성 성공
-   * FAIL = 엑셀파일 오류
-   */
+  // PROCESSING = 파일 업로드 대기 & 파일 처리중
+  // SUCCESS = 파일 파싱, 주문생성 성공
+  // FAIL = 엑셀파일 오류
   @spice
   type orderStatus =
     | @spice.as("PROCESSING") PROCESSING
@@ -521,15 +559,13 @@ module OrdersAdmin = {
     | @spice.as("FAIL") FAIL
     | @spice.as("COMPLETE") COMPLETE
 
-  /**
-  - CREATE — 신규 주문 → 바이어가 아임웹에서 결제하고 신선하이 서비스에 발주서 엑셀을 업로드함
-  - PACKING — 상품준비중 → 농민이 주문 들어온거 확인하고 상품 준비중으로 변경함
-  - DEPARTURE — 집하중 → 농민이 택배 보내고 송장번호를 입력함
-  - DELIVERING — 배송중 → 배송추적API를 통해 송장번호 배송상태 연동됨
-  - COMPLETE — 배송완료 → 배송추적API를 통해 송장번호 배송완료 연동됨
-  - CANCEL — 주문취소 → 바이어/어드민이 취소함
-  - ERROR — 송장번호에러 → 송장번호 입력했을때 배송추적API 호출하는데, 여기서 송장번호 유효성검사 실패한 경우
- */
+  // CREATE — 신규 주문 → 바이어가 아임웹에서 결제하고 신선하이 서비스에 발주서 엑셀을 업로드함
+  // PACKING — 상품준비중 → 농민이 주문 들어온거 확인하고 상품 준비중으로 변경함
+  // DEPARTURE — 집하중 → 농민이 택배 보내고 송장번호를 입력함
+  // DELIVERING — 배송중 → 배송추적API를 통해 송장번호 배송상태 연동됨
+  // COMPLETE — 배송완료 → 배송추적API를 통해 송장번호 배송완료 연동됨
+  // CANCEL — 주문취소 → 바이어/어드민이 취소함
+  // ERROR — 송장번호에러 → 송장번호 입력했을때 배송추적API 호출하는데, 여기서 송장번호 유효성검사 실패한 경우
   @spice
   type status =
     | @spice.as("CREATE") CREATE
@@ -644,29 +680,26 @@ module OrdersAdmin = {
   }
 }
 
-/**
- * 수기 주문데이터 관리자 업로드 시연용 훅
- * TODO: 시연이 끝나면 지워도 된다.
- */
+// 수기 주문데이터 관리자 업로드 시연용 훅
+// TODO: 시연이 끝나면 지워도 된다.
 module OrdersAllAdmin = {
   type result = Loading | Loaded(Js.Json.t) | Error(FetchHelper.customError)
 
   @spice
   type orderType = | @spice.as(`온라인`) Online | @spice.as(`오프라인`) Offline
-  /**
-   * No. - no
-   * 주문일자 - order-date
-   * 거래유형 - order-type - "온라인" | "오프라인"
-   * 생산자명 - producer-name
-   * 바이어명 - buyer-name
-   * 판매금액 - total-price
-   * 주문번호 - order-no
-   * 품목 - product-category
-   * 상품명 - product-name
-   * 옵션명 - product-option-name
 
-   * nullable: 주문번호 바이어명 생산자명 옵션명
- */
+  // No. - no
+  // 주문일자 - order-date
+  // 거래유형 - order-type - "온라인" | "오프라인"
+  // 생산자명 - producer-name
+  // 바이어명 - buyer-name
+  // 판매금액 - total-price
+  // 주문번호 - order-no
+  // 품목 - product-category
+  // 상품명 - product-name
+  // 옵션명 - product-option-name
+
+  // nullable: 주문번호 바이어명 생산자명 옵션명
   @spice
   type order = {
     no: int,
@@ -1273,6 +1306,10 @@ module QueryUser = {
       @spice.key("business-registration-number") businessRegistrationNumber: option<string>,
       manager: option<string>,
       @spice.key("shop-url") shopUrl: option<string>,
+      @spice.key("interested-item-category-ids") interestedItemCategoryIds: option<array<string>>,
+      @spice.key("self-reported-business-sectors")
+      selfReportedBusinessSectors: option<array<string>>,
+      @spice.key("self-reported-sales-bin") selfReportedSalesBin: option<string>,
     }
     @spice
     type users = {
@@ -2368,22 +2405,81 @@ let useSmoothScroll = () => {
   })
 }
 
-module UserAgent = {
-  type dimension =
-    | Unknown
-    | PC
-    | Mobile
+module Tradematch = {
+  let stepsOrder = ["grade", "count", "price", "cycle", "requirement", "shipping"]
 
-  let useDimension = () => {
-    let (dimension, setDimension) = React.Uncurried.useState(_ => Unknown)
+  type usePageStepsReturnType = {
+    totalStepLength: int,
+    firstStep: string,
+    currentStep: string,
+    currentStepIndex: int,
+    isLast: bool,
+    nextStepIndex: int,
+    nextStep: option<string>,
+  }
 
-    React.useEffect0(() => {
-      // TODO: user-agent 기반으로 개선
-      setDimension(._ => Webapi.Dom.window->Webapi.Dom.Window.innerWidth < 1280 ? Mobile : PC)
+  type useNavigateStepReturnType = {
+    navigateToFirstStep: unit => unit,
+    navigateToNextStep: unit => unit,
+    replaceToStep: string => unit,
+  }
 
-      None
-    })
+  let usePageSteps = (): usePageStepsReturnType => {
+    let router = Next.Router.useRouter()
 
-    dimension
+    let totalStepLength = stepsOrder->Js.Array2.length
+    let firstStep = stepsOrder->Garter_Array.firstExn
+    let currentStep = router.query->Js.Dict.get("step")->Option.mapWithDefault(firstStep, x => x)
+    let currentStepIndex =
+      stepsOrder->Array.getIndexBy(x => x === currentStep)->Option.mapWithDefault(0, x => x)
+    let nextStepIndex = currentStepIndex + 1
+    let nextStep = stepsOrder->Array.get(nextStepIndex)
+    let isLast = stepsOrder->Array.length - 1 === currentStepIndex
+
+    {
+      totalStepLength,
+      firstStep,
+      currentStep,
+      currentStepIndex,
+      nextStepIndex,
+      nextStep,
+      isLast,
+    }
+  }
+
+  let useNavigateStep = (): useNavigateStepReturnType => {
+    let {makeWithDict, toString} = module(Webapi.Url.URLSearchParams)
+    let router = Next.Router.useRouter()
+    let {nextStep, firstStep} = usePageSteps()
+
+    let navigateToNextStep = () => {
+      switch nextStep {
+      | Some(nextStep') => {
+          router.query->Js.Dict.set("step", nextStep')
+          let newQueryString = router.query->makeWithDict->toString
+          router->Next.Router.push(`${router.pathname}?${newQueryString}`)
+        }
+
+      | None => router->Next.Router.push(`/buyer/tradematch/ask-to-buy/applied`)
+      }
+    }
+
+    let navigateToFirstStep = () => {
+      router.query->Js.Dict.set("step", firstStep)
+      let newQueryString = router.query->makeWithDict->toString
+      router->Next.Router.replace(`${router.pathname}?${newQueryString}`)
+    }
+
+    let replaceToStep = (step: string) => {
+      router.query->Js.Dict.set("step", step)
+      let newQueryString = router.query->makeWithDict->toString
+      router->Next.Router.replace(`${router.pathname}?${newQueryString}`)
+    }
+
+    {
+      navigateToNextStep,
+      navigateToFirstStep,
+      replaceToStep,
+    }
   }
 }

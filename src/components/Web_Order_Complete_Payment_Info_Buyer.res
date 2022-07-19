@@ -41,14 +41,15 @@ module Placeholder = {
           <span className=%twc("text-text-L2")> {`결제 수단`->React.string} </span>
           <Box className=%twc("h-6 my-0 w-20 text-base font-bold xl:text-sm") />
         </li>
-        <li key="product-price" className=%twc("flex justify-between items-center")>
-          <span className=%twc("text-text-L2")> {`총 상품금액`->React.string} </span>
-          <Box className=%twc("h-6 my-0 w-20 text-base font-bold xl:text-sm") />
-        </li>
-        <li key="delivery-cost" className=%twc("flex justify-between items-center")>
-          <span className=%twc("text-text-L2")> {`배송비`->React.string} </span>
-          <Box className=%twc("h-6 my-0 w-20 text-base font-bold xl:text-sm") />
-        </li>
+        // 단기적으로 상품금액, 배송비 노출을 없애기로함 (7/6) -> isFreeShipping이 wosOrder에 추가되면 부활시킬 예정
+        // <li key="product-price" className=%twc("flex justify-between items-center")>
+        //   <span className=%twc("text-text-L2")> {`총 상품금액`->React.string} </span>
+        //   <Box className=%twc("h-6 my-0 w-20 text-base font-bold xl:text-sm") />
+        // </li>
+        // <li key="delivery-cost" className=%twc("flex justify-between items-center")>
+        //   <span className=%twc("text-text-L2")> {`배송비`->React.string} </span>
+        //   <Box className=%twc("h-6 my-0 w-20 text-base font-bold xl:text-sm") />
+        // </li>
         <li key="total-price" className=%twc("flex justify-between items-center")>
           <span className=%twc("text-text-L2")> {`총 결제금액`->React.string} </span>
           <Box className=%twc("h-6 my-0 w-24 text-base font-bold xl:text-sm") />
@@ -83,18 +84,19 @@ let make = (~query) => {
             {paymentMethod->paymentMethodToString->React.string}
           </span>
         </li>
-        <li key="product-price" className=%twc("flex justify-between items-center h-6")>
-          <span className=%twc("text-text-L2")> {`총 상품금액`->React.string} </span>
-          <span className=%twc("text-base font-bold xl:text-sm")>
-            {`${productPrice->Locale.Int.show}원`->React.string}
-          </span>
-        </li>
-        <li key="delivery-cost" className=%twc("flex justify-between items-center h-6")>
-          <span className=%twc("text-text-L2")> {`배송비`->React.string} </span>
-          <span className=%twc("text-base font-bold xl:text-sm")>
-            {`${deliveryPrice->Locale.Int.show}원`->React.string}
-          </span>
-        </li>
+        // 단기적으로 상품금액, 배송비 노출을 없애기로함 (7/6) -> isFreeShipping이 wosOrder에 추가되면 부활시킬 예정
+        // <li key="product-price" className=%twc("flex justify-between items-center h-6")>
+        //   <span className=%twc("text-text-L2")> {`총 상품금액`->React.string} </span>
+        //   <span className=%twc("text-base font-bold xl:text-sm")>
+        //     {`${productPrice->Locale.Int.show}원`->React.string}
+        //   </span>
+        // </li>
+        // <li key="delivery-cost" className=%twc("flex justify-between items-center h-6")>
+        //   <span className=%twc("text-text-L2")> {`배송비`->React.string} </span>
+        //   <span className=%twc("text-base font-bold xl:text-sm")>
+        //     {`${deliveryPrice->Locale.Int.show}원`->React.string}
+        //   </span>
+        // </li>
         <li key="total-price" className=%twc("flex justify-between items-center h-6")>
           <span className=%twc("text-text-L2")> {`총 결제금액`->React.string} </span>
           <span className=%twc("text-xl xl:text-lg text-primary font-bold")>

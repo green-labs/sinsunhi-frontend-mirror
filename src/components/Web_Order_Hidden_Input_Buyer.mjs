@@ -73,7 +73,7 @@ function Web_Order_Hidden_Input_Buyer(Props) {
       }, undefined);
   var product = fragments.productNode;
   var productInfo;
-  if (product !== undefined && typeof product === "object" && product.NAME === "Product") {
+  if (product !== undefined && typeof product === "object" && product.NAME === "NormalProduct") {
     var match$1 = product.VAL;
     productInfo = React.createElement(React.Fragment, undefined, React.createElement(Web_Order_Hidden_Input_Buyer$Hidden, {
               value: String(match$1.productId),

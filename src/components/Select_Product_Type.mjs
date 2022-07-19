@@ -10,10 +10,14 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as IconArrowSelect from "./svgs/IconArrowSelect.mjs";
 
 function status_encode(v) {
-  if (v) {
-    return "견적상품";
-  } else {
-    return "일반상품";
+  switch (v) {
+    case /* NORMAL */0 :
+        return "일반상품";
+    case /* QUOTED */1 :
+        return "견적상품";
+    case /* MATCHING */2 :
+        return "매칭상품";
+    
   }
 }
 
@@ -36,31 +40,49 @@ function status_decode(v) {
             TAG: /* Ok */0,
             _0: /* QUOTED */1
           };
+  } else if ("매칭상품" === str$1) {
+    return {
+            TAG: /* Ok */0,
+            _0: /* MATCHING */2
+          };
   } else {
     return Spice.error(undefined, "Not matched", v);
   }
 }
 
 function toString(status) {
-  return Belt_Option.getWithDefault(Js_json.decodeString(status ? "견적상품" : "일반상품"), "");
+  return Belt_Option.getWithDefault(Js_json.decodeString(status_encode(status)), "");
 }
 
 function Select_Product_Type(Props) {
   var status = Props.status;
   var onChange = Props.onChange;
+  var tmp;
+  switch (status) {
+    case /* NORMAL */0 :
+        tmp = "left-0";
+        break;
+    case /* QUOTED */1 :
+        tmp = "left-1/3";
+        break;
+    case /* MATCHING */2 :
+        tmp = "left-2/3";
+        break;
+    
+  }
   return React.createElement("div", {
               className: "bg-bg-pressed-L2 w-full p-2 rounded-xl "
             }, React.createElement("div", {
                   className: "p-1 relative flex"
                 }, React.createElement("div", {
                       className: Cx.cx([
-                            "absolute bg-white top-0 h-full w-1/2 rounded-lg",
-                            status === /* NORMAL */0 ? "left-0" : "left-1/2"
+                            "absolute bg-white top-0 h-full w-1/3 rounded-lg",
+                            tmp
                           ])
                     }), React.createElement("div", {
                       className: Cx.cx([
                             "text-center py-2 px-6 flex-1 z-10 cursor-pointer",
-                            status === /* NORMAL */0 ? "text-text-L1" : "text-text-L2"
+                            status !== 0 ? "text-text-L2" : "text-text-L1"
                           ]),
                       onClick: (function (param) {
                           return Curry._1(onChange, /* NORMAL */0);
@@ -68,12 +90,20 @@ function Select_Product_Type(Props) {
                     }, toString(/* NORMAL */0)), React.createElement("div", {
                       className: Cx.cx([
                             "text-center py-2 px-6 flex-1 z-10 cursor-pointer",
-                            status === /* NORMAL */0 ? "text-text-L2" : "text-text-L1"
+                            status !== 1 ? "text-text-L2" : "text-text-L1"
                           ]),
                       onClick: (function (param) {
                           return Curry._1(onChange, /* QUOTED */1);
                         })
-                    }, toString(/* QUOTED */1))));
+                    }, toString(/* QUOTED */1)), React.createElement("div", {
+                      className: Cx.cx([
+                            "text-center py-2 px-6 flex-1 z-10 cursor-pointer",
+                            status >= 2 ? "text-text-L1" : "text-text-L2"
+                          ]),
+                      onClick: (function (param) {
+                          return Curry._1(onChange, /* MATCHING */2);
+                        })
+                    }, "매칭상품")));
 }
 
 function status_encode$1(v) {
@@ -86,6 +116,8 @@ function status_encode$1(v) {
         return "QUOTED";
     case /* QUOTABLE */3 :
         return "QUOTABLE";
+    case /* MATCHING */4 :
+        return "MATCHING";
     
   }
 }
@@ -119,6 +151,11 @@ function status_decode$1(v) {
             TAG: /* Ok */0,
             _0: /* QUOTABLE */3
           };
+  } else if ("MATCHING" === str$1) {
+    return {
+            TAG: /* Ok */0,
+            _0: /* MATCHING */4
+          };
   } else {
     return Spice.error(undefined, "Not matched", v);
   }
@@ -138,6 +175,8 @@ function toDisplayName(status) {
         return "견적상품";
     case /* QUOTABLE */3 :
         return "일반+견적상품";
+    case /* MATCHING */4 :
+        return "매칭상품";
     
   }
 }
@@ -178,7 +217,8 @@ function Select_Product_Type$Search(Props) {
                           /* ALL */0,
                           /* NORMAL */1,
                           /* QUOTED */2,
-                          /* QUOTABLE */3
+                          /* QUOTABLE */3,
+                          /* MATCHING */4
                         ], (function (s) {
                             var value = toString$1(s);
                             return React.createElement("option", {

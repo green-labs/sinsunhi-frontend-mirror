@@ -20,17 +20,22 @@ import Format from "date-fns/format";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 import * as Hooks from "react-relay/hooks";
-import * as IconCheckBoxChecked from "./svgs/IconCheckBoxChecked.mjs";
-import * as IconCheckBoxUnChecked from "./svgs/IconCheckBoxUnChecked.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ErrorMessage from "@hookform/error-message";
 import * as Add_ProductOption_Admin from "./Add_ProductOption_Admin.mjs";
 import * as Product_Option_Each_Admin from "./Product_Option_Each_Admin.mjs";
 import * as Select_Product_Option_Unit from "./Select_Product_Option_Unit.mjs";
 import * as ReactCollapsible from "@radix-ui/react-collapsible";
+import * as Select_Product_Shipping_Type from "./Select_Product_Shipping_Type.mjs";
 import * as Select_Product_Operation_Status from "./Select_Product_Operation_Status.mjs";
+import CheckboxCheckedSvg from "../../public/assets/checkbox-checked.svg";
 import * as UpdateProductOptionAdminFragment_graphql from "../__generated__/UpdateProductOptionAdminFragment_graphql.mjs";
+import CheckboxUncheckedSvg from "../../public/assets/checkbox-unchecked.svg";
 import * as UpdateProductOptionAdminAutoGenNameFragment_graphql from "../__generated__/UpdateProductOptionAdminAutoGenNameFragment_graphql.mjs";
+
+var checkboxCheckedIcon = CheckboxCheckedSvg;
+
+var checkboxUncheckedIcon = CheckboxUncheckedSvg;
 
 function use(fRef) {
   var data = Hooks.useFragment(UpdateProductOptionAdminFragment_graphql.node, fRef);
@@ -251,6 +256,10 @@ function submit_encode(v) {
               [
                 "auto-generated-name",
                 Spice.stringToJson(v.autoGenName)
+              ],
+              [
+                "is-free-shipping",
+                Select_Product_Shipping_Type.status_encode(v.isFreeShipping)
               ]
             ]);
 }
@@ -276,75 +285,88 @@ function submit_decode(v) {
           if (memo.TAG === /* Ok */0) {
             var autoGenName = Spice.stringFromJson(Belt_Option.getWithDefault(Js_dict.get(dict$1, "auto-generated-name"), null));
             if (autoGenName.TAG === /* Ok */0) {
+              var isFreeShipping = Select_Product_Shipping_Type.status_decode(Belt_Option.getWithDefault(Js_dict.get(dict$1, "is-free-shipping"), null));
+              if (isFreeShipping.TAG === /* Ok */0) {
+                return {
+                        TAG: /* Ok */0,
+                        _0: {
+                          id: id._0,
+                          name: name._0,
+                          operationStatus: operationStatus._0,
+                          cutOffTime: cutOffTime._0,
+                          memo: memo._0,
+                          autoGenName: autoGenName._0,
+                          isFreeShipping: isFreeShipping._0
+                        }
+                      };
+              }
+              var e = isFreeShipping._0;
               return {
-                      TAG: /* Ok */0,
+                      TAG: /* Error */1,
                       _0: {
-                        id: id._0,
-                        name: name._0,
-                        operationStatus: operationStatus._0,
-                        cutOffTime: cutOffTime._0,
-                        memo: memo._0,
-                        autoGenName: autoGenName._0
+                        path: ".is-free-shipping" + e.path,
+                        message: e.message,
+                        value: e.value
                       }
                     };
             }
-            var e = autoGenName._0;
+            var e$1 = autoGenName._0;
             return {
                     TAG: /* Error */1,
                     _0: {
-                      path: ".auto-generated-name" + e.path,
-                      message: e.message,
-                      value: e.value
+                      path: ".auto-generated-name" + e$1.path,
+                      message: e$1.message,
+                      value: e$1.value
                     }
                   };
           }
-          var e$1 = memo._0;
+          var e$2 = memo._0;
           return {
                   TAG: /* Error */1,
                   _0: {
-                    path: ".memo" + e$1.path,
-                    message: e$1.message,
-                    value: e$1.value
+                    path: ".memo" + e$2.path,
+                    message: e$2.message,
+                    value: e$2.value
                   }
                 };
         }
-        var e$2 = cutOffTime._0;
+        var e$3 = cutOffTime._0;
         return {
                 TAG: /* Error */1,
                 _0: {
-                  path: ".cut-off-time" + e$2.path,
-                  message: e$2.message,
-                  value: e$2.value
+                  path: ".cut-off-time" + e$3.path,
+                  message: e$3.message,
+                  value: e$3.value
                 }
               };
       }
-      var e$3 = operationStatus._0;
+      var e$4 = operationStatus._0;
       return {
               TAG: /* Error */1,
               _0: {
-                path: ".operation-status" + e$3.path,
-                message: e$3.message,
-                value: e$3.value
+                path: ".operation-status" + e$4.path,
+                message: e$4.message,
+                value: e$4.value
               }
             };
     }
-    var e$4 = name._0;
+    var e$5 = name._0;
     return {
             TAG: /* Error */1,
             _0: {
-              path: ".name" + e$4.path,
-              message: e$4.message,
-              value: e$4.value
+              path: ".name" + e$5.path,
+              message: e$5.message,
+              value: e$5.value
             }
           };
   }
-  var e$5 = id._0;
+  var e$6 = id._0;
   return {
           TAG: /* Error */1,
           _0: {
-            path: ".id" + e$5.path,
-            message: e$5.message,
-            value: e$5.value
+            path: ".id" + e$6.path,
+            message: e$6.message,
+            value: e$6.value
           }
         };
 }
@@ -356,7 +378,8 @@ function makeInputNames(prefix) {
           operationStatus: prefix + ".operation-status",
           cutOffTime: prefix + ".cut-off-time",
           memo: prefix + ".memo",
-          autoGenName: prefix + ".auto-generated-name"
+          autoGenName: prefix + ".auto-generated-name",
+          isFreeShipping: prefix + ".is-free-shipping"
         };
 }
 
@@ -394,6 +417,10 @@ function makeAddProductOptionDefaultValue(values, grade, packageType, countPerPa
     [
       names.operationStatus,
       Select_Product_Operation_Status.Base.status_encode(values.operationStatus)
+    ],
+    [
+      names.isFreeShipping,
+      Select_Product_Shipping_Type.status_encode(values.isFreeShipping)
     ],
     [
       names.buyerPrice,
@@ -714,7 +741,7 @@ function Update_ProductOption_Admin$EditStatus(Props) {
                 }));
   };
   return React.createElement("div", {
-              className: "flex flex-col gap-2 grow"
+              className: "flex flex-col gap-2"
             }, React.createElement("label", {
                   className: "block"
                 }, React.createElement("span", {
@@ -758,6 +785,66 @@ function Update_ProductOption_Admin$EditStatus(Props) {
 
 var EditStatus = {
   make: Update_ProductOption_Admin$EditStatus
+};
+
+function Update_ProductOption_Admin$EditIsFreeShipping(Props) {
+  var inputName = Props.inputName;
+  var defaultValue = Props.defaultValue;
+  var disabled = Props.disabled;
+  var match = ReactHookForm$1.useFormContext({
+        mode: "onChange"
+      }, undefined);
+  var errors = match.formState.errors;
+  var toStatus = function (statusFromSelect) {
+    return Belt_Result.mapWithDefault(Select_Product_Shipping_Type.status_decode(statusFromSelect), undefined, (function (v) {
+                  return v;
+                }));
+  };
+  return React.createElement("div", {
+              className: "flex flex-col gap-2"
+            }, React.createElement("label", {
+                  className: "block"
+                }, React.createElement("span", {
+                      className: "font-bold"
+                    }, "배송비 타입"), React.createElement("span", {
+                      className: "text-red-500"
+                    }, "*")), React.createElement("span", {
+                  className: "w-44 h-9"
+                }, React.createElement(ReactHookForm$1.Controller, {
+                      name: inputName,
+                      control: match.control,
+                      render: (function (param) {
+                          var match = param.field;
+                          var onChange = match.onChange;
+                          return React.createElement("div", undefined, React.createElement(Select_Product_Shipping_Type.make, {
+                                          status: toStatus(match.value),
+                                          onChange: (function (selected) {
+                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Shipping_Type.status_encode(selected)));
+                                            }),
+                                          forwardRef: match.ref,
+                                          disabled: disabled
+                                        }), React.createElement(ErrorMessage.ErrorMessage, {
+                                          name: match.name,
+                                          errors: errors,
+                                          render: (function (param) {
+                                              return React.createElement("span", {
+                                                          className: "flex"
+                                                        }, React.createElement(IconError.make, {
+                                                              width: "20",
+                                                              height: "20"
+                                                            }), React.createElement("span", {
+                                                              className: "text-sm text-notice ml-1"
+                                                            }, "배송비 타입을 입력해주세요."));
+                                            })
+                                        }));
+                        }),
+                      defaultValue: Select_Product_Shipping_Type.status_encode(defaultValue),
+                      rules: ReactHookForm.Rules.make(true, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+                    })));
+}
+
+var EditIsFreeShipping = {
+  make: Update_ProductOption_Admin$EditIsFreeShipping
 };
 
 function Update_ProductOption_Admin$EditCutOffTime(Props) {
@@ -951,7 +1038,7 @@ function Update_ProductOption_Admin(Props) {
                                             }, "단품정보 접기"), React.createElement(IconArrow.make, {
                                               height: "15",
                                               width: "15",
-                                              fill: "#000000",
+                                              stroke: "#000000",
                                               className: "transform -rotate-90"
                                             })),
                                     className: "collabsible-trigger"
@@ -1005,19 +1092,19 @@ function Update_ProductOption_Admin(Props) {
                                           defaultValue: productOption.status,
                                           disabled: disabled,
                                           key: stringifyStatus(productOption.status)
+                                        }), React.createElement(Update_ProductOption_Admin$EditIsFreeShipping, {
+                                          inputName: inputNames.isFreeShipping,
+                                          defaultValue: productOption.productOptionCost.isFreeShipping ? /* FREE */1 : /* NOTFREE */0,
+                                          disabled: disabled
                                         }))), React.createElement("div", {
                                   className: "flex flex-col gap-6 py-6 w-full"
                                 }, React.createElement(Update_ProductOption_Admin$EditCutOffTime, tmp), React.createElement(Update_ProductOption_Admin$EditMemo, tmp$1), index !== 0 || !match$1 ? null : React.createElement("div", {
                                         className: "flex gap-2 items-center"
                                       }, React.createElement("button", {
                                             onClick: onClickApplyAll
-                                          }, applyAll ? React.createElement(IconCheckBoxChecked.make, {
-                                                  width: "20",
-                                                  height: "20"
-                                                }) : React.createElement(IconCheckBoxUnChecked.make, {
-                                                  width: "20",
-                                                  height: "20"
-                                                })), React.createElement("span", undefined, "[" + productDisplayName + "] 전체 단품에 출고기준시간과 메모 동일하게 적용하기")))),
+                                          }, React.createElement("img", {
+                                                src: applyAll ? checkboxCheckedIcon : checkboxUncheckedIcon
+                                              })), React.createElement("span", undefined, "[" + productDisplayName + "] 전체 단품에 출고기준시간과 메모 동일하게 적용하기")))),
                         className: "collabsible-content"
                       })),
               defaultOpen: true
@@ -1029,6 +1116,8 @@ var Select_Unit;
 var make = Update_ProductOption_Admin;
 
 export {
+  checkboxCheckedIcon ,
+  checkboxUncheckedIcon ,
   Select_Unit ,
   Fragment ,
   DecodeProductOption ,
@@ -1042,9 +1131,10 @@ export {
   ReadOnlyPackage ,
   ReadOnlyWeight ,
   EditStatus ,
+  EditIsFreeShipping ,
   EditCutOffTime ,
   EditMemo ,
   make ,
   
 }
-/* react Not a pure module */
+/* checkboxCheckedIcon Not a pure module */

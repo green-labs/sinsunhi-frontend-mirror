@@ -1,16 +1,2 @@
-@react.component
-let make = (~height, ~width, ~fill) =>
-  <svg width height viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M25.3839 6.61612C25.872 7.10427 25.872 7.89573 25.3839 8.38388L8.38388 25.3839C7.89573 25.872 7.10427 25.872 6.61612 25.3839C6.12796 24.8957 6.12796 24.1043 6.61612 23.6161L23.6161 6.61612C24.1043 6.12796 24.8957 6.12796 25.3839 6.61612Z"
-      fill
-    />
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M6.61612 6.61612C6.12796 7.10427 6.12796 7.89573 6.61612 8.38388L23.6161 25.3839C24.1043 25.872 24.8957 25.872 25.3839 25.3839C25.872 24.8957 25.872 24.1043 25.3839 23.6161L8.38388 6.61612C7.89573 6.12796 7.10427 6.12796 6.61612 6.61612Z"
-      fill
-    />
-  </svg>
+@module("../../../public/assets/close.svg?react") @react.component
+external make: (~height: string, ~width: string, ~fill: string) => React.element = "default"

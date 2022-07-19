@@ -12,6 +12,7 @@ import * as ReactUtil from "../../utils/ReactUtil.mjs";
 import Head from "next/head";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
+import * as CustomHooks from "../../utils/CustomHooks.mjs";
 import * as FetchHelper from "../../utils/FetchHelper.mjs";
 import * as ReactEvents from "../../utils/ReactEvents.mjs";
 import * as Router from "next/router";
@@ -297,6 +298,26 @@ function $$default(props) {
         }));
   var phoneNumber = Js_dict.get(props.query, "phone-number");
   var uid = Js_dict.get(props.query, "uid");
+  var router = Router.useRouter();
+  var user = CustomHooks.Auth.use(undefined);
+  React.useEffect((function () {
+          if (typeof user !== "number") {
+            var match = user._0.role;
+            switch (match) {
+              case /* Seller */0 :
+                  router.push("/seller");
+                  break;
+              case /* Buyer */1 :
+                  router.push("/");
+                  break;
+              case /* Admin */2 :
+                  router.push("/admin");
+                  break;
+              
+            }
+          }
+          
+        }), [user]);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "바이어 아이디 찾기 비밀번호 찾기 - 신선하이")
                 }), React.createElement("div", {

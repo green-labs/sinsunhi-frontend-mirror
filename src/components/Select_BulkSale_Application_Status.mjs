@@ -156,21 +156,21 @@ function stringifyStatus(s) {
 
 function displayStatus(s) {
   if (s === "CONFIRMED") {
-    return "판매진행";
+    return "판매 확정";
   } else if (s === "WITHDRAWN") {
     return "고객 취소";
   } else if (s === "APPLIED") {
-    return "접수중";
+    return "신청 접수 중";
   } else if (s === "SAMPLE_REQUESTED") {
-    return "샘플요청";
+    return "샘플 요청";
   } else if (s === "SAMPLE_REVIEWING") {
-    return "품평회 진행중";
+    return "품평회 진행 중";
   } else if (s === "REJECTED") {
-    return "보류";
+    return "추후 판매";
   } else if (s === "UNDER_DISCUSSION") {
-    return "협의중";
+    return "판매 협의 중";
   } else if (s === "ON_SITE_MEETING_SCHEDULED") {
-    return "현장미팅예정";
+    return "현장 미팅 예정";
   } else {
     return "전량 구매 진행 상태 파싱 오류";
   }

@@ -25,7 +25,7 @@ function DS_ButtonContainer$Floating1(Props) {
     tmp.buttonType = Caml_option.valFromOption(buttonType);
   }
   return React.createElement("div", {
-              className: "fixed w-full max-w-3xl bottom-0 left-1/2 -translate-x-1/2 p-5 gradient-cta-t tab-highlight-color"
+              className: "absolute w-full max-w-3xl bottom-0 left-1/2 -translate-x-1/2 p-5 gradient-cta-t tab-highlight-color"
             }, Belt_Option.mapWithDefault(dataGtm, React.createElement(DS_Button.Normal.Large1.make, tmp), (function (dataGtm$p) {
                     var tmp = {
                       label: label

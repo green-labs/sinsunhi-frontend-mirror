@@ -709,10 +709,7 @@ let fetchWithRetryForRelay = (~fetcher, ~url, ~body, ~count) => {
       }
     )
 
-  // FIXME retry 로직의 Promise가 중첩되어 마치 병렬로 처리되고 있어 interval=200 핫픽스를 합니다.
-  // interval을 주어 토큰을 갱신하는 사이 원래 하려던 요청의 Promise가 또 생성되기 전에 토큰 갱신을 성공할 수 있게 합니다.
-  // TODO retry 리팩토링
-  retry(~fn, ~count, ~interval=200, ~err=None)
+  retry(~fn, ~count, ~interval=0, ~err=None)
 }
 
 let requestWithRetry = (~fetcher, ~url, ~body, ~count, ~onSuccess, ~onFailure) => {

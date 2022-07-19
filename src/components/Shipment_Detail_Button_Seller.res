@@ -258,7 +258,7 @@ module OrderList = {
           <IconArrow
             height="20"
             width="20"
-            fill={isDisabledLeft ? "#CCCCCC" : "#727272"}
+            stroke={isDisabledLeft ? "#CCCCCC" : "#727272"}
             className=%twc("relative")
           />
         </button>
@@ -282,7 +282,7 @@ module OrderList = {
           <IconArrow
             height="20"
             width="20"
-            fill={isDisabledRight ? "#CCCCCC" : "#727272"}
+            stroke={isDisabledRight ? "#CCCCCC" : "#727272"}
             className=%twc("relative")
           />
         </button>

@@ -5,7 +5,14 @@ module Fragment = %relay(`
           productOptionNodeId: { type: "ID!" }
         ) {
           productNode: node(id: $productNodeId) {
-            ... on Product {
+            ... on NormalProduct {
+              displayName
+              image {
+                original
+              }
+            }
+        
+            ... on QuotableProduct {
               displayName
               image {
                 original
@@ -49,7 +56,7 @@ let make = (~query, ~quantity) => {
   let (productName, imageUrl) = switch fragments.productNode {
   | Some(productNode') =>
     switch productNode' {
-    | #Product(product) => (product.displayName, product.image.original)
+    | #NormalProduct(product) => (product.displayName, product.image.original)
     | _ => ("", "")
     }
   | None => ("", "")

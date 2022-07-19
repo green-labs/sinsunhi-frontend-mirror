@@ -1,5 +1,8 @@
 external unsafeAsFile: Webapi.Blob.t => Webapi.File.t = "%identity"
 
+@module("../../public/assets/navi-download.svg")
+external naviDownloadIcon: string = "default"
+
 module DownloadTableHead = {
   @react.component
   let make = () =>
@@ -79,9 +82,8 @@ module DownloadTableRow = {
       | SUCCESS =>
         <p className=%twc("flex flex-row items-center")>
           <span> {`생성완료`->React.string} </span>
-          <IconNaviDownload
-            width="1rem"
-            height="1.2rem"
+          <img
+            src=naviDownloadIcon
             className=%twc("ml-5 cursor-pointer")
             onClick={_ => downloadFtn(id->Int.toString, filename)}
           />

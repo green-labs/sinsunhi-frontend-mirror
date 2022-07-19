@@ -3,9 +3,10 @@ let make = (~status: CustomHooks.QueryUser.result) => {
   switch status {
   | Error(error) => <ErrorPanel error />
   | Loading => <div> {j`로딩 중..`->React.string} </div>
-  | Loaded(users) => <>
+  | Loaded(users) =>
+    <>
       <div className=%twc("w-full min-w-max text-sm divide-y divide-gray-100 pr-7")>
-        <div className=%twc("grid grid-cols-8-admin-users-buyer bg-gray-100 text-gray-500 h-12")>
+        <div className=%twc("grid grid-cols-11-admin-users-buyer bg-gray-100 text-gray-500 h-12")>
           <div className=%twc("flex items-center px-4 whitespace-nowrap")>
             {j`바이어명`->React.string}
           </div>
@@ -23,6 +24,15 @@ let make = (~status: CustomHooks.QueryUser.result) => {
           </div>
           <div className=%twc("flex items-center px-4 whitespace-nowrap")>
             {j`사업장주소·사업자번호`->React.string}
+          </div>
+          <div className=%twc("flex items-center px-4 whitespace-nowrap")>
+            {j`업종`->React.string}
+          </div>
+          <div className=%twc("flex items-center justify-center px-4 whitespace-nowrap")>
+            {j`연매출`->React.string}
+          </div>
+          <div className=%twc("flex items-center justify-center px-4 whitespace-nowrap")>
+            {j`관심품목`->React.string}
           </div>
           <div className=%twc("flex items-center px-4 whitespace-nowrap")>
             {j`담당자`->React.string}

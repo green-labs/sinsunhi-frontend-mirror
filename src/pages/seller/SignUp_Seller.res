@@ -257,7 +257,7 @@ let make = () => {
           {`생산자 회원가입`->React.string}
           <button className=%twc("absolute left-0 p-2") onClick={handleOnClickBackButton}>
             <IconArrow
-              height="24" width="24" fill="#262626" className=%twc("transform rotate-180")
+              height="24" width="24" stroke="#262626" className=%twc("transform rotate-180")
             />
           </button>
         </h2>

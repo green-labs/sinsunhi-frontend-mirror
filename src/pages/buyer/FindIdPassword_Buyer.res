@@ -112,9 +112,7 @@ module ResetPassword = {
     let (isShowResetSuccess, setShowResetSuccess) = React.Uncurried.useState(_ => Dialog.Hide)
     let (isShowResetError, setShowResetError) = React.Uncurried.useState(_ => Dialog.Hide)
 
-    /**
-     * 비밀번호 재설정 요청
-     */
+    // 비밀번호 재설정 요청
     let onSubmit = ({state}: Form.onSubmitAPI) => {
       let email = state.values->FormFields.get(FormFields.Email)
 
@@ -282,6 +280,24 @@ let default = (~props: props) => {
     })
   let phoneNumber = props.query->Js.Dict.get("phone-number")
   let uid = props.query->Js.Dict.get("uid")
+
+  let {useRouter, push} = module(Next.Router)
+  let router = useRouter()
+  // 이미 로그인 된 경우 redirect 하기
+  let user = CustomHooks.Auth.use()
+  React.useEffect1(_ => {
+    switch user {
+    | LoggedIn(user') =>
+      switch user'.role {
+      | Buyer => router->push("/")
+      | Seller => router->push("/seller")
+      | Admin => router->push("/admin")
+      }
+    | NotLoggedIn | Unknown => ()
+    }
+
+    None
+  }, [user])
 
   <>
     <Next.Head>

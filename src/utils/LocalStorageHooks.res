@@ -49,6 +49,13 @@ module RefreshTokenConfig = {
   let toString = value => value
 }
 
+module BuyerInfoConfig = {
+  type t = string
+  let key = "SS_BUYER_INFO_LAST_SHOWN"
+  let fromString = str => str->Option.getWithDefault("")
+  let toString = value => value
+}
+
 module PhoneNumber = LocalStorage.Make(PhoneNumberConfig)
 
 module BuyerEmail = LocalStorage.Make(BuyerEmailConfig)
@@ -60,3 +67,5 @@ module AdminMenu = LocalStorage.Make(AdminMenuConfig)
 module AccessToken = LocalStorage.Make(AccessTokenConfig)
 
 module RefreshToken = LocalStorage.Make(RefreshTokenConfig)
+
+module BuyerInfoLastShown = LocalStorage.Make(BuyerInfoConfig)

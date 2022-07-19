@@ -165,7 +165,7 @@ function BulkSale_Product_Update_Button(Props) {
   var match$2 = React.useState(function () {
         return /* Selected */{
                 value: product.productCategory.crop.id,
-                label: product.productCategory.name
+                label: product.productCategory.crop.name
               };
       });
   var setCropId = match$2[1];
@@ -178,6 +178,11 @@ function BulkSale_Product_Update_Button(Props) {
       });
   var setProductCategoryId = match$3[1];
   var productCategoryId = match$3[0];
+  console.log([
+        "asf",
+        productCategoryId,
+        product.productCategory.name
+      ]);
   var match$4 = React.useState(function () {
         return product.preferredGrade;
       });

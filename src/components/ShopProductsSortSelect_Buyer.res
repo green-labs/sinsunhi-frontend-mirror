@@ -7,6 +7,10 @@
  *
  */
 
+@module("../../public/assets/arrow-gray800-up-down.svg")
+external arrowUpDownIcon:string = "default"
+
+
 let encodeSort = sort => {
   switch sort {
   | #UPDATED_ASC => "updated-asc"
@@ -36,6 +40,7 @@ let makeSortLabel = sort => {
   | _ => ""
   }
 }
+
 
 @react.component
 let make = () => {
@@ -68,7 +73,7 @@ let make = () => {
       <Trigger className=%twc("focus:outline-none")>
         <div className=%twc("ml-2 flex items-center justify-center")>
           <span className=%twc("text-sm mr-1 text-gray-800")> {label->React.string} </span>
-          <IconArrowUpDown />
+          <img src=arrowUpDownIcon />
         </div>
       </Trigger>
       <Content
@@ -126,7 +131,7 @@ module MO = {
         <Trigger className=%twc("focus:outline-none")>
           <div className=%twc("ml-2 flex items-center justify-center")>
             <span className=%twc("text-sm mr-1 text-gray-800")> {label->React.string} </span>
-            <IconArrowUpDown />
+            <img src=arrowUpDownIcon />
           </div>
         </Trigger>
         <Content

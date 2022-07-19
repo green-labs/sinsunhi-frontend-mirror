@@ -282,7 +282,7 @@ and Selection: Selection = {
 let make = (~control, ~name) => {
   // 5단계의 표준카테고리 선택 셀렉트를 가진다.
   let categoryNamePrefixes = ["c1", "c2", "c3", "c4", "c5"]
-  let placeholders = [`전체`, `대분류선택`, `부류선택`, `작물선택`, `품종선택`]
+  let placeholders = [`전체`, `대분류선택`, `부류선택`, `품목선택`, `품종선택`]
 
   <Category
     parentId=None control name categoryNamePrefixes placeholders disabled={false} required={false}

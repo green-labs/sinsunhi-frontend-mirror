@@ -2,7 +2,6 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
-import * as IconEdit from "./svgs/IconEdit.mjs";
 import * as Textarea from "./common/Textarea.mjs";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
@@ -14,7 +13,10 @@ import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
+import EditSvg from "../../public/assets/edit.svg";
 import * as BulkSaleProducerMemoUpdateButtonMutation_graphql from "../__generated__/BulkSaleProducerMemoUpdateButtonMutation_graphql.mjs";
+
+var editIcon = EditSvg;
 
 var make_bulkSaleApplicationUpdateInput = BulkSaleProducerMemoUpdateButtonMutation_graphql.Utils.make_bulkSaleApplicationUpdateInput;
 
@@ -103,10 +105,9 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, {
-                        width: "20",
-                        height: "20",
-                        className: "mr-1"
+                  children: React.createElement("img", {
+                        className: "mr-1",
+                        src: editIcon
                       }),
                   className: "inline-flex"
                 }), React.createElement(ReactDialog.Content, {
@@ -203,8 +204,9 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
 var make = BulkSale_Producer_Memo_Update_Button;
 
 export {
+  editIcon ,
   Mutation ,
   make ,
   
 }
-/* react Not a pure module */
+/* editIcon Not a pure module */

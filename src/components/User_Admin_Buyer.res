@@ -4,13 +4,15 @@ module Item = {
   module Table = {
     @react.component
     let make = (~user: CustomHooks.QueryUser.Buyer.user) => {
-      <li className=%twc("grid grid-cols-8-admin-users-buyer text-gray-700")>
+      <li className=%twc("grid grid-cols-11-admin-users-buyer text-gray-700")>
         <div className=%twc("px-4 py-2")> {user.name->React.string} </div>
         <div className=%twc("px-4 py-2")>
           <span className=%twc("block")> {user.email->React.string} </span>
           <span className=%twc("block")> {user.phone->React.string} </span>
         </div>
-        <div className=%twc("px-4 py-2")> <Badge_User_Transaction_Admin status=user.status /> </div>
+        <div className=%twc("px-4 py-2")>
+          <Badge_User_Transaction_Admin status=user.status />
+        </div>
         <div className=%twc("px-4 py-2 text-right")>
           <span className=%twc("block mb-4")>
             {`${user.deposit->Locale.Float.show(~digits=0)}원`->React.string}
@@ -27,6 +29,17 @@ module Item = {
           <span className=%twc("block")>
             {user.businessRegistrationNumber->Option.getWithDefault("")->React.string}
           </span>
+        </div>
+        <div className=%twc("px-4 py-2")>
+          {user.selfReportedBusinessSectors
+          ->Option.mapWithDefault("", bs => Js.Array2.joinWith(bs, ", "))
+          ->React.string}
+        </div>
+        <div className=%twc("px-4 py-2")>
+          {user.selfReportedSalesBin->Option.getWithDefault("")->React.string}
+        </div>
+        <div className=%twc("px-4 py-2")>
+          <Buyer_Interested_Item_Category_Button_Admin itemIds=user.interestedItemCategoryIds />
         </div>
         <div className=%twc("px-4 py-2")>
           {user.manager->Option.getWithDefault("-")->React.string}

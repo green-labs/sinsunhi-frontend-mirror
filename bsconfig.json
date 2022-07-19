@@ -26,7 +26,7 @@
     "@rescript/react",
     "bs-css",
     "bs-css-emotion",
-    "bs-date-fns",
+    "res-date-fns",
     "bs-fetch",
     "rescript-webapi",
     "@greenlabs/res-daum-postcode",

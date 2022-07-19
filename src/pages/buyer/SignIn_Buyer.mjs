@@ -5,12 +5,16 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Input from "../../components/common/Input.mjs";
 import * as React from "react";
 import * as Dialog from "../../components/common/Dialog.mjs";
+import * as Global from "../../components/Global.mjs";
+import * as DataGtm from "../../utils/DataGtm.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Checkbox from "../../components/common/Checkbox.mjs";
+import * as Redirect from "../../components/Redirect.mjs";
 import * as ReactUtil from "../../utils/ReactUtil.mjs";
 import Head from "next/head";
 import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import JwtDecode from "jwt-decode";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../utils/CustomHooks.mjs";
@@ -21,6 +25,7 @@ import * as ReForm__Helpers from "@rescriptbr/reform/src/ReForm__Helpers.mjs";
 import * as ChannelTalkHelper from "../../utils/ChannelTalkHelper.mjs";
 import * as LocalStorageHooks from "../../utils/LocalStorageHooks.mjs";
 import * as SignIn_Buyer_Form from "../../components/SignIn_Buyer_Form.mjs";
+import * as ReactSeparator from "@radix-ui/react-separator";
 import * as SignIn_Buyer_Set_Password from "../../components/SignIn_Buyer_Set_Password.mjs";
 
 function $$default(props) {
@@ -50,7 +55,7 @@ function $$default(props) {
     var email = SignIn_Buyer_Form.FormFields.get(state.values, /* Email */0);
     var password = SignIn_Buyer_Form.FormFields.get(state.values, /* Password */1);
     var prim0 = new URLSearchParams(router.query);
-    var redirectUrl = Belt_Option.getWithDefault(Caml_option.nullable_to_opt(prim0.get("redirect")), "/buyer");
+    var redirectUrl = Belt_Option.getWithDefault(Caml_option.nullable_to_opt(prim0.get("redirect")), "/");
     var urlSearchParams = new URLSearchParams([
             [
               "grant-type",
@@ -76,8 +81,15 @@ function $$default(props) {
             Curry._1(LocalStorageHooks.AccessToken.set, res$1.token);
             Curry._1(LocalStorageHooks.RefreshToken.set, res$1.refreshToken);
             ChannelTalkHelper.bootWithProfile(undefined);
-            router.push(redirectUrl);
-            
+            var user = CustomHooks.Auth.user_decode(JwtDecode(res$1.token));
+            if (user.TAG === /* Ok */0) {
+              Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, String(user._0.id));
+            }
+            Redirect.setHref(redirectUrl);
+            return DataGtm.push({
+                        login_status: true,
+                        method: "normal"
+                      });
           }), (function (err) {
             if (err.status === 409) {
               setShowForExisted(function (param) {
@@ -85,12 +97,15 @@ function $$default(props) {
                   });
               ReactUtil.setValueElementByRef(inputPasswordRef, "");
               SignIn_Buyer_Form.FormFields.set(state.values, /* Password */1, "");
-              return ;
             } else {
-              return setShowForError(function (param) {
-                          return /* Show */0;
-                        });
+              setShowForError(function (param) {
+                    return /* Show */0;
+                  });
             }
+            return DataGtm.push({
+                        login_status: false,
+                        method: "normal"
+                      });
           }));
     
   };
@@ -146,9 +161,10 @@ function $$default(props) {
                   router.push("/seller");
                   break;
               case /* Buyer */1 :
-                  router.push("/buyer");
+                  router.push("/");
                   break;
               case /* Admin */2 :
+                  router.push("/admin");
                   break;
               
             }
@@ -223,23 +239,17 @@ function $$default(props) {
                                       className: form.isSubmitting || !isFormFilled(undefined) ? "w-full mt-12 h-14 flex justify-center items-center bg-gray-300 rounded-xl text-white font-bold" : "w-full mt-12 h-14 flex justify-center items-center bg-black-gl rounded-xl text-white font-bold focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-black",
                                       disabled: form.isSubmitting || !isFormFilled(undefined),
                                       type: "submit"
-                                    }, "로그인"), React.createElement("p", {
-                                      className: "p-4 mt-8 rounded-xl border border-gray-100"
-                                    }, React.createElement("span", {
-                                          className: "block text-gray-500 font-semibold"
-                                        }, "* 첫 발주이신가요?"), React.createElement("span", {
-                                          className: "text-gray-500"
-                                        }, "가입하신 이메일로 비밀번호 설정하는 방법을 보내드렸습니다. 이메일 확인 부탁드립니다.")))), React.createElement("div", {
-                              className: "pt-7"
-                            }, React.createElement("button", {
-                                  className: "w-full h-14 flex justify-center items-center bg-gray-gl rounded-xl",
+                                    }, "로그인"))), React.createElement(ReactSeparator.Root, {
+                              className: "h-px bg-div-border-L2 my-7"
+                            }), React.createElement("div", undefined, React.createElement("button", {
+                                  className: "w-full h-14 flex justify-center items-center rounded-xl border-[1px] border-green-500",
                                   onClick: (function (param) {
                                       router.push("/buyer/signup");
                                       
                                     })
                                 }, React.createElement("span", {
-                                      className: "text-enabled-L1"
-                                    }, "회원가입")))))), React.createElement(Dialog.make, {
+                                      className: "text-green-500 font-bold"
+                                    }, "바이어 회원가입")))))), React.createElement(Dialog.make, {
                   isShow: match[0],
                   children: React.createElement(SignIn_Buyer_Set_Password.make, {
                         onSuccess: match[1],

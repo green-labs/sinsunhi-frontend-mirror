@@ -64,11 +64,26 @@ module ProductOption = {
     ) => `최대 ${wLabel}${uLabel}`)
   }
 
-  // 가격: 단품가격 - 배송비 (배송비는 별도로 보여주어야 하기 때문에 단품 가격에서 배송비를 제외시킨다.)
-  let makePriceLabel = (price, deliveryCost) => {
-    price->Option.mapWithDefault("", price' =>
-      `${(price' - deliveryCost)->Float.fromInt->Locale.Float.show(~digits=0)}원`
-    )
+  let makeOptionPrice = (~price, ~deliveryCost, ~isFreeShipping) => {
+    // isFreeShipping(배송비 무료 프로모션)이 true일 때
+    // 단품 가격 == 바이어 판매가
+    // isFreeShipping(배송비 무료 프로모션)이 false일 때
+    // 단품 가격 == 바이어 판매가 - 배송비
+    switch isFreeShipping {
+    | true => price
+    | false => price->Option.map(price' => price' - deliveryCost)
+    }
+  }
+
+  let makeOptionDeliveryCost = (~deliveryCost, ~isFreeShipping) => {
+    // isFreeShipping(배송비 무료 프로모션)이 true일 때
+    // 배송비 == 0
+    // isFreeShipping(배송비 무료 프로모션)이 false일 때
+    // 배송비 == 입력된 배송비
+    switch isFreeShipping {
+    | true => 0
+    | false => deliveryCost
+    }
   }
 }
 
@@ -118,10 +133,5 @@ module Product = {
       | (None, None) => ""
       }
     }
-  }
-
-  // 견적상품
-  module Quatable = {
-
   }
 }

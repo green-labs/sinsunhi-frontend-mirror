@@ -89,7 +89,7 @@ function ShopSearchInput_Buyer(Props) {
                     }, React.createElement(IconSearch.make, {
                           width: "36",
                           height: "36",
-                          fill: "#fff"
+                          stroke: "#fff"
                         }), React.createElement("span", {
                           className: "text-white font-bold"
                         }, "검색"))));
@@ -188,7 +188,7 @@ function ShopSearchInput_Buyer$MO(Props) {
                     }, React.createElement(IconSearch.make, {
                           width: "24",
                           height: "24",
-                          fill: "#12B564"
+                          stroke: "#12B564"
                         }))));
 }
 

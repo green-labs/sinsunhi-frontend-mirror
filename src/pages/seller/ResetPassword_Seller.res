@@ -61,9 +61,7 @@ let make = () => {
   let (isShowResetSuccess, setShowResetSuccess) = React.Uncurried.useState(_ => Dialog.Hide)
   let (isShowResetError, setShowResetError) = React.Uncurried.useState(_ => Dialog.Hide)
 
-  /**
-   * 휴대전화 인증 번호 전송
-   */
+  // 휴대전화 인증 번호 전송
   let onSubmitVerifyPhoneNumber = ({state}: VerifyPhoneNumberForm.onSubmitAPI) => {
     setStatusRequestVerificationCode(._ => SendingRequestVerificationCode)
     // 입력된 폰 번호 형식 "010-1234-5678" -> "01012345678" 로 변경해야함.
@@ -110,9 +108,7 @@ let make = () => {
     (),
   )
 
-  /**
-   * 비밀번호 재설정 요청
-   */
+  // 비밀번호 재설정 요청
   let onSubmitResetPassword = ({state}: ResetPasswordForm.onSubmitAPI) => {
     setStatusRequestReset(._ => SendingRequestReset)
 
@@ -309,7 +305,7 @@ let make = () => {
             {`비밀번호 재설정`->React.string}
             <button className=%twc("absolute left-0 p-2") onClick={handleOnClickBackButton}>
               <IconArrow
-                height="24" width="24" fill="#262626" className=%twc("transform rotate-180")
+                height="24" width="24" stroke="#262626" className=%twc("transform rotate-180")
               />
             </button>
           </h2>

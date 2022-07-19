@@ -20,40 +20,6 @@ module Form = {
   }
 }
 
-let encodeQualifiedNameValue = query => {
-  let generateForm: array<
-    UpdateProductDetailAdminFragment_graphql.Types.fragment_category_fullyQualifiedName,
-  > => Form.submit = categories => {
-    c1: categories
-    ->Array.get(0)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c2: categories
-    ->Array.get(1)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c3: categories
-    ->Array.get(2)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c4: categories
-    ->Array.get(3)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-    c5: categories
-    ->Array.get(4)
-    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
-      ReactSelect.Selected({value: d.id, label: d.name})
-    }),
-  }
-
-  query->generateForm
-}
-
 module type Skeleton = {
   @react.component
   let make: (~placeholders: array<string>) => React.element
@@ -257,7 +223,7 @@ let make = (~control, ~name, ~disabled=false, ~required=true) => {
     `카테고리 선택`,
     `대분류선택`,
     `부류선택`,
-    `작물선택`,
+    `품목선택`,
     `품종선택`,
   ]
 

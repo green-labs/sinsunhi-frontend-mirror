@@ -41,6 +41,7 @@ let make = (~onSuccess, ~onFailure, ~startIndex) => {
   let handleUpload = () => {
     switch file {
     | Some(file') =>
+      DataGtm.push({"event": "select_purchase_order"})
       UploadFileToS3PresignedUrl.upload(
         ~kind=UploadFileToS3PresignedUrl.Buyer,
         ~file=file',

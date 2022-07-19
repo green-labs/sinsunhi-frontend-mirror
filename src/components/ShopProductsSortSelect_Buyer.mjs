@@ -5,8 +5,10 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
-import * as IconArrowUpDown from "./svgs/IconArrowUpDown.mjs";
 import * as ReactDropdownMenu from "@radix-ui/react-dropdown-menu";
+import ArrowGray800UpDownSvg from "../../public/assets/arrow-gray800-up-down.svg";
+
+var arrowUpDownIcon = ArrowGray800UpDownSvg;
 
 function encodeSort(sort) {
   if (sort === "UPDATED_DESC") {
@@ -91,7 +93,9 @@ function ShopProductsSortSelect_Buyer(Props) {
                             className: "ml-2 flex items-center justify-center"
                           }, React.createElement("span", {
                                 className: "text-sm mr-1 text-gray-800"
-                              }, label), React.createElement(IconArrowUpDown.make, {})),
+                              }, label), React.createElement("img", {
+                                src: arrowUpDownIcon
+                              })),
                       className: "focus:outline-none"
                     }), React.createElement(ReactDropdownMenu.Content, {
                       children: null,
@@ -146,7 +150,9 @@ function ShopProductsSortSelect_Buyer$MO(Props) {
                             className: "ml-2 flex items-center justify-center"
                           }, React.createElement("span", {
                                 className: "text-sm mr-1 text-gray-800"
-                              }, label), React.createElement(IconArrowUpDown.make, {})),
+                              }, label), React.createElement("img", {
+                                src: arrowUpDownIcon
+                              })),
                       className: "focus:outline-none"
                     }), React.createElement(ReactDropdownMenu.Content, {
                       children: null,
@@ -170,6 +176,7 @@ var MO = {
 var make = ShopProductsSortSelect_Buyer;
 
 export {
+  arrowUpDownIcon ,
   encodeSort ,
   decodeSort ,
   makeSortLabel ,
@@ -177,4 +184,4 @@ export {
   MO ,
   
 }
-/* react Not a pure module */
+/* arrowUpDownIcon Not a pure module */

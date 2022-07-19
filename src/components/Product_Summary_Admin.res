@@ -11,8 +11,17 @@ module Fragment = %relay(`
     productId
     displayName
     name
-    producer {
-      name
+  
+    ... on NormalProduct {
+      producer {
+        name
+      }
+    }
+  
+    ... on QuotableProduct {
+      producer {
+        name
+      }
     }
   }
 `)
@@ -30,7 +39,9 @@ let make = (~query) => {
       <div className=%twc("flex")>
         <div className=%twc("flex gap-2")>
           <span className=%twc("font-bold")> {`생산자`->React.string} </span>
-          <span className=%twc("w-80")> {producer.name->React.string} </span>
+          <span className=%twc("w-80")>
+            {producer->Option.mapWithDefault("", ({name}) => name)->React.string}
+          </span>
         </div>
         <div className=%twc("flex gap-2")>
           <span className=%twc("font-bold")> {`상품번호`->React.string} </span>

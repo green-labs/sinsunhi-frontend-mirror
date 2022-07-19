@@ -57,7 +57,7 @@ function User_List_Admin_Buyer(Props) {
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "w-full min-w-max text-sm divide-y divide-gray-100 pr-7"
                 }, React.createElement("div", {
-                      className: "grid grid-cols-8-admin-users-buyer bg-gray-100 text-gray-500 h-12"
+                      className: "grid grid-cols-11-admin-users-buyer bg-gray-100 text-gray-500 h-12"
                     }, React.createElement("div", {
                           className: "flex items-center px-4 whitespace-nowrap"
                         }, "바이어명"), React.createElement("div", {
@@ -71,6 +71,12 @@ function User_List_Admin_Buyer(Props) {
                         }, "거래내역"), React.createElement("div", {
                           className: "flex items-center px-4 whitespace-nowrap"
                         }, "사업장주소·사업자번호"), React.createElement("div", {
+                          className: "flex items-center px-4 whitespace-nowrap"
+                        }, "업종"), React.createElement("div", {
+                          className: "flex items-center justify-center px-4 whitespace-nowrap"
+                        }, "연매출"), React.createElement("div", {
+                          className: "flex items-center justify-center px-4 whitespace-nowrap"
+                        }, "관심품목"), React.createElement("div", {
                           className: "flex items-center px-4 whitespace-nowrap"
                         }, "담당자"), React.createElement("div", {
                           className: "flex items-center px-4 whitespace-nowrap"

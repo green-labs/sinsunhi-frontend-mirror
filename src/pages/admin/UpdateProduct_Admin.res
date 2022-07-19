@@ -2,6 +2,7 @@ module Query = %relay(`
 query UpdateProductAdminQuery($productId: ID!) {
   node(id: $productId) {
     ... on Product {
+      __typename
       ...UpdateProductDetailAdminFragment
     }
   }
@@ -18,7 +19,12 @@ module Detail = {
     )
 
     switch queryData.node {
-    | Some(node) => <UpdateProduct_Detail_Admin query={node.fragmentRefs} />
+    | Some(node) =>
+      switch node.__typename->Product_Parser.Type.decode {
+      | Some(productType) => <UpdateProduct_Detail_Admin query={node.fragmentRefs} productType />
+      | None => <div> {`지원하지 않은 상품 타입입니다.`->React.string} </div>
+      }
+
     | None => <div> {`상품 정보가 존재하지 않습니다.`->React.string} </div>
     }
   }

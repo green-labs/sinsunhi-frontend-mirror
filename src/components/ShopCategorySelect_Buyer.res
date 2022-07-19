@@ -55,14 +55,14 @@ module Mobile = {
   `)
   module Sub = {
     @react.component
-    let make = (~parentId, ~parentName) => {
+    let make = (~parentId) => {
       let {displayCategories} = Query.use(
         ~variables=Query.makeVariables(~types=[#NORMAL], ~parentId, ~onlyDisplayable=true, ()),
         (),
       )
 
       let parentQueryStr = {
-        [("category-id", parentId), ("category-name", parentName)]
+        [("category-id", parentId)]
         ->Webapi.Url.URLSearchParams.makeWithArray
         ->Webapi.Url.URLSearchParams.toString
       }
@@ -74,13 +74,13 @@ module Mobile = {
               "text-left px-5 py-3 bg-white flex justify-between items-center active:bg-bg-pressed-L2"
             )>
             <span className=%twc("font-bold")> {`전체보기`->React.string} </span>
-            <IconArrow width="16" height="16" fill="#B2B2B2" />
+            <IconArrow width="16" height="16" stroke="#B2B2B2" />
           </button>
         </Next.Link>
         {displayCategories
-        ->Array.map(({name, id}) => {
+        ->Array.map(({id, name}) => {
           let queryStr = {
-            [("category-id", id), ("category-name", name->Js.Global.encodeURIComponent)]
+            [("category-id", id)]
             ->Webapi.Url.URLSearchParams.makeWithArray
             ->Webapi.Url.URLSearchParams.toString
           }
@@ -90,7 +90,7 @@ module Mobile = {
               className=%twc(
                 "text-left px-5 py-3 bg-white flex justify-between items-center active:bg-bg-pressed-L2"
               )>
-              {name->React.string} <IconArrow width="16" height="16" fill="#B2B2B2" />
+              {name->React.string} <IconArrow width="16" height="16" stroke="#B2B2B2" />
             </button>
           </Next.Link>
         })
@@ -110,12 +110,6 @@ module Mobile = {
 
     let defaultParentId = displayCategories->Array.get(0)->Option.map(({id}) => id)
     let (parentId, setParentId) = React.Uncurried.useState(_ => defaultParentId)
-
-    let parent = {
-      parentId->Option.flatMap(parentId' => {
-        displayCategories->Array.getBy(({id}) => id == parentId')
-      })
-    }
 
     let clickedStyle = id => {
       switch parentId {
@@ -166,8 +160,8 @@ module Mobile = {
                     </div>
                     <div className=%twc("col-span-6 flex flex-col border-none")>
                       <React.Suspense fallback={<div />}>
-                        {parent->Option.mapWithDefault(React.null, ({id, name}) => {
-                          <Sub parentId=id parentName=name />
+                        {parentId->Option.mapWithDefault(React.null, parentId' => {
+                          <Sub parentId=parentId' />
                         })}
                       </React.Suspense>
                     </div>
@@ -180,7 +174,7 @@ module Mobile = {
                         target={isNewTabMobile ? "_blank" : ""}
                         rel="noopener noreferer">
                         <div> {title->React.string} </div>
-                        <IconArrow width="24" height="24" fill="#B2B2B2" />
+                        <IconArrow width="24" height="24" stroke="#B2B2B2" />
                       </a>
                     </Next.Link>
                   )
@@ -228,18 +222,6 @@ module PC = {
         }
       }
 
-      let makeOnClick = (id, name) => {
-        ReactEvents.interceptingHandler(_ => {
-          router->pushObj({
-            pathname: `/buyer/products`,
-            query: [
-              ("category-id", id),
-              ("category-name", name->Js.Global.encodeURIComponent),
-            ]->Js.Dict.fromArray,
-          })
-        })
-      }
-
       switch displayCategories {
       | [] => React.null
       | _ => <>
@@ -249,7 +231,12 @@ module PC = {
               <Hoverable
                 key=id className=%twc("mt-3") onHoverChange={makeHoverChange(~id, ~children)}>
                 <div
-                  onClick={makeOnClick(id, name)}
+                  onClick={ReactEvents.interceptingHandler(_ => {
+                    router->pushObj({
+                      pathname: `/buyer/products`,
+                      query: [("category-id", id)]->Js.Dict.fromArray,
+                    })
+                  })}
                   className=%twc(
                     "w-full flex items-center justify-between group cursor-pointer group"
                   )>
@@ -264,7 +251,7 @@ module PC = {
                       className=%twc("hidden group-hover:block")
                       width="16"
                       height="16"
-                      fill="#12B564"
+                      stroke="#12B564"
                     />
                   </span>
                 </div>

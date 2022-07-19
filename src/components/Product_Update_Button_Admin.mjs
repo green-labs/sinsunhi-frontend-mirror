@@ -8,7 +8,6 @@ import * as React from "react";
 import * as Js_json from "rescript/lib/es6/js_json.js";
 import * as Js_null from "rescript/lib/es6/js_null.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
-import * as IconEdit from "./svgs/IconEdit.mjs";
 import * as Textarea from "./common/Textarea.mjs";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
@@ -22,14 +21,21 @@ import * as FetchHelper from "../utils/FetchHelper.mjs";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
 import * as ReForm__Helpers from "@rescriptbr/reform/src/ReForm__Helpers.mjs";
-import * as IconCheckBoxChecked from "./svgs/IconCheckBoxChecked.mjs";
 import * as Search_Crop_Cultivar from "./Search_Crop_Cultivar.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
-import * as IconCheckBoxUnChecked from "./svgs/IconCheckBoxUnChecked.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as Select_Product_Update_Admin from "./Select_Product_Update_Admin.mjs";
+import EditSvg from "../../public/assets/edit.svg";
 import * as Query_Product_Detail_Form_Admin from "./Query_Product_Detail_Form_Admin.mjs";
+import CheckboxCheckedSvg from "../../public/assets/checkbox-checked.svg";
+import CheckboxUncheckedSvg from "../../public/assets/checkbox-unchecked.svg";
+
+var checkboxCheckedIcon = CheckboxCheckedSvg;
+
+var checkboxUncheckedIcon = CheckboxUncheckedSvg;
+
+var editIcon = EditSvg;
 
 function Product_Update_Button_Admin$CutOffAndMemo(Props) {
   var product = Props.product;
@@ -122,9 +128,8 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, {
-                        width: "20",
-                        height: "20"
+                  children: React.createElement("img", {
+                        src: editIcon
                       }),
                   className: "block text-left mb-1 underline focus:outline-none"
                 }), React.createElement(ReactDialog.Content, {
@@ -178,7 +183,9 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
                                                 return !prev;
                                               });
                                   })
-                              }, isUpdateByProductId ? React.createElement(IconCheckBoxChecked.make, {}) : React.createElement(IconCheckBoxUnChecked.make, {}), React.createElement("p", {
+                              }, React.createElement("img", {
+                                    src: isUpdateByProductId ? checkboxCheckedIcon : checkboxUncheckedIcon
+                                  }), React.createElement("p", {
                                     className: "ml-2"
                                   }, "[" + product.productName + "] 상품에 동일하게 적용하기"))), React.createElement("section", {
                             className: "flex justify-center items-center mt-5"
@@ -280,9 +287,8 @@ function Product_Update_Button_Admin$Crop(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, {
-                        width: "20",
-                        height: "20"
+                  children: React.createElement("img", {
+                        src: editIcon
                       }),
                   className: "block text-left mb-1 underline focus:outline-none"
                 }), React.createElement(ReactDialog.Content, {
@@ -448,9 +454,8 @@ function Product_Update_Button_Admin$Detail(Props) {
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
-                  children: React.createElement(IconEdit.make, {
-                        width: "20",
-                        height: "20"
+                  children: React.createElement("img", {
+                        src: editIcon
                       }),
                   className: "block text-left mb-1 underline focus:outline-none"
                 }), React.createElement(ReactDialog.Content, {
@@ -656,9 +661,12 @@ var Select;
 
 export {
   Select ,
+  checkboxCheckedIcon ,
+  checkboxUncheckedIcon ,
+  editIcon ,
   CutOffAndMemo ,
   Crop ,
   Detail ,
   
 }
-/* Env Not a pure module */
+/* checkboxCheckedIcon Not a pure module */

@@ -1,7 +1,11 @@
 module Query = %relay(`
   query WebOrderBuyerQuery($productNodeId: ID!, $productOptionNodeId: ID!) {
     productNode: node(id: $productNodeId) {
-      ... on Product {
+      ... on NormalProduct {
+        isCourierAvailable
+      }
+  
+      ... on QuotableProduct {
         isCourierAvailable
       }
     }
@@ -212,7 +216,7 @@ module Container = {
           (
             Form.name,
             switch queryData.productNode {
-            | Some(#Product({isCourierAvailable})) => [
+            | Some(#NormalProduct({isCourierAvailable})) => [
                 ("payment-method", Js.Json.string("card")),
                 ("product-options", [Form.defaultValue(isCourierAvailable)]->Js.Json.array),
               ]

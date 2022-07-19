@@ -216,6 +216,8 @@ var Mutation_make_createProductOptionCostInput = AddProductOptionsAdminMutation_
 
 var Mutation_make_updateProductOptionInput = AddProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionInput;
 
+var Mutation_make_updateProductOptionCostInput = AddProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionCostInput;
+
 var Mutation_makeVariables = AddProductOptionsAdminMutation_graphql.Utils.makeVariables;
 
 var Mutation = {
@@ -233,6 +235,7 @@ var Mutation = {
   make_createProductOptionInput: Mutation_make_createProductOptionInput,
   make_createProductOptionCostInput: Mutation_make_createProductOptionCostInput,
   make_updateProductOptionInput: Mutation_make_updateProductOptionInput,
+  make_updateProductOptionCostInput: Mutation_make_updateProductOptionCostInput,
   makeVariables: Mutation_makeVariables,
   Types: undefined,
   commitMutation: commitMutation,
@@ -379,6 +382,7 @@ function makeCreateOption(productNodeId, option) {
                 return String(prim);
               })), Belt_Option.map(match[5], Select_Product_Option_Unit.Size.toString), option.showEach, undefined);
   }
+  var match$1 = option.isFreeShipping;
   return {
           countPerPackageMax: Belt_Option.map(Belt_Option.keep(option.each, (function (param) {
                       return option.showEach;
@@ -430,6 +434,7 @@ function makeCreateOption(productNodeId, option) {
           productOptionCost: {
             contractType: contractTypeEncode(option.cost.costType),
             deliveryCost: Belt_Option.getWithDefault(option.cost.deliveryCost, 0),
+            isFreeShipping: match$1 ? true : false,
             rawCost: option.cost.rawCost,
             workingCost: option.cost.workingCost
           },
@@ -443,7 +448,6 @@ function Add_ProductOptions_Admin$Presenter(Props) {
   var query = Props.query;
   var productId = Props.productId;
   var match = use$1(query);
-  var totalCount = match.productOptions.totalCount;
   var router = Router.useRouter();
   var match$1 = use$2(undefined);
   var mutate = match$1[0];
@@ -465,6 +469,9 @@ function Add_ProductOptions_Admin$Presenter(Props) {
               ]])
       }, undefined);
   var reset = methods.reset;
+  var totalCount = Belt_Option.mapWithDefault(match.productOptions, 0, (function (po) {
+          return po.totalCount;
+        }));
   React.useEffect((function () {
           if (totalCount > 0) {
             router.replace("/admin/products/" + productId + "/options");
@@ -548,7 +555,7 @@ function Add_ProductOptions_Admin$Presenter(Props) {
                               className: "p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl"
                             }, React.createElement(Add_ProductOptions_List_Admin.make, {
                                   productDisplayName: match.displayName,
-                                  isCourierAvailable: match.isCourierAvailable,
+                                  isCourierAvailable: Belt_Option.getWithDefault(match.isCourierAvailable, false),
                                   formName: name
                                 })))), React.createElement("div", {
                       className: "relative h-16 max-w-gnb-panel bg-white flex items-center gap-2 justify-between pr-5"

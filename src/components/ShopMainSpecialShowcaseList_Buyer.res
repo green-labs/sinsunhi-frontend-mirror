@@ -50,7 +50,7 @@ module PC = {
             categoryIdx == 1 ? %twc("w-full bg-[#F9F9F9] py-16") : %twc("w-full bg-white py-16")
 
           <section key={`showcase-skeleton-${categoryIdx->Int.toString}`} className=containerStyle>
-            <div className=%twc("w-[1280px] mx-auto")>
+            <div className=%twc("w-[1280px] mx-auto px-5")>
               <div className=%twc("w-[155px] h-[38px] animate-pulse bg-gray-150 rounded-lg") />
               <ol className=%twc("mt-12 grid grid-cols-4 gap-x-10 gap-y-16")>
                 {Array.range(1, 8)
@@ -76,18 +76,6 @@ module PC = {
 
     let {specialDisplayCategories} = Fragment.use(query)
 
-    let makeOnClick = (id, name) => {
-      ReactEvents.interceptingHandler(_ => {
-        router->pushObj({
-          pathname: "/buyer/products",
-          query: [
-            ("category-id", id),
-            ("category-name", name->Js.Global.encodeURIComponent),
-          ]->Js.Dict.fromArray,
-        })
-      })
-    }
-
     specialDisplayCategories
     ->Array.mapWithIndex((idx, {id, name, products: {edges, pageInfo}}) => {
       let containerStyle =
@@ -100,7 +88,7 @@ module PC = {
 
       | _ =>
         <section key={`main-special-category-${id}-pc`} className=containerStyle>
-          <div className=%twc("w-[1280px] mx-auto")>
+          <div className=%twc("w-[1280px] mx-auto px-5")>
             <h1 className=%twc("text-2xl font-bold")> {name->React.string} </h1>
             <ol className=%twc("mt-12 grid grid-cols-4 gap-x-10 gap-y-16")>
               {edges
@@ -119,10 +107,15 @@ module PC = {
             | true =>
               <div className=%twc("mt-12 flex items-center justify-center")>
                 <button
-                  onClick={makeOnClick(id, name)}
+                  onClick={ReactEvents.interceptingHandler(_ => {
+                    router->pushObj({
+                      pathname: "/buyer/products",
+                      query: [("category-id", id)]->Js.Dict.fromArray,
+                    })
+                  })}
                   className=%twc("px-6 py-3 bg-gray-100 rounded-full text-sm flex items-center")>
                   {`전체보기`->React.string}
-                  <IconArrow className=%twc("ml-1") width="16" height="16" fill="#262626" />
+                  <IconArrow className=%twc("ml-1") width="16" height="16" stroke="#262626" />
                 </button>
               </div>
             }}
@@ -170,18 +163,6 @@ module MO = {
 
     let {specialDisplayCategories} = Fragment.use(query)
 
-    let makeOnClick = (id, name) => {
-      ReactEvents.interceptingHandler(_ => {
-        router->pushObj({
-          pathname: "/buyer/products",
-          query: [
-            ("category-id", id),
-            ("category-name", name->Js.Global.encodeURIComponent),
-          ]->Js.Dict.fromArray,
-        })
-      })
-    }
-
     specialDisplayCategories
     ->Array.map(({id, name, products: {edges, pageInfo}}) => {
       switch edges {
@@ -208,12 +189,17 @@ module MO = {
             | true =>
               <div className=%twc("mt-8 flex items-center justify-center")>
                 <button
-                  onClick={makeOnClick(id, name)}
+                  onClick={ReactEvents.interceptingHandler(_ => {
+                    router->pushObj({
+                      pathname: "/buyer/products",
+                      query: [("category-id", id)]->Js.Dict.fromArray,
+                    })
+                  })}
                   className=%twc(
                     "px-[18px] py-[10px] bg-gray-100 rounded-full text-sm flex items-center"
                   )>
                   {`전체보기`->React.string}
-                  <IconArrow className=%twc("ml-1") width="16" height="16" fill="#262626" />
+                  <IconArrow className=%twc("ml-1") width="16" height="16" stroke="#262626" />
                 </button>
               </div>
             }}

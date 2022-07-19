@@ -5,9 +5,11 @@ import * as React from "react";
 import * as ReactUtil from "../utils/ReactUtil.mjs";
 import Clipboard from "clipboard";
 import Head from "next/head";
-import * as IconChrome from "../components/svgs/IconChrome.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import ChromeSvg from "../../public/assets/chrome.svg";
+
+var chromeIcon = ChromeSvg;
 
 function BrowserGuide(Props) {
   React.useEffect((function () {
@@ -42,10 +44,8 @@ function BrowserGuide(Props) {
                       target: "_blank"
                     }, React.createElement("div", {
                           className: "flex justify-center items-center py-3 w-80 border border-gray-200 rounded-xl font-bold mt-14"
-                        }, React.createElement(IconChrome.make, {
-                              width: "24",
-                              height: "24",
-                              fill: "none"
+                        }, React.createElement("img", {
+                              src: chromeIcon
                             }), React.createElement("span", {
                               className: "ml-1"
                             }, "크롬 다운로드"))), React.createElement("div", {
@@ -76,7 +76,8 @@ function BrowserGuide(Props) {
 var make = BrowserGuide;
 
 export {
+  chromeIcon ,
   make ,
   
 }
-/* Env Not a pure module */
+/* chromeIcon Not a pure module */

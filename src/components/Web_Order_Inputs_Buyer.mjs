@@ -66,7 +66,10 @@ function Web_Order_Inputs_Buyer$ReceiverPhoneInput(Props) {
       }, undefined);
   var errors = match.formState.errors;
   var newValue = function (e) {
-    return e.currentTarget.value.slice(0, 13).replace(/[^0-9]/g, "").replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3").replace("--", "-");
+    var str = e.currentTarget.value.slice(0, 14).replace(/[^0-9]/g, "");
+    return (
+              str.length === 12 ? str.replace(/([0-9]{4})([0-9]{4})([0-9]{4})/, "$1-$2-$3") : str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3")
+            ).replace("--", "-");
   };
   return React.createElement("div", {
               className: "flex flex-col gap-2 xl:gap-0 xl:flex-row xl:items-baseline"

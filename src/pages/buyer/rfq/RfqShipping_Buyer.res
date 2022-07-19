@@ -1,9 +1,14 @@
 module Query = {
-  module RfqNextAcceptableDeliveryDateAndTerm = %relay(`
-    query RfqShippingBuyer_RfqNextAcceptableDeliveryDateAndTerm_Query {
+  module RfqNextAcceptableDeliveryDate = %relay(`
+    query RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query {
       rfqNextAcceptableDeliveryDate {
         date
       }
+    }
+  `)
+
+  module RfqTerms = %relay(`
+    query RfqShippingBuyer_RfqTerms_Query {
       terms {
         edges {
           node {
@@ -206,14 +211,13 @@ module SearchAddress = {
         open DaumPostCode
         open Webapi
         let iframeWrapper = Dom.document->Dom.Document.getElementById("iframe-embed-addr")
-        let bodyElement = Dom.document->Dom.Document.querySelector("body")
         let drawerHeaderHeight = 56
 
-        switch (iframeWrapper, bodyElement) {
-        | (Some(iframeWrapper'), Some(bodyElement')) => {
+        switch iframeWrapper {
+        | Some(iframeWrapper') => {
             let (w, h) = (
               iframeWrapper'->Dom.Element.clientWidth,
-              bodyElement'->Dom.Element.clientHeight - drawerHeaderHeight,
+              Dom.window->Dom.Window.innerHeight - drawerHeaderHeight,
             )
             let option = makeOption(
               ~oncomplete=onComplete,
@@ -226,6 +230,7 @@ module SearchAddress = {
             daumPostCode->embedPostCode(iframeWrapper', openOption)
             iframeWrapper'->Dom.Element.setAttribute("style", "display: block;")
           }
+
         | _ => ()
         }
       }
@@ -375,10 +380,10 @@ module Shipping = {
       None
     })
 
+    let {terms} = Query.RfqTerms.use(~variables=(), ())
     let {
       rfqNextAcceptableDeliveryDate: {date: minDateString},
-      terms,
-    } = Query.RfqNextAcceptableDeliveryDateAndTerm.use(~variables=(), ())
+    } = Query.RfqNextAcceptableDeliveryDate.use(~variables=(), ())
 
     let isTermAgree =
       terms.edges->Array.map(x => x.node.agreement)->Array.keep(x => x === `rfq`)->Array.length > 0
@@ -446,7 +451,10 @@ module Shipping = {
 
     let toggleDrawer = _ => setIsAddressDrawerShow(.prev => !prev)
     let onCompleteAddressDrawer = (data: DaumPostCode.oncompleteResponse) => {
-      let newAddress = `${data.sido} ${data.sigungu} ${data.bname}`->Js.String2.trim
+      let newAddress =
+        `${data.sido} ${data.sigungu} ${data.bname}`
+        ->Js.String2.replaceByRe(%re("/[ ]{2,}/"), " ")
+        ->Js.String2.trim
       setDeliveryAddress(._ => newAddress)
       toggleDrawer()
     }
@@ -484,9 +492,9 @@ module Shipping = {
           input: {
             status: #READY_TO_REQUEST,
             deliveryAddress: Some(deliveryAddress),
-            desiredDeliveryDate: desiredDeliveryDate,
+            desiredDeliveryDate,
             deliveryCycle: Some(deliveryCycle["value"]),
-            deliveryMethod: deliveryMethod,
+            deliveryMethod,
           },
         },
         ~onCompleted={
@@ -496,6 +504,7 @@ module Shipping = {
                 DataGtm.push({"event": "Expose_view_RFQ_Livestock_RequestCompleted"})
                 router->Next.Router.push("/buyer/rfq/request/draft/complete")
               }
+
             | #Error(_)
             | #UnselectedUnionMember(_) =>
               addToast(.
@@ -507,13 +516,15 @@ module Shipping = {
             }
           }
         },
-        ~onError=_ =>
-          addToast(.
-            `요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.`->DS_Toast.getToastComponent(
-              #error,
-            ),
-            {appearance: "error"},
-          ),
+        ~onError={
+          err =>
+            addToast(.
+              `요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.`->DS_Toast.getToastComponent(
+                #error,
+              ),
+              {appearance: "error"},
+            )
+        },
         (),
       )->ignore
     }
@@ -553,7 +564,7 @@ module Shipping = {
       className=%twc(
         "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-14 pb-[96px] "
       )>
-      <DS_TopNavigation.Detail.Root className=%twc("bg-white z-[1000]")>
+      <DS_TopNavigation.Detail.Root className=%twc("bg-white z-[5]")>
         <DS_TopNavigation.Detail.Left>
           <a className=%twc("cursor-pointer") onClick={_ => History.back()}>
             <DS_Icon.Common.ArrowLeftXLarge1 height="32" width="32" className=%twc("relative") />
@@ -572,7 +583,7 @@ module Shipping = {
             _type=#single collapsible=true onValueChange={scrollToTargetItem}>
             <DS_Accordion.Item value={"desiredDeliveryDate"}>
               <CalendarListitem
-                leftText=`최초 납품 희망일`
+                leftText={`최초 납품 희망일`}
                 currentDate={selectedDeliveryDate}
                 handleChangeDate={setSelectedDeliveryDate}
                 minDate={minDate}
@@ -585,7 +596,7 @@ module Shipping = {
                 <DS_Accordion.Trigger className=%twc("w-full")>
                   <div ref={ReactDOM.Ref.domRef(deliveryMethodRef)}>
                     <TriggerListitem
-                      leftText=`수령방식` rightText={selectedDeliveryMethod.title}
+                      leftText={`수령방식`} rightText={selectedDeliveryMethod.title}
                     />
                   </div>
                 </DS_Accordion.Trigger>
@@ -599,7 +610,7 @@ module Shipping = {
             </DS_Accordion.Item>
             <DS_Accordion.Item value={`deliveryAddress`}>
               <AddressButton
-                leftText=`배송지역`
+                leftText={`배송지역`}
                 rightText={deliveryAddress === `` ? `선택해주세요` : deliveryAddress}
                 handleClick={toggleDrawer}
               />
@@ -609,7 +620,7 @@ module Shipping = {
                 <DS_Accordion.Trigger className=%twc("w-full")>
                   <div ref={ReactDOM.Ref.domRef(deliveryCycleRef)}>
                     <TriggerListitem
-                      leftText=`정기배송 여부`
+                      leftText={`정기배송 여부`}
                       rightText={deliveryCycle["text"]}
                       hasDivider=false
                     />
@@ -641,19 +652,19 @@ module Shipping = {
                         </div>
                         <div> {`1. 개인정보 수집 항목 : 주소`->React.string} </div>
                         <div>
-                          {`2. 개인정보 수집 목적 : 견적요청 서비스 이용 (농산, 축산, 수산)`->React.string}
+                          {`2. 개인정보 수집 목적 : 견적 매칭 서비스 및 구매상품 배송`->React.string}
                         </div>
                         <div>
                           {`3. 개인정보의 보유 및 이용 기간 : `->React.string}
-                          <span className=%twc("font-bold text-base")>
+                          <span className=%twc("font-bold")>
                             {`회원탈퇴 시 즉시 파기`->React.string}
                           </span>
-                          {` 이용자는 동의를 거부할 권리가 있습니다. 다만, 이에 동의하지 않을 경우 견적요청 서비스 이용이 어려울 수 있습니다.`->React.string}
+                          {` 이용자는 개인정보 수집 및 이용 동의를 거부할 권리가 있습니다. 다만, 이에 동의하지 않을 경우 신선매칭 서비스 이용이 어려울 수 있습니다.`->React.string}
                         </div>
                       </p>}>
                       <DS_ListItem.Information1.Left>
                         {isAgreedPrivacyPolicy
-                          ? <DS_Icon.Common.CheckedLarge1 height="24" width="24" fill=`#12B564` />
+                          ? <DS_Icon.Common.CheckedLarge1 height="24" width="24" fill={`#12B564`} />
                           : <DS_Icon.Common.UncheckedLarge1 height="24" width="24" />}
                       </DS_ListItem.Information1.Left>
                     </DS_ListItem.Information1>
@@ -682,7 +693,7 @@ let make = (~requestId: option<string>) => {
 
   switch requestId {
   | Some(id) =>
-    <Authorization.Buyer fallback={React.null} title=j`바이어 견적 요청`>
+    <Authorization.Buyer fallback={React.null} title={j`바이어 견적 요청`}>
       <React.Suspense fallback={<div />}>
         <RfqCommon.CheckBuyerRequestStatus requestId={id}>
           <Shipping requestId={id} />

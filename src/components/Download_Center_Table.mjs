@@ -13,10 +13,12 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as FetchHelper from "../utils/FetchHelper.mjs";
 import Format from "date-fns/format";
-import * as IconNaviDownload from "./svgs/IconNaviDownload.mjs";
 import * as Select_CountPerPage from "./Select_CountPerPage.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as Webapi__Dom__Document from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Document.mjs";
+import NaviDownloadSvg from "../../public/assets/navi-download.svg";
+
+var naviDownloadIcon = NaviDownloadSvg;
 
 function Download_Center_Table$DownloadTableHead(Props) {
   return React.createElement("header", undefined, React.createElement("ul", {
@@ -81,10 +83,9 @@ function Download_Center_Table$DownloadTableRow(Props) {
     } else {
       return React.createElement("p", {
                   className: "flex flex-row items-center"
-                }, React.createElement("span", undefined, "생성완료"), React.createElement(IconNaviDownload.make, {
-                      width: "1rem",
-                      height: "1.2rem",
+                }, React.createElement("span", undefined, "생성완료"), React.createElement("img", {
                       className: "ml-5 cursor-pointer",
+                      src: naviDownloadIcon,
                       onClick: (function (param) {
                           var requestId = String(id);
                           FetchHelper.requestWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/excel-export/" + requestId + "/download-url", "", 3, (function (res) {
@@ -194,9 +195,10 @@ function Download_Center_Table(Props) {
 var make = Download_Center_Table;
 
 export {
+  naviDownloadIcon ,
   DownloadTableHead ,
   DownloadTableRow ,
   make ,
   
 }
-/* Env Not a pure module */
+/* naviDownloadIcon Not a pure module */

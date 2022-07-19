@@ -15,6 +15,9 @@ class MyDocument extends Document {
           <meta name="naver-site-verification" content="118b9725fc68d47f420bded30c9a1fbc10ef2d6c" />
           <meta name="google-site-verification" content="hxOisu7UrmoAE5HN9HWorLkG0Y4016ojm4NQ5aCPZT8" />
           <meta name="description" content="농산물 소싱은 신선하이에서! 전국 60만 산지농가의 우수한 농산물을 싸고 편리하게 공급합니다. 국내 유일한 농산물 B2B 플랫폼 신선하이와 함께 매출을 올려보세요." />
+          {/* Google Optimizer */}
+          <script type="text/javascript" src="https://www.googleoptimize.com/optimize.js?id=OPT-WW67CB9" />
+          {/* End Google Optimizer */}
           {/* Google Tag Manager */}
           <script dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -44,10 +47,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
-          <script
-            type="text/javascript"
-            src={`${kcpScriptUrl}`}
-          ></script>
+          <script type="text/javascript" src={`${kcpScriptUrl}`} />
           <script
             type="text/javascript"
             dangerouslySetInnerHTML={{
@@ -77,7 +77,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               }`,
             }}
           ></script>
-          <script src="https://js.tosspayments.com/v1"></script>
+          <script type="text/javascript" src="https://js.tosspayments.com/v1" />
           <script dangerouslySetInnerHTML={{
             __html: `
           var clientKey = '${process.env.NEXT_PUBLIC_TOSS_PAYMENTS_CLIENT_KEY}'

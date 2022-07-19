@@ -1,11 +1,25 @@
 open ReactHookForm
 
 module Fragment = %relay(`
-  fragment UpdateQuotedProductFormAdminFragment on Product {
+  fragment UpdateQuotedProductFormAdminFragment on QuotedProduct {
+    id
+    displayCategories {
+      fullyQualifiedName {
+        type_: type
+        id
+        name
+      }
+    }
+    category {
+      fullyQualifiedName {
+        id
+        name
+      }
+    }
+    displayName
     name
     displayName
     productId
-    price
     status
     origin
     grade
@@ -29,6 +43,48 @@ module Fragment = %relay(`
     noticeStartAt
     noticeEndAt
   }
+`)
+
+module Mutation = %relay(`
+   mutation UpdateQuotedProductFormAdminMutation(
+     $id: ID!
+     $description: String!
+     $displayCategoryIds: [ID!]!
+     $displayName: String!
+     $image: ImageInput!
+     $name: String!
+     $notice: String
+     $noticeEndAt: DateTime
+     $noticeStartAt: DateTime
+     $origin: String!
+     $salesDocument: String
+     $status: ProductStatus!
+     $grade: String!
+   ) {
+     updateQuotedProduct(
+       input: {
+         id: $id
+         description: $description
+         displayCategoryIds: $displayCategoryIds
+         displayName: $displayName
+         image: $image
+         name: $name
+         notice: $notice
+         noticeEndAt: $noticeEndAt
+         noticeStartAt: $noticeStartAt
+         origin: $origin
+         salesDocument: $salesDocument
+         status: $status
+         grade: $grade
+       }
+     ) {
+       ... on UpdateQuotedProductResult {
+         product {
+           id
+         }
+       }
+     }
+   } 
 `)
 
 let getTextInputStyle = disabled => {
@@ -422,7 +478,7 @@ module GradeInput = {
       <input
         id=grade.name
         name=grade.name
-        defaultValue=?{defaultValue}
+        defaultValue
         onChange=grade.onChange
         onBlur=grade.onBlur
         ref=grade.ref
@@ -678,7 +734,107 @@ module EditorInput = {
   }
 }
 
-let statusDecode = (
+let producerToReactSelected = (
+  p: UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_producer,
+) => {
+  ReactSelect.Selected({
+    value: p.id,
+    label: p.bossName->Option.mapWithDefault(p.name, bn => `${p.name}(${bn})`),
+  })
+}
+
+let toDisplayCategory = query => {
+  let generateForm: array<
+    UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_displayCategories_fullyQualifiedName,
+  > => Select_Display_Categories.Form.submit = categories => {
+    categoryType: switch categories->Garter.Array.first->Option.map(({type_}) => type_) {
+    | Some(#NORMAL) => ReactSelect.Selected({value: "normal", label: `일반`})
+    | Some(#SHOWCASE) => ReactSelect.Selected({value: "showcase", label: `기획전`})
+    | _ => ReactSelect.NotSelected
+    },
+    c1: categories
+    ->Array.get(0)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c2: categories
+    ->Array.get(1)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c3: categories
+    ->Array.get(2)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c4: categories
+    ->Array.get(3)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c5: categories
+    ->Array.get(4)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+  }
+  query->generateForm
+}
+
+let toProductCategory = query => {
+  let generateForm: array<
+    UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_category_fullyQualifiedName,
+  > => Select_Product_Category.Form.submit = categories => {
+    c1: categories
+    ->Array.get(0)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c2: categories
+    ->Array.get(1)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c3: categories
+    ->Array.get(2)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c4: categories
+    ->Array.get(3)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+    c5: categories
+    ->Array.get(4)
+    ->Option.mapWithDefault(ReactSelect.NotSelected, d => {
+      ReactSelect.Selected({value: d.id, label: d.name})
+    }),
+  }
+
+  query->generateForm
+}
+
+let toImage: UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_image => Upload_Thumbnail_Admin.Form.image = image => {
+  original: image.original,
+  thumb1000x1000: image.thumb1000x1000,
+  thumb100x100: image.thumb100x100,
+  thumb1920x1920: image.thumb1920x1920,
+  thumb400x400: image.thumb400x400,
+  thumb800x800: image.thumb800x800,
+}
+
+let encodeStatus = (status: Select_Product_Operation_Status.Base.status) => {
+  switch status {
+  | SALE => #SALE
+  | SOLDOUT => #SOLDOUT
+  | HIDDEN_SALE => #HIDDEN_SALE
+  | NOSALE => #NOSALE
+  | RETIRE => #RETIRE
+  }
+}
+
+let decodeStatus = (
   s: UpdateQuotedProductFormAdminFragment_graphql.Types.enum_ProductStatus,
 ): option<Select_Product_Operation_Status.Base.status> => {
   switch s {
@@ -691,29 +847,70 @@ let statusDecode = (
   }
 }
 
-let producerToReactSelected = (
-  p: UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_producer,
-) => {
-  ReactSelect.Selected({
-    value: p.id,
-    label: p.bossName->Option.mapWithDefault(p.name, bn => `${p.name}(${bn})`),
-  })
-}
-
-let queryImageToFormImage: UpdateQuotedProductFormAdminFragment_graphql.Types.fragment_image => Upload_Thumbnail_Admin.Form.image = image => {
-  original: image.original,
-  thumb1000x1000: image.thumb1000x1000,
-  thumb100x100: image.thumb100x100,
-  thumb1920x1920: image.thumb1920x1920,
-  thumb400x400: image.thumb400x400,
-  thumb800x800: image.thumb800x800,
-}
+let makeQuotedProductVariables = (productId, form: Form.submit) =>
+  Mutation.makeVariables(
+    ~id=productId,
+    ~displayCategoryIds=form.displayCategories->ProductForm.makeDisplayCategoryIds,
+    ~displayName=form.buyerProductName,
+    ~image={
+      original: form.thumbnail.original,
+      thumb1000x1000: form.thumbnail.thumb1000x1000,
+      thumb100x100: form.thumbnail.thumb100x100,
+      thumb1920x1920: form.thumbnail.thumb1920x1920,
+      thumb400x400: form.thumbnail.thumb400x400,
+      thumb800x800: form.thumbnail.thumb800x800,
+    },
+    ~description=form.editor,
+    ~name=form.producerProductName,
+    ~grade=form.grade,
+    ~notice=?{form.notice->Option.keep(str => str != "")},
+    ~noticeStartAt=?{form.noticeStartAt->ProductForm.makeNoticeDate(DateFns.startOfDay)},
+    ~noticeEndAt=?{form.noticeEndAt->ProductForm.makeNoticeDate(DateFns.endOfDay)},
+    ~origin=form.origin,
+    ~salesDocument=?{form.documentURL->Option.keep(str => str != "")},
+    ~status=form.operationStatus->encodeStatus,
+    (),
+  )
 
 @react.component
 let make = (~query) => {
-  let data = Fragment.use(query)
+  let router = Next.Router.useRouter()
+  let product = Fragment.use(query)
+  let (quotedlMutate, isQuotedlMutating) = Mutation.use()
+  let {addToast} = ReactToastNotifications.useToasts()
+  let (isShowUpdateSuccess, setShowUpdateSuccess) = React.Uncurried.useState(_ => Dialog.Hide)
+  let (isShowInitalize, setShowInitialize) = React.Uncurried.useState(_ => Dialog.Hide)
 
-  let disabled = data.status == #RETIRE
+  let methods = Hooks.Form.use(.
+    ~config=Hooks.Form.config(
+      ~mode=#onChange,
+      ~defaultValues=[
+        //다이나믹하게 생성되는 Field array 특성상 defaultValue를 Form에서 초기 설정을 해주어 맨 처음 마운트 될때만 값이 유지되도록 한다.
+        (
+          Product_Detail_Basic_Admin.Form.formName.displayCategories,
+          product.displayCategories
+          ->Array.map(d => d.fullyQualifiedName)
+          ->Array.map(toDisplayCategory)
+          ->Array.map(Select_Display_Categories.Form.submit_encode)
+          ->Js.Json.array,
+        ),
+        (
+          Product_Detail_Basic_Admin.Form.formName.productCategory,
+          product.category.fullyQualifiedName
+          ->toProductCategory
+          ->Select_Product_Category.Form.submit_encode,
+        ),
+      ]
+      ->Js.Dict.fromArray
+      ->Js.Json.object_,
+      (),
+    ),
+    (),
+  )
+
+  let {handleSubmit} = methods
+
+  let disabled = product.status == #RETIRE
 
   let {
     producerProductName,
@@ -731,58 +928,145 @@ let make = (~query) => {
     editor,
   } = Form.formName
 
-  <>
-    <section className=%twc("p-7 mx-4 bg-white rounded-b-md")>
-      <h2 className=%twc("text-text-L1 text-lg font-bold")> {j`기본정보`->React.string} </h2>
-      <div className=%twc("divide-y text-sm")>
-        <div className=%twc("flex flex-col space-y-6 py-6")>
-          <ReadOnlyProducer value={data.producer->producerToReactSelected} />
-          <ReadOnlyCategory name=productCategory />
-          <DisplayCategoryInput name=displayCategories disabled />
+  let onSubmit = (data: Js.Json.t, _) => {
+    let result =
+      data
+      ->Form.submit_decode
+      ->Result.map(data' =>
+        quotedlMutate(
+          ~variables=makeQuotedProductVariables(product.id, data'),
+          ~onCompleted={(_, _) => setShowUpdateSuccess(._ => Dialog.Show)},
+          (),
+        )->ignore
+      )
+
+    switch result {
+    | Error(e) => {
+        Js.log(e)
+        addToast(.
+          <div className=%twc("flex items-center")>
+            <IconError height="24" width="24" className=%twc("mr-2") />
+            {j`오류가 발생하였습니다. 수정내용을 확인하세요.`->React.string}
+          </div>,
+          {appearance: "error"},
+        )
+      }
+    | _ => ()
+    }
+  }
+
+  let handleReset = ReactEvents.interceptingHandler(_ => {
+    setShowInitialize(._ => Dialog.Show)
+  })
+
+  <ReactHookForm.Provider methods>
+    <form onSubmit={handleSubmit(. onSubmit)}>
+      <section className=%twc("p-7 mx-4 bg-white rounded-b-md")>
+        <h2 className=%twc("text-text-L1 text-lg font-bold")> {j`기본정보`->React.string} </h2>
+        <div className=%twc("divide-y text-sm")>
+          <div className=%twc("flex flex-col space-y-6 py-6")>
+            <ReadOnlyProducer value={product.producer->producerToReactSelected} />
+            <ReadOnlyCategory name=productCategory />
+            <DisplayCategoryInput name=displayCategories disabled />
+          </div>
+          <div className=%twc("flex flex-col space-y-6 py-6")>
+            <ProductNameInputs
+              producerProductName
+              buyerProductName
+              producerProductNameDefaultValue={product.name}
+              buyerProductNameDefaultValue={product.displayName}
+              disabled
+            />
+            <ReadOnlyProductId productId={product.productId->Int.toString} />
+          </div>
+          <div className=%twc("py-6 flex flex-col space-y-6")>
+            <div className=%twc("flex gap-2")>
+              <OperationStatusInput
+                name=operationStatus defaultValue={product.status->decodeStatus} disabled
+              />
+              <OriginInput name=origin defaultValue={product.origin} disabled />
+            </div>
+            <div className=%twc("flex gap-2 text-sm")>
+              <GradeInput name=grade defaultValue={product.grade} disabled />
+            </div>
+          </div>
         </div>
-        <div className=%twc("flex flex-col space-y-6 py-6")>
-          <ProductNameInputs
-            producerProductName
-            buyerProductName
-            producerProductNameDefaultValue={data.name}
-            buyerProductNameDefaultValue={data.displayName}
+      </section>
+      <section className=%twc("p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl")>
+        <h2 className=%twc("text-text-L1 text-lg font-bold")>
+          {j`상품상세설명`->React.string}
+        </h2>
+        <div className=%twc("text-sm py-6 flex flex-col space-y-6")>
+          <NoticeAndDateInput
+            noticeName=notice
+            noticeFromName=noticeDateFrom
+            noticeToName=noticeDateTo
+            defaultNotice={product.notice}
+            defaultNoticeFrom={product.noticeStartAt}
+            defaultNoticeTo={product.noticeEndAt}
             disabled
           />
-          <ReadOnlyProductId productId={data.productId->Int.toString} />
+          <ThumbnailUploadInput name=thumbnail defaultValue={product.image->toImage} disabled />
+          <SalesDocumentURLInput name=documentURL defaultValue={product.salesDocument} disabled />
+          <EditorInput name=editor defaultValue={product.description} disabled />
         </div>
-        <div className=%twc("py-6 flex flex-col space-y-6")>
-          <div className=%twc("flex gap-2")>
-            <OperationStatusInput
-              name=operationStatus defaultValue={data.status->statusDecode} disabled
-            />
-            <OriginInput name=origin defaultValue={data.origin} disabled />
-          </div>
-          <div className=%twc("flex gap-2 text-sm")>
-            <GradeInput name=grade defaultValue={data.grade} disabled />
-          </div>
-        </div>
+      </section>
+      <div
+        className=%twc(
+          "fixed bottom-0 h-16 max-w-gnb-panel bg-white flex items-center gap-2 justify-end pr-10 w-full z-50"
+        )>
+        {switch product.status {
+        | #RETIRE =>
+          <button
+            type_="submit"
+            disabled=true
+            className=%twc("px-3 py-2 bg-disabled-L2 text-white rounded-lg focus:outline-none")>
+            {`상품을 수정할 수 없습니다.`->React.string}
+          </button>
+        | _ => <>
+            <button
+              type_="reset"
+              className=%twc("px-3 py-2 bg-div-shape-L1 rounded-lg focus:outline-none")
+              onClick={handleReset}
+              disabled={isQuotedlMutating}>
+              {`수정내용 초기화`->React.string}
+            </button>
+            <button
+              type_="submit"
+              disabled={isQuotedlMutating}
+              className=%twc(
+                "px-3 py-2 bg-green-gl text-white rounded-lg hover:bg-green-gl-dark focus:outline-none"
+              )>
+              {`상품 수정`->React.string}
+            </button>
+          </>
+        }}
       </div>
-    </section>
-    <section className=%twc("p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl")>
-      <h2 className=%twc("text-text-L1 text-lg font-bold")>
-        {j`상품상세설명`->React.string}
-      </h2>
-      <div className=%twc("text-sm py-6 flex flex-col space-y-6")>
-        <NoticeAndDateInput
-          noticeName=notice
-          noticeFromName=noticeDateFrom
-          noticeToName=noticeDateTo
-          defaultNotice={data.notice}
-          defaultNoticeFrom={data.noticeStartAt}
-          defaultNoticeTo={data.noticeEndAt}
-          disabled
-        />
-        <ThumbnailUploadInput
-          name=thumbnail defaultValue={data.image->queryImageToFormImage} disabled
-        />
-        <SalesDocumentURLInput name=documentURL defaultValue={data.salesDocument} disabled />
-        <EditorInput name=editor defaultValue={data.description} disabled />
-      </div>
-    </section>
-  </>
+    </form>
+    <Dialog
+      boxStyle=%twc("text-center rounded-2xl")
+      isShow={isShowInitalize}
+      textOnCancel=`닫기`
+      textOnConfirm=`초기화`
+      kindOfConfirm=Dialog.Negative
+      onConfirm={_ => {
+        router->Next.Router.reload(router.pathname)
+        setShowInitialize(._ => Dialog.Hide)
+      }}
+      onCancel={_ => setShowInitialize(._ => Dialog.Hide)}>
+      <p> {`수정한 모든 내용을 초기화 하시겠어요?`->React.string} </p>
+    </Dialog>
+    <Dialog
+      boxStyle=%twc("text-center rounded-2xl")
+      isShow={isShowUpdateSuccess}
+      textOnCancel=`확인`
+      onCancel={_ => {
+        setShowUpdateSuccess(._ => Dialog.Hide)
+        router->Next.Router.reload(router.pathname)
+      }}>
+      <p className=%twc("text-gray-500 text-center whitespace-pre-wrap")>
+        {`상품정보가 수정되었습니다.`->React.string}
+      </p>
+    </Dialog>
+  </ReactHookForm.Provider>
 }

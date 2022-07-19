@@ -4,6 +4,12 @@
  *   2. 역할: 이미 생성 된, 단품의 리스트아이템을 수정할 수 있다 (삭제 불가)
  */
 
+@module("../../public/assets/checkbox-checked.svg")
+external checkboxCheckedIcon: string = "default"
+
+@module("../../public/assets/checkbox-unchecked.svg")
+external checkboxUncheckedIcon: string = "default"
+
 open ReactHookForm
 module Select_Unit = Select_Product_Option_Unit
 module Fragment = %relay(`
@@ -26,6 +32,9 @@ module Fragment = %relay(`
     cutOffTime
     memo
     stockSku
+    productOptionCost {
+      isFreeShipping
+    }
     ...UpdateProductOptionAdminAutoGenNameFragment
   }
 `)
@@ -206,6 +215,7 @@ module Form = {
     @spice.key("cut-off-time") cutOffTime: option<string>,
     @spice.key("memo") memo: option<string>,
     @spice.key("auto-generated-name") autoGenName: string,
+    @spice.key("is-free-shipping") isFreeShipping: Select_Product_Shipping_Type.status,
   }
 
   type inputNames = {
@@ -215,6 +225,7 @@ module Form = {
     cutOffTime: string,
     memo: string,
     autoGenName: string,
+    isFreeShipping: string,
   }
 
   let makeInputNames = prefix => {
@@ -224,6 +235,7 @@ module Form = {
     cutOffTime: `${prefix}.cut-off-time`,
     memo: `${prefix}.memo`,
     autoGenName: `${prefix}.auto-generated-name`,
+    isFreeShipping: `${prefix}.is-free-shipping`,
   }
 
   // 단품 수정 폼 정보를 이용하여 단품 생성 폼을 만든다
@@ -255,6 +267,7 @@ module Form = {
         names.operationStatus,
         values.operationStatus->Select_Product_Operation_Status.Base.status_encode,
       ),
+      (names.isFreeShipping, values.isFreeShipping->Select_Product_Shipping_Type.status_encode),
       (names.buyerPrice, Js.Json.null),
       (
         "cost",
@@ -516,7 +529,7 @@ module EditStatus = {
       ->Result.mapWithDefault(None, v => Some(v))
     }
 
-    <div className=%twc("flex flex-col gap-2 grow")>
+    <div className=%twc("flex flex-col gap-2")>
       <label className=%twc("block")>
         <span className=%twc("font-bold")> {`운영상태`->React.string} </span>
         <span className=%twc("text-red-500")> {`*`->React.string} </span>
@@ -548,6 +561,64 @@ module EditStatus = {
                     <IconError width="20" height="20" />
                     <span className=%twc("text-sm text-notice ml-1")>
                       {`운영상태를 입력해주세요.`->React.string}
+                    </span>
+                  </span>
+                }}
+              />
+            </div>
+          }}
+        />
+      </span>
+    </div>
+  }
+}
+
+module EditIsFreeShipping = {
+  @react.component
+  let make = (~inputName, ~defaultValue, ~disabled) => {
+    let {control, formState: {errors}} = Hooks.Context.use(.
+      ~config=Hooks.Form.config(~mode=#onChange, ()),
+      (),
+    )
+
+    let toStatus = statusFromSelect => {
+      statusFromSelect
+      ->Select_Product_Shipping_Type.status_decode
+      ->Result.mapWithDefault(None, v => Some(v))
+    }
+
+    <div className=%twc("flex flex-col gap-2")>
+      <label className=%twc("block")>
+        <span className=%twc("font-bold")> {`배송비 타입`->React.string} </span>
+        <span className=%twc("text-red-500")> {`*`->React.string} </span>
+      </label>
+      <span className=%twc("w-44 h-9")>
+        <Controller
+          name=inputName
+          control
+          defaultValue={defaultValue->Select_Product_Shipping_Type.status_encode}
+          rules={Rules.make(~required=true, ())}
+          render={({field: {ref, name, value, onChange}}) => {
+            <div>
+              <Select_Product_Shipping_Type
+                forwardRef=ref
+                status={value->toStatus}
+                onChange={selected => {
+                  selected
+                  ->Select_Product_Shipping_Type.status_encode
+                  ->Controller.OnChangeArg.value
+                  ->onChange
+                }}
+                disabled
+              />
+              <ErrorMessage
+                errors
+                name
+                render={_ => {
+                  <span className=%twc("flex")>
+                    <IconError width="20" height="20" />
+                    <span className=%twc("text-sm text-notice ml-1")>
+                      {`배송비 타입을 입력해주세요.`->React.string}
                     </span>
                   </span>
                 }}
@@ -753,7 +824,7 @@ let make = (
               <div className=%twc("flex items-center cursor-pointer relative gap-1")>
                 <span className=%twc("underline")> {`단품정보 접기`->React.string} </span>
                 <IconArrow
-                  height="15" width="15" fill="#000000" className=%twc("transform -rotate-90")
+                  height="15" width="15" stroke="#000000" className=%twc("transform -rotate-90")
                 />
               </div>
             </RadixUI.Collapsible.Trigger>
@@ -805,6 +876,17 @@ let make = (
                 defaultValue=productOption.status
                 disabled
               />
+              <EditIsFreeShipping
+                inputName={inputNames.isFreeShipping}
+                defaultValue={
+                  open Select_Product_Shipping_Type
+                  switch productOption.productOptionCost.isFreeShipping {
+                  | true => FREE
+                  | false => NOTFREE
+                  }
+                }
+                disabled
+              />
             </div>
           </div>
           <div className=%twc("flex flex-col gap-6 py-6 w-full")>
@@ -824,9 +906,7 @@ let make = (
             | (0, true) =>
               <div className=%twc("flex gap-2 items-center")>
                 <button onClick=onClickApplyAll>
-                  {applyAll
-                    ? <IconCheckBoxChecked width="20" height="20" />
-                    : <IconCheckBoxUnChecked width="20" height="20" />}
+                  <img src={applyAll ? checkboxCheckedIcon : checkboxUncheckedIcon} />
                 </button>
                 <span>
                   {`[${productDisplayName}] 전체 단품에 출고기준시간과 메모 동일하게 적용하기`->React.string}

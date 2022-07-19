@@ -1,5 +1,8 @@
 @spice
-type status = | @spice.as(`일반상품`) NORMAL | @spice.as(`견적상품`) QUOTED
+type status =
+  | @spice.as(`일반상품`) NORMAL
+  | @spice.as(`견적상품`) QUOTED
+  | @spice.as(`매칭상품`) MATCHING
 
 let toString = status => status->status_encode->Js.Json.decodeString->Option.getWithDefault("")
 
@@ -9,14 +12,21 @@ let make = (~status, ~onChange) => {
     <div className=%twc("p-1 relative flex")>
       <div
         className={cx([
-          %twc("absolute bg-white top-0 h-full w-1/2 rounded-lg"),
-          status == NORMAL ? %twc("left-0") : %twc("left-1/2"),
+          %twc("absolute bg-white top-0 h-full w-1/3 rounded-lg"),
+          switch status {
+          | NORMAL => %twc("left-0")
+          | QUOTED => %twc("left-1/3")
+          | MATCHING => %twc("left-2/3")
+          },
         ])}
       />
       <div
         className={cx([
           %twc("text-center py-2 px-6 flex-1 z-10 cursor-pointer"),
-          status == NORMAL ? %twc("text-text-L1") : %twc("text-text-L2"),
+          switch status {
+          | NORMAL => %twc("text-text-L1")
+          | _ => %twc("text-text-L2")
+          },
         ])}
         onClick={_ => onChange(NORMAL)}>
         {NORMAL->toString->React.string}
@@ -24,10 +34,24 @@ let make = (~status, ~onChange) => {
       <div
         className={cx([
           %twc("text-center py-2 px-6 flex-1 z-10 cursor-pointer"),
-          status == NORMAL ? %twc("text-text-L2") : %twc("text-text-L1"),
+          switch status {
+          | QUOTED => %twc("text-text-L1")
+          | _ => %twc("text-text-L2")
+          },
         ])}
         onClick={_ => onChange(QUOTED)}>
         {QUOTED->toString->React.string}
+      </div>
+      <div
+        className={cx([
+          %twc("text-center py-2 px-6 flex-1 z-10 cursor-pointer"),
+          switch status {
+          | MATCHING => %twc("text-text-L1")
+          | _ => %twc("text-text-L2")
+          },
+        ])}
+        onClick={_ => onChange(MATCHING)}>
+        {`매칭상품`->React.string}
       </div>
     </div>
   </div>
@@ -40,6 +64,7 @@ module Search = {
     | @spice.as(`NORMAL`) NORMAL
     | @spice.as(`QUOTED`) QUOTED
     | @spice.as(`QUOTABLE`) QUOTABLE
+    | @spice.as(`MATCHING`) MATCHING
 
   let toString = status => status->status_encode->Js.Json.decodeString->Option.getWithDefault(`ALL`)
 
@@ -49,6 +74,7 @@ module Search = {
     | NORMAL => `일반상품`
     | QUOTED => `견적상품`
     | QUOTABLE => `일반+견적상품`
+    | MATCHING => `매칭상품`
     }
 
   let defaultStyle = %twc(
@@ -81,7 +107,7 @@ module Search = {
           <option value="" disabled=true hidden={value == "" ? false : true}>
             {`운영상태 선택`->React.string}
           </option>
-          {[ALL, NORMAL, QUOTED, QUOTABLE]
+          {[ALL, NORMAL, QUOTED, QUOTABLE, MATCHING]
           ->Array.map(s => {
             let value = s->toString
             <option key={value} value> {s->toDisplayName->React.string} </option>

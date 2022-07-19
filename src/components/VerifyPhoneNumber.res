@@ -27,9 +27,7 @@ let make = (~onVerified) => {
 
   let inputVerificationCodeRef = React.useRef(Js.Nullable.null)
 
-  /**
-   * 휴대전화 인증 번호 전송
-   */
+  // 휴대전화 인증 번호 전송
   let onSubmitVerifyPhoneNumber = ({state}: VerifyPhoneNumberForm.onSubmitAPI) => {
     setSMS(._ => SendingSMS)
     // 입력된 폰 번호 형식 "010-1234-5678" -> "01012345678" 로 변경해야함.
@@ -80,9 +78,7 @@ let make = (~onVerified) => {
     (),
   )
 
-  /**
-   * 인증번호 전송
-   */
+  // 인증번호 전송
   let onSubmitVerificationCode = ({state}: VerificationCodeForm.onSubmitAPI) => {
     setVerificationCode(._ => SendingVerificationCode)
 

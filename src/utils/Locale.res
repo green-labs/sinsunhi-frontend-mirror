@@ -33,14 +33,10 @@ module Float = {
       )
     sign ++ value
   }
-  /**
-   * float 값을 소수점 이하 반올림한다.
-   */
+  // float 값을 소수점 이하 반올림한다.
   let round0 = num => num->Js.Math.round
 
-  /**
-   * float 값을 소수점 1자리 이하 반올림한다.
-   */
+  // float 값을 소수점 1자리 이하 반올림한다.
   let round1 = num => (num *. 10.0)->Js.Math.round /. 10.0
 }
 

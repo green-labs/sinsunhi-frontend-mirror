@@ -327,7 +327,7 @@ module Apply = {
         weightKg->Option.isNone ||
           weightKg
           ->Option.flatMap(x => x->Int.fromString)
-          ->Option.mapWithDefault(false, x => x < 100)
+          ->Option.mapWithDefault(false, x => x < 50)
 
       | Usage => usage->Garter.Array.isEmpty
       | StorageMethod => storageMethod->Option.isNone
@@ -339,6 +339,7 @@ module Apply = {
       | Brand => preferredBrand->Option.isNone
       | Etc => etc->Option.isNone
       }
+
       // 세부저장일 경우 이전값과 같은지 체크
       if !disableFlag && isModifyDetail {
         switch step {
@@ -377,17 +378,17 @@ module Apply = {
           | None => usage->Garter.Array.isEmpty ? [] : usage
           }
         },
-        storageMethod: storageMethod,
-        packageMethod: packageMethod,
+        storageMethod,
+        packageMethod,
         preferredBrand: {
           switch emptyBrand {
           | Some(emptyBrand') => emptyBrand'
           | None => preferredBrand
           }
         },
-        prevTradePricePerKg: prevTradePricePerKg,
-        prevTradeSellerName: prevTradeSellerName,
-        weightKg: weightKg,
+        prevTradePricePerKg,
+        prevTradeSellerName,
+        weightKg,
         otherRequirements: {
           switch emptyEtc {
           | Some(emptyEtc') => emptyEtc'
@@ -398,7 +399,7 @@ module Apply = {
       }
 
       mutateUpdate(
-        ~variables={id: itemId, input: input},
+        ~variables={id: itemId, input},
         ~onCompleted={
           ({updateRfqRequestItemsMeat}, _) => {
             switch updateRfqRequestItemsMeat {
@@ -603,7 +604,7 @@ let make = (~itemId: option<string>, ~requestId: option<string>, ~step: option<s
   {
     switch (itemId, requestId) {
     | (Some(itemId'), Some(requestId')) =>
-      <Authorization.Buyer fallback={React.null} title=j`바이어 견적 요청`>
+      <Authorization.Buyer fallback={React.null} title={j`바이어 견적 요청`}>
         <React.Suspense>
           <RfqCommon.CheckBuyerRequestStatus requestId={requestId'}>
             <Apply itemId={itemId'} requestId={requestId'} step />

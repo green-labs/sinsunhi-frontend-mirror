@@ -6,7 +6,6 @@ import * as ReactUtil from "../../utils/ReactUtil.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as CustomHooks from "../../utils/CustomHooks.mjs";
 import * as Router from "next/router";
-import * as IconDropdown from "../../components/svgs/IconDropdown.mjs";
 import * as Upload_Buyer from "./Upload_Buyer.mjs";
 import * as Authorization from "../../utils/Authorization.mjs";
 import * as Belt_SetString from "rescript/lib/es6/belt_SetString.js";
@@ -15,6 +14,9 @@ import * as After_Pay_Orders_List from "./After_Pay_Orders_List.mjs";
 import * as Upload_After_Pay_Form from "./Upload_After_Pay_Form.mjs";
 import * as ReactAccordion from "@radix-ui/react-accordion";
 import * as Agreement_After_Pay_Buyer from "./Agreement_After_Pay_Buyer.mjs";
+import DropdownSvg from "../../../public/assets/dropdown.svg";
+
+var dropdownIcon = DropdownSvg;
 
 function Upload_After_Pay_Buyer$BalanceView(Props) {
   var balance = Props.balance;
@@ -146,10 +148,9 @@ function Upload_After_Pay_Buyer$Notice(Props) {
                                         className: "flex items-center"
                                       }, React.createElement("div", {
                                             className: "text-sm underline"
-                                          }, match[0]), React.createElement(IconDropdown.make, {
-                                            width: "16",
-                                            height: "16",
-                                            className: "accordian-icon"
+                                          }, match[0]), React.createElement("img", {
+                                            className: "accordian-icon",
+                                            src: dropdownIcon
                                           })),
                                   className: "mt-4 accordian-trigger"
                                 })
@@ -200,10 +201,11 @@ function Upload_After_Pay_Buyer(Props) {
 var make = Upload_After_Pay_Buyer;
 
 export {
+  dropdownIcon ,
   BalanceView ,
   Balance ,
   Notice ,
   make ,
   
 }
-/* react Not a pure module */
+/* dropdownIcon Not a pure module */

@@ -4,13 +4,14 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import Head from "next/head";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as Layout_Buyer from "../../layouts/Layout_Buyer.mjs";
+import * as Router from "next/router";
+import * as Footer_Buyer from "../../components/Footer_Buyer.mjs";
+import * as Header_Buyer from "../../components/Header_Buyer.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ChannelTalkHelper from "../../utils/ChannelTalkHelper.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 import * as Hooks from "react-relay/hooks";
-import * as SignUp_Buyer_Survey from "../../components/SignUp_Buyer_Survey.mjs";
 import * as ShopSearchInput_Buyer from "../../components/ShopSearchInput_Buyer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopMain_SubBanner_Buyer from "../../components/ShopMain_SubBanner_Buyer.mjs";
@@ -127,9 +128,14 @@ var Fragment = {
 
 function ShopMain_Buyer$PC(Props) {
   var query = Props.query;
+  var router = Router.useRouter();
   var match = use$1(query);
   var fragmentRefs = match.fragmentRefs;
-  return React.createElement(React.Fragment, undefined, React.createElement("section", {
+  return React.createElement("div", {
+              className: "w-full min-w-[1280px] min-h-screen"
+            }, React.createElement(Header_Buyer.PC.make, {
+                  key: router.asPath
+                }), React.createElement("main", {
                   className: "w-full bg-white pt-12 pb-20"
                 }, React.createElement("div", {
                       className: "w-[1280px] mx-auto"
@@ -149,7 +155,7 @@ function ShopMain_Buyer$PC(Props) {
                               query: fragmentRefs
                             })))), React.createElement(ShopMainSpecialShowcaseList_Buyer.PC.make, {
                   query: fragmentRefs
-                }));
+                }), React.createElement(Footer_Buyer.PC.make, {}));
 }
 
 var PC = {
@@ -158,29 +164,38 @@ var PC = {
 
 function ShopMain_Buyer$MO(Props) {
   var query = Props.query;
+  var router = Router.useRouter();
   var match = use$1(query);
   var fragmentRefs = match.fragmentRefs;
-  return React.createElement(React.Fragment, undefined, React.createElement("div", {
-                  className: "w-full p-3 pt-1 bg-white sticky top-0 z-10"
-                }, React.createElement(ShopSearchInput_Buyer.MO.make, {})), React.createElement("div", {
-                  className: "w-full flex flex-col bg-white pb-16"
-                }, React.createElement("section", {
-                      className: "w-full px-5"
-                    }, React.createElement("div", {
-                          className: "mt-5"
-                        }, React.createElement(ShopMain_MainBanner_Buyer.MO.make, {
+  return React.createElement("div", {
+              className: "w-full min-h-screen"
+            }, React.createElement("div", {
+                  className: "w-full bg-white"
+                }, React.createElement("div", {
+                      className: "w-full max-w-3xl mx-auto bg-white min-h-screen"
+                    }, React.createElement(Header_Buyer.Mobile.GnbHome.make, {
+                          key: router.asPath
+                        }), React.createElement("div", {
+                          className: "w-full p-3 pt-1 bg-white sticky top-0 z-10"
+                        }, React.createElement(ShopSearchInput_Buyer.MO.make, {})), React.createElement("div", {
+                          className: "w-full flex flex-col bg-white pb-16"
+                        }, React.createElement("section", {
+                              className: "w-full px-5"
+                            }, React.createElement("div", {
+                                  className: "mt-5"
+                                }, React.createElement(ShopMain_MainBanner_Buyer.MO.make, {
+                                      query: fragmentRefs
+                                    })), React.createElement("div", {
+                                  className: "mt-3"
+                                }, React.createElement(ShopMain_SubBanner_Buyer.MO.make, {
+                                      query: fragmentRefs
+                                    }))), React.createElement("section", {
+                              className: "w-full mt-12"
+                            }, React.createElement(ShopMain_CategoryList_Buyer.MO.make, {
+                                  query: fragmentRefs
+                                })), React.createElement(ShopMainSpecialShowcaseList_Buyer.MO.make, {
                               query: fragmentRefs
-                            })), React.createElement("div", {
-                          className: "mt-3"
-                        }, React.createElement(ShopMain_SubBanner_Buyer.MO.make, {
-                              query: fragmentRefs
-                            }))), React.createElement("section", {
-                      className: "w-full mt-12"
-                    }, React.createElement(ShopMain_CategoryList_Buyer.MO.make, {
-                          query: fragmentRefs
-                        })), React.createElement(ShopMainSpecialShowcaseList_Buyer.MO.make, {
-                      query: fragmentRefs
-                    })));
+                            })), React.createElement(Footer_Buyer.MO.make, {}))));
 }
 
 var MO = {
@@ -188,23 +203,37 @@ var MO = {
 };
 
 function ShopMain_Buyer$Placeholder(Props) {
-  return React.createElement(Layout_Buyer.Responsive.make, {
-              pc: React.createElement("section", {
-                    className: "w-full bg-white pt-12 pb-20"
-                  }, React.createElement("div", {
-                        className: "w-[1280px] mx-auto"
+  var deviceType = Props.deviceType;
+  var router = Router.useRouter();
+  switch (deviceType) {
+    case /* Unknown */0 :
+        return null;
+    case /* PC */1 :
+        return React.createElement("div", {
+                    className: "w-full min-w-[1280px] min-h-screen"
+                  }, React.createElement(Header_Buyer.PC.make, {
+                        key: router.asPath
+                      }), React.createElement("main", {
+                        className: "w-full bg-white pt-12 pb-20"
                       }, React.createElement("div", {
-                            className: "flex gap-5 px-5"
+                            className: "w-[1280px] mx-auto"
                           }, React.createElement("div", {
-                                className: "w-[920px]"
-                              }, React.createElement(ShopMain_MainBanner_Buyer.PC.Placeholder.make, {})), React.createElement("div", {
-                                className: "w-[300px]"
-                              }, React.createElement(ShopMain_SubBanner_Buyer.PC.Placeholder.make, {}))), React.createElement("div", {
-                            className: "w-full mt-20"
-                          }, React.createElement(ShopMain_CategoryList_Buyer.PC.Placeholder.make, {}))), React.createElement("div", {
-                        className: "mt-12"
-                      }, React.createElement(ShopMainSpecialShowcaseList_Buyer.PC.Placeholder.make, {}))),
-              mobile: React.createElement(React.Fragment, undefined, React.createElement("div", {
+                                className: "flex gap-5 px-5"
+                              }, React.createElement("div", {
+                                    className: "w-[920px]"
+                                  }, React.createElement(ShopMain_MainBanner_Buyer.PC.Placeholder.make, {})), React.createElement("div", {
+                                    className: "w-[300px]"
+                                  }, React.createElement(ShopMain_SubBanner_Buyer.PC.Placeholder.make, {}))), React.createElement("div", {
+                                className: "w-full mt-20"
+                              }, React.createElement(ShopMain_CategoryList_Buyer.PC.Placeholder.make, {}))), React.createElement("div", {
+                            className: "mt-12"
+                          }, React.createElement(ShopMainSpecialShowcaseList_Buyer.PC.Placeholder.make, {}))), React.createElement(Footer_Buyer.PC.make, {}));
+    case /* Mobile */2 :
+        return React.createElement("div", {
+                    className: "w-full min-h-screen"
+                  }, React.createElement(Header_Buyer.Mobile.GnbHome.make, {
+                        key: router.asPath
+                      }), React.createElement("div", {
                         className: "w-full p-3 pt-1 bg-white sticky top-0 z-10"
                       }, React.createElement(ShopSearchInput_Buyer.MO.make, {})), React.createElement("div", {
                         className: "bg-white pt-5 px-5"
@@ -212,8 +241,9 @@ function ShopMain_Buyer$Placeholder(Props) {
                         className: "mt-3 px-5"
                       }, React.createElement(ShopMain_SubBanner_Buyer.MO.Placeholder.make, {})), React.createElement("div", {
                         className: "mt-12 pb-12"
-                      }, React.createElement(ShopMain_CategoryList_Buyer.MO.Placeholder.make, {})), React.createElement(ShopMainSpecialShowcaseList_Buyer.MO.Placeholder.make, {}))
-            });
+                      }, React.createElement(ShopMain_CategoryList_Buyer.MO.Placeholder.make, {})), React.createElement(ShopMainSpecialShowcaseList_Buyer.MO.Placeholder.make, {}), React.createElement(Footer_Buyer.MO.make, {}));
+    
+  }
 }
 
 var Placeholder = {
@@ -221,17 +251,23 @@ var Placeholder = {
 };
 
 function ShopMain_Buyer$Container(Props) {
+  var deviceType = Props.deviceType;
   ChannelTalkHelper.Hook.use(undefined, undefined, undefined);
   var match = use(undefined, /* StoreAndNetwork */2, undefined, undefined, undefined);
   var fragmentRefs = match.fragmentRefs;
-  return React.createElement(Layout_Buyer.Responsive.make, {
-              pc: React.createElement(ShopMain_Buyer$PC, {
+  switch (deviceType) {
+    case /* Unknown */0 :
+        return null;
+    case /* PC */1 :
+        return React.createElement(ShopMain_Buyer$PC, {
                     query: fragmentRefs
-                  }),
-              mobile: React.createElement(ShopMain_Buyer$MO, {
+                  });
+    case /* Mobile */2 :
+        return React.createElement(ShopMain_Buyer$MO, {
                     query: fragmentRefs
-                  })
-            });
+                  });
+    
+  }
 }
 
 var Container = {
@@ -239,6 +275,7 @@ var Container = {
 };
 
 function ShopMain_Buyer(Props) {
+  var deviceType = Props.deviceType;
   var match = React.useState(function () {
         return false;
       });
@@ -253,13 +290,21 @@ function ShopMain_Buyer(Props) {
                   children: React.createElement("title", undefined, "신선하이")
                 }), React.createElement(RescriptReactErrorBoundary.make, {
                   children: React.createElement(React.Suspense, {
-                        children: match[0] ? React.createElement(ShopMain_Buyer$Container, {}) : React.createElement(ShopMain_Buyer$Placeholder, {}),
-                        fallback: React.createElement(ShopMain_Buyer$Placeholder, {})
+                        children: match[0] ? React.createElement(ShopMain_Buyer$Container, {
+                                deviceType: deviceType
+                              }) : React.createElement(ShopMain_Buyer$Placeholder, {
+                                deviceType: deviceType
+                              }),
+                        fallback: React.createElement(ShopMain_Buyer$Placeholder, {
+                              deviceType: deviceType
+                            })
                       }),
                   fallback: (function (param) {
-                      return React.createElement(ShopMain_Buyer$Placeholder, {});
+                      return React.createElement(ShopMain_Buyer$Placeholder, {
+                                  deviceType: deviceType
+                                });
                     })
-                }), React.createElement(SignUp_Buyer_Survey.make, {}));
+                }));
 }
 
 var make = ShopMain_Buyer;

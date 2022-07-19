@@ -1,6 +1,9 @@
 open RadixUI
 open Webapi
 
+@module("../../public/assets/edit.svg")
+external editIcon: string = "default"
+
 @react.component
 let make = (~user: CustomHooks.QueryUser.Farmer.user) => {
   let router = Next.Router.useRouter()
@@ -100,7 +103,7 @@ let make = (~user: CustomHooks.QueryUser.Farmer.user) => {
   <Dialog.Root>
     <Dialog.Overlay className=%twc("dialog-overlay") />
     <Dialog.Trigger className=%twc("block text-left mb-1 underline focus:outline-none")>
-      <IconEdit height="20" width="20" />
+      <img src=editIcon />
     </Dialog.Trigger>
     <Dialog.Content className=%twc("dialog-content overflow-y-auto")>
       <div className=%twc("p-5")>

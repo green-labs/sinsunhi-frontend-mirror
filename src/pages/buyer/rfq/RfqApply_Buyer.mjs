@@ -534,7 +534,7 @@ function RfqApply_Buyer$Apply(Props) {
           break;
       case /* OrderAmount */1 :
           disableFlag = Belt_Option.isNone(weightKg) || Belt_Option.mapWithDefault(Belt_Option.flatMap(weightKg, Belt_Int.fromString), false, (function (x) {
-                  return x < 100;
+                  return x < 50;
                 }));
           break;
       case /* Usage */2 :

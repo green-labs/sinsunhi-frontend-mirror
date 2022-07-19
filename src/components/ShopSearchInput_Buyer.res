@@ -65,7 +65,7 @@ let make = () => {
         className=%twc(
           "absolute right-0 h-[52px] bg-green-500 rounded-full focus:outline-none flex items-center justify-center px-6"
         )>
-        <IconSearch width="36" height="36" fill="#fff" />
+        <IconSearch width="36" height="36" stroke="#fff" />
         <span className=%twc("text-white font-bold")> {`검색`->React.string} </span>
       </button>
     </div>
@@ -137,7 +137,7 @@ module MO = {
           />
         }}
         <button type_="submit" className=%twc("absolute right-3 top-1/2 translate-y-[-50%]")>
-          <IconSearch width="24" height="24" fill="#12B564" />
+          <IconSearch width="24" height="24" stroke="#12B564" />
         </button>
       </div>
     </form>

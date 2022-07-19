@@ -16,6 +16,7 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as FetchHelper from "./FetchHelper.mjs";
 import * as Router from "next/router";
+import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as DetectBrowser from "detect-browser";
 import * as LocalStorageHooks from "./LocalStorageHooks.mjs";
 
@@ -43,18 +44,23 @@ function useSetPassword(token) {
 }
 
 function useDebounce(value, delay) {
+  var timeoutId = React.useRef(null);
   var match = React.useState(function () {
         return value;
       });
   var setDebouncedValue = match[1];
   React.useEffect((function () {
-          var handler = setTimeout((function (param) {
+          timeoutId.current = setTimeout((function (param) {
                   return setDebouncedValue(function (param) {
                               return value;
                             });
                 }), delay);
           return (function (param) {
-                    clearTimeout(handler);
+                    var id = timeoutId.current;
+                    if (!(id == null)) {
+                      clearTimeout(id);
+                      return ;
+                    }
                     
                   });
         }), [value]);
@@ -62,6 +68,54 @@ function useDebounce(value, delay) {
           match[0],
           setDebouncedValue
         ];
+}
+
+function useScrollDirection(param) {
+  var prevScrollTop = React.useRef(0.0);
+  var match = React.useState(function () {
+        return /* ScrollStop */0;
+      });
+  var setScrollDirection = match[1];
+  var scrollDirection = match[0];
+  React.useEffect((function () {
+          var handleScrollEvent = function (param) {
+            var currentScrollTop = window.scrollY;
+            if (currentScrollTop <= 0.0) {
+              return ;
+            }
+            var diff$p = currentScrollTop - prevScrollTop.current;
+            var direction = diff$p > 0.0 ? /* ScrollDown */1 : (
+                diff$p < 0.0 ? /* ScrollUp */2 : /* ScrollStop */0
+              );
+            switch (direction) {
+              case /* ScrollStop */0 :
+                  break;
+              case /* ScrollDown */1 :
+                  if (scrollDirection !== /* ScrollDown */1) {
+                    setScrollDirection(function (param) {
+                          return /* ScrollDown */1;
+                        });
+                  }
+                  break;
+              case /* ScrollUp */2 :
+                  if (scrollDirection !== /* ScrollUp */2) {
+                    setScrollDirection(function (param) {
+                          return /* ScrollUp */2;
+                        });
+                  }
+                  break;
+              
+            }
+            prevScrollTop.current = currentScrollTop;
+            
+          };
+          window.addEventListener("scroll", handleScrollEvent);
+          return (function (param) {
+                    window.removeEventListener("scroll", handleScrollEvent);
+                    
+                  });
+        }), [scrollDirection]);
+  return scrollDirection;
 }
 
 function useScrollObserver(thresholds, sensitive) {
@@ -148,6 +202,7 @@ function useScrollObserver(thresholds, sensitive) {
 }
 
 var Scroll = {
+  useScrollDirection: useScrollDirection,
   useScrollObserver: useScrollObserver
 };
 
@@ -6381,6 +6436,22 @@ function user_encode$2(v) {
               [
                 "shop-url",
                 Spice.optionToJson(Spice.stringToJson, v.shopUrl)
+              ],
+              [
+                "interested-item-category-ids",
+                Spice.optionToJson((function (param) {
+                        return Spice.arrayToJson(Spice.stringToJson, param);
+                      }), v.interestedItemCategoryIds)
+              ],
+              [
+                "self-reported-business-sectors",
+                Spice.optionToJson((function (param) {
+                        return Spice.arrayToJson(Spice.stringToJson, param);
+                      }), v.selfReportedBusinessSectors)
+              ],
+              [
+                "self-reported-sales-bin",
+                Spice.optionToJson(Spice.stringToJson, v.selfReportedSalesBin)
               ]
             ]);
 }
@@ -6418,141 +6489,184 @@ function user_decode$2(v) {
                       if (manager.TAG === /* Ok */0) {
                         var shopUrl = Spice.optionFromJson(Spice.stringFromJson, Belt_Option.getWithDefault(Js_dict.get(dict$1, "shop-url"), null));
                         if (shopUrl.TAG === /* Ok */0) {
+                          var interestedItemCategoryIds = Spice.optionFromJson((function (param) {
+                                  return Spice.arrayFromJson(Spice.stringFromJson, param);
+                                }), Belt_Option.getWithDefault(Js_dict.get(dict$1, "interested-item-category-ids"), null));
+                          if (interestedItemCategoryIds.TAG === /* Ok */0) {
+                            var selfReportedBusinessSectors = Spice.optionFromJson((function (param) {
+                                    return Spice.arrayFromJson(Spice.stringFromJson, param);
+                                  }), Belt_Option.getWithDefault(Js_dict.get(dict$1, "self-reported-business-sectors"), null));
+                            if (selfReportedBusinessSectors.TAG === /* Ok */0) {
+                              var selfReportedSalesBin = Spice.optionFromJson(Spice.stringFromJson, Belt_Option.getWithDefault(Js_dict.get(dict$1, "self-reported-sales-bin"), null));
+                              if (selfReportedSalesBin.TAG === /* Ok */0) {
+                                return {
+                                        TAG: /* Ok */0,
+                                        _0: {
+                                          id: id._0,
+                                          uid: uid._0,
+                                          name: name._0,
+                                          deposit: deposit._0,
+                                          status: status._0,
+                                          email: email._0,
+                                          phone: phone._0,
+                                          address: address._0,
+                                          role: role._0,
+                                          businessRegistrationNumber: businessRegistrationNumber._0,
+                                          manager: manager._0,
+                                          shopUrl: shopUrl._0,
+                                          interestedItemCategoryIds: interestedItemCategoryIds._0,
+                                          selfReportedBusinessSectors: selfReportedBusinessSectors._0,
+                                          selfReportedSalesBin: selfReportedSalesBin._0
+                                        }
+                                      };
+                              }
+                              var e = selfReportedSalesBin._0;
+                              return {
+                                      TAG: /* Error */1,
+                                      _0: {
+                                        path: ".self-reported-sales-bin" + e.path,
+                                        message: e.message,
+                                        value: e.value
+                                      }
+                                    };
+                            }
+                            var e$1 = selfReportedBusinessSectors._0;
+                            return {
+                                    TAG: /* Error */1,
+                                    _0: {
+                                      path: ".self-reported-business-sectors" + e$1.path,
+                                      message: e$1.message,
+                                      value: e$1.value
+                                    }
+                                  };
+                          }
+                          var e$2 = interestedItemCategoryIds._0;
                           return {
-                                  TAG: /* Ok */0,
+                                  TAG: /* Error */1,
                                   _0: {
-                                    id: id._0,
-                                    uid: uid._0,
-                                    name: name._0,
-                                    deposit: deposit._0,
-                                    status: status._0,
-                                    email: email._0,
-                                    phone: phone._0,
-                                    address: address._0,
-                                    role: role._0,
-                                    businessRegistrationNumber: businessRegistrationNumber._0,
-                                    manager: manager._0,
-                                    shopUrl: shopUrl._0
+                                    path: ".interested-item-category-ids" + e$2.path,
+                                    message: e$2.message,
+                                    value: e$2.value
                                   }
                                 };
                         }
-                        var e = shopUrl._0;
+                        var e$3 = shopUrl._0;
                         return {
                                 TAG: /* Error */1,
                                 _0: {
-                                  path: ".shop-url" + e.path,
-                                  message: e.message,
-                                  value: e.value
+                                  path: ".shop-url" + e$3.path,
+                                  message: e$3.message,
+                                  value: e$3.value
                                 }
                               };
                       }
-                      var e$1 = manager._0;
+                      var e$4 = manager._0;
                       return {
                               TAG: /* Error */1,
                               _0: {
-                                path: ".manager" + e$1.path,
-                                message: e$1.message,
-                                value: e$1.value
+                                path: ".manager" + e$4.path,
+                                message: e$4.message,
+                                value: e$4.value
                               }
                             };
                     }
-                    var e$2 = businessRegistrationNumber._0;
+                    var e$5 = businessRegistrationNumber._0;
                     return {
                             TAG: /* Error */1,
                             _0: {
-                              path: ".business-registration-number" + e$2.path,
-                              message: e$2.message,
-                              value: e$2.value
+                              path: ".business-registration-number" + e$5.path,
+                              message: e$5.message,
+                              value: e$5.value
                             }
                           };
                   }
-                  var e$3 = role._0;
+                  var e$6 = role._0;
                   return {
                           TAG: /* Error */1,
                           _0: {
-                            path: ".role" + e$3.path,
-                            message: e$3.message,
-                            value: e$3.value
+                            path: ".role" + e$6.path,
+                            message: e$6.message,
+                            value: e$6.value
                           }
                         };
                 }
-                var e$4 = address._0;
+                var e$7 = address._0;
                 return {
                         TAG: /* Error */1,
                         _0: {
-                          path: ".address" + e$4.path,
-                          message: e$4.message,
-                          value: e$4.value
+                          path: ".address" + e$7.path,
+                          message: e$7.message,
+                          value: e$7.value
                         }
                       };
               }
-              var e$5 = phone._0;
+              var e$8 = phone._0;
               return {
                       TAG: /* Error */1,
                       _0: {
-                        path: ".phone" + e$5.path,
-                        message: e$5.message,
-                        value: e$5.value
+                        path: ".phone" + e$8.path,
+                        message: e$8.message,
+                        value: e$8.value
                       }
                     };
             }
-            var e$6 = email._0;
+            var e$9 = email._0;
             return {
                     TAG: /* Error */1,
                     _0: {
-                      path: ".email" + e$6.path,
-                      message: e$6.message,
-                      value: e$6.value
+                      path: ".email" + e$9.path,
+                      message: e$9.message,
+                      value: e$9.value
                     }
                   };
           }
-          var e$7 = status._0;
+          var e$10 = status._0;
           return {
                   TAG: /* Error */1,
                   _0: {
-                    path: ".status" + e$7.path,
-                    message: e$7.message,
-                    value: e$7.value
+                    path: ".status" + e$10.path,
+                    message: e$10.message,
+                    value: e$10.value
                   }
                 };
         }
-        var e$8 = deposit._0;
+        var e$11 = deposit._0;
         return {
                 TAG: /* Error */1,
                 _0: {
-                  path: ".deposit" + e$8.path,
-                  message: e$8.message,
-                  value: e$8.value
+                  path: ".deposit" + e$11.path,
+                  message: e$11.message,
+                  value: e$11.value
                 }
               };
       }
-      var e$9 = name._0;
+      var e$12 = name._0;
       return {
               TAG: /* Error */1,
               _0: {
-                path: ".name" + e$9.path,
-                message: e$9.message,
-                value: e$9.value
+                path: ".name" + e$12.path,
+                message: e$12.message,
+                value: e$12.value
               }
             };
     }
-    var e$10 = uid._0;
+    var e$13 = uid._0;
     return {
             TAG: /* Error */1,
             _0: {
-              path: ".uid" + e$10.path,
-              message: e$10.message,
-              value: e$10.value
+              path: ".uid" + e$13.path,
+              message: e$13.message,
+              value: e$13.value
             }
           };
   }
-  var e$11 = id._0;
+  var e$14 = id._0;
   return {
           TAG: /* Error */1,
           _0: {
-            path: ".id" + e$11.path,
-            message: e$11.message,
-            value: e$11.value
+            path: ".id" + e$14.path,
+            message: e$14.message,
+            value: e$14.value
           }
         };
 }
@@ -12964,26 +13078,79 @@ function useSmoothScroll(param) {
   
 }
 
-function useDimension(param) {
-  var match = React.useState(function () {
-        return /* Unknown */0;
-      });
-  var setDimension = match[1];
-  React.useEffect((function () {
-          setDimension(function (param) {
-                if (window.innerWidth < 1280) {
-                  return /* Mobile */2;
-                } else {
-                  return /* PC */1;
-                }
-              });
-          
-        }), []);
-  return match[0];
+var stepsOrder = [
+  "grade",
+  "count",
+  "price",
+  "cycle",
+  "requirement",
+  "shipping"
+];
+
+function usePageSteps(param) {
+  var router = Router.useRouter();
+  var totalStepLength = stepsOrder.length;
+  var firstStep = Garter_Array.firstExn(stepsOrder);
+  var currentStep = Belt_Option.mapWithDefault(Js_dict.get(router.query, "step"), firstStep, (function (x) {
+          return x;
+        }));
+  var currentStepIndex = Belt_Option.mapWithDefault(Belt_Array.getIndexBy(stepsOrder, (function (x) {
+              return x === currentStep;
+            })), 0, (function (x) {
+          return x;
+        }));
+  var nextStepIndex = currentStepIndex + 1 | 0;
+  var nextStep = Belt_Array.get(stepsOrder, nextStepIndex);
+  var isLast = (stepsOrder.length - 1 | 0) === currentStepIndex;
+  return {
+          totalStepLength: totalStepLength,
+          firstStep: firstStep,
+          currentStep: currentStep,
+          currentStepIndex: currentStepIndex,
+          isLast: isLast,
+          nextStepIndex: nextStepIndex,
+          nextStep: nextStep
+        };
 }
 
-var UserAgent = {
-  useDimension: useDimension
+function useNavigateStep(param) {
+  var router = Router.useRouter();
+  var match = usePageSteps(undefined);
+  var nextStep = match.nextStep;
+  var firstStep = match.firstStep;
+  var navigateToNextStep = function (param) {
+    if (nextStep !== undefined) {
+      router.query["step"] = nextStep;
+      var newQueryString = new URLSearchParams(router.query).toString();
+      router.push(router.pathname + "?" + newQueryString);
+      return ;
+    }
+    router.push("/buyer/tradematch/ask-to-buy/applied");
+    
+  };
+  var navigateToFirstStep = function (param) {
+    router.query["step"] = firstStep;
+    var newQueryString = new URLSearchParams(router.query).toString();
+    router.replace(router.pathname + "?" + newQueryString);
+    
+  };
+  var replaceToStep = function (step) {
+    router.query["step"] = step;
+    var newQueryString = new URLSearchParams(router.query).toString();
+    router.replace(router.pathname + "?" + newQueryString);
+    
+  };
+  return {
+          navigateToFirstStep: navigateToFirstStep,
+          navigateToNextStep: navigateToNextStep,
+          replaceToStep: replaceToStep
+        };
+}
+
+var Tradematch = {
+  stepsOrder: stepsOrder,
+  usePageSteps: usePageSteps,
+  useNavigateStep: useNavigateStep
 };
 
 export {
@@ -13030,7 +13197,7 @@ export {
   AfterPayAgreement ,
   AfterPayOrdersList ,
   useSmoothScroll ,
-  UserAgent ,
+  Tradematch ,
   
 }
 /* Env Not a pure module */

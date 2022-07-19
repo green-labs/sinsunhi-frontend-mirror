@@ -6,11 +6,13 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import ReactSlick from "react-slick";
-import * as IconArrowWhite from "./svgs/IconArrowWhite.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopMainMainBannerBuyerFragment_graphql from "../__generated__/ShopMainMainBannerBuyerFragment_graphql.mjs";
+import ArrowWhiteLeftSvg from "../../public/assets/arrow-white-left.svg";
+
+var arrowWhiteLeftIcon = ArrowWhiteLeftSvg;
 
 function use(fRef) {
   var data = Hooks.useFragment(ShopMainMainBannerBuyerFragment_graphql.node, fRef);
@@ -46,9 +48,8 @@ function ShopMain_MainBanner_Buyer$PC$PrevBtn(Props) {
   return React.createElement("button", {
               className: "absolute z-[5] left-3 top-1/2 translate-y-[-50%]",
               onClick: handleClick
-            }, React.createElement(IconArrowWhite.make, {
-                  width: "40",
-                  height: "56"
+            }, React.createElement("img", {
+                  src: arrowWhiteLeftIcon
                 }));
 }
 
@@ -67,9 +68,8 @@ function ShopMain_MainBanner_Buyer$PC$NextBtn(Props) {
   return React.createElement("button", {
               className: "absolute rotate-180 z-[5] right-3 top-1/2 translate-y-[-50%]",
               onClick: handleClick
-            }, React.createElement(IconArrowWhite.make, {
-                  width: "40",
-                  height: "56"
+            }, React.createElement("img", {
+                  src: arrowWhiteLeftIcon
                 }));
 }
 
@@ -276,9 +276,10 @@ var MO = {
 };
 
 export {
+  arrowWhiteLeftIcon ,
   Fragment ,
   PC ,
   MO ,
   
 }
-/* react Not a pure module */
+/* arrowWhiteLeftIcon Not a pure module */

@@ -3,9 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
-import * as IconHome from "./svgs/IconHome.mjs";
 import * as Redirect from "./Redirect.mjs";
-import * as IconArrow from "./svgs/IconArrow.mjs";
 import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
@@ -15,12 +13,17 @@ import * as Router from "next/router";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as IconHamburger from "./svgs/IconHamburger.mjs";
 import * as IconArrowSelect from "./svgs/IconArrowSelect.mjs";
+import * as PDP_Header_Buyer from "../pages/buyer/pdp/PDP_Header_Buyer.mjs";
+import * as PLP_Header_Buyer from "../pages/buyer/plp/PLP_Header_Buyer.mjs";
 import * as ChannelTalkHelper from "../utils/ChannelTalkHelper.mjs";
 import * as GnbBannerList_Buyer from "./GnbBannerList_Buyer.mjs";
 import * as ShopSearchInput_Buyer from "./ShopSearchInput_Buyer.mjs";
 import * as ShopCategorySelect_Buyer from "./ShopCategorySelect_Buyer.mjs";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
+import HomeSvg from "../../public/assets/home.svg";
 import * as ReactDropdownMenu from "@radix-ui/react-dropdown-menu";
+
+var homeIcon = HomeSvg;
 
 function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
   var router = Router.useRouter();
@@ -41,7 +44,7 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
   var logOutAction = function (param) {
     CustomHooks.Auth.logOut(undefined);
     ChannelTalkHelper.logout(undefined);
-    return Redirect.setHref("/buyer");
+    return Redirect.setHref("/");
   };
   var itemStyle = "cursor-pointer w-full h-full py-3 px-4 whitespace-nowrap flex items-center justify-center";
   return React.createElement(ReactDropdownMenu.Root, {
@@ -154,11 +157,9 @@ function Header_Buyer$Mobile$Normal(Props) {
                                   router.back();
                                   
                                 })
-                            }, React.createElement(IconArrow.make, {
-                                  height: "24",
-                                  width: "24",
-                                  fill: "#262626",
-                                  className: "rotate-180"
+                            }, React.createElement("img", {
+                                  className: "w-6 h-6 rotate-180",
+                                  src: "/assets/arrow-right.svg"
                                 })), React.createElement("div", undefined, React.createElement("span", {
                                   className: "font-bold text-xl"
                                 }, title)), React.createElement("button", {
@@ -166,10 +167,8 @@ function Header_Buyer$Mobile$Normal(Props) {
                                   router.push("/buyer");
                                   
                                 })
-                            }, React.createElement(IconHome.make, {
-                                  width: "24",
-                                  height: "24",
-                                  fill: "#262626"
+                            }, React.createElement("img", {
+                                  src: homeIcon
                                 }))))), React.createElement("div", {
                   className: "w-full h-14"
                 }));
@@ -197,10 +196,8 @@ function Header_Buyer$Mobile$NoBack(Props) {
                                   router.push("/buyer");
                                   
                                 })
-                            }, React.createElement(IconHome.make, {
-                                  width: "24",
-                                  height: "24",
-                                  fill: "#262626"
+                            }, React.createElement("img", {
+                                  src: homeIcon
                                 }))))), React.createElement("div", {
                   className: "w-full h-14"
                 }));
@@ -223,10 +220,14 @@ function Header_Buyer$Mobile$GnbHome(Props) {
               });
           
         }), []);
-  var redirectUrl = new URLSearchParams(Js_dict.fromArray([[
-                "redirect",
-                router.asPath
-              ]])).toString();
+  var redirect = Js_dict.get(router.query, "redirect");
+  var redirectUrl = redirect !== undefined ? new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  redirect
+                ]])).toString() : new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  router.asPath
+                ]])).toString();
   return React.createElement("div", {
               className: "w-full bg-white"
             }, React.createElement("header", {
@@ -279,11 +280,9 @@ function Header_Buyer$Mobile$Search(Props) {
                               router.back();
                               
                             })
-                        }, React.createElement(IconArrow.make, {
-                              height: "24",
-                              width: "24",
-                              fill: "#262626",
-                              className: "rotate-180"
+                        }, React.createElement("img", {
+                              className: "w-6 h-6 rotate-180",
+                              src: "/assets/arrow-right.svg"
                             })), React.createElement(ShopSearchInput_Buyer.MO.make, {}))), React.createElement("div", {
                   className: "w-full h-14"
                 }));
@@ -314,28 +313,20 @@ function Header_Buyer$Mobile(Props) {
                     title: "주문 내역"
                   });
     case "products" :
-        if (thirdPathname !== undefined) {
-          switch (thirdPathname) {
-            case "advanced-search" :
-                return React.createElement(Header_Buyer$Mobile$Normal, {
-                            title: "상품 검색"
-                          });
-            case "all" :
-                return React.createElement(Header_Buyer$Mobile$Normal, {
-                            title: "전체 상품"
-                          });
-            default:
+        if (thirdPathname === undefined) {
+          return React.createElement(PLP_Header_Buyer.make, {});
+        }
+        switch (thirdPathname) {
+          case "advanced-search" :
               return React.createElement(Header_Buyer$Mobile$Normal, {
-                          title: "상품 상세"
+                          title: "상품 검색"
                         });
-          }
-        } else {
-          var categoryName = Belt_Option.mapWithDefault(Js_dict.get(router.query, "category-name"), "", (function (prim) {
-                  return decodeURIComponent(prim);
-                }));
-          return React.createElement(Header_Buyer$Mobile$Normal, {
-                      title: categoryName
-                    });
+          case "all" :
+              return React.createElement(Header_Buyer$Mobile$Normal, {
+                          title: "전체 상품"
+                        });
+          default:
+            return React.createElement(PDP_Header_Buyer.make, {});
         }
     case "search" :
         return React.createElement(Header_Buyer$Mobile$Search, {});
@@ -399,14 +390,14 @@ var Mobile = {
   make: Header_Buyer$Mobile
 };
 
-function Header_Buyer$PC$LoggedInUserMenu(Props) {
+function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
   var user = Props.user;
   var router = Router.useRouter();
   var logOut = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   CustomHooks.Auth.logOut(undefined);
                   ChannelTalkHelper.logout(undefined);
-                  return Redirect.setHref("/buyer");
+                  return Redirect.setHref("/");
                 }), param);
   };
   var itemStyle = "cursor-pointer w-full h-full py-3 px-8 whitespace-nowrap flex items-center justify-center";
@@ -486,15 +477,19 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
 }
 
 var LoggedInUserMenu$1 = {
-  make: Header_Buyer$PC$LoggedInUserMenu
+  make: Header_Buyer$PC_Old$LoggedInUserMenu
 };
 
-function Header_Buyer$PC$NotLoggedInUserMenu(Props) {
+function Header_Buyer$PC_Old$NotLoggedInUserMenu(Props) {
   var router = Router.useRouter();
-  var redirectUrl = new URLSearchParams(Js_dict.fromArray([[
-                "redirect",
-                router.asPath
-              ]])).toString();
+  var redirect = Js_dict.get(router.query, "redirect");
+  var redirectUrl = redirect !== undefined ? new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  redirect
+                ]])).toString() : new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  router.asPath
+                ]])).toString();
   var buttonStyle = "ml-2 py-3 px-4 bg-green-50 flex items-center justify-center rounded-full text-sm text-green-500 cursor-pointer";
   return React.createElement("div", {
               className: "flex items-center justify-center"
@@ -504,7 +499,7 @@ function Header_Buyer$PC$NotLoggedInUserMenu(Props) {
                         className: buttonStyle
                       }, "로그인")
                 }), React.createElement(Link, {
-                  href: "/buyer/signup",
+                  href: "/buyer/signup?" + redirectUrl,
                   children: React.createElement("a", {
                         className: buttonStyle
                       }, "회원가입")
@@ -512,10 +507,10 @@ function Header_Buyer$PC$NotLoggedInUserMenu(Props) {
 }
 
 var NotLoggedInUserMenu = {
-  make: Header_Buyer$PC$NotLoggedInUserMenu
+  make: Header_Buyer$PC_Old$NotLoggedInUserMenu
 };
 
-function Header_Buyer$PC(Props) {
+function Header_Buyer$PC_Old(Props) {
   var user = Curry._1(CustomHooks.User.Buyer.use2, undefined);
   var match = typeof user === "number" ? [
       "/buyer/signin",
@@ -531,7 +526,7 @@ function Header_Buyer$PC(Props) {
                     }, React.createElement("div", {
                           className: "flex items-center"
                         }, React.createElement(Link, {
-                              href: "/buyer",
+                              href: "/",
                               children: React.createElement("a", undefined, React.createElement("img", {
                                         className: "w-[120px] h-10 object-contain",
                                         alt: "sinsunhi-logo-header-pc",
@@ -544,10 +539,10 @@ function Header_Buyer$PC(Props) {
                         }, React.createElement("span", {
                               className: "flex"
                             }, typeof user === "number" ? (
-                                user !== 0 ? React.createElement(Header_Buyer$PC$NotLoggedInUserMenu, {}) : React.createElement("div", {
+                                user !== 0 ? React.createElement(Header_Buyer$PC_Old$NotLoggedInUserMenu, {}) : React.createElement("div", {
                                         className: "w-40 h-6 bg-gray-150 animate-pulse rounded-lg"
                                       })
-                              ) : React.createElement(Header_Buyer$PC$LoggedInUserMenu, {
+                              ) : React.createElement(Header_Buyer$PC_Old$LoggedInUserMenu, {
                                     user: user._0
                                   })))), React.createElement("nav", {
                       className: "flex items-center justify-between pr-10 pl-2 border-y"
@@ -593,15 +588,219 @@ function Header_Buyer$PC(Props) {
                 }));
 }
 
-var PC = {
+var PC_Old = {
   LoggedInUserMenu: LoggedInUserMenu$1,
   NotLoggedInUserMenu: NotLoggedInUserMenu,
+  make: Header_Buyer$PC_Old
+};
+
+function Header_Buyer$PC$LoggedInUserMenu(Props) {
+  var user = Props.user;
+  var router = Router.useRouter();
+  var logOut = function (param) {
+    return ReactEvents.interceptingHandler((function (param) {
+                  CustomHooks.Auth.logOut(undefined);
+                  ChannelTalkHelper.logout(undefined);
+                  return Redirect.setHref("/");
+                }), param);
+  };
+  var itemStyle = "cursor-pointer w-full h-full py-3 px-8 whitespace-nowrap flex items-center justify-center";
+  return React.createElement("div", {
+              className: "relative flex items-center h-16",
+              id: "gnb-user"
+            }, React.createElement(ReactDropdownMenu.Root, {
+                  children: null
+                }, React.createElement(ReactDropdownMenu.Trigger, {
+                      children: React.createElement("div", {
+                            className: "flex items-center"
+                          }, React.createElement("span", {
+                                className: "text-base text-gray-800"
+                              }, Belt_Option.getWithDefault(user.email, "")), React.createElement("span", {
+                                className: "relative ml-1"
+                              }, React.createElement(IconArrowSelect.make, {
+                                    height: "22",
+                                    width: "22",
+                                    fill: "#262626"
+                                  }))),
+                      className: "focus:outline-none"
+                    }), React.createElement(ReactDropdownMenu.Content, {
+                      children: null,
+                      align: "end",
+                      className: "dropdown-content w-[140px] bg-white rounded-lg shadow-md divide-y text-gray-800"
+                    }, React.createElement(ReactDropdownMenu.Item, {
+                          children: React.createElement("div", {
+                                className: itemStyle,
+                                onClick: (function (param) {
+                                    return ReactEvents.interceptingHandler((function (param) {
+                                                  router.push("/buyer/orders");
+                                                  
+                                                }), param);
+                                  })
+                              }, React.createElement("span", undefined, "주문 내역")),
+                          className: "focus:outline-none"
+                        }), React.createElement(ReactDropdownMenu.Item, {
+                          children: React.createElement("div", {
+                                className: itemStyle,
+                                onClick: (function (param) {
+                                    return ReactEvents.interceptingHandler((function (param) {
+                                                  router.push("/buyer/transactions");
+                                                  
+                                                }), param);
+                                  })
+                              }, React.createElement("span", undefined, "결제 내역")),
+                          className: "focus:outline-none"
+                        }), React.createElement(ReactDropdownMenu.Item, {
+                          children: React.createElement("div", {
+                                className: itemStyle,
+                                onClick: (function (param) {
+                                    return ReactEvents.interceptingHandler((function (param) {
+                                                  router.push("/buyer/download-center");
+                                                  
+                                                }), param);
+                                  })
+                              }, React.createElement("span", undefined, "다운로드 센터")),
+                          className: "focus:outline-none"
+                        }), React.createElement(ReactDropdownMenu.Item, {
+                          children: React.createElement("div", {
+                                className: itemStyle,
+                                onClick: (function (param) {
+                                    return ReactEvents.interceptingHandler((function (param) {
+                                                  router.push("/buyer/products/advanced-search");
+                                                  
+                                                }), param);
+                                  })
+                              }, React.createElement("span", undefined, "단품 확인")),
+                          className: "focus:outline-none"
+                        }), React.createElement(ReactDropdownMenu.Item, {
+                          children: React.createElement("div", {
+                                className: itemStyle,
+                                onClick: logOut
+                              }, React.createElement("span", undefined, "로그아웃")),
+                          className: "focus:outline-none"
+                        }))));
+}
+
+var LoggedInUserMenu$2 = {
+  make: Header_Buyer$PC$LoggedInUserMenu
+};
+
+function Header_Buyer$PC$NotLoggedInUserMenu(Props) {
+  var router = Router.useRouter();
+  var redirect = Js_dict.get(router.query, "redirect");
+  var redirectUrl = redirect !== undefined ? new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  redirect
+                ]])).toString() : new URLSearchParams(Js_dict.fromArray([[
+                  "redirect",
+                  router.asPath
+                ]])).toString();
+  var buttonStyle = "ml-2 py-3 px-4 bg-green-50 flex items-center justify-center rounded-full text-sm text-green-500 cursor-pointer";
+  return React.createElement("div", {
+              className: "flex items-center justify-center"
+            }, React.createElement(Link, {
+                  href: "/buyer/signin?" + redirectUrl,
+                  children: React.createElement("a", {
+                        className: buttonStyle
+                      }, "로그인")
+                }), React.createElement(Link, {
+                  href: "/buyer/signup?" + redirectUrl,
+                  children: React.createElement("a", {
+                        className: buttonStyle
+                      }, "회원가입")
+                }));
+}
+
+var NotLoggedInUserMenu$1 = {
+  make: Header_Buyer$PC$NotLoggedInUserMenu
+};
+
+function Header_Buyer$PC(Props) {
+  var user = Curry._1(CustomHooks.User.Buyer.use2, undefined);
+  var match = typeof user === "number" ? [
+      "/buyer/signin",
+      "_self"
+    ] : [
+      "https://drive.google.com/drive/u/0/folders/1DbaGUxpkYnJMrl4RPKRzpCqTfTUH7bYN",
+      "_blank"
+    ];
+  return React.createElement("header", {
+              className: "w-full sticky top-0 bg-white z-10"
+            }, React.createElement("div", {
+                  className: "w-full flex justify-between items-center py-4 px-10"
+                }, React.createElement("div", {
+                      className: "flex items-center"
+                    }, React.createElement(Link, {
+                          href: "/",
+                          children: React.createElement("a", undefined, React.createElement("img", {
+                                    className: "w-[120px] h-10 object-contain",
+                                    alt: "sinsunhi-logo-header-pc",
+                                    src: "/assets/sinsunhi-logo.svg"
+                                  }))
+                        }), React.createElement("div", {
+                          className: "ml-12"
+                        }, React.createElement(ShopSearchInput_Buyer.make, {}))), React.createElement("div", {
+                      className: "flex items-center"
+                    }, React.createElement("span", {
+                          className: "flex"
+                        }, typeof user === "number" ? (
+                            user !== 0 ? React.createElement(Header_Buyer$PC$NotLoggedInUserMenu, {}) : React.createElement("div", {
+                                    className: "w-40 h-6 bg-gray-150 animate-pulse rounded-lg"
+                                  })
+                          ) : React.createElement(Header_Buyer$PC$LoggedInUserMenu, {
+                                user: user._0
+                              })))), React.createElement("nav", {
+                  className: "flex items-center justify-between pr-10 pl-2 border-y"
+                }, React.createElement("div", {
+                      className: "flex items-center divide-x"
+                    }, React.createElement(RescriptReactErrorBoundary.make, {
+                          children: React.createElement(React.Suspense, {
+                                children: React.createElement(ShopCategorySelect_Buyer.PC.make, {}),
+                                fallback: null
+                              }),
+                          fallback: (function (param) {
+                              return null;
+                            })
+                        }), React.createElement(RescriptReactErrorBoundary.make, {
+                          children: React.createElement(React.Suspense, {
+                                children: React.createElement(GnbBannerList_Buyer.make, {}),
+                                fallback: null
+                              }),
+                          fallback: (function (param) {
+                              return null;
+                            })
+                        })), React.createElement("div", {
+                      className: "flex items-center text-base text-gray-800"
+                    }, React.createElement(Link, {
+                          href: match[0],
+                          children: React.createElement("a", {
+                                className: "ml-4 cursor-pointer",
+                                target: match[1]
+                              }, "판매자료 다운로드")
+                        }), React.createElement(Link, {
+                          href: "/buyer/upload",
+                          children: React.createElement("a", {
+                                className: "ml-4 cursor-pointer"
+                              }, "주문서 업로드")
+                        }), React.createElement(Link, {
+                          href: "https://shinsunmarket.co.kr/532",
+                          children: React.createElement("a", {
+                                className: "ml-4 cursor-pointer",
+                                target: "_blank"
+                              }, "고객지원")
+                        }))));
+}
+
+var PC = {
+  LoggedInUserMenu: LoggedInUserMenu$2,
+  NotLoggedInUserMenu: NotLoggedInUserMenu$1,
   make: Header_Buyer$PC
 };
 
 export {
+  homeIcon ,
   Mobile ,
+  PC_Old ,
   PC ,
   
 }
-/* react Not a pure module */
+/* homeIcon Not a pure module */

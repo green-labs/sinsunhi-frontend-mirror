@@ -144,7 +144,11 @@ module List = {
         | Some(Ok(NORMAL)) => [#NORMAL]->Some
         | Some(Ok(QUOTABLE)) => [#QUOTABLE]->Some
         | Some(Ok(QUOTED)) => [#QUOTED]->Some
-        | _ => []->Some
+        | Some(Ok(MATCHING)) => [#MATCHING]->Some
+        | Some(Ok(ALL)) => []->Some
+        | Some(Error(_))
+        | None =>
+          []->Some
         }
       },
     }

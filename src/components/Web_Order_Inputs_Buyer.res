@@ -54,9 +54,18 @@ module ReceiverPhoneInput = {
 
     let newValue = e =>
       (e->ReactEvent.Synthetic.currentTarget)["value"]
-      ->Js.String2.slice(~from=0, ~to_=13)
+      ->Js.String2.slice(~from=0, ~to_=14)
       ->Js.String2.replaceByRe(%re("/[^0-9]/g"), "")
-      ->Js.String2.replaceByRe(%re("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/"), "$1-$2-$3")
+      ->(str =>
+        switch str->Js.String.length == 12 {
+        // length == 12는 안심번호로 간주 예시) 0502-0772-8543
+        | true => str->Js.String2.replaceByRe(%re("/([0-9]{4})([0-9]{4})([0-9]{4})/"), "$1-$2-$3")
+        | false =>
+          str->Js.String2.replaceByRe(
+            %re("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/"),
+            "$1-$2-$3",
+          )
+        })
       ->Js.String2.replace("--", "-")
 
     let toPhoneFormat = (fn, e) => fn(Controller.OnChangeArg.value(e->newValue->Js.Json.string))

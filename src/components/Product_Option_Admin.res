@@ -16,9 +16,19 @@ module Fragment = %relay(`
       id
       name
       productId
-      producer {
-        name
+  
+      ... on NormalProduct {
+        producer {
+          name
+        }
       }
+  
+      ... on QuotableProduct {
+        producer {
+          name
+        }
+      }
+  
       md {
         name
       }
@@ -75,7 +85,9 @@ module Item = {
           </div>
           <div className=%twc("h-full flex flex-col px-4 py-2")>
             <span className=%twc("block")>
-              {productOption.product.producer.name->React.string}
+              {productOption.product.producer->Option.mapWithDefault(React.null, ({name}) =>
+                name->React.string
+              )}
             </span>
           </div>
           <div className=%twc("h-full flex flex-col px-4 py-2")>

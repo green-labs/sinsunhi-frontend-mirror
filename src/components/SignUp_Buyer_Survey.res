@@ -29,11 +29,11 @@ let make = () => {
     None
   }
 
-  // welcome 파라메터가 있을 경우 서베이를 보여주고, 반복출력을 피해기 위해 welcome 파라메터를 제거
+  // welcome 파라메터가 있을 경우 서베이를 보여주고, 반복출력을 피하기 위해 welcome 파라메터를 제거
   React.useEffect1(() => {
     if router.query->Js.Dict.get("welcome")->Option.isSome {
       router->replaceObj({
-        pathname: "/buyer",
+        pathname: router.pathname,
         query: router.query->dropByK("welcome"),
       })
       setShow(._ => true)

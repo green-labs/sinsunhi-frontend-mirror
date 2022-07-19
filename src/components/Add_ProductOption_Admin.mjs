@@ -19,14 +19,19 @@ import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as ReactHookForm$1 from "react-hook-form";
-import * as IconCheckBoxChecked from "./svgs/IconCheckBoxChecked.mjs";
-import * as IconCheckBoxUnChecked from "./svgs/IconCheckBoxUnChecked.mjs";
 import * as ErrorMessage from "@hookform/error-message";
 import * as Product_Option_Each_Admin from "./Product_Option_Each_Admin.mjs";
 import * as Select_Product_Option_Unit from "./Select_Product_Option_Unit.mjs";
 import * as ReactCollapsible from "@radix-ui/react-collapsible";
+import * as Select_Product_Shipping_Type from "./Select_Product_Shipping_Type.mjs";
 import * as Select_Producer_Contract_Type from "./Select_Producer_Contract_Type.mjs";
 import * as Select_Product_Operation_Status from "./Select_Product_Operation_Status.mjs";
+import CheckboxCheckedSvg from "../../public/assets/checkbox-checked.svg";
+import CheckboxUncheckedSvg from "../../public/assets/checkbox-unchecked.svg";
+
+var checkboxCheckedIcon = CheckboxCheckedSvg;
+
+var checkboxUncheckedIcon = CheckboxUncheckedSvg;
 
 function cost_encode(v) {
   return Js_dict.fromArray([
@@ -179,6 +184,10 @@ function submit_encode(v) {
               [
                 "show-each",
                 Spice.boolToJson(v.showEach)
+              ],
+              [
+                "is-free-shipping",
+                Select_Product_Shipping_Type.status_encode(v.isFreeShipping)
               ]
             ]);
 }
@@ -214,130 +223,143 @@ function submit_decode(v) {
                     if (memo.TAG === /* Ok */0) {
                       var showEach = Spice.boolFromJson(Belt_Option.getWithDefault(Js_dict.get(dict$1, "show-each"), null));
                       if (showEach.TAG === /* Ok */0) {
+                        var isFreeShipping = Select_Product_Shipping_Type.status_decode(Belt_Option.getWithDefault(Js_dict.get(dict$1, "is-free-shipping"), null));
+                        if (isFreeShipping.TAG === /* Ok */0) {
+                          return {
+                                  TAG: /* Ok */0,
+                                  _0: {
+                                    name: name._0,
+                                    grade: grade._0,
+                                    package: $$package._0,
+                                    weight: weight._0,
+                                    each: each._0,
+                                    weightUnit: weightUnit._0,
+                                    operationStatus: operationStatus._0,
+                                    cost: cost._0,
+                                    cutOffTime: cutOffTime._0,
+                                    memo: memo._0,
+                                    showEach: showEach._0,
+                                    isFreeShipping: isFreeShipping._0
+                                  }
+                                };
+                        }
+                        var e = isFreeShipping._0;
                         return {
-                                TAG: /* Ok */0,
+                                TAG: /* Error */1,
                                 _0: {
-                                  name: name._0,
-                                  grade: grade._0,
-                                  package: $$package._0,
-                                  weight: weight._0,
-                                  each: each._0,
-                                  weightUnit: weightUnit._0,
-                                  operationStatus: operationStatus._0,
-                                  cost: cost._0,
-                                  cutOffTime: cutOffTime._0,
-                                  memo: memo._0,
-                                  showEach: showEach._0
+                                  path: ".is-free-shipping" + e.path,
+                                  message: e.message,
+                                  value: e.value
                                 }
                               };
                       }
-                      var e = showEach._0;
+                      var e$1 = showEach._0;
                       return {
                               TAG: /* Error */1,
                               _0: {
-                                path: ".show-each" + e.path,
-                                message: e.message,
-                                value: e.value
+                                path: ".show-each" + e$1.path,
+                                message: e$1.message,
+                                value: e$1.value
                               }
                             };
                     }
-                    var e$1 = memo._0;
+                    var e$2 = memo._0;
                     return {
                             TAG: /* Error */1,
                             _0: {
-                              path: ".memo" + e$1.path,
-                              message: e$1.message,
-                              value: e$1.value
+                              path: ".memo" + e$2.path,
+                              message: e$2.message,
+                              value: e$2.value
                             }
                           };
                   }
-                  var e$2 = cutOffTime._0;
+                  var e$3 = cutOffTime._0;
                   return {
                           TAG: /* Error */1,
                           _0: {
-                            path: ".cut-off-time" + e$2.path,
-                            message: e$2.message,
-                            value: e$2.value
+                            path: ".cut-off-time" + e$3.path,
+                            message: e$3.message,
+                            value: e$3.value
                           }
                         };
                 }
-                var e$3 = cost._0;
+                var e$4 = cost._0;
                 return {
                         TAG: /* Error */1,
                         _0: {
-                          path: ".cost" + e$3.path,
-                          message: e$3.message,
-                          value: e$3.value
+                          path: ".cost" + e$4.path,
+                          message: e$4.message,
+                          value: e$4.value
                         }
                       };
               }
-              var e$4 = operationStatus._0;
+              var e$5 = operationStatus._0;
               return {
                       TAG: /* Error */1,
                       _0: {
-                        path: ".operation-status" + e$4.path,
-                        message: e$4.message,
-                        value: e$4.value
+                        path: ".operation-status" + e$5.path,
+                        message: e$5.message,
+                        value: e$5.value
                       }
                     };
             }
-            var e$5 = weightUnit._0;
+            var e$6 = weightUnit._0;
             return {
                     TAG: /* Error */1,
                     _0: {
-                      path: ".weight-unit" + e$5.path,
-                      message: e$5.message,
-                      value: e$5.value
+                      path: ".weight-unit" + e$6.path,
+                      message: e$6.message,
+                      value: e$6.value
                     }
                   };
           }
-          var e$6 = each._0;
+          var e$7 = each._0;
           return {
                   TAG: /* Error */1,
                   _0: {
-                    path: ".each" + e$6.path,
-                    message: e$6.message,
-                    value: e$6.value
+                    path: ".each" + e$7.path,
+                    message: e$7.message,
+                    value: e$7.value
                   }
                 };
         }
-        var e$7 = weight._0;
+        var e$8 = weight._0;
         return {
                 TAG: /* Error */1,
                 _0: {
-                  path: ".weight" + e$7.path,
-                  message: e$7.message,
-                  value: e$7.value
+                  path: ".weight" + e$8.path,
+                  message: e$8.message,
+                  value: e$8.value
                 }
               };
       }
-      var e$8 = $$package._0;
+      var e$9 = $$package._0;
       return {
               TAG: /* Error */1,
               _0: {
-                path: ".package" + e$8.path,
-                message: e$8.message,
-                value: e$8.value
+                path: ".package" + e$9.path,
+                message: e$9.message,
+                value: e$9.value
               }
             };
     }
-    var e$9 = grade._0;
+    var e$10 = grade._0;
     return {
             TAG: /* Error */1,
             _0: {
-              path: ".grade" + e$9.path,
-              message: e$9.message,
-              value: e$9.value
+              path: ".grade" + e$10.path,
+              message: e$10.message,
+              value: e$10.value
             }
           };
   }
-  var e$10 = name._0;
+  var e$11 = name._0;
   return {
           TAG: /* Error */1,
           _0: {
-            path: ".name" + e$10.path,
-            message: e$10.message,
-            value: e$10.value
+            path: ".name" + e$11.path,
+            message: e$11.message,
+            value: e$11.value
           }
         };
 }
@@ -351,6 +373,7 @@ function makeNames(prefix) {
           weight: prefix + ".weight",
           weightUnit: prefix + ".weight-unit",
           operationStatus: prefix + ".operation-status",
+          isFreeShipping: prefix + ".is-free-shipping",
           buyerPrice: prefix + ".cost.buyer-price",
           cost: prefix + ".cost.cost",
           rawCost: prefix + ".cost.raw-cost",
@@ -383,6 +406,10 @@ var defaultValue = Js_dict.fromArray([
       ],
       [
         "operation-status",
+        null
+      ],
+      [
+        "is-free-shipping",
         null
       ],
       [
@@ -428,6 +455,7 @@ var Form_names = {
   weight: "weight",
   weightUnit: "weight-unit",
   operationStatus: "operation-status",
+  isFreeShipping: "is-free-shipping",
   buyerPrice: "cost.buyer-price",
   cost: "cost.cost",
   rawCost: "cost.raw-cost",
@@ -845,6 +873,62 @@ function Add_ProductOption_Admin$OptionStatusSelect(Props) {
 
 var OptionStatusSelect = {
   make: Add_ProductOption_Admin$OptionStatusSelect
+};
+
+function Add_ProductOption_Admin$IsFreeShipping(Props) {
+  var inputName = Props.inputName;
+  var match = ReactHookForm$1.useFormContext({
+        mode: "onChange"
+      }, undefined);
+  var errors = match.formState.errors;
+  var toStatus = function (statusFromSelect) {
+    return Belt_Result.mapWithDefault(Select_Product_Shipping_Type.status_decode(statusFromSelect), undefined, (function (v) {
+                  return v;
+                }));
+  };
+  return React.createElement("div", {
+              className: "flex flex-col w-[158px] min-w-[158px]"
+            }, React.createElement("label", {
+                  className: "block"
+                }, React.createElement("span", {
+                      className: "font-bold"
+                    }, "배송비 타입"), React.createElement("span", {
+                      className: "text-red-500"
+                    }, "*")), React.createElement("span", {
+                  className: "mt-2 w-full h-9"
+                }, React.createElement(ReactHookForm$1.Controller, {
+                      name: inputName,
+                      control: match.control,
+                      render: (function (param) {
+                          var match = param.field;
+                          var onChange = match.onChange;
+                          return React.createElement("div", undefined, React.createElement(Select_Product_Shipping_Type.make, {
+                                          status: toStatus(match.value),
+                                          onChange: (function (selected) {
+                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Shipping_Type.status_encode(selected)));
+                                            }),
+                                          forwardRef: match.ref
+                                        }), React.createElement(ErrorMessage.ErrorMessage, {
+                                          name: match.name,
+                                          errors: errors,
+                                          render: (function (param) {
+                                              return React.createElement("span", {
+                                                          className: "flex"
+                                                        }, React.createElement(IconError.make, {
+                                                              width: "20",
+                                                              height: "20"
+                                                            }), React.createElement("span", {
+                                                              className: "text-sm text-notice ml-1"
+                                                            }, "배송비 타입을 입력해주세요."));
+                                            })
+                                        }));
+                        }),
+                      rules: ReactHookForm.Rules.make(true, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+                    })));
+}
+
+var IsFreeShipping = {
+  make: Add_ProductOption_Admin$IsFreeShipping
 };
 
 function Add_ProductOption_Admin$RawCostInput(Props) {
@@ -1279,7 +1363,7 @@ function Add_ProductOption_Admin(Props) {
                                           }, "단품정보 접기"), React.createElement(IconArrow.make, {
                                             height: "15",
                                             width: "15",
-                                            fill: "#000000",
+                                            stroke: "#000000",
                                             className: "transform -rotate-90"
                                           })),
                                   className: "collabsible-trigger"
@@ -1316,6 +1400,8 @@ function Add_ProductOption_Admin(Props) {
                                         inputNames: inputNames
                                       }), React.createElement(Add_ProductOption_Admin$OptionStatusSelect, {
                                         inputName: inputNames.operationStatus
+                                      }), React.createElement(Add_ProductOption_Admin$IsFreeShipping, {
+                                        inputName: inputNames.isFreeShipping
                                       })), React.createElement("div", {
                                     className: "flex gap-4 items-center justify-start"
                                   }, React.createElement(Add_ProductOption_Admin$RawCostInput, {
@@ -1336,13 +1422,9 @@ function Add_ProductOption_Admin(Props) {
                                       className: "flex gap-2 items-center"
                                     }, React.createElement("button", {
                                           onClick: onClickApplyAll
-                                        }, applyAll ? React.createElement(IconCheckBoxChecked.make, {
-                                                width: "20",
-                                                height: "20"
-                                              }) : React.createElement(IconCheckBoxUnChecked.make, {
-                                                width: "20",
-                                                height: "20"
-                                              })), React.createElement("span", undefined, "[" + productDisplayName + "] 전체 단품에 출고기준시간과 메모 동일하게 적용하기")))),
+                                        }, React.createElement("img", {
+                                              src: applyAll ? checkboxCheckedIcon : checkboxUncheckedIcon
+                                            })), React.createElement("span", undefined, "[" + productDisplayName + "] 전체 단품에 출고기준시간과 메모 동일하게 적용하기")))),
                       className: "collabsible-content"
                     })), React.createElement(Dialog.make, {
                   isShow: match$1[0],
@@ -1373,6 +1455,8 @@ var make = Add_ProductOption_Admin;
 
 export {
   Select_Unit ,
+  checkboxCheckedIcon ,
+  checkboxUncheckedIcon ,
   Form ,
   makeAutoGeneratedName ,
   NameInput ,
@@ -1383,6 +1467,7 @@ export {
   WeightInput ,
   PriceInput ,
   OptionStatusSelect ,
+  IsFreeShipping ,
   RawCostInput ,
   WorkingCostInput ,
   DeliveryCostInput ,
@@ -1393,4 +1478,4 @@ export {
   make ,
   
 }
-/* defaultValue Not a pure module */
+/* checkboxCheckedIcon Not a pure module */

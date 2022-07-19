@@ -177,6 +177,8 @@ module Hooks = {
       delayError: int,
       @optional
       criteriaMode: [#firstError | #all],
+      @optional
+      resolver: (. Js.Json.t) => {"values": Js.Json.t, "errors": Js.Json.t},
     }
 
     type t = {

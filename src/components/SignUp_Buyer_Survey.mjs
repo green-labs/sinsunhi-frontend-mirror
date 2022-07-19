@@ -38,9 +38,10 @@ function SignUp_Buyer_Survey(Props) {
   }
   React.useEffect((function () {
           if (Belt_Option.isSome(Js_dict.get(router.query, "welcome"))) {
+            var prim1_pathname = router.pathname;
             var prim1_query = dropByK(router.query, "welcome");
             var prim1 = {
-              pathname: "/buyer",
+              pathname: prim1_pathname,
               query: prim1_query
             };
             router.replace(prim1);

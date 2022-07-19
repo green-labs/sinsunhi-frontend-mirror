@@ -1,4 +1,58 @@
 open ReactHookForm
+module Mutation = %relay(`
+  mutation AddNormalProductFormAdminMutation(
+    $categoryId: ID!
+    $description: String!
+    $displayCategoryIds: [ID!]!
+    $displayName: String!
+    $image: ImageInput!
+    $isCourierAvailable: Boolean!
+    $isVat: Boolean!
+    $name: String!
+    $notice: String
+    $noticeEndAt: DateTime
+    $noticeStartAt: DateTime
+    $origin: String!
+    $price: Int!
+    $producerId: ID!
+    $salesDocument: String
+    $status: ProductStatus!
+    $type_: NormalProductType!
+  ) {
+    createProduct(
+      input: {
+        categoryId: $categoryId
+        description: $description
+        displayCategoryIds: $displayCategoryIds
+        displayName: $displayName
+        image: $image
+        isCourierAvailable: $isCourierAvailable
+        isVat: $isVat
+        name: $name
+        notice: $notice
+        noticeEndAt: $noticeEndAt
+        noticeStartAt: $noticeStartAt
+        origin: $origin
+        price: $price
+        producerId: $producerId
+        salesDocument: $salesDocument
+        status: $status
+        type: $type_
+      }
+    ) {
+      ... on CreateProductResult {
+        product {
+          id
+        }
+      }
+      ... on Error {
+        code
+        message
+      }
+    }
+  }
+`)
+
 //Form 에 대한 정보
 // names, submit data
 module Form = {
@@ -831,8 +885,147 @@ module EditorInput = {
   }
 }
 
+module NormalSuccessDialog = {
+  type showWithId = Show(string) | Hide
+  @react.component
+  let make = (~showWithId) => {
+    let router = Next.Router.useRouter()
+
+    let (isShow, id) = {
+      switch showWithId {
+      | Show(id) => (Dialog.Show, Some(id))
+      | Hide => (Dialog.Hide, None)
+      }
+    }
+
+    <Dialog
+      boxStyle=%twc("text-center rounded-2xl")
+      isShow
+      textOnCancel=`아니오(목록으로)`
+      textOnConfirm=`네`
+      kindOfConfirm=Dialog.Positive
+      onCancel={_ => router->Next.Router.push("/admin/products")}
+      onConfirm={_ =>
+        id
+        ->Option.map(id' => router->Next.Router.push(`/admin/products/${id'}/create-options`))
+        ->ignore}>
+      <div className=%twc("flex flex-col")>
+        <span> {`상품등록이 완료되었습니다.`->React.string} </span>
+        <span> {`이어서 상품의 단품을 등록하시겠어요?`->React.string} </span>
+      </div>
+    </Dialog>
+  }
+}
+
+let makeNormalProductVariables = (form: Form.submit) =>
+  Mutation.makeVariables(
+    ~categoryId=form.productCategory.c5->ProductForm.makeCategoryId,
+    ~displayCategoryIds=form.displayCategories->ProductForm.makeDisplayCategoryIds,
+    ~description=form.editor,
+    ~displayName=form.buyerProductName,
+    ~image={
+      original: form.thumbnail.original,
+      thumb1000x1000: form.thumbnail.thumb1000x1000,
+      thumb100x100: form.thumbnail.thumb100x100,
+      thumb1920x1920: form.thumbnail.thumb1920x1920,
+      thumb400x400: form.thumbnail.thumb400x400,
+      thumb800x800: form.thumbnail.thumb800x800,
+    },
+    ~isVat={form.tax->Select_Tax_Status.toBool},
+    ~isCourierAvailable={form.delivery->Select_Delivery.toBool},
+    ~name=form.producerProductName,
+    ~notice=?{form.notice->Option.keep(str => str != "")},
+    ~noticeEndAt=?{form.noticeEndAt->ProductForm.makeNoticeDate(DateFns.endOfDay)},
+    ~noticeStartAt=?{form.noticeStartAt->ProductForm.makeNoticeDate(DateFns.startOfDay)},
+    ~origin=form.origin,
+    ~price=form.basePrice,
+    ~producerId=form.producerName.value,
+    ~salesDocument=?{form.documentURL->Option.keep(str => str != "")},
+    ~status=switch form.operationStatus {
+    | SALE => #SALE
+    | SOLDOUT => #SOLDOUT
+    | HIDDEN_SALE => #HIDDEN_SALE
+    | NOSALE => #NOSALE
+    | RETIRE => #RETIRE
+    },
+    ~type_=switch form.quotable {
+    | true => #QUOTABLE
+    | false => #NORMAL
+    },
+    (),
+  )
+
 @react.component
 let make = () => {
+  let (normalMutate, isNormalMutating) = Mutation.use()
+  let {addToast} = ReactToastNotifications.useToasts()
+
+  let methods = Hooks.Form.use(.
+    ~config=Hooks.Form.config(
+      ~mode=#onChange,
+      ~defaultValues=[
+        (
+          Product_Detail_Basic_Admin.Form.formName.displayCategories,
+          [
+            Select_Display_Categories.Form.defaultDisplayCategory(
+              Select_Display_Categories.Form.Normal,
+            ),
+          ]->Js.Json.array,
+        ),
+        (Product_Detail_Description_Admin.Form.formName.thumbnail, ""->Js.Json.string),
+      ]
+      ->Js.Dict.fromArray
+      ->Js.Json.object_,
+      (),
+    ),
+    (),
+  )
+
+  let {handleSubmit, reset} = methods
+
+  let (isShowReset, setShowReset) = React.Uncurried.useState(_ => Dialog.Hide)
+  let (isShowNormalSuccess, setShowNormalSucess) = React.Uncurried.useState(_ =>
+    NormalSuccessDialog.Hide
+  )
+
+  let handleReset = ReactEvents.interceptingHandler(_ => {
+    setShowReset(._ => Dialog.Show)
+  })
+
+  let onSubmit = (data: Js.Json.t, _) => {
+    Js.log(data)
+
+    let result =
+      data
+      ->Form.submit_decode
+      ->Result.map(data' =>
+        normalMutate(
+          ~variables=makeNormalProductVariables(data'),
+          ~onCompleted=({createProduct}, _) => {
+            switch createProduct {
+            | #CreateProductResult({product}) => setShowNormalSucess(._ => Show(product.id))
+            | _ => ()
+            }
+          },
+          (),
+        )->ignore
+      )
+
+    switch result {
+    | Error(e) => {
+        Js.log(e)
+        addToast(.
+          <div className=%twc("flex items-center")>
+            <IconError height="24" width="24" className=%twc("mr-2") />
+            {j`오류가 발생하였습니다. 등록내용을 확인하세요.`->React.string}
+          </div>,
+          {appearance: "error"},
+        )
+      }
+    | _ => ()
+    }
+  }
+
   let {
     producerName,
     producerProductName,
@@ -852,45 +1045,82 @@ let make = () => {
     documentURL,
     editor,
   } = Form.formName
-  <>
-    <section className=%twc("p-7 mx-4 bg-white rounded-b-md")>
-      <h2 className=%twc("text-text-L1 text-lg font-bold")> {j`기본정보`->React.string} </h2>
-      <div className=%twc("divide-y text-sm")>
-        <div className=%twc("flex flex-col space-y-6 py-6")>
-          <SelectProducerInput name=producerName />
-          <Category name=productCategory />
-          <DisplayCategory name=displayCategories />
-        </div>
-        <div className=%twc("flex flex-col space-y-6 py-6")>
-          <ProductNameInputs producerProductName buyerProductName />
-          <ReadOnlyProductId />
-          <DisplayPriceInput name=basePrice />
-        </div>
-        <div className=%twc("py-6 flex flex-col space-y-6")>
-          <div className=%twc("flex gap-2")>
-            <OperationStatusInput name=operationStatus /> <OriginInput name=origin />
+
+  <ReactHookForm.Provider methods>
+    <form onSubmit={handleSubmit(. onSubmit)}>
+      <section className=%twc("p-7 mx-4 bg-white rounded-b-md")>
+        <h2 className=%twc("text-text-L1 text-lg font-bold")> {j`기본정보`->React.string} </h2>
+        <div className=%twc("divide-y text-sm")>
+          <div className=%twc("flex flex-col space-y-6 py-6")>
+            <SelectProducerInput name=producerName />
+            <Category name=productCategory />
+            <DisplayCategory name=displayCategories />
           </div>
-          <div className=%twc("flex gap-2")>
-            <IsVatInput name=tax /> <IsCourierAvailableInput name=delivery />
+          <div className=%twc("flex flex-col space-y-6 py-6")>
+            <ProductNameInputs producerProductName buyerProductName />
+            <ReadOnlyProductId />
+            <DisplayPriceInput name=basePrice />
+          </div>
+          <div className=%twc("py-6 flex flex-col space-y-6")>
+            <div className=%twc("flex gap-2")>
+              <OperationStatusInput name=operationStatus /> <OriginInput name=origin />
+            </div>
+            <div className=%twc("flex gap-2")>
+              <IsVatInput name=tax /> <IsCourierAvailableInput name=delivery />
+            </div>
+          </div>
+          <div className=%twc("py-6 flex flex-col space-y-6")>
+            <QuotableChackbox name={quotable} />
           </div>
         </div>
-        <div className=%twc("py-6 flex flex-col space-y-6")>
-          <QuotableChackbox name={quotable} />
+      </section>
+      <section className=%twc("p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl")>
+        <h2 className=%twc("text-text-L1 text-lg font-bold")>
+          {j`상품상세설명`->React.string}
+        </h2>
+        <div className=%twc("text-sm py-6 flex flex-col space-y-6")>
+          <NoticeAndDateInput
+            noticeName=notice noticeFromName=noticeDateFrom noticeToName=noticeDateTo
+          />
+          <ThumbnailUploadInput name=thumbnail />
+          <SalesDocumentURLInput name=documentURL />
+          <EditorInput name=editor />
         </div>
+      </section>
+      <div
+        className=%twc(
+          "relative h-16 max-w-gnb-panel bg-white flex items-center gap-2 justify-end pr-5"
+        )>
+        <button
+          type_="reset"
+          className=%twc("px-3 py-2 bg-div-shape-L1 rounded-lg focus:outline-none")
+          onClick={handleReset}
+          disabled={isNormalMutating}>
+          {`초기화`->React.string}
+        </button>
+        <button
+          type_="submit"
+          className=%twc(
+            "px-3 py-2 bg-green-gl text-white rounded-lg hover:bg-green-gl-dark focus:outline-none"
+          )
+          disabled={isNormalMutating}>
+          {`상품 등록`->React.string}
+        </button>
       </div>
-    </section>
-    <section className=%twc("p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl")>
-      <h2 className=%twc("text-text-L1 text-lg font-bold")>
-        {j`상품상세설명`->React.string}
-      </h2>
-      <div className=%twc("text-sm py-6 flex flex-col space-y-6")>
-        <NoticeAndDateInput
-          noticeName=notice noticeFromName=noticeDateFrom noticeToName=noticeDateTo
-        />
-        <ThumbnailUploadInput name=thumbnail />
-        <SalesDocumentURLInput name=documentURL />
-        <EditorInput name=editor />
-      </div>
-    </section>
-  </>
+      <Dialog
+        boxStyle=%twc("text-center rounded-2xl")
+        isShow={isShowReset}
+        textOnCancel=`닫기`
+        textOnConfirm=`초기화`
+        kindOfConfirm=Dialog.Negative
+        onConfirm={_ => {
+          reset(. None)
+          setShowReset(._ => Dialog.Hide)
+        }}
+        onCancel={_ => setShowReset(._ => Dialog.Hide)}>
+        <p> {`모든 내용을 초기화 하시겠어요?`->React.string} </p>
+      </Dialog>
+      <NormalSuccessDialog showWithId={isShowNormalSuccess} />
+    </form>
+  </ReactHookForm.Provider>
 }

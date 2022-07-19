@@ -5,7 +5,16 @@ module Fragment = %relay(`
           productOptionNodeId: { type: "ID!" }
         ) {
           productNode: node(id: $productNodeId) {
-            ... on Product {
+            ... on NormalProduct {
+              productId
+              name
+              isVat
+              image {
+                original
+              }
+            }
+        
+            ... on QuotableProduct {
               productId
               name
               isVat
@@ -52,7 +61,7 @@ let make = (~query, ~quantity, ~watchValue) => {
   let productInfo = switch fragments.productNode {
   | Some(product) =>
     switch product {
-    | #Product({productId, name, isVat}) => <>
+    | #NormalProduct({productId, name, isVat}) => <>
         <Hidden
           inputName=Form.names.productId value={Some(productId->Int.toString)} isNumber=true
         />

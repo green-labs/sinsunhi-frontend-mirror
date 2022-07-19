@@ -103,18 +103,16 @@ module Hook = {
   }
 
   let use = (~viewMode=PcAndMobile, ~trackData: option<trackData<'eventProperty>>=?, ()) => {
-    let dimension = CustomHooks.UserAgent.useDimension()
-
-    React.useEffect1(_ => {
-      switch viewMode {
-      | PcAndMobile => showChannelButton()
-      | PcOnly if dimension == PC => showChannelButton()
-      | MobileOnly if dimension == Mobile => showChannelButton()
+    React.useEffect0(_ => {
+      switch (viewMode, DeviceDetect.detectDevice()) {
+      | (PcAndMobile, _) => showChannelButton()
+      | (PcOnly, PC) => showChannelButton()
+      | (MobileOnly, Mobile) => showChannelButton()
       | _ => ()
       }
 
       Some(hideChannelButton)
-    }, [dimension])
+    })
 
     React.useEffect1(_ => {
       switch trackData {

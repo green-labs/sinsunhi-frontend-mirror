@@ -1,11 +1,8 @@
-/**
- * 1. 위치
- *    안심 판매 - 소싱 상품 등록/수정 - 상품 등록 다이얼로그
- *
- * 2. 역할
- *    품종 검색 select
- *
- */
+// 1. 위치
+//    안심 판매 - 소싱 상품 등록/수정 - 상품 등록 다이얼로그
+//
+// 2. 역할
+//    품종 검색 select
 module Query = %relay(`
   query SelectBulkSaleCropQuery(
     $count: Int

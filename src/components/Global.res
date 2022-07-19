@@ -13,6 +13,9 @@ module Window = {
     unit,
   ) => unit = "open"
 
+  @val @scope(("window", "navigator", "serviceWorker"))
+  external serviceWorkerRegister: string => Js.Promise.t<Js.Nullable.t<'a>> = "register"
+
   module ReactNativeWebView = {
     type t
     @val @scope("window") @return(nullable)
@@ -37,3 +40,6 @@ module Window = {
     }
   }
 }
+
+@val
+external import_: string => Js.Promise.t<Js.Nullable.t<'a>> = "import"

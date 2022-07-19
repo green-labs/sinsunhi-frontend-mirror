@@ -90,7 +90,7 @@ function Web_Order_Delivery_Method_Selection_Buyer(Props) {
                   className: "flex gap-2"
                 }, Belt_Array.map(productNode !== undefined ? (
                         typeof productNode === "object" ? (
-                            productNode.NAME === "Product" ? (
+                            productNode.NAME === "NormalProduct" ? (
                                 productNode.VAL.isCourierAvailable ? [
                                     [
                                       "parcel",

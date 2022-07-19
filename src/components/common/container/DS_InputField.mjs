@@ -9,7 +9,9 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as KoreanNumeral from "@greenlabs/re-korean-numeral/src/KoreanNumeral.mjs";
-import * as IconSearchBarClear from "../../svgs/IconSearchBarClear.mjs";
+import SearchbarClearSvg from "../../../../public/assets/searchbar-clear.svg";
+
+var searchBarClear = SearchbarClearSvg;
 
 function toOnlyNumber(value) {
   return value.replace(/[^0-9]/g, "").replace(/^[0]/g, "");
@@ -172,9 +174,8 @@ function DS_InputField$Line1$Input(Props) {
                                               return Curry._1(fn, undefined);
                                             }));
                               })
-                          }, React.createElement(IconSearchBarClear.make, {
-                                height: "16",
-                                width: "16"
+                          }, React.createElement("img", {
+                                src: searchBarClear
                               })) : null)), React.createElement("div", {
                   className: lineStyle(errorMessage, disabled, match[0])
                 }), tmp$1);
@@ -194,8 +195,9 @@ var Line1 = {
 };
 
 export {
+  searchBarClear ,
   Convert ,
   Line1 ,
   
 }
-/* react Not a pure module */
+/* searchBarClear Not a pure module */

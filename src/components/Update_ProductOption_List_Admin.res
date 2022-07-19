@@ -4,28 +4,16 @@
  *   2. 역할: 이미 생성 된, 단품의 리스트를 수정할 수 있고(삭제불가), 단품을 추가할 수 있다
  */
 
-module Fragment = %relay(`
-  fragment UpdateProductOptionListAdminFragment on Product {
-    productOptions(first: 20)
-      @connection(key: "UpdateProductOptionsAdmin_productOptions") {
-      __id
-      edges {
-        node {
-          id
-          status
-          ...UpdateProductOptionAdminFragment
-        }
-      }
-    }
-  }
-`)
-
 open ReactHookForm
 let formName = "product-options"
 
 @react.component
-let make = (~query, ~productDisplayName, ~isCourierAvailable) => {
-  let {productOptions: {edges, __id: connectionId}} = Fragment.use(query)
+let make = (
+  ~productDisplayName,
+  ~isCourierAvailable,
+  ~options: UpdateProductOptionsAdminFragment_graphql.Types.fragment_productOptions,
+) => {
+  let {edges, __id: connectionId} = options
 
   let (applyAll, setApplyAll) = React.Uncurried.useState(_ => false)
 

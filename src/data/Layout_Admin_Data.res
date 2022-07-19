@@ -1,3 +1,12 @@
+@module("../../public/assets/navi-dashboard.svg")
+external naviDashboardIcon: string = "default"
+@module("../../public/assets/navi-order.svg")
+external naviOrderIcon: string = "default"
+@module("../../public/assets/navi-product.svg")
+external naviProductIcon: string = "default"
+@module("../../public/assets/navi-user.svg")
+external naviUserIcon: string = "default"
+
 module Item = {
   type rec t =
     | Root({title: string, anchor: anchor, icon: React.element, children: array<t>})
@@ -17,13 +26,13 @@ module Item = {
     Root({
       title: `대시 보드`,
       anchor: {url: "/admin/dashboard", target: #_self}, // fs 원래대로
-      icon: <IconNaviDashboard width="1.25rem" height="1.25rem" fill="#262626" />,
+      icon: <img src=naviDashboardIcon />,
       children: [],
     }),
     Root({
       title: `상품`,
       anchor: {url: "/admin/products", target: #_self},
-      icon: <IconNaviProduct height="1.25rem" width="1.25rem" fill="#262626" />,
+      icon: <img src=naviProductIcon />,
       children: [
         Sub({
           title: `상품 등록`,
@@ -45,7 +54,7 @@ module Item = {
     Root({
       title: `주문 배송`,
       anchor: {url: "/admin/orders", target: #_self},
-      icon: <IconNaviOrder height="1.25rem" width="1.25rem" fill="#262626" />,
+      icon: <img src=naviOrderIcon />,
       children: [
         Sub({
           title: `주문서 조회`,
@@ -141,7 +150,7 @@ module Item = {
     Root({
       title: `회원`,
       anchor: {url: "/admin/farmer-users", target: #_self},
-      icon: <IconNaviUser height="1.25rem" width="1.25rem" fill="#262626" />,
+      icon: <img src=naviUserIcon />,
       children: [
         Sub({
           title: `생산자 사용자 조회`,

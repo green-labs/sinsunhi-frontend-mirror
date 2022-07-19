@@ -6,6 +6,7 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Badge_User_Transaction_Admin from "./Badge_User_Transaction_Admin.mjs";
 import * as Buyer_Cash_Refund_Button_Admin from "./Buyer_Cash_Refund_Button_Admin.mjs";
 import * as Buyer_Transaction_Detail_Button_Admin from "./Buyer_Transaction_Detail_Button_Admin.mjs";
+import * as Buyer_Interested_Item_Category_Button_Admin from "./Buyer_Interested_Item_Category_Button_Admin.mjs";
 
 function formatDate(d) {
   return Locale.DateTime.formatFromUTC(new Date(d), "yyyy/MM/dd HH:mm:ss");
@@ -14,7 +15,7 @@ function formatDate(d) {
 function User_Admin_Buyer$Item$Table(Props) {
   var user = Props.user;
   return React.createElement("li", {
-              className: "grid grid-cols-8-admin-users-buyer text-gray-700"
+              className: "grid grid-cols-11-admin-users-buyer text-gray-700"
             }, React.createElement("div", {
                   className: "px-4 py-2"
                 }, user.name), React.createElement("div", {
@@ -45,6 +46,16 @@ function User_Admin_Buyer$Item$Table(Props) {
                     }, Belt_Option.getWithDefault(user.address, "")), React.createElement("span", {
                       className: "block"
                     }, Belt_Option.getWithDefault(user.businessRegistrationNumber, ""))), React.createElement("div", {
+                  className: "px-4 py-2"
+                }, Belt_Option.mapWithDefault(user.selfReportedBusinessSectors, "", (function (bs) {
+                        return bs.join(", ");
+                      }))), React.createElement("div", {
+                  className: "px-4 py-2"
+                }, Belt_Option.getWithDefault(user.selfReportedSalesBin, "")), React.createElement("div", {
+                  className: "px-4 py-2"
+                }, React.createElement(Buyer_Interested_Item_Category_Button_Admin.make, {
+                      itemIds: user.interestedItemCategoryIds
+                    })), React.createElement("div", {
                   className: "px-4 py-2"
                 }, Belt_Option.getWithDefault(user.manager, "-")), React.createElement("div", {
                   className: "px-4 py-2"

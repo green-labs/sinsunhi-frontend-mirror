@@ -5,16 +5,24 @@ import * as IconSise from "../components/svgs/IconSise.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as IconNaviUser from "../components/svgs/IconNaviUser.mjs";
-import * as IconNaviOrder from "../components/svgs/IconNaviOrder.mjs";
-import * as IconNaviProduct from "../components/svgs/IconNaviProduct.mjs";
 import Format from "date-fns/format";
 import * as IconNaviBulkSale from "../components/svgs/IconNaviBulkSale.mjs";
 import SetDate from "date-fns/setDate";
-import * as IconNaviDashboard from "../components/svgs/IconNaviDashboard.mjs";
 import * as IconDownloadCenter from "../components/svgs/IconDownloadCenter.mjs";
 import * as IconNaviSettlement from "../components/svgs/IconNaviSettlement.mjs";
 import EndOfMonth from "date-fns/endOfMonth";
+import NaviUserSvg from "../../public/assets/navi-user.svg";
+import NaviOrderSvg from "../../public/assets/navi-order.svg";
+import NaviProductSvg from "../../public/assets/navi-product.svg";
+import NaviDashboardSvg from "../../public/assets/navi-dashboard.svg";
+
+var naviDashboardIcon = NaviDashboardSvg;
+
+var naviOrderIcon = NaviOrderSvg;
+
+var naviProductIcon = NaviProductSvg;
+
+var naviUserIcon = NaviUserSvg;
 
 var defaultQueryParams = {};
 
@@ -26,10 +34,8 @@ var items = [
       url: "/admin/dashboard",
       target: "_self"
     },
-    icon: React.createElement(IconNaviDashboard.make, {
-          height: "1.25rem",
-          width: "1.25rem",
-          fill: "#262626"
+    icon: React.createElement("img", {
+          src: naviDashboardIcon
         }),
     children: []
   },
@@ -40,10 +46,8 @@ var items = [
       url: "/admin/products",
       target: "_self"
     },
-    icon: React.createElement(IconNaviProduct.make, {
-          height: "1.25rem",
-          width: "1.25rem",
-          fill: "#262626"
+    icon: React.createElement("img", {
+          src: naviProductIcon
         }),
     children: [
       {
@@ -82,10 +86,8 @@ var items = [
       url: "/admin/orders",
       target: "_self"
     },
-    icon: React.createElement(IconNaviOrder.make, {
-          height: "1.25rem",
-          width: "1.25rem",
-          fill: "#262626"
+    icon: React.createElement("img", {
+          src: naviOrderIcon
         }),
     children: [
       {
@@ -217,10 +219,8 @@ var items = [
       url: "/admin/farmer-users",
       target: "_self"
     },
-    icon: React.createElement(IconNaviUser.make, {
-          height: "1.25rem",
-          width: "1.25rem",
-          fill: "#262626"
+    icon: React.createElement("img", {
+          src: naviUserIcon
         }),
     children: [
       {
@@ -297,7 +297,11 @@ var Item = {
 };
 
 export {
+  naviDashboardIcon ,
+  naviOrderIcon ,
+  naviProductIcon ,
+  naviUserIcon ,
   Item ,
   
 }
-/* items Not a pure module */
+/* naviDashboardIcon Not a pure module */

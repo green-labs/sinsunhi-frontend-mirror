@@ -1,3 +1,6 @@
+@module("../../../public/assets/dropdown.svg")
+external dropdownIcon: string = "default"
+
 module BalanceView = {
   @react.component
   let make = (~balance, ~credit, ~maxExpiryDays, ~rate) => {
@@ -136,7 +139,7 @@ module Notice = {
             <RadixUI.Accordian.Trigger className=%twc("mt-4 accordian-trigger")>
               <div className=%twc("flex items-center")>
                 <div className=%twc("text-sm underline")> {text->React.string} </div>
-                <IconDropdown height="16" width="16" className=%twc("accordian-icon") />
+                <img src=dropdownIcon className=%twc("accordian-icon") />
               </div>
             </RadixUI.Accordian.Trigger>
           </RadixUI.Accordian.Header>

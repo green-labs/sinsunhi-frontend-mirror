@@ -1,3 +1,6 @@
+@module("../../../public/assets/input-check.svg")
+external inputCheckIcon: string = "default"
+
 @react.component
 let make = (~id=?, ~name=?, ~checked=?, ~onChange=?, ~disabled=?) => {
   let style = switch disabled {
@@ -18,7 +21,7 @@ let make = (~id=?, ~name=?, ~checked=?, ~onChange=?, ~disabled=?) => {
     <input type_="checkbox" ?id ?name className=%twc("hidden") ?checked ?onChange ?disabled />
     <label htmlFor={id->Option.getWithDefault("")} className=style>
       {checked->Option.mapWithDefault(React.null, checked' =>
-        checked' ? <IconInputCheck height="12" width="14" fill="#FFF" /> : React.null
+        checked' ? <img src=inputCheckIcon /> : React.null
       )}
     </label>
   </>
@@ -61,7 +64,7 @@ module Uncontrolled = {
         PeerStyles.default ++
         PeerStyles.checked ++
         PeerStyles.disabled}>
-        <IconInputCheck height="12" width="14" fill="#FFF" />
+        <img src=inputCheckIcon />
       </label>
     </>
   }

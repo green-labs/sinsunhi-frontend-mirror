@@ -23,7 +23,6 @@ import * as Hooks from "react-relay/hooks";
 import * as Product_Summary_Admin from "../../components/Product_Summary_Admin.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Add_ProductOption_Admin from "../../components/Add_ProductOption_Admin.mjs";
-import * as IconInEqualitySignRight from "../../components/svgs/IconInEqualitySignRight.mjs";
 import * as Product_Option_Each_Admin from "../../components/Product_Option_Each_Admin.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
@@ -33,6 +32,10 @@ import * as Update_ProductOption_List_Admin from "../../components/Update_Produc
 import * as UpdateProductOptionsAdminQuery_graphql from "../../__generated__/UpdateProductOptionsAdminQuery_graphql.mjs";
 import * as UpdateProductOptionsAdminFragment_graphql from "../../__generated__/UpdateProductOptionsAdminFragment_graphql.mjs";
 import * as UpdateProductOptionsAdminMutation_graphql from "../../__generated__/UpdateProductOptionsAdminMutation_graphql.mjs";
+import InequalitySignRightSvg from "../../../public/assets/inequality-sign-right.svg";
+import * as UpdateProductOptionsAdminProductTypeFragment_graphql from "../../__generated__/UpdateProductOptionsAdminProductTypeFragment_graphql.mjs";
+
+var inequalitySignRightIcon = InequalitySignRightSvg;
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
   var data = Hooks.useLazyLoadQuery(UpdateProductOptionsAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables)), {
@@ -132,10 +135,39 @@ function useOpt(opt_fRef) {
               }), data);
 }
 
+var Fragment_productOptionStatus_decode = UpdateProductOptionsAdminFragment_graphql.Utils.productOptionStatus_decode;
+
+var Fragment_productOptionStatus_fromString = UpdateProductOptionsAdminFragment_graphql.Utils.productOptionStatus_fromString;
+
 var Fragment = {
+  productOptionStatus_decode: Fragment_productOptionStatus_decode,
+  productOptionStatus_fromString: Fragment_productOptionStatus_fromString,
   Types: undefined,
   use: use$1,
   useOpt: useOpt
+};
+
+function use$2(fRef) {
+  var data = Hooks.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fRef);
+  return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionsAdminProductTypeFragment_graphql.Internal.convertFragment, data);
+}
+
+function useOpt$1(opt_fRef) {
+  var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
+  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
+  return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
+                if (rawFragment !== undefined) {
+                  return UpdateProductOptionsAdminProductTypeFragment_graphql.Internal.convertFragment(rawFragment);
+                }
+                
+              }), data);
+}
+
+var ProductTypeFragment = {
+  Types: undefined,
+  use: use$2,
+  useOpt: useOpt$1
 };
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
@@ -163,7 +195,7 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
             });
 }
 
-function use$2(param) {
+function use$3(param) {
   var match = Hooks.useMutation(UpdateProductOptionsAdminMutation_graphql.node);
   var mutate = match[0];
   return [
@@ -217,6 +249,8 @@ var Mutation_make_createProductOptionCostInput = UpdateProductOptionsAdminMutati
 
 var Mutation_make_updateProductOptionInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionInput;
 
+var Mutation_make_updateProductOptionCostInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionCostInput;
+
 var Mutation_makeVariables = UpdateProductOptionsAdminMutation_graphql.Utils.makeVariables;
 
 var Mutation = {
@@ -234,10 +268,11 @@ var Mutation = {
   make_createProductOptionInput: Mutation_make_createProductOptionInput,
   make_createProductOptionCostInput: Mutation_make_createProductOptionCostInput,
   make_updateProductOptionInput: Mutation_make_updateProductOptionInput,
+  make_updateProductOptionCostInput: Mutation_make_updateProductOptionCostInput,
   makeVariables: Mutation_makeVariables,
   Types: undefined,
   commitMutation: commitMutation,
-  use: use$2
+  use: use$3
 };
 
 function submit_encode(v) {
@@ -418,9 +453,10 @@ function nonEmptyString(str) {
 
 function makeUpdateOption(option) {
   var name$p = option.name;
-  var match = option.operationStatus;
+  var match = option.isFreeShipping;
+  var match$1 = option.operationStatus;
   var tmp;
-  switch (match) {
+  switch (match$1) {
     case /* SALE */0 :
         tmp = "SALE";
         break;
@@ -443,6 +479,9 @@ function makeUpdateOption(option) {
           id: option.id,
           memo: Belt_Option.keep(option.memo, nonEmptyString),
           optionName: name$p !== undefined && name$p !== "" ? name$p : option.autoGenName,
+          productOptionCost: {
+            isFreeShipping: match ? true : false
+          },
           status: tmp
         };
 }
@@ -482,6 +521,7 @@ function makeCreateOption(productNodeId, option) {
                 return String(prim);
               })), Belt_Option.map(match[5], Select_Product_Option_Unit.Size.toString), true, undefined);
   }
+  var match$1 = option.isFreeShipping;
   return {
           countPerPackageMax: Belt_Option.map(Belt_Option.keep(option.each, (function (param) {
                       return option.showEach;
@@ -533,6 +573,7 @@ function makeCreateOption(productNodeId, option) {
           productOptionCost: {
             contractType: contractTypeEncode(option.cost.costType),
             deliveryCost: Belt_Option.getWithDefault(option.cost.deliveryCost, 0),
+            isFreeShipping: match$1 ? true : false,
             rawCost: option.cost.rawCost,
             workingCost: option.cost.workingCost
           },
@@ -550,9 +591,8 @@ function Update_ProductOptions_Admin$Title(Props) {
                   className: "flex items-center gap-1 text-text-L1 text-sm"
                 }, React.createElement("span", {
                       className: "font-bold"
-                    }, "상품 조회·수정"), React.createElement(IconInEqualitySignRight.make, {
-                      width: "16",
-                      height: "16"
+                    }, "상품 조회·수정"), React.createElement("img", {
+                      src: inequalitySignRightIcon
                     }), React.createElement("span", undefined, "단품 수정")), React.createElement("h1", {
                   className: "text-text-L1 text-xl font-bold"
                 }, "[" + productDisplayName + "] 상품의 단품 수정"));
@@ -582,7 +622,9 @@ var Bottom = {
 function Update_ProductOptions_Admin$Presenter(Props) {
   var query = Props.query;
   var queryData = use$1(query);
+  var productType = use$2(query);
   var router = Router.useRouter();
+  var productOptions = queryData.productOptions;
   var productDisplayName = queryData.displayName;
   var productNodeId = queryData.id;
   var match = ReactToastNotifications.useToasts();
@@ -595,7 +637,7 @@ function Update_ProductOptions_Admin$Presenter(Props) {
         return /* Hide */1;
       });
   var setShowInitialize = match$2[1];
-  var match$3 = use$2(undefined);
+  var match$3 = use$3(undefined);
   var mutate = match$3[0];
   var methods = ReactHookForm$1.useForm({
         mode: "onChange"
@@ -666,61 +708,67 @@ function Update_ProductOptions_Admin$Presenter(Props) {
                             });
                 }), param);
   };
-  return React.createElement(ReactHookForm.Provider.make, {
-              children: null,
-              methods: methods
-            }, React.createElement("form", {
-                  onSubmit: methods.handleSubmit(onSubmit)
-                }, React.createElement("div", {
-                      className: "max-w-gnb-panel overflow-auto bg-div-shape-L1 min-h-screen"
-                    }, React.createElement(Update_ProductOptions_Admin$Title, {
-                          productDisplayName: productDisplayName
-                        }), React.createElement(Product_Summary_Admin.make, {
-                          query: queryData.fragmentRefs
-                        }), React.createElement("section", {
-                          className: "p-7 mt-4 mx-4 mb-20 bg-white rounded shadow-gl"
-                        }, React.createElement(Update_ProductOption_List_Admin.make, {
-                              query: queryData.fragmentRefs,
-                              productDisplayName: productDisplayName,
-                              isCourierAvailable: queryData.isCourierAvailable
-                            }))), React.createElement(Update_ProductOptions_Admin$Bottom, {
-                      onReset: handleReset
-                    })), React.createElement(Dialog.make, {
-                  isShow: match$2[0],
-                  children: React.createElement("p", {
-                        className: "text-gray-500 text-center whitespace-pre-wrap"
-                      }, "단품 등록 페이지를", React.createElement("br", undefined), "초기화 하시겠습니까?"),
-                  onCancel: (function (param) {
-                      return setShowInitialize(function (param) {
-                                  return /* Hide */1;
-                                });
-                    }),
-                  onConfirm: (function (param) {
-                      reset(undefined);
-                      trigger("");
-                      return setShowInitialize(function (param) {
-                                  return /* Hide */1;
-                                });
-                    }),
-                  textOnCancel: "닫기",
-                  textOnConfirm: "초기화",
-                  kindOfConfirm: /* Negative */1,
-                  boxStyle: "text-center rounded-2xl"
-                }), React.createElement(Dialog.make, {
-                  isShow: match$1[0],
-                  children: React.createElement("p", {
-                        className: "text-gray-500 text-center whitespace-pre-wrap"
-                      }, "단품정보가 수정되었습니다."),
-                  onCancel: (function (param) {
-                      setShowUpdateSuccess(function (param) {
-                            return /* Hide */1;
-                          });
-                      router.reload(router.pathname);
-                      
-                    }),
-                  textOnCancel: "확인",
-                  boxStyle: "text-center rounded-2xl"
-                }));
+  if (productType.NAME === "UnselectedUnionMember") {
+    return React.createElement("div", undefined, "지원하지 않은 상품 타입 입니다");
+  } else if (productOptions !== undefined) {
+    return React.createElement(ReactHookForm.Provider.make, {
+                children: null,
+                methods: methods
+              }, React.createElement("form", {
+                    onSubmit: methods.handleSubmit(onSubmit)
+                  }, React.createElement("div", {
+                        className: "max-w-gnb-panel overflow-auto bg-div-shape-L1 min-h-screen"
+                      }, React.createElement(Update_ProductOptions_Admin$Title, {
+                            productDisplayName: productDisplayName
+                          }), React.createElement(Product_Summary_Admin.make, {
+                            query: queryData.fragmentRefs
+                          }), React.createElement("section", {
+                            className: "p-7 mt-4 mx-4 mb-20 bg-white rounded shadow-gl"
+                          }, React.createElement(Update_ProductOption_List_Admin.make, {
+                                productDisplayName: productDisplayName,
+                                isCourierAvailable: Belt_Option.getWithDefault(queryData.isCourierAvailable, false),
+                                options: productOptions
+                              }))), React.createElement(Update_ProductOptions_Admin$Bottom, {
+                        onReset: handleReset
+                      })), React.createElement(Dialog.make, {
+                    isShow: match$2[0],
+                    children: React.createElement("p", {
+                          className: "text-gray-500 text-center whitespace-pre-wrap"
+                        }, "단품 등록 페이지를", React.createElement("br", undefined), "초기화 하시겠습니까?"),
+                    onCancel: (function (param) {
+                        return setShowInitialize(function (param) {
+                                    return /* Hide */1;
+                                  });
+                      }),
+                    onConfirm: (function (param) {
+                        reset(undefined);
+                        trigger("");
+                        return setShowInitialize(function (param) {
+                                    return /* Hide */1;
+                                  });
+                      }),
+                    textOnCancel: "닫기",
+                    textOnConfirm: "초기화",
+                    kindOfConfirm: /* Negative */1,
+                    boxStyle: "text-center rounded-2xl"
+                  }), React.createElement(Dialog.make, {
+                    isShow: match$1[0],
+                    children: React.createElement("p", {
+                          className: "text-gray-500 text-center whitespace-pre-wrap"
+                        }, "단품정보가 수정되었습니다."),
+                    onCancel: (function (param) {
+                        setShowUpdateSuccess(function (param) {
+                              return /* Hide */1;
+                            });
+                        router.reload(router.pathname);
+                        
+                      }),
+                    textOnCancel: "확인",
+                    boxStyle: "text-center rounded-2xl"
+                  }));
+  } else {
+    return null;
+  }
 }
 
 var Presenter = {
@@ -768,8 +816,10 @@ function Update_ProductOptions_Admin(Props) {
 var make = Update_ProductOptions_Admin;
 
 export {
+  inequalitySignRightIcon ,
   Query ,
   Fragment ,
+  ProductTypeFragment ,
   Mutation ,
   Form ,
   contractTypeEncode ,
@@ -787,4 +837,4 @@ export {
   make ,
   
 }
-/* react Not a pure module */
+/* inequalitySignRightIcon Not a pure module */

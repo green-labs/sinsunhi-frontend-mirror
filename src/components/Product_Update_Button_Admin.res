@@ -2,6 +2,15 @@ open RadixUI
 open Webapi
 module Select = Select_Product_Update_Admin
 
+@module("../../public/assets/checkbox-checked.svg")
+external checkboxCheckedIcon: string = "default"
+
+@module("../../public/assets/checkbox-unchecked.svg")
+external checkboxUncheckedIcon: string = "default"
+
+@module("../../public/assets/edit.svg")
+external editIcon: string = "default"
+
 module CutOffAndMemo = {
   @react.component
   let make = (~product: CustomHooks.Products.product) => {
@@ -93,7 +102,7 @@ module CutOffAndMemo = {
     <Dialog.Root onOpenChange=prefill>
       <Dialog.Overlay className=%twc("dialog-overlay") />
       <Dialog.Trigger className=%twc("block text-left mb-1 underline focus:outline-none")>
-        <IconEdit height="20" width="20" />
+        <img src=editIcon />
       </Dialog.Trigger>
       <Dialog.Content className=%twc("dialog-content overflow-y-auto")>
         <div className=%twc("p-5")>
@@ -138,7 +147,7 @@ module CutOffAndMemo = {
             <div
               className=%twc("flex items-center cursor-pointer w-fit")
               onClick={_ => setIsUpdateByProductId(.prev => !prev)}>
-              {isUpdateByProductId ? <IconCheckBoxChecked /> : <IconCheckBoxUnChecked />}
+              <img src={isUpdateByProductId ? checkboxCheckedIcon : checkboxUncheckedIcon} />
               <p className=%twc("ml-2")>
                 {j`[${product.productName}] 상품에 동일하게 적용하기`->React.string}
               </p>
@@ -251,7 +260,7 @@ module Crop = {
     <Dialog.Root onOpenChange=init>
       <Dialog.Overlay className=%twc("dialog-overlay") />
       <Dialog.Trigger className=%twc("block text-left mb-1 underline focus:outline-none")>
-        <IconEdit height="20" width="20" />
+        <img src=editIcon />
       </Dialog.Trigger>
       <Dialog.Content className=%twc("dialog-content overflow-y-auto text-sm")>
         <div className=%twc("p-5")>
@@ -464,7 +473,7 @@ module Detail = {
     <Dialog.Root onOpenChange=prefill>
       <Dialog.Overlay className=%twc("dialog-overlay") />
       <Dialog.Trigger className=%twc("block text-left mb-1 underline focus:outline-none")>
-        <IconEdit height="20" width="20" />
+        <img src=editIcon />
       </Dialog.Trigger>
       <Dialog.Content className=%twc("dialog-content overflow-y-auto text-sm")>
         <div className=%twc("p-5")>

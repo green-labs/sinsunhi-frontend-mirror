@@ -62,7 +62,7 @@ module AgreementItem = {
       <div> <label htmlFor=id> children </label> </div>
       {href->Option.mapWithDefault(React.null, href =>
         <div className=%twc("ml-auto")>
-          <a href> <IconArrow height="20" width="20" fill={"#B2B2B2"} /> </a>
+          <a href> <IconArrow height="20" width="20" stroke={"#B2B2B2"} /> </a>
         </div>
       )}
     </div>

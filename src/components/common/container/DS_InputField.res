@@ -1,3 +1,6 @@
+@module("../../../../public/assets/searchbar-clear.svg")
+external searchBarClear: string = "default"
+
 module Convert = {
   let toOnlyNumber = value =>
     value->Js.String2.replaceByRe(%re("/[^0-9]/g"), "")->Js.String2.replaceByRe(%re("/^[0]/g"), "")
@@ -105,7 +108,7 @@ module Line1 = {
               ? <button
                   onClick={_ => fnClear->Option.mapWithDefault((), fn => fn())}
                   className=%twc("h-[30px]")>
-                  <IconSearchBarClear height="16" width="16" />
+                  <img src=searchBarClear />
                 </button>
               : React.null}
           </div>

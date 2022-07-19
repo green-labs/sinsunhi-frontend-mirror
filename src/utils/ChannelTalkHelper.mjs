@@ -8,6 +8,7 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ChannelTalk from "../bindings/ChannelTalk.mjs";
 import * as CustomHooks from "./CustomHooks.mjs";
+import * as DeviceDetect from "../bindings/DeviceDetect.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as Hooks from "react-relay/hooks";
@@ -156,26 +157,28 @@ function useBoot(param) {
 
 function use$1(viewModeOpt, trackData, param) {
   var viewMode = viewModeOpt !== undefined ? viewModeOpt : /* PcAndMobile */0;
-  var dimension = CustomHooks.UserAgent.useDimension(undefined);
   React.useEffect((function () {
+          var match = DeviceDetect.detectDevice(undefined);
           switch (viewMode) {
             case /* PcAndMobile */0 :
                 ChannelTalk.showChannelButton(undefined);
                 break;
             case /* PcOnly */1 :
-                if (dimension === /* PC */1) {
+                if (match !== 1) {
+                  
+                } else {
                   ChannelTalk.showChannelButton(undefined);
                 }
                 break;
             case /* MobileOnly */2 :
-                if (dimension === /* Mobile */2) {
+                if (match >= 2) {
                   ChannelTalk.showChannelButton(undefined);
                 }
                 break;
             
           }
           return ChannelTalk.hideChannelButton;
-        }), [dimension]);
+        }), []);
   React.useEffect((function () {
           if (trackData !== undefined) {
             window.ChannelIO("track", trackData.eventName, trackData.eventProperty);

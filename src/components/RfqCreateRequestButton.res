@@ -101,7 +101,7 @@ module Button = {
 
       let deleteDraftRequest = id => {
         deleteRequest(
-          ~variables={id: id, connections: [data.rfqRequests.__id]},
+          ~variables={id, connections: [data.rfqRequests.__id]},
           ~onCompleted=(_, _) => createNewRequest(),
           ~onError=_ => createToast(`작성 중이던 견적 삭제에 실패했습니다.`),
           (),
@@ -200,7 +200,10 @@ let make = (~className, ~buttonText=`최저가 견적받기`, ~position=?) => {
 
   let handleClickLoginButton = () => {
     let {makeWithDict, toString} = module(Webapi.Url.URLSearchParams)
-    let redirectUrl = [("redirect", router.asPath)]->Js.Dict.fromArray->makeWithDict->toString
+    let redirectUrl = switch router.query->Js.Dict.get("redirect") {
+    | Some(redirect) => [("redirect", redirect)]->Js.Dict.fromArray->makeWithDict->toString
+    | None => [("redirect", router.asPath)]->Js.Dict.fromArray->makeWithDict->toString
+    }
     router->Next.Router.push(`/buyer/signin?${redirectUrl}`)
   }
 

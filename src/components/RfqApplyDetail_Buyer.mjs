@@ -99,78 +99,80 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                         title1: "찾으시는 상품의",
                         title2: "등급을 선택해주세요"
                       })
-                }), React.createElement(DS_Tab.LeftTab.Root.make, {
-                  children: isDomestic ? React.createElement(DS_Tab.LeftTab.Item.make, {
-                          children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                label: "국내산",
-                                selected: madeIn === "KR",
-                                className: "text-sm",
-                                onClick: (function (param) {
-                                    return setMadeIn(function (param) {
-                                                return "KR";
-                                              });
-                                  })
-                              })
-                        }) : (
-                      isBeef ? React.createElement(React.Fragment, undefined, React.createElement(DS_Tab.LeftTab.Item.make, {
-                                  children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                        label: "미국산",
-                                        selected: madeIn === "US",
-                                        className: "text-sm",
-                                        onClick: (function (param) {
-                                            return setMadeIn(function (param) {
-                                                        return "US";
-                                                      });
-                                          })
-                                      })
-                                }), React.createElement(DS_Tab.LeftTab.Item.make, {
-                                  children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                        label: "호주산",
-                                        selected: madeIn === "AU",
-                                        className: "text-sm",
-                                        onClick: (function (param) {
-                                            return setMadeIn(function (param) {
-                                                        return "AU";
-                                                      });
-                                          })
-                                      })
-                                }), React.createElement(DS_Tab.LeftTab.Item.make, {
-                                  children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                        label: "캐나다산",
-                                        selected: madeIn === "CA",
-                                        className: "text-sm",
-                                        onClick: (function (param) {
-                                            return setMadeIn(function (param) {
-                                                        return "CA";
-                                                      });
-                                          })
-                                      })
-                                }), React.createElement(DS_Tab.LeftTab.Item.make, {
-                                  children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                        label: "뉴질랜드산",
-                                        selected: madeIn === "NZ",
-                                        className: "text-sm",
-                                        onClick: (function (param) {
-                                            return setMadeIn(function (param) {
-                                                        return "NZ";
-                                                      });
-                                          })
-                                      })
-                                })) : React.createElement(DS_Tab.LeftTab.Item.make, {
+                }), React.createElement("article", {
+                  className: "px-5"
+                }, React.createElement(DS_Tab.LeftTab.Root.make, {
+                      children: isDomestic ? React.createElement(DS_Tab.LeftTab.Item.make, {
                               children: React.createElement(DS_Button.Chip.TextSmall1.make, {
-                                    label: "수입산",
-                                    selected: madeIn === "OTHER",
+                                    label: "국내산",
+                                    selected: madeIn === "KR",
                                     className: "text-sm",
                                     onClick: (function (param) {
                                         return setMadeIn(function (param) {
-                                                    return "OTHER";
+                                                    return "KR";
                                                   });
                                       })
                                   })
-                            })
-                    ),
-                  className: "mt-8 space-x-0"
-                }), React.createElement(DS_ListItem.Normal1.Root.make, {
+                            }) : (
+                          isBeef ? React.createElement(React.Fragment, undefined, React.createElement(DS_Tab.LeftTab.Item.make, {
+                                      children: React.createElement(DS_Button.Chip.TextSmall1.make, {
+                                            label: "미국산",
+                                            selected: madeIn === "US",
+                                            className: "text-sm",
+                                            onClick: (function (param) {
+                                                return setMadeIn(function (param) {
+                                                            return "US";
+                                                          });
+                                              })
+                                          })
+                                    }), React.createElement(DS_Tab.LeftTab.Item.make, {
+                                      children: React.createElement(DS_Button.Chip.TextSmall1.make, {
+                                            label: "호주산",
+                                            selected: madeIn === "AU",
+                                            className: "text-sm",
+                                            onClick: (function (param) {
+                                                return setMadeIn(function (param) {
+                                                            return "AU";
+                                                          });
+                                              })
+                                          })
+                                    }), React.createElement(DS_Tab.LeftTab.Item.make, {
+                                      children: React.createElement(DS_Button.Chip.TextSmall1.make, {
+                                            label: "캐나다산",
+                                            selected: madeIn === "CA",
+                                            className: "text-sm",
+                                            onClick: (function (param) {
+                                                return setMadeIn(function (param) {
+                                                            return "CA";
+                                                          });
+                                              })
+                                          })
+                                    }), React.createElement(DS_Tab.LeftTab.Item.make, {
+                                      children: React.createElement(DS_Button.Chip.TextSmall1.make, {
+                                            label: "뉴질랜드산",
+                                            selected: madeIn === "NZ",
+                                            className: "text-sm",
+                                            onClick: (function (param) {
+                                                return setMadeIn(function (param) {
+                                                            return "NZ";
+                                                          });
+                                              })
+                                          })
+                                    })) : React.createElement(DS_Tab.LeftTab.Item.make, {
+                                  children: React.createElement(DS_Button.Chip.TextSmall1.make, {
+                                        label: "수입산",
+                                        selected: madeIn === "OTHER",
+                                        className: "text-sm",
+                                        onClick: (function (param) {
+                                            return setMadeIn(function (param) {
+                                                        return "OTHER";
+                                                      });
+                                          })
+                                      })
+                                })
+                        ),
+                      className: "mt-8 space-x-0"
+                    })), React.createElement(DS_ListItem.Normal1.Root.make, {
                   children: React.createElement(RfqApplyDetail_Buyer$Grade$List, {
                         edges: edges,
                         madeIn: madeIn,
@@ -216,13 +218,13 @@ function RfqApplyDetail_Buyer$OrderAmount(Props) {
                         unit: "kg",
                         errorMessage: Belt_Option.mapWithDefault(weightKg, undefined, (function (x) {
                                 return Belt_Option.mapWithDefault(Belt_Option.flatMap(Garter_Array.first(x.split(".")), Belt_Int.fromString), undefined, (function (x) {
-                                              if (x < 100) {
-                                                return "최소 주문량은 " + String(100) + "kg 입니다.";
+                                              if (x < 50) {
+                                                return "최소 주문량은 " + String(50) + "kg 입니다.";
                                               }
                                               
                                             }));
                               })),
-                        underLabel: "최소 주문량 " + String(100) + "kg",
+                        underLabel: "최소 주문량 " + String(50) + "kg",
                         underLabelType: "ton",
                         maxLength: 6
                       }),

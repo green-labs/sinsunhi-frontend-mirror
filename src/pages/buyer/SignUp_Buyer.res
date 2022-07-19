@@ -19,7 +19,7 @@ let make = () => {
   module FormFields = SignUp_Buyer_Form.FormFields
   module Form = SignUp_Buyer_Form.Form
 
-  let {useRouter, push, pushAs} = module(Next.Router)
+  let {useRouter, push} = module(Next.Router)
   let router = useRouter()
   let {addToast} = ReactToastNotifications.useToasts()
 
@@ -75,15 +75,36 @@ let make = () => {
       ~urlSearchParams,
       ~onSuccess={
         res => {
+          // 회원가입 -> 로그인 후 redirect 쿼리파라미터(redirect=...)가 있는 경우 이동 시킨다.
+          let redirectUrlWithWelcome =
+            router.query
+            ->Js.Dict.get("redirect")
+            ->Option.map(url => {
+              if url->Js.String2.includes("?") {
+                `${url}&welcome`
+              } else {
+                `${url}?welcome`
+              }
+            })
+            ->Option.getWithDefault("/?welcome")
+
           switch FetchHelper.responseToken_decode(res) {
-          | Ok(res') => {
-              LocalStorageHooks.AccessToken.set(res'.token)
-              LocalStorageHooks.RefreshToken.set(res'.refreshToken)
+          | Ok(res) => {
+              LocalStorageHooks.AccessToken.set(res.token)
+              LocalStorageHooks.RefreshToken.set(res.refreshToken)
               ChannelTalkHelper.bootWithProfile()
 
+              // 로그인 성공 시, 웹뷰에 Braze 푸시 기기 토큰 등록을 위한 userId를 postMessage 합니다.
+              switch res.token->CustomHooks.Auth.decodeJwt->CustomHooks.Auth.user_decode {
+              | Ok(user) =>
+                Global.Window.ReactNativeWebView.PostMessage.storeBrazeUserId(user.id->Int.toString)
+              | Error(_) => ()
+              }
+
               // 회원가입 완료 -> 홈 진입 시에 서베이 출력용 쿼리 삽입
-              router->pushAs("/buyer?welcome", "/buyer")
+              Redirect.setHref(redirectUrlWithWelcome)
             }
+
           | Error(_) => router->push("/buyer/signin")
           }
         }
@@ -130,6 +151,15 @@ let make = () => {
                 )
                 // 회원가입 이후 자동 로그인 처리
                 signIn(formApi)
+
+                // GTM
+                let businessRegistrationNumber =
+                  state.values->FormFields.get(FormFields.BusinessRegistrationNumber)
+                DataGtm.push({
+                  "method": "normal",
+                  "business_number": businessRegistrationNumber,
+                  "marketing": agreedTerms->Belt.Set.String.has("marketing"),
+                })
               }
             },
             ~onFailure={_ => setShowErr(._ => Dialog.Show)},
@@ -177,6 +207,7 @@ let make = () => {
         setEmailExisted(._ => existed)
         FormFields.Email->form.setFieldValue(email', ~shouldValidate=true, ())
       }
+
     | None => {
         setEmailExisted(._ => existed)
         FormFields.Email->form.setFieldValue("", ~shouldValidate=true, ())
@@ -200,6 +231,7 @@ let make = () => {
           (),
         )
       }
+
     | None => {
         setBusinessNumberStatus(._ => Unverified)
         FormFields.BusinessRegistrationNumber->form.setFieldValue("", ~shouldValidate=true, ())
@@ -228,8 +260,26 @@ let make = () => {
 
   let onSubmit = ReactEvents.interceptingHandler(_ => form.submit())
 
+  // 이미 로그인 된 경우 redirect 하기
+  let user = CustomHooks.Auth.use()
+  React.useEffect1(_ => {
+    switch user {
+    | LoggedIn(user') =>
+      switch user'.role {
+      | Buyer => router->push("/")
+      | Seller => router->push("/seller")
+      | Admin => router->push("/admin")
+      }
+    | NotLoggedIn | Unknown => ()
+    }
+
+    None
+  }, [user])
+
   <>
-    <Next.Head> <title> {`회원가입 - 신선하이`->React.string} </title> </Next.Head>
+    <Next.Head>
+      <title> {`회원가입 - 신선하이`->React.string} </title>
+    </Next.Head>
     <div
       className=%twc(
         "container mx-auto max-w-lg min-h-screen flex flex-col justify-center items-center pb-24 relative"
@@ -255,7 +305,7 @@ let make = () => {
                 name="password"
                 type_={showPwd ? "text" : "password"}
                 size=Input.Large
-                placeholder=`비밀번호 입력 (영문, 숫자 조합 6~15자)`
+                placeholder={`비밀번호 입력 (영문, 숫자 조합 6~15자)`}
                 onChange={FormFields.Password->form.handleChange->ReForm.Helpers.handleChange}
                 error={FormFields.Password->Form.ReSchema.Field->form.getFieldError}
               />
@@ -285,7 +335,7 @@ let make = () => {
                 name="company-name"
                 type_="text"
                 size=Input.Large
-                placeholder=`회사명 입력`
+                placeholder={`회사명 입력`}
                 onChange={FormFields.Name->form.handleChange->ReForm.Helpers.handleChange}
                 error={FormFields.Name->Form.ReSchema.Field->form.getFieldError}
               />
@@ -301,7 +351,7 @@ let make = () => {
                 name="manager-name"
                 type_="text"
                 size=Input.Large
-                placeholder=`담당자명 입력`
+                placeholder={`담당자명 입력`}
                 onChange={FormFields.Manager->form.handleChange->ReForm.Helpers.handleChange}
                 error={FormFields.Manager->Form.ReSchema.Field->form.getFieldError}
               />
@@ -352,7 +402,11 @@ let make = () => {
                 </span>
               </div>
               <Next.Link href={makeTermUrl("a9f5ca47-9dda-4a34-929c-60e1ce1dfbe5")}>
-                <a target="_blank"> <IconArrow height="20" width="20" fill="#DDDDDD" /> </a>
+                <a target="_blank">
+                  <IconArrow
+                    height="18" width="18" strokeWidth="0" fill="#DDDDDD" stroke="#DDDDDD"
+                  />
+                </a>
               </Next.Link>
             </div>
             // 개인정보 수집·이용(필수)
@@ -370,7 +424,11 @@ let make = () => {
                 </span>
               </div>
               <Next.Link href={makeTermUrl("7d920089-18ba-4ca6-a806-f83ec8f6c335")}>
-                <a target="_blank"> <IconArrow height="20" width="20" fill="#DDDDDD" /> </a>
+                <a target="_blank">
+                  <IconArrow
+                    height="18" width="18" strokeWidth="0" fill="#DDDDDD" stroke="#DDDDDD"
+                  />
+                </a>
               </Next.Link>
             </div>
             // 맞춤 소싱 제안 등 마케팅 정보 수신(선택)
@@ -387,7 +445,11 @@ let make = () => {
                 </span>
               </div>
               <Next.Link href={makeTermUrl("4f08bfe5-9ba7-4d1d-ba34-04281414ee00")}>
-                <a target="_blank"> <IconArrow height="20" width="20" fill="#DDDDDD" /> </a>
+                <a target="_blank">
+                  <IconArrow
+                    height="18" width="18" strokeWidth="0" fill="#DDDDDD" stroke="#DDDDDD"
+                  />
+                </a>
               </Next.Link>
             </div>
             // Submit
@@ -412,7 +474,7 @@ let make = () => {
     <Dialog
       isShow=showErr
       onCancel={_ => setShowErr(._ => Dialog.Hide)}
-      textOnCancel=`닫기`
+      textOnCancel={`닫기`}
       boxStyle=%twc("rounded-xl")>
       <p className=%twc("text-text-L1 text-center whitespace-pre-wrap")>
         {`입력한 정보를 확인해주세요.\n\n이미 가입하신 경우\n비밀번호 찾기를 통해 로그인하실 수 있으며\n관련 문의사항은 채널톡으로 문의해주세요.`->React.string}

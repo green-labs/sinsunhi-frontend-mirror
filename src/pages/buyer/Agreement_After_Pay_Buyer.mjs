@@ -96,7 +96,7 @@ function Agreement_After_Pay_Buyer$AgreementItem(Props) {
                                   }, React.createElement(IconArrow.make, {
                                         height: "20",
                                         width: "20",
-                                        fill: "#B2B2B2"
+                                        stroke: "#B2B2B2"
                                       })));
                   })));
 }

@@ -85,63 +85,64 @@ function Web_Order_Payment_Info_Buyer(Props) {
   var deliveryType = ReactHookForm.useWatch({
         name: Web_Order_Buyer_Form.names.deliveryType
       });
+  var optionPrice = Belt_Option.getWithDefault(Belt_Option.flatMap(fragments.node, (function (option) {
+              return option.price;
+            })), 0);
   var match = fragments.node;
   var match$1;
   if (match !== undefined) {
-    var deliveryCost = match.productOptionCost.deliveryCost;
     if (deliveryType !== undefined) {
+      var match$2 = match.productOptionCost;
+      var deliveryCost = match$2.deliveryCost;
       var price = match.price;
       var decode = Web_Order_Buyer_Form.deliveryType_decode(deliveryType);
       if (decode.TAG === /* Ok */0) {
         var decode$1 = decode._0;
-        match$1 = decode$1 === "PARCEL" ? [
-            Math.imul(Belt_Option.getWithDefault(price, 0) - deliveryCost | 0, quantity),
-            Math.imul(deliveryCost, quantity),
-            false
-          ] : (
-            decode$1 === "SELF" ? [
-                Math.imul(Belt_Option.getWithDefault(price, 0), quantity),
-                0,
-                false
+        match$1 = decode$1 === "PARCEL" ? (
+            match$2.isFreeShipping ? [
+                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+                "무료"
               ] : [
-                Math.imul(Belt_Option.getWithDefault(price, 0), quantity),
-                0,
-                true
+                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0) - deliveryCost | 0, quantity)) + "원",
+                Locale.Int.show(undefined, Math.imul(deliveryCost, quantity)) + "원"
+              ]
+          ) : (
+            decode$1 === "SELF" ? [
+                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+                "0원"
+              ] : [
+                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+                "협의"
               ]
           );
       } else {
         match$1 = [
-          0,
-          0,
-          false
+          "-",
+          "-"
         ];
       }
     } else {
       match$1 = [
-        0,
-        Math.imul(deliveryCost, quantity),
-        false
+        "-",
+        "-"
       ];
     }
   } else {
     match$1 = [
-      0,
-      0,
-      false
+      "-",
+      "-"
     ];
   }
-  var totalDeliveryCost = match$1[1];
-  var totalProductPrice = match$1[0];
-  var match$2 = CustomHooks.Scroll.useScrollObserver({
+  var match$3 = CustomHooks.Scroll.useScrollObserver({
         TAG: /* Px */1,
         _0: 50.0
       }, undefined);
-  var scrollY = match$2[3];
-  var match$3 = React.useState(function () {
+  var scrollY = match$3[3];
+  var match$4 = React.useState(function () {
         return false;
       });
-  var setIsFixedOff = match$3[1];
-  var match$4 = Belt_Option.mapWithDefault(Caml_option.nullable_to_opt(document.getElementsByTagName("body").item(0)), [
+  var setIsFixedOff = match$4[1];
+  var match$5 = Belt_Option.mapWithDefault(Caml_option.nullable_to_opt(document.getElementsByTagName("body").item(0)), [
         0,
         0
       ], (function (a) {
@@ -150,8 +151,8 @@ function Web_Order_Payment_Info_Buyer(Props) {
                   window.innerHeight
                 ];
         }));
-  var innerHeight = match$4[1];
-  var scrollHeight = match$4[0];
+  var innerHeight = match$5[1];
+  var scrollHeight = match$5[0];
   React.useEffect((function () {
           setIsFixedOff(function (param) {
                 return ((scrollHeight - innerHeight | 0) - (scrollY | 0) | 0) < 140;
@@ -165,7 +166,7 @@ function Web_Order_Payment_Info_Buyer(Props) {
   return React.createElement("div", {
               className: Cx.cx([
                     "rounded-sm bg-white p-7 w-full xl:w-fit",
-                    match$3[0] ? "xl:absolute xl:bottom-0" : "xl:fixed"
+                    match$4[0] ? "xl:absolute xl:bottom-0" : "xl:fixed"
                   ])
             }, React.createElement("span", {
                   className: "text-lg xl:text-xl text-enabled-L1 font-bold"
@@ -178,21 +179,21 @@ function Web_Order_Payment_Info_Buyer(Props) {
                           className: "text-text-L2"
                         }, "총 상품금액"), React.createElement("span", {
                           className: "text-base font-bold xl:text-sm xl:font-normal"
-                        }, Locale.Int.show(undefined, totalProductPrice) + "원")), React.createElement("li", {
+                        }, match$1[0])), React.createElement("li", {
                       key: "delivery-cost",
                       className: "flex justify-between items-center"
                     }, React.createElement("span", {
                           className: "text-text-L2"
                         }, "배송비"), React.createElement("span", {
                           className: "text-base font-bold xl:text-sm xl:font-normal"
-                        }, match$1[2] ? "협의" : Locale.Int.show(undefined, totalDeliveryCost) + "원")), React.createElement("li", {
+                        }, match$1[1])), React.createElement("li", {
                       key: "total-price",
                       className: "flex justify-between items-center"
                     }, React.createElement("span", {
                           className: "text-text-L2"
                         }, "총 결제금액"), React.createElement("span", {
                           className: "text-xl xl:text-lg text-primary font-bold"
-                        }, Locale.Int.show(undefined, totalProductPrice + totalDeliveryCost | 0) + "원"))), React.createElement("div", {
+                        }, Locale.Int.show(undefined, Math.imul(optionPrice, quantity)) + "원"))), React.createElement("div", {
                   className: "mt-7 mb-10 text-center text-text-L1"
                 }, React.createElement("span", undefined, "주문 내용을 확인했으며, 정보 제공에 동의합니다.")), React.createElement("button", {
                   className: "w-full h-14 flex justify-center items-center bg-primary text-lg text-white rounded-xl",

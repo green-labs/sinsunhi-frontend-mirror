@@ -6,6 +6,8 @@
  *    이벤트 배너 정 보를 Swiper 형태로 표현합니다.
  *
  */
+@module("../../public/assets/arrow-white-left.svg")
+external arrowWhiteLeftIcon: string = "default"
 
 module Fragment = %relay(`
   fragment ShopMainMainBannerBuyerFragment on Query {
@@ -19,7 +21,6 @@ module Fragment = %relay(`
     }
   }
 `)
-
 module PC = {
   module PrevBtn = {
     @react.component
@@ -27,7 +28,7 @@ module PC = {
       let handleClick = _ => onClick->Option.map(onClick' => onClick'())->ignore
       <button
         onClick={handleClick} className=%twc("absolute z-[5] left-3 top-1/2 translate-y-[-50%]")>
-        <IconArrowWhite width="40" height="56" />
+        <img src=arrowWhiteLeftIcon />
       </button>
     }
   }
@@ -39,7 +40,7 @@ module PC = {
       <button
         onClick={handleClick}
         className=%twc("absolute rotate-180 z-[5] right-3 top-1/2 translate-y-[-50%]")>
-        <IconArrowWhite width="40" height="56" />
+        <img src=arrowWhiteLeftIcon />
       </button>
     }
   }

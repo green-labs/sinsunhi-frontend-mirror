@@ -28,7 +28,7 @@ let default = (~props) => {
 
     let {makeWithArray, makeWithDict, toString, get} = module(Webapi.Url.URLSearchParams)
 
-    let redirectUrl = router.query->makeWithDict->get("redirect")->Option.getWithDefault("/buyer")
+    let redirectUrl = router.query->makeWithDict->get("redirect")->Option.getWithDefault("/")
 
     let urlSearchParams =
       [("grant-type", "password"), ("username", email), ("password", password)]
@@ -47,8 +47,19 @@ let default = (~props) => {
               LocalStorageHooks.RefreshToken.set(res.refreshToken)
               ChannelTalkHelper.bootWithProfile()
 
-              router->push(redirectUrl)
+              // 로그인 성공 시, 웹뷰에 Braze 푸시 기기 토큰 등록을 위한 userId를 postMessage 합니다.
+              switch res.token->CustomHooks.Auth.decodeJwt->CustomHooks.Auth.user_decode {
+              | Ok(user) =>
+                Global.Window.ReactNativeWebView.PostMessage.storeBrazeUserId(user.id->Int.toString)
+              | Error(_) => ()
+              }
+
+              Redirect.setHref(redirectUrl)
+
+              // GTM
+              DataGtm.push({"login_status": true, "method": "normal"})
             }
+
           | Error(_) => setShowForError(._ => Dialog.Show)
           }
         }
@@ -65,6 +76,9 @@ let default = (~props) => {
           } else {
             setShowForError(._ => Dialog.Show)
           }
+
+          // GTM
+          DataGtm.push({"login_status": false, "method": "normal"})
         }
       },
     )->ignore
@@ -142,10 +156,9 @@ let default = (~props) => {
     switch user {
     | LoggedIn(user') =>
       switch user'.role {
-      | Buyer => router->push("/buyer")
+      | Buyer => router->push("/")
       | Seller => router->push("/seller")
-      // 어드민의 경우, 되돌리지 않고 접근하게 한다.
-      | Admin => ()
+      | Admin => router->push("/admin")
       }
     | NotLoggedIn | Unknown => ()
     }
@@ -157,7 +170,9 @@ let default = (~props) => {
   ChannelTalkHelper.Hook.use()
 
   <>
-    <Next.Head> <title> {j`바이어 로그인 - 신선하이`->React.string} </title> </Next.Head>
+    <Next.Head>
+      <title> {j`바이어 로그인 - 신선하이`->React.string} </title>
+    </Next.Head>
     <div
       className=%twc(
         "container mx-auto max-w-lg min-h-buyer relative flex flex-col justify-center pb-20"
@@ -172,7 +187,7 @@ let default = (~props) => {
               type_="email"
               name="email"
               size=Input.Large
-              placeholder=`이메일`
+              placeholder={`이메일`}
               value={form.values->FormFields.get(FormFields.Email)}
               onChange={FormFields.Email->form.handleChange->ReForm.Helpers.handleChange}
               error={FormFields.Email->Form.ReSchema.Field->form.getFieldError}
@@ -183,7 +198,7 @@ let default = (~props) => {
               type_="password"
               name="password"
               size=Input.Large
-              placeholder=`비밀번호`
+              placeholder={`비밀번호`}
               onChange={FormFields.Password->form.handleChange->ReForm.Helpers.handleChange}
               error={FormFields.Password->Form.ReSchema.Field->form.getFieldError}
               className=%twc("block mt-3")
@@ -224,21 +239,18 @@ let default = (~props) => {
                 disabled={form.isSubmitting || !isFormFilled()}>
                 {`로그인`->React.string}
               </button>
-              <p className=%twc("p-4 mt-8 rounded-xl border border-gray-100")>
-                <span className=%twc("block text-gray-500 font-semibold")>
-                  {`* 첫 발주이신가요?`->React.string}
-                </span>
-                <span className=%twc("text-gray-500")>
-                  {`가입하신 이메일로 비밀번호 설정하는 방법을 보내드렸습니다. 이메일 확인 부탁드립니다.`->React.string}
-                </span>
-              </p>
             </div>
           </form>
-          <div className=%twc("pt-7")>
+          <RadixUI.Separator.Root className=%twc("h-px bg-div-border-L2 my-7") />
+          <div>
             <button
-              className={%twc("w-full h-14 flex justify-center items-center bg-gray-gl rounded-xl")}
+              className={%twc(
+                "w-full h-14 flex justify-center items-center rounded-xl border-[1px] border-green-500"
+              )}
               onClick={_ => router->push("/buyer/signup")}>
-              <span className=%twc("text-enabled-L1")> {`회원가입`->React.string} </span>
+              <span className=%twc("text-green-500 font-bold")>
+                {`바이어 회원가입`->React.string}
+              </span>
             </button>
           </div>
         </div>

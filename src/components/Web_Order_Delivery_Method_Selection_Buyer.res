@@ -6,7 +6,11 @@ module Fragment = %relay(`
         fragment WebOrderDeliveryMethodSelectionBuyerFragment on Query
         @argumentDefinitions(productNodeId: { type: "ID!" }) {
           productNode: node(id: $productNodeId) {
-            ... on Product {
+            ... on NormalProduct {
+              isCourierAvailable
+            }
+        
+            ... on QuotableProduct {
               isCourierAvailable
             }
           }
@@ -66,7 +70,7 @@ let make = (~query, ~quantity) => {
     <div className=%twc("flex gap-2")>
       {{
         switch productNode {
-        | Some(#Product({isCourierAvailable})) =>
+        | Some(#NormalProduct({isCourierAvailable})) =>
           switch isCourierAvailable {
           | true => [
               ("parcel", `택배배송`),

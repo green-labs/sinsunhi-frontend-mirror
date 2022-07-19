@@ -213,44 +213,9 @@ var Form = {
   submit_decode: submit_decode
 };
 
-function encodeQualifiedNameValue(query) {
-  return {
-          c1: Belt_Option.mapWithDefault(Belt_Array.get(query, 0), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c2: Belt_Option.mapWithDefault(Belt_Array.get(query, 1), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c3: Belt_Option.mapWithDefault(Belt_Array.get(query, 2), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c4: Belt_Option.mapWithDefault(Belt_Array.get(query, 3), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                })),
-          c5: Belt_Option.mapWithDefault(Belt_Array.get(query, 4), /* NotSelected */0, (function (d) {
-                  return /* Selected */{
-                          value: d.id,
-                          label: d.name
-                        };
-                }))
-        };
-}
-
 var Skeleton = Caml_module.init_mod([
       "Select_Product_Category.res",
-      62,
+      28,
       32
     ], {
       TAG: /* Module */0,
@@ -307,7 +272,7 @@ Caml_module.update_mod({
 
 var Category = Caml_module.init_mod([
       "Select_Product_Category.res",
-      121,
+      87,
       32
     ], {
       TAG: /* Module */0,
@@ -319,7 +284,7 @@ var Category = Caml_module.init_mod([
 
 var $$Selection = Caml_module.init_mod([
       "Select_Product_Category.res",
-      155,
+      121,
       27
     ], {
       TAG: /* Module */0,
@@ -499,7 +464,7 @@ function Select_Product_Category(Props) {
     "카테고리 선택",
     "대분류선택",
     "부류선택",
-    "작물선택",
+    "품목선택",
     "품종선택"
   ];
   return React.createElement(Category.make, {
@@ -518,7 +483,6 @@ var make = Select_Product_Category;
 export {
   Query ,
   Form ,
-  encodeQualifiedNameValue ,
   Skeleton ,
   Category ,
   $$Selection ,

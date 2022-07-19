@@ -179,7 +179,7 @@ function Shipment_Detail_Button_Seller$OrderList$Pagination(Props) {
                 }, React.createElement(IconArrow.make, {
                       height: "20",
                       width: "20",
-                      fill: isDisabledLeft ? "#CCCCCC" : "#727272",
+                      stroke: isDisabledLeft ? "#CCCCCC" : "#727272",
                       className: "relative"
                     })), Belt_Array.map(Belt_Array.range(start, end), (function (i) {
                     return React.createElement("li", {
@@ -200,7 +200,7 @@ function Shipment_Detail_Button_Seller$OrderList$Pagination(Props) {
                 }, React.createElement(IconArrow.make, {
                       height: "20",
                       width: "20",
-                      fill: isDisabledRight ? "#CCCCCC" : "#727272",
+                      stroke: isDisabledRight ? "#CCCCCC" : "#727272",
                       className: "relative"
                     })));
 }

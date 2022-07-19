@@ -322,6 +322,9 @@ function useSearchInput(param) {
         case /* QUOTABLE */3 :
             tmp$2 = ["QUOTABLE"];
             break;
+        case /* MATCHING */4 :
+            tmp$2 = ["MATCHING"];
+            break;
         
       }
     } else {

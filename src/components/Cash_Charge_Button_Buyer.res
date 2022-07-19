@@ -1,5 +1,20 @@
 open ReactHookForm
 
+@module("../../public/assets/checkbox-checked.svg")
+external checkboxCheckedIcon: string = "default"
+
+@module("../../public/assets/checkbox-unchecked.svg")
+external checkboxUncheckedIcon: string = "default"
+
+@module("../../public/assets/radio-default.svg")
+external radioDefaultIcon: string = "default"
+
+@module("../../public/assets/radio-filled.svg")
+external radioFilledIcon: string = "default"
+
+@module("../../public/assets/notice.svg")
+external noticeIcon: string = "default"
+
 @val @scope("window")
 external jsfPay: Dom.element => unit = "jsf__pay"
 
@@ -140,7 +155,7 @@ let make = (~hasRequireTerms, ~buttonClassName, ~buttonText) => {
   }
   let errorElement =
     <>
-      <IconNotice width="1.25rem" height="1.25rem" fill="none" />
+      <img src=noticeIcon />
       <div className=%twc("ml-1.5 text-sm")>
         {j`최소 결제금액(1,000원 이상)을 입력해주세요.`->React.string}
       </div>
@@ -222,7 +237,7 @@ let make = (~hasRequireTerms, ~buttonClassName, ~buttonText) => {
                     {
                       amount: requestPaymentTossPaymentsResult.amount,
                       orderId: requestPaymentTossPaymentsResult.orderId,
-                      orderName: `신선캐시 ${requestPaymentTossPaymentsResult.amount->Int.toString}`,
+                      orderName: `신선하이 ${requestPaymentTossPaymentsResult.amount->Int.toString}`,
                       customerName: requestPaymentTossPaymentsResult.customerName,
                       validHours: data'.paymentMethod->tossPaymentsValidHours,
                       successUrl: `${origin}/buyer/toss-payments/success?payment-id=${requestPaymentTossPaymentsResult.paymentId->Int.toString}`, // TODO
@@ -367,9 +382,7 @@ let make = (~hasRequireTerms, ~buttonClassName, ~buttonText) => {
                       v->Controller.OnChangeArg.value->onChange
                     }}
                     className=%twc("flex items-center cursor-pointer gap-2 text-sm")>
-                    {value == v
-                      ? <IconRadioFilled width="1.25rem" height="1.25rem" fill="none" />
-                      : <IconRadioDefault width="1.25rem" height="1.25rem" fill="none" />}
+                    <img src={value == v ? radioFilledIcon : radioDefaultIcon} />
                     {name->React.string}
                   </button>
                 )
@@ -382,15 +395,15 @@ let make = (~hasRequireTerms, ~buttonClassName, ~buttonText) => {
               <button
                 className=%twc("flex items-center cursor-pointer")
                 onClick={_ => setRequireTerms(.prev => !prev)}>
-                {requireTerms
-                  ? <IconCheckBoxChecked width="20" height="20" />
-                  : <IconCheckBoxUnChecked width="20" height="20" />}
+                <img src={requireTerms ? checkboxCheckedIcon : checkboxUncheckedIcon} />
                 <span className=%twc("ml-2 text-sm")>
                   {j`신선하이 이용약관 동의(필수)`->React.string}
                 </span>
               </button>
               <a href={"/terms"} target="_blank">
-                <IconArrow width="20" height="20" fill="#B2B2B2" className=%twc("cursor-pointer") />
+                <IconArrow
+                  width="20" height="20" stroke="#B2B2B2" className=%twc("cursor-pointer")
+                />
               </a>
             </div>
           | false => React.null

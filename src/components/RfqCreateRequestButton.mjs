@@ -559,10 +559,14 @@ function RfqCreateRequestButton(Props) {
     return React.createElement("button", {
                 className: className,
                 onClick: (function (param) {
-                    var redirectUrl = new URLSearchParams(Js_dict.fromArray([[
-                                  "redirect",
-                                  router.asPath
-                                ]])).toString();
+                    var redirect = Js_dict.get(router.query, "redirect");
+                    var redirectUrl = redirect !== undefined ? new URLSearchParams(Js_dict.fromArray([[
+                                    "redirect",
+                                    redirect
+                                  ]])).toString() : new URLSearchParams(Js_dict.fromArray([[
+                                    "redirect",
+                                    router.asPath
+                                  ]])).toString();
                     router.push("/buyer/signin?" + redirectUrl);
                     
                   })

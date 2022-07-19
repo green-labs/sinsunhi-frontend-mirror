@@ -11,13 +11,13 @@ type status =
 let stringifyStatus = s => s->status_encode->Js.Json.decodeString->Option.getWithDefault("")
 let displayStatus = s =>
   switch s {
-  | APPLIED => `접수중`
-  | UNDER_DISCUSSION => `협의중`
-  | ON_SITE_MEETING_SCHEDULED => `현장미팅예정`
-  | SAMPLE_REQUESTED => `샘플요청`
-  | SAMPLE_REVIEWING => `품평회 진행중`
-  | REJECTED => `보류`
-  | CONFIRMED => `판매진행`
+  | APPLIED => `신청 접수 중`
+  | UNDER_DISCUSSION => `판매 협의 중`
+  | ON_SITE_MEETING_SCHEDULED => `현장 미팅 예정`
+  | SAMPLE_REQUESTED => `샘플 요청`
+  | SAMPLE_REVIEWING => `품평회 진행 중`
+  | REJECTED => `추후 판매`
+  | CONFIRMED => `판매 확정`
   | WITHDRAWN => `고객 취소`
   }
 

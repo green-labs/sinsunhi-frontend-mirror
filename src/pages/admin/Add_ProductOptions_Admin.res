@@ -15,10 +15,20 @@ module Query = %relay(`
 module Fragment = %relay(`
   fragment AddProductOptionsAdminFragment on Product {
     displayName
-    productOptions {
-      totalCount
+  
+    ... on NormalProduct {
+      productOptions {
+        totalCount
+      }
+      isCourierAvailable
     }
-    isCourierAvailable
+  
+    ... on QuotableProduct {
+      productOptions {
+        totalCount
+      }
+      isCourierAvailable
+    }
   }
 `)
 
@@ -105,6 +115,10 @@ let makeCreateOption: (
     deliveryCost: option.cost.deliveryCost->Option.getWithDefault(0),
     rawCost: option.cost.rawCost,
     workingCost: option.cost.workingCost,
+    isFreeShipping: switch option.isFreeShipping {
+    | FREE => true
+    | NOTFREE => false
+    },
   },
   grade: option.grade->Option.keep(nonEmptyString),
   cutOffTime: option.cutOffTime->Option.keep(nonEmptyString)->noneToDefaultCutOffTime,
@@ -193,11 +207,7 @@ let makeCreateOption: (
 module Presenter = {
   @react.component
   let make = (~query, ~productId: string) => {
-    let {
-      displayName: productDisplayName,
-      productOptions: {totalCount},
-      isCourierAvailable,
-    } = Fragment.use(query)
+    let {displayName: productDisplayName, productOptions, isCourierAvailable} = Fragment.use(query)
     let router = Next.Router.useRouter()
 
     let (mutate, _) = Mutation.use()
@@ -265,6 +275,8 @@ module Presenter = {
       }
     }
 
+    let totalCount = productOptions->Option.mapWithDefault(0, po => po.totalCount)
+
     React.useEffect1(_ => {
       // 단품이 이미 있는 경우 단품 수정페이지로 이동시킵니다.
       if totalCount > 0 {
@@ -290,7 +302,9 @@ module Presenter = {
             // 단품 정보
             <section className=%twc("p-7 mt-4 mx-4 mb-7 bg-white rounded shadow-gl")>
               <Add_ProductOptions_List_Admin
-                productDisplayName formName={Form.name} isCourierAvailable
+                productDisplayName
+                formName={Form.name}
+                isCourierAvailable={isCourierAvailable->Option.getWithDefault(false)}
               />
             </section>
           </div>

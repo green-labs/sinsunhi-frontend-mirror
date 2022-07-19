@@ -1,4 +1,8 @@
 open RadixUI
+
+@module("../../public/assets/edit.svg")
+external editIcon:string = "default"
+
 module Mutation = %relay(`
   mutation BulkSaleProducerMemoUpdateButtonMutation(
     $id: ID!
@@ -76,7 +80,7 @@ let make = (~applicationId, ~memoData) => {
   <Dialog.Root>
     <Dialog.Overlay className=%twc("dialog-overlay") />
     <Dialog.Trigger className=%twc("inline-flex")>
-      <IconEdit width="20" height="20" className=%twc("mr-1") />
+      <img src=editIcon className=%twc("mr-1") />
     </Dialog.Trigger>
     <Dialog.Content className=%twc("dialog-content-memo overflow-y-auto rounded-xl")>
       <section className=%twc("p-5")>
