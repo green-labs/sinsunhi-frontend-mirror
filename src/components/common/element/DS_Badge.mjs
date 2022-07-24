@@ -30,6 +30,5 @@ var Medium = {
 export {
   colorStyle ,
   Medium ,
-  
 }
 /* react Not a pure module */

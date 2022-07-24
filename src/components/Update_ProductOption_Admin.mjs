@@ -14,12 +14,12 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import Format from "date-fns/format";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ErrorMessage from "@hookform/error-message";
 import * as Add_ProductOption_Admin from "./Add_ProductOption_Admin.mjs";
@@ -38,13 +38,13 @@ var checkboxCheckedIcon = CheckboxCheckedSvg;
 var checkboxUncheckedIcon = CheckboxUncheckedSvg;
 
 function use(fRef) {
-  var data = Hooks.useFragment(UpdateProductOptionAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateProductOptionAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateProductOptionAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -74,6 +74,7 @@ var Fragment = {
   weightUnit_decode: Fragment_weightUnit_decode,
   weightUnit_fromString: Fragment_weightUnit_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -176,9 +177,9 @@ function Update_ProductOption_Admin$Each(Props) {
                       className: "block"
                     }, "입수 정보"), React.createElement("div", {
                       className: "px-3 py-2 border border-border-default-L1 rounded-lg h-9 bg-disabled-L3 w-36 leading-4.5"
-                    }, Belt_Option.mapWithDefault(weight, "", (function (prim) {
+                    }, "" + Belt_Option.mapWithDefault(weight, "", (function (prim) {
                             return String(prim);
-                          })) + "\n          " + Belt_Option.mapWithDefault(weightUnit, "", Select_Product_Option_Unit.Weight.toString)), React.createElement("div", undefined, React.createElement("div", {
+                          })) + "\n          " + Belt_Option.mapWithDefault(weightUnit, "", Select_Product_Option_Unit.Weight.toString) + ""), React.createElement("div", undefined, React.createElement("div", {
                           className: "px-3 py-2 border border-border-default-L1 rounded-lg h-9 focus:outline-none bg-disabled-L3 w-36"
                         }, Belt_Option.mapWithDefault(minNum, "", (function (prim) {
                                 return String(prim);
@@ -373,13 +374,13 @@ function submit_decode(v) {
 
 function makeInputNames(prefix) {
   return {
-          id: prefix + ".id",
-          name: prefix + ".name",
-          operationStatus: prefix + ".operation-status",
-          cutOffTime: prefix + ".cut-off-time",
-          memo: prefix + ".memo",
-          autoGenName: prefix + ".auto-generated-name",
-          isFreeShipping: prefix + ".is-free-shipping"
+          id: "" + prefix + ".id",
+          name: "" + prefix + ".name",
+          operationStatus: "" + prefix + ".operation-status",
+          cutOffTime: "" + prefix + ".cut-off-time",
+          memo: "" + prefix + ".memo",
+          autoGenName: "" + prefix + ".auto-generated-name",
+          isFreeShipping: "" + prefix + ".is-free-shipping"
         };
 }
 
@@ -575,13 +576,13 @@ var EditName = {
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(UpdateProductOptionAdminAutoGenNameFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateProductOptionAdminAutoGenNameFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionAdminAutoGenNameFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionAdminAutoGenNameFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateProductOptionAdminAutoGenNameFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -605,6 +606,7 @@ var Fragment$1 = {
   weightUnit_decode: Fragment_weightUnit_decode$1,
   weightUnit_fromString: Fragment_weightUnit_fromString$1,
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt$1
 };
@@ -759,7 +761,7 @@ function Update_ProductOption_Admin$EditStatus(Props) {
                           return React.createElement("div", undefined, React.createElement(Select_Product_Operation_Status.Base.make, {
                                           status: toStatus(match.value),
                                           onChange: (function (selected) {
-                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Operation_Status.Base.status_encode(selected)));
+                                              Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Operation_Status.Base.status_encode(selected)));
                                             }),
                                           forwardRef: match.ref,
                                           disabled: disabled
@@ -819,7 +821,7 @@ function Update_ProductOption_Admin$EditIsFreeShipping(Props) {
                           return React.createElement("div", undefined, React.createElement(Select_Product_Shipping_Type.make, {
                                           status: toStatus(match.value),
                                           onChange: (function (selected) {
-                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Shipping_Type.status_encode(selected)));
+                                              Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Shipping_Type.status_encode(selected)));
                                             }),
                                           forwardRef: match.ref,
                                           disabled: disabled
@@ -986,14 +988,13 @@ function Update_ProductOption_Admin(Props) {
   };
   var onClickApplyAll = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setApplyAll(function (prev) {
-                              return !prev;
-                            });
+                  setApplyAll(function (prev) {
+                        return !prev;
+                      });
                 }), param);
   };
   React.useLayoutEffect((function () {
           trigger(inputNames.id);
-          
         }), []);
   var tmp = {
     inputName: inputNames.cutOffTime,
@@ -1135,6 +1136,5 @@ export {
   EditCutOffTime ,
   EditMemo ,
   make ,
-  
 }
 /* checkboxCheckedIcon Not a pure module */

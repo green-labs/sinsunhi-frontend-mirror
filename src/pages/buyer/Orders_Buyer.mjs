@@ -273,16 +273,13 @@ function Orders_Buyer$Orders(Props) {
           setOrdersToCancel(function (param) {
                 
               });
-          
         }), [router.query]);
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var orders$p = CustomHooks.Orders.orders_decode(status._0);
     count = orders$p.TAG === /* Ok */0 ? String(orders$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   var handleOnCheckOrder = function (orderProductNo, e) {
     var checked = e.target.checked;
@@ -293,9 +290,9 @@ function Orders_Buyer$Orders(Props) {
                 });
     }
     var newOrdersToCancel$1 = Belt_SetString.remove(ordersToCancel, orderProductNo);
-    return setOrdersToCancel(function (param) {
-                return newOrdersToCancel$1;
-              });
+    setOrdersToCancel(function (param) {
+          return newOrdersToCancel$1;
+        });
   };
   var check = function (orderProductNo) {
     return Belt_SetString.has(ordersToCancel, orderProductNo);
@@ -320,9 +317,9 @@ function Orders_Buyer$Orders(Props) {
                     })), (function (order) {
                   return order.orderProductNo;
                 }))) : undefined;
-    return setOrdersToCancel(function (param) {
-                return allOrderProductNo;
-              });
+    setOrdersToCancel(function (param) {
+          return allOrderProductNo;
+        });
   };
   var countOfChecked = Belt_SetString.size(ordersToCancel);
   var cancelOrder = function (orders) {
@@ -332,7 +329,7 @@ function Orders_Buyer$Orders(Props) {
     Belt_Option.map(JSON.stringify({
               "order-product-numbers": orders
             }), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/cancel", body, 3, (function (res) {
+            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/cancel", body, 3, (function (res) {
                           var res$p = response_decode(res);
                           var result;
                           if (res$p.TAG === /* Ok */0) {
@@ -353,15 +350,14 @@ function Orders_Buyer$Orders(Props) {
                           setOrdersToCancel(function (param) {
                                 
                               });
-                          mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                          return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                         }), (function (param) {
-                          return setShowCancelError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowCancelError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   var isTotalSelected = Belt_Option.isNone(Js_dict.get(router.query, "status"));
   var isCreateSelected = Belt_Option.isSome(Belt_Option.keep(Js_dict.get(router.query, "status"), (function (status) {
@@ -379,7 +375,7 @@ function Orders_Buyer$Orders(Props) {
                                   className: "font-bold"
                                 }, "주문내역", React.createElement("span", {
                                       className: "ml-1 text-green-gl font-normal"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex flex-col lg:flex-row mt-4 lg:mt-0"
                                 }, React.createElement("div", {
                                       className: "flex items-center"
@@ -416,12 +412,12 @@ function Orders_Buyer$Orders(Props) {
                   isShow: match$2[0],
                   children: null,
                   onCancel: (function (param) {
-                      return setShowCancelConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
-                      return cancelOrder(Belt_SetString.toArray(ordersToCancel));
+                      cancelOrder(Belt_SetString.toArray(ordersToCancel));
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -438,9 +434,9 @@ function Orders_Buyer$Orders(Props) {
                   isShow: match$3[0],
                   children: null,
                   onCancel: (function (param) {
-                      return setShowNothingToCancel(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToCancel(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }, React.createElement("a", {
@@ -460,15 +456,15 @@ function Orders_Buyer$Orders(Props) {
                               if ((totalCount - updateCount | 0) > 0) {
                                 return React.createElement(React.Fragment, undefined, React.createElement("span", {
                                                 className: "font-bold"
-                                              }, String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 주문취소 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 주문취소 처리되지 못했습니다");
+                                              }, "" + String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 주문취소 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 주문취소 처리되지 못했습니다");
                               } else {
-                                return String(totalCount) + "개의 주문이 정상적으로 주문취소 처리되었습니다.";
+                                return "" + String(totalCount) + "개의 주문이 정상적으로 주문취소 처리되었습니다.";
                               }
                             }))),
                   onConfirm: (function (param) {
-                      return setShowCancelSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$6[0],
@@ -476,9 +472,9 @@ function Orders_Buyer$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문 취소에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowCancelError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -504,6 +500,5 @@ export {
   response_decode ,
   Orders ,
   make ,
-  
 }
 /* Env Not a pure module */

@@ -40,6 +40,5 @@ var make = OutOfService;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

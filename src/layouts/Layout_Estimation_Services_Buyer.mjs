@@ -49,6 +49,5 @@ var make = Layout_Estimation_Services_Buyer;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

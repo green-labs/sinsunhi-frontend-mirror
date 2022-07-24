@@ -5,6 +5,7 @@ import * as React from "react";
 import * as Helper from "../utils/Helper.mjs";
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as FetchHelper from "../utils/FetchHelper.mjs";
@@ -25,25 +26,25 @@ function Search_Crop_Cultivar(Props) {
   var value = Props.value;
   var onChange = Props.onChange;
   var handleLoadOptions = function (inputValue) {
-    return FetchHelper.fetchWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/category/search?type=" + decodeSearchType(type_) + "&query=" + inputValue, "", 3).then(function (result) {
-                var result$p = Belt_Result.map(CustomHooks.CropCategory.response_decode(result), (function (response$p) {
-                        return Belt_Array.map(response$p.data, (function (category) {
-                                      return /* Selected */{
-                                              value: String(category.id),
-                                              label: category.crop + "(" + category.cultivar + ")"
-                                            };
-                                    }));
-                      }));
-                if (result$p.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("작물/품종 검색 에러(디코딩 오류)"));
-                }
-                var categories = result$p._0;
-                if (categories.length !== 0) {
-                  return Promise.resolve(categories);
-                } else {
-                  return Promise.reject(Js_exn.raiseError("작물/품종 검색 결과 없음"));
-                }
-              });
+    return Js_promise.then_((function (result) {
+                  var result$p = Belt_Result.map(CustomHooks.CropCategory.response_decode(result), (function (response$p) {
+                          return Belt_Array.map(response$p.data, (function (category) {
+                                        return /* Selected */{
+                                                value: String(category.id),
+                                                label: "" + category.crop + "(" + category.cultivar + ")"
+                                              };
+                                      }));
+                        }));
+                  if (result$p.TAG !== /* Ok */0) {
+                    return Promise.reject(Js_exn.raiseError("작물/품종 검색 에러(디코딩 오류)"));
+                  }
+                  var categories = result$p._0;
+                  if (categories.length !== 0) {
+                    return Promise.resolve(categories);
+                  } else {
+                    return Promise.reject(Js_exn.raiseError("작물/품종 검색 결과 없음"));
+                  }
+                }), FetchHelper.fetchWithRetry(FetchHelper.getWithToken, "" + Env.restApiUrl + "/category/search?type=" + decodeSearchType(type_) + "&query=" + inputValue + "", "", 3));
   };
   return React.createElement(Async, {
               value: value,
@@ -79,6 +80,5 @@ var make = Search_Crop_Cultivar;
 export {
   decodeSearchType ,
   make ,
-  
 }
 /* Env Not a pure module */

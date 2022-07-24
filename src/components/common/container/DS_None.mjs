@@ -20,6 +20,5 @@ var Default = {
 
 export {
   Default ,
-  
 }
 /* react Not a pure module */

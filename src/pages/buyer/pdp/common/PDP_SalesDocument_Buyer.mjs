@@ -30,9 +30,9 @@ function PDP_SalesDocument_Buyer$MO(Props) {
                     user !== 0 ? React.createElement(React.Fragment, undefined, React.createElement("button", {
                                 className: btnStyle,
                                 onClick: (function (param) {
-                                    return setShowWarning(function (param) {
-                                                return /* Show */0;
-                                              });
+                                    setShowWarning(function (param) {
+                                          return /* Show */0;
+                                        });
                                   })
                               }, React.createElement(IconDownloadCenter.make, {
                                     width: "24",
@@ -46,12 +46,11 @@ function PDP_SalesDocument_Buyer$MO(Props) {
                                 cancelText: "취소",
                                 onConfirm: (function (param) {
                                     router.push("/buyer/signin");
-                                    
                                   }),
                                 onCancel: (function (param) {
-                                    return setShowWarning(function (param) {
-                                                return /* Hide */1;
-                                              });
+                                    setShowWarning(function (param) {
+                                          return /* Hide */1;
+                                        });
                                   }),
                                 children: React.createElement("div", {
                                       className: "w-full h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-gray-800"
@@ -96,9 +95,9 @@ function PDP_SalesDocument_Buyer$PC(Props) {
                     user !== 0 ? React.createElement(React.Fragment, undefined, React.createElement("button", {
                                 className: btnStyle,
                                 onClick: (function (param) {
-                                    return setShowWarning(function (param) {
-                                                return /* Show */0;
-                                              });
+                                    setShowWarning(function (param) {
+                                          return /* Show */0;
+                                        });
                                   })
                               }, React.createElement(IconDownloadCenter.make, {
                                     width: "24",
@@ -112,12 +111,11 @@ function PDP_SalesDocument_Buyer$PC(Props) {
                                 cancelText: "취소",
                                 onConfirm: (function (param) {
                                     router.push("/buyer/signin");
-                                    
                                   }),
                                 onCancel: (function (param) {
-                                    return setShowWarning(function (param) {
-                                                return /* Hide */1;
-                                              });
+                                    setShowWarning(function (param) {
+                                          return /* Hide */1;
+                                        });
                                   }),
                                 children: React.createElement("div", {
                                       className: "w-full h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-gray-800"
@@ -147,6 +145,5 @@ var PC = {
 export {
   MO ,
   PC ,
-  
 }
 /* react Not a pure module */

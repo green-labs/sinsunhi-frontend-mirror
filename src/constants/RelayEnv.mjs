@@ -28,7 +28,7 @@ function network(api) {
 }
 
 function environment(api) {
-  return RescriptRelay.Environment.make(network(api), RescriptRelay.Store.make(new RelayRuntime.RecordSource(undefined), 10, undefined, undefined), undefined, undefined, undefined, undefined, undefined);
+  return RescriptRelay.Environment.make(network(api), RescriptRelay.Store.make(new RelayRuntime.RecordSource(undefined), 10, undefined, undefined), undefined, undefined, undefined, undefined, undefined, undefined);
 }
 
 var envSinsunMarket = environment({
@@ -45,6 +45,5 @@ export {
   Graphql_error ,
   envSinsunMarket ,
   envFMBridge ,
-  
 }
 /* envSinsunMarket Not a pure module */

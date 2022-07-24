@@ -2,16 +2,17 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RfqCommon_RfqRequest_Query_graphql from "../../../__generated__/RfqCommon_RfqRequest_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqCommon_RfqRequest_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqCommon_RfqRequest_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -20,7 +21,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqCommon_RfqRequest_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqCommon_RfqRequest_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -38,38 +39,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqCommon_RfqRequest_Query_graphql.node, RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqCommon_RfqRequest_Query_graphql.node, RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqCommon_RfqRequest_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqCommon_RfqRequest_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqCommon_RfqRequest_Query_graphql.node, RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqCommon_RfqRequest_Query_graphql.node, RfqCommon_RfqRequest_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqCommon_RfqRequest_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqCommon_RfqRequest_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqCommon_RfqRequest_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqCommon_RfqRequest_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqCommon_RfqRequest_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -82,12 +82,10 @@ var Query_rfqRequestStatus_decode = RfqCommon_RfqRequest_Query_graphql.Utils.rfq
 
 var Query_rfqRequestStatus_fromString = RfqCommon_RfqRequest_Query_graphql.Utils.rfqRequestStatus_fromString;
 
-var Query_makeVariables = RfqCommon_RfqRequest_Query_graphql.Utils.makeVariables;
-
 var Query = {
   rfqRequestStatus_decode: Query_rfqRequestStatus_decode,
   rfqRequestStatus_fromString: Query_rfqRequestStatus_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -117,16 +115,11 @@ function RfqCommon$CheckBuyerRequestStatus(Props) {
   var router = Router.useRouter();
   var result = use$1(requestId);
   React.useEffect((function () {
-          if (result) {
-            if (result._0 === "DRAFT") {
-              
-            } else {
-              router.push("/buyer/rfq");
-            }
+          if (result && result._0 === "DRAFT") {
+            
           } else {
             router.push("/buyer/rfq");
           }
-          
         }), []);
   if (result && result._0 === "DRAFT") {
     return children;
@@ -143,6 +136,5 @@ var CheckBuyerRequestStatus = {
 
 export {
   CheckBuyerRequestStatus ,
-  
 }
 /* react Not a pure module */

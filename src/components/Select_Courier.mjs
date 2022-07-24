@@ -30,12 +30,11 @@ function Select_Courier(Props) {
                         return selected;
                       });
           }));
-    
   };
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "택배사 선택";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(courierCode, (function (courierCode$p) {
                     return Belt_Result.getWithDefault(Belt_Result.map(CustomHooks.Courier.response_decode(couriers), (function (couriers$p) {
@@ -46,8 +45,6 @@ function Select_Courier(Props) {
                   })), (function (courier) {
                 return courier.name;
               })), "택배사 선택");
-  } else {
-    courierName = "택배사 선택";
   }
   var tmp;
   tmp = typeof status === "number" ? (
@@ -90,6 +87,5 @@ var make = Select_Courier;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

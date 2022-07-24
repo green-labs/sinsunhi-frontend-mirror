@@ -22,9 +22,9 @@ function Order_Detail_Button_Buyer_Seller(Props) {
   var order = Props.order;
   var status = CustomHooks.Courier.use(undefined);
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(order.courierCode, (function (courierCode$p) {
                     return Belt_Result.getWithDefault(Belt_Result.map(CustomHooks.Courier.response_decode(couriers), (function (couriers$p) {
@@ -35,8 +35,6 @@ function Order_Detail_Button_Buyer_Seller(Props) {
                   })), (function (courier) {
                 return courier.name;
               })), "-");
-  } else {
-    courierName = "-";
   }
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -83,7 +81,7 @@ function Order_Detail_Button_Buyer_Seller(Props) {
                                     className: "p-3 bg-div-shape-L2 border-t sm:border-t-0"
                                   }, "결제금액"), React.createElement("div", {
                                     className: "p-3 border-t sm:border-t-0"
-                                  }, Locale.Float.show(undefined, order.productPrice * order.quantity, 0) + "원")), React.createElement("div", {
+                                  }, "" + Locale.Float.show(undefined, order.productPrice * order.quantity, 0) + "원")), React.createElement("div", {
                                 className: "grid grid-cols-2-detail"
                               }, React.createElement("div", {
                                     className: "p-3 bg-div-shape-L2"
@@ -125,7 +123,7 @@ function Order_Detail_Button_Buyer_Seller(Props) {
                                     className: "p-3 bg-div-shape-L2 border-t sm:border-t-0"
                                   }, "금액"), React.createElement("div", {
                                     className: "p-3 border-t sm:border-t-0"
-                                  }, Locale.Float.show(undefined, order.productPrice, 0) + "원"))), React.createElement("h3", {
+                                  }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원"))), React.createElement("h3", {
                             className: "mt-10 font-bold"
                           }, "배송정보"), React.createElement("section", {
                             className: "divide-y text-sm text-text-L2 mt-2 border-t border-b"
@@ -174,6 +172,5 @@ export {
   formatDate ,
   Converter$1 as Converter,
   make ,
-  
 }
 /* Converter Not a pure module */

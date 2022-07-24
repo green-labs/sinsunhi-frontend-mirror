@@ -47,6 +47,5 @@ var make = Order_Uncompleted;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

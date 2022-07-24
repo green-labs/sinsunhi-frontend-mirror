@@ -87,6 +87,5 @@ var make = User_List_Admin_Farmer;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

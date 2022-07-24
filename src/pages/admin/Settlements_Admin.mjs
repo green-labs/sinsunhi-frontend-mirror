@@ -31,23 +31,21 @@ function Settlements_Admin$Settlements(Props) {
       });
   var setShowErrorForNothingToDownload = match$2[1];
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var settlements$p = CustomHooks.Settlements.settlements_decode(status._0);
     count = settlements$p.TAG === /* Ok */0 ? String(settlements$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   var handleOnCheckSettlement = function (producerCode) {
-    return setProducerCodeToDownload(function (param) {
-                return producerCode;
-              });
+    setProducerCodeToDownload(function (param) {
+          return producerCode;
+        });
   };
   var removeCheckedSettlement = function (param) {
-    return setProducerCodeToDownload(function (param) {
-                
-              });
+    setProducerCodeToDownload(function (param) {
+          
+        });
   };
   var from = Belt_Option.getWithDefault(Js_dict.get(router.query, "from"), Format(SubDays(new Date(), 7), "yyyyMMdd"));
   var to_ = Belt_Option.getWithDefault(Js_dict.get(router.query, "to"), Format(new Date(), "yyyyMMdd"));
@@ -82,7 +80,7 @@ function Settlements_Admin$Settlements(Props) {
                                   className: "text-lg font-bold"
                                 }, "내역", React.createElement("span", {
                                       className: "text-base text-primary font-normal ml-1"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex"
                                 }, React.createElement(Select_CountPerPage.make, {
                                       className: "mr-2"
@@ -101,9 +99,9 @@ function Settlements_Admin$Settlements(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "다운로드에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onCancel: (function (param) {
-                      return setShowErrorForDownload(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorForDownload(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -112,9 +110,9 @@ function Settlements_Admin$Settlements(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "다운로드할 항목을 선택해주세요"),
                   onCancel: (function (param) {
-                      return setShowErrorForNothingToDownload(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorForNothingToDownload(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }));
@@ -139,6 +137,5 @@ export {
   List ,
   Settlements ,
   make ,
-  
 }
 /* react Not a pure module */

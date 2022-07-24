@@ -6,6 +6,5 @@ var make = PlusSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

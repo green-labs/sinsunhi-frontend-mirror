@@ -6,22 +6,22 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ChannelTalk from "../../../../bindings/ChannelTalk.mjs";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as Product_Parser from "../../../../utils/Product_Parser.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as PDP_Normal_Gtm_Buyer from "./PDP_Normal_Gtm_Buyer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RfqCreateRequestButton from "../../../../components/RfqCreateRequestButton.mjs";
 import * as PDPNormalSubmitBuyerFragment_graphql from "../../../../__generated__/PDPNormalSubmitBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPNormalSubmitBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalSubmitBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalSubmitBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalSubmitBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalSubmitBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -39,6 +39,7 @@ var Fragment = {
   productStatus_decode: Fragment_productStatus_decode,
   productStatus_fromString: Fragment_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -57,7 +58,7 @@ function PDP_Normal_Submit_Buyer$PC$ActionBtn(Props) {
                   _0: /* Confirm */1
                 };
         });
-    return Curry._1(pushGtmClickBuy, undefined);
+    Curry._1(pushGtmClickBuy, undefined);
   };
   return React.createElement("button", {
               className: className,
@@ -112,24 +113,24 @@ function PDP_Normal_Submit_Buyer$PC$OrderBtn(Props) {
         return React.createElement("button", {
                     className: btnStyle,
                     onClick: (function (param) {
-                        return setShowModal(function (param) {
-                                    return /* Show */{
-                                            _0: /* Unauthorized */{
-                                              _0: "로그인 후에\n구매하실 수 있습니다."
-                                            }
-                                          };
-                                  });
+                        setShowModal(function (param) {
+                              return /* Show */{
+                                      _0: /* Unauthorized */{
+                                        _0: "로그인 후에\n구매하실 수 있습니다."
+                                      }
+                                    };
+                            });
                       })
                   }, "구매하기");
     case /* NoOption */3 :
         return React.createElement("button", {
                     className: btnStyle,
                     onClick: (function (param) {
-                        return setShowModal(function (param) {
-                                    return /* Show */{
-                                            _0: /* NoOption */0
-                                          };
-                                  });
+                        setShowModal(function (param) {
+                              return /* Show */{
+                                      _0: /* NoOption */0
+                                    };
+                            });
                       })
                   }, "구매하기");
     
@@ -151,13 +152,13 @@ function PDP_Normal_Submit_Buyer$PC$RfqBtn(Props) {
       return React.createElement("button", {
                   className: btnStyle,
                   onClick: (function (param) {
-                      return setShowModal(function (param) {
-                                  return /* Show */{
-                                          _0: /* Unauthorized */{
-                                            _0: "로그인 후에\n견적을 받으실 수 있습니다."
-                                          }
-                                        };
-                                });
+                      setShowModal(function (param) {
+                            return /* Show */{
+                                    _0: /* Unauthorized */{
+                                      _0: "로그인 후에\n견적을 받으실 수 있습니다."
+                                    }
+                                  };
+                          });
                     })
                 }, buttonText);
     } else {
@@ -220,7 +221,7 @@ function PDP_Normal_Submit_Buyer$MO$CTAContainer(Props) {
                       className: "w-full h-14 flex"
                     }, React.createElement("button", {
                           onClick: (function (param) {
-                              return ChannelTalk.showMessenger(undefined);
+                              ChannelTalk.showMessenger(undefined);
                             })
                         }, React.createElement("img", {
                               className: "w-14 h-14 mr-2",
@@ -247,7 +248,7 @@ function PDP_Normal_Submit_Buyer$MO$OrderBtn$ActionBtn(Props) {
                   _0: /* Confirm */1
                 };
         });
-    return Curry._1(pushGtmClickBuy, undefined);
+    Curry._1(pushGtmClickBuy, undefined);
   };
   return React.createElement("button", {
               className: className,
@@ -302,24 +303,24 @@ function PDP_Normal_Submit_Buyer$MO$OrderBtn(Props) {
         return React.createElement("button", {
                     className: btnStyle,
                     onClick: (function (param) {
-                        return setShowModal(function (param) {
-                                    return /* Show */{
-                                            _0: /* Unauthorized */{
-                                              _0: "로그인 후에\n구매하실 수 있습니다."
-                                            }
-                                          };
-                                  });
+                        setShowModal(function (param) {
+                              return /* Show */{
+                                      _0: /* Unauthorized */{
+                                        _0: "로그인 후에\n구매하실 수 있습니다."
+                                      }
+                                    };
+                            });
                       })
                   }, "구매하기");
     case /* NoOption */3 :
         return React.createElement("button", {
                     className: btnStyle,
                     onClick: (function (param) {
-                        return setShowModal(function (param) {
-                                    return /* Show */{
-                                            _0: /* NoOption */0
-                                          };
-                                  });
+                        setShowModal(function (param) {
+                              return /* Show */{
+                                      _0: /* NoOption */0
+                                    };
+                            });
                       })
                   }, "구매하기");
     
@@ -342,13 +343,13 @@ function PDP_Normal_Submit_Buyer$MO$RfqBtn(Props) {
       return React.createElement(React.Fragment, undefined, React.createElement("button", {
                       className: btnStyle,
                       onClick: (function (param) {
-                          return setShowModal(function (param) {
-                                      return /* Show */{
-                                              _0: /* Unauthorized */{
-                                                _0: "로그인 후에\n견적을 받으실 수 있습니다."
-                                              }
-                                            };
-                                    });
+                          setShowModal(function (param) {
+                                return /* Show */{
+                                        _0: /* Unauthorized */{
+                                          _0: "로그인 후에\n견적을 받으실 수 있습니다."
+                                        }
+                                      };
+                              });
                         })
                     }, buttonText));
     } else {
@@ -423,6 +424,5 @@ export {
   Fragment ,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

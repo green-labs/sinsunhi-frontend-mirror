@@ -146,6 +146,5 @@ export {
   Register ,
   Hooks ,
   Provider ,
-  
 }
 /* react Not a pure module */

@@ -6,6 +6,5 @@ var make = ArrowSelectSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

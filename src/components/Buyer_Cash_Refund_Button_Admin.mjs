@@ -27,9 +27,7 @@ function Buyer_Cash_Refund_Button_Admin(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var onSubmit = function (param) {
     var state = param.state;
@@ -44,7 +42,7 @@ function Buyer_Cash_Refund_Button_Admin(Props) {
                             reason: reason
                           });
               })), (function (body) {
-            FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/cash/refund", body, 3, (function (param) {
+            FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/cash/refund", body, 3, (function (param) {
                     addToast(React.createElement("div", {
                               className: "flex items-center"
                             }, React.createElement(IconCheck.make, {
@@ -55,21 +53,19 @@ function Buyer_Cash_Refund_Button_Admin(Props) {
                                 }), "잔액환불 요청 성공하였습니다."), {
                           appearance: "success"
                         });
-                    return close(undefined);
+                    close(undefined);
                   }), (function (err) {
-                    return addToast(React.createElement("div", {
-                                    className: "flex items-center"
-                                  }, React.createElement(IconError.make, {
-                                        width: "24",
-                                        height: "24",
-                                        className: "mr-2"
-                                      }), Belt_Option.getWithDefault(err.message, "잔액환불 요청에 에러가 발생하였습니다.")), {
-                                appearance: "error"
-                              });
+                    addToast(React.createElement("div", {
+                              className: "flex items-center"
+                            }, React.createElement(IconError.make, {
+                                  width: "24",
+                                  height: "24",
+                                  className: "mr-2"
+                                }), Belt_Option.getWithDefault(err.message, "잔액환불 요청에 에러가 발생하였습니다.")), {
+                          appearance: "error"
+                        });
                   }));
-            
           }));
-    
   };
   var form = Curry._7(Buyer_Cash_Refund_Form_Admin.Form.use, Buyer_Cash_Refund_Form_Admin.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -80,7 +76,7 @@ function Buyer_Cash_Refund_Button_Admin(Props) {
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var partial_arg = Curry._1(form.handleChange, /* Tid */0);
@@ -165,7 +161,7 @@ function Buyer_Cash_Refund_Button_Admin(Props) {
                                   })
                             }))), React.createElement(Dialog.ButtonBox.make, {
                       onCancel: (function (param) {
-                          return close(undefined);
+                          close(undefined);
                         }),
                       onConfirm: handleOnSubmit,
                       textOnCancel: "닫기",
@@ -183,6 +179,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Env Not a pure module */

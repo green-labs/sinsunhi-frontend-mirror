@@ -99,10 +99,9 @@ function User_Update_Button_Admin_Farmer(Props) {
   var addToast = match$1.addToast;
   var close = function (param) {
     var buttonClose = document.getElementById("btn-close");
-    return Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
-                  buttonClose$p.click();
-                  
-                }));
+    Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
+            buttonClose$p.click();
+          }));
   };
   var onSubmit = function (param) {
     var state = param.state;
@@ -117,7 +116,7 @@ function User_Update_Button_Admin_Farmer(Props) {
               "manager-phone": phone,
               etc: etc
             }), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/user/farmer", body, 3, (function (param) {
+            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/user/farmer", body, 3, (function (param) {
                           close(undefined);
                           addToast(React.createElement("div", {
                                     className: "flex items-center"
@@ -130,27 +129,26 @@ function User_Update_Button_Admin_Farmer(Props) {
                                 appearance: "success"
                               });
                           var rq = router.query;
-                          return mutate(Env.restApiUrl + "/user?" + (rq["role"] = "farmer", new URLSearchParams(rq).toString()), undefined, true);
+                          mutate("" + Env.restApiUrl + "/user?" + (rq["role"] = "farmer", new URLSearchParams(rq).toString()) + "", undefined, true);
                         }), (function (param) {
-                          return addToast(React.createElement("div", {
-                                          className: "flex items-center"
-                                        }, React.createElement(IconError.make, {
-                                              width: "24",
-                                              height: "24",
-                                              className: "mr-2"
-                                            }), "오류가 발생하였습니다."), {
-                                      appearance: "error"
-                                    });
+                          addToast(React.createElement("div", {
+                                    className: "flex items-center"
+                                  }, React.createElement(IconError.make, {
+                                        width: "24",
+                                        height: "24",
+                                        className: "mr-2"
+                                      }), "오류가 발생하였습니다."), {
+                                appearance: "error"
+                              });
                         }));
           }));
-    
   };
   var form = Curry._7(Form.use, initialState, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(Form.ReSchema.Validation.regExp, "전화번호 형식이 맞지 않습니다.", "^$|^\\d{3}-\\d{3,4}-\\d{4}$", undefined, /* Phone */2)])
+        _0: Belt_Array.concatMany([Curry._4(Form.ReSchema.Validation.regExp, "전화번호 형식이 맞지 않습니다.", "^$|^\d{3}-\d{3,4}-\d{4}$", undefined, /* Phone */2)])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnChangePhone = function (e) {
     var newValue = e.currentTarget.value.replace(/[^0-9]/g, "").replace(/(^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-");
-    return Curry._4(form.setFieldValue, /* Phone */2, newValue, true, undefined);
+    Curry._4(form.setFieldValue, /* Phone */2, newValue, true, undefined);
   };
   var prefill = function (isOpen) {
     if (isOpen) {
@@ -164,7 +162,7 @@ function User_Update_Button_Admin_Farmer(Props) {
   };
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var tmp = {
@@ -280,6 +278,5 @@ export {
   Form ,
   initialState ,
   make ,
-  
 }
 /* editIcon Not a pure module */

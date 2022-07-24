@@ -36,9 +36,9 @@ function BulkSale_ProductSaleLedgers_Button_FormEntry_Admin(Props) {
       return ;
     }
     var newEntries$p = Caml_option.valFromOption(newEntries);
-    return setEntries(function (param) {
-                return newEntries$p;
-              });
+    setEntries(function (param) {
+          return newEntries$p;
+        });
   };
   var amount = Belt_Option.map(Belt_MapString.get(entries, id), (function (entry) {
           return entry.quantity.amount;
@@ -65,9 +65,9 @@ function BulkSale_ProductSaleLedgers_Button_FormEntry_Admin(Props) {
       return ;
     }
     var newEntries$p = Caml_option.valFromOption(newEntries);
-    return setEntries(function (param) {
-                return newEntries$p;
-              });
+    setEntries(function (param) {
+          return newEntries$p;
+        });
   };
   var unit = Belt_Option.mapWithDefault(Belt_MapString.get(entries, id), "KG", (function (entry) {
           return entry.quantity.unit;
@@ -94,9 +94,9 @@ function BulkSale_ProductSaleLedgers_Button_FormEntry_Admin(Props) {
       return ;
     }
     var newEntries$p = Caml_option.valFromOption(newEntries);
-    return setEntries(function (param) {
-                return newEntries$p;
-              });
+    setEntries(function (param) {
+          return newEntries$p;
+        });
   };
   var volume = Belt_Option.map(Belt_MapString.get(entries, id), (function (entry) {
           return entry.volume;
@@ -119,9 +119,9 @@ function BulkSale_ProductSaleLedgers_Button_FormEntry_Admin(Props) {
       return ;
     }
     var newEntries$p = Caml_option.valFromOption(newEntries);
-    return setEntries(function (param) {
-                return newEntries$p;
-              });
+    setEntries(function (param) {
+          return newEntries$p;
+        });
   };
   var price = Belt_Option.map(Belt_MapString.get(entries, id), (function (entry) {
           return entry.price;
@@ -144,9 +144,9 @@ function BulkSale_ProductSaleLedgers_Button_FormEntry_Admin(Props) {
       return ;
     }
     var newEntries$p = Caml_option.valFromOption(newEntries);
-    return setEntries(function (param) {
-                return newEntries$p;
-              });
+    setEntries(function (param) {
+          return newEntries$p;
+        });
   };
   return React.createElement("div", {
               className: "py-4"
@@ -231,6 +231,5 @@ var make = BulkSale_ProductSaleLedgers_Button_FormEntry_Admin;
 
 export {
   make ,
-  
 }
 /* Input Not a pure module */

@@ -39,9 +39,9 @@ function Order_Detail_Button_Admin(Props) {
   var addToast = match$1.addToast;
   var status = CustomHooks.Courier.use(undefined);
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(order.courierCode, (function (courierCode$p) {
                     return Belt_Result.getWithDefault(Belt_Result.map(CustomHooks.Courier.response_decode(couriers), (function (couriers$p) {
@@ -52,8 +52,6 @@ function Order_Detail_Button_Admin(Props) {
                   })), (function (courier) {
                 return courier.name;
               })), "-");
-  } else {
-    courierName = "-";
   }
   var match$2 = React.useState(function () {
         return Belt_Option.getWithDefault(order.adminMemo, "");
@@ -65,7 +63,7 @@ function Order_Detail_Button_Admin(Props) {
                   Belt_Option.map(JSON.stringify({
                             memo: adminMemo
                           }), (function (body) {
-                          return FetchHelper.requestWithRetry(FetchHelper.patchWithToken, Env.restApiUrl + "/order/" + order.orderProductNo + "/memo", body, 3, (function (param) {
+                          return FetchHelper.requestWithRetry(FetchHelper.patchWithToken, "" + Env.restApiUrl + "/order/" + order.orderProductNo + "/memo", body, 3, (function (param) {
                                         addToast(React.createElement("div", {
                                                   className: "flex items-center"
                                                 }, React.createElement(IconCheck.make, {
@@ -76,20 +74,19 @@ function Order_Detail_Button_Admin(Props) {
                                                     }), "저장되었습니다."), {
                                               appearance: "success"
                                             });
-                                        return mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, true);
+                                        mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                                       }), (function (param) {
-                                        return addToast(React.createElement("div", {
-                                                        className: "flex items-center"
-                                                      }, React.createElement(IconError.make, {
-                                                            width: "24",
-                                                            height: "24",
-                                                            className: "mr-2"
-                                                          }), "오류가 발생하였습니다."), {
-                                                    appearance: "error"
-                                                  });
+                                        addToast(React.createElement("div", {
+                                                  className: "flex items-center"
+                                                }, React.createElement(IconError.make, {
+                                                      width: "24",
+                                                      height: "24",
+                                                      className: "mr-2"
+                                                    }), "오류가 발생하였습니다."), {
+                                              appearance: "error"
+                                            });
                                       }));
                         }));
-                  
                 }), param);
   };
   var match$3 = order.deliveryType;
@@ -197,9 +194,9 @@ function Order_Detail_Button_Admin(Props) {
   return React.createElement(ReactDialog.Root, {
               children: null,
               onOpenChange: (function (param) {
-                  return setAdminMemo(function (param) {
-                              return Belt_Option.getWithDefault(order.adminMemo, "");
-                            });
+                  setAdminMemo(function (param) {
+                        return Belt_Option.getWithDefault(order.adminMemo, "");
+                      });
                 })
             }, React.createElement(ReactDialog.Overlay, {
                   className: "dialog-overlay"
@@ -245,7 +242,7 @@ function Order_Detail_Button_Admin(Props) {
                                     className: "p-3 bg-div-shape-L2"
                                   }, "결제금액"), React.createElement("div", {
                                     className: "p-3"
-                                  }, Locale.Float.show(undefined, order.productPrice * order.quantity, 0) + "원")), React.createElement("div", {
+                                  }, "" + Locale.Float.show(undefined, order.productPrice * order.quantity, 0) + "원")), React.createElement("div", {
                                 className: "grid grid-cols-4-detail"
                               }, React.createElement("div", {
                                     className: "p-3 bg-div-shape-L2"
@@ -297,7 +294,7 @@ function Order_Detail_Button_Admin(Props) {
                                     className: "p-3 bg-div-shape-L2"
                                   }, "금액"), React.createElement("div", {
                                     className: "p-3"
-                                  }, Locale.Float.show(undefined, order.productPrice, 0) + "원"))), React.createElement("h3", {
+                                  }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원"))), React.createElement("h3", {
                             className: "mt-10 font-bold"
                           }, "배송정보"), React.createElement("section", {
                             className: "divide-y text-sm text-text-L2 mt-2 border-t border-b"
@@ -310,9 +307,9 @@ function Order_Detail_Button_Admin(Props) {
                             value: adminMemo,
                             onChange: (function (e) {
                                 var v = e.target.value;
-                                return setAdminMemo(function (param) {
-                                            return v;
-                                          });
+                                setAdminMemo(function (param) {
+                                      return v;
+                                    });
                               })
                           }), React.createElement("span", {
                             className: "w-1/2"
@@ -321,9 +318,7 @@ function Order_Detail_Button_Admin(Props) {
                                     var buttonClose = document.getElementById("btn-close");
                                     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
                                             buttonClose$p.click();
-                                            
                                           }));
-                                    
                                   }),
                                 onConfirm: handleOnConfirm,
                                 textOnCancel: "닫기",
@@ -339,6 +334,5 @@ export {
   formatDate ,
   Converter$1 as Converter,
   make ,
-  
 }
 /* Converter Not a pure module */

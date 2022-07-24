@@ -254,6 +254,5 @@ var Common = {
 export {
   Left ,
   Common ,
-  
 }
 /* react Not a pure module */

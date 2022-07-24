@@ -5,20 +5,20 @@ import * as IconClose from "./svgs/IconClose.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as BulkSaleMarketSalesInfoButtonAdminFragment_graphql from "../__generated__/BulkSaleMarketSalesInfoButtonAdminFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(BulkSaleMarketSalesInfoButtonAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleMarketSalesInfoButtonAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleMarketSalesInfoButtonAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleMarketSalesInfoButtonAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleMarketSalesInfoButtonAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -30,6 +30,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -82,6 +83,5 @@ var make = BulkSale_MarketSalesInfo_Button_Admin;
 export {
   Fragment ,
   make ,
-  
 }
 /* react Not a pure module */

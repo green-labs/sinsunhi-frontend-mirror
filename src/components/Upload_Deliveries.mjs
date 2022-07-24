@@ -27,19 +27,18 @@ function Upload_Deliveries(Props) {
   var setShowFileRequired = match$2[1];
   var handleOnChangeFiles = function (e) {
     var values = e.target.files;
-    return setFiles(function (param) {
-                return values;
-              });
+    setFiles(function (param) {
+          return values;
+        });
   };
   var handleResetFile = function (param) {
     var inputFile = document.getElementById("input-file");
     Belt_Option.map((inputFile == null) ? undefined : Caml_option.some(inputFile), (function (inputFile$p) {
             inputFile$p.value = "";
-            
           }));
-    return setFiles(function (param) {
-                
-              });
+    setFiles(function (param) {
+          
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement("section", {
                   className: "py-5"
@@ -65,9 +64,9 @@ function Upload_Deliveries(Props) {
                                 return React.createElement("span", {
                                             className: "absolute p-2 right-0",
                                             onClick: (function (param) {
-                                                return setShowDelete(function (param) {
-                                                            return /* Show */0;
-                                                          });
+                                                setShowDelete(function (param) {
+                                                      return /* Show */0;
+                                                    });
                                               })
                                           }, React.createElement(IconCloseInput.make, {
                                                 height: "28",
@@ -106,9 +105,9 @@ function Upload_Deliveries(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 선택해주세요."),
                   onConfirm: (function (param) {
-                      return setShowFileRequired(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowFileRequired(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$1[0],
@@ -116,15 +115,15 @@ function Upload_Deliveries(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 삭제하시겠어요?"),
                   onCancel: (function (param) {
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       handleResetFile(undefined);
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "삭제"
@@ -135,6 +134,5 @@ var make = Upload_Deliveries;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

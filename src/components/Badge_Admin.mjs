@@ -22,6 +22,5 @@ var make = Badge_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

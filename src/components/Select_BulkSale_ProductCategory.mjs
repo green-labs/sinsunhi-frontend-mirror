@@ -5,18 +5,19 @@ import * as React from "react";
 import * as Helper from "../utils/Helper.mjs";
 import * as RelayEnv from "../constants/RelayEnv.mjs";
 import * as IconError from "./svgs/IconError.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import Async from "react-select/async";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as SelectBulkSaleProductCategoryQuery_graphql from "../__generated__/SelectBulkSaleProductCategoryQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(SelectBulkSaleProductCategoryQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(SelectBulkSaleProductCategoryQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -25,7 +26,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(SelectBulkSaleProductCategoryQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(SelectBulkSaleProductCategoryQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -43,38 +44,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, SelectBulkSaleProductCategoryQuery_graphql.node, SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, SelectBulkSaleProductCategoryQuery_graphql.node, SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: SelectBulkSaleProductCategoryQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: SelectBulkSaleProductCategoryQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, SelectBulkSaleProductCategoryQuery_graphql.node, SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, SelectBulkSaleProductCategoryQuery_graphql.node, SelectBulkSaleProductCategoryQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(SelectBulkSaleProductCategoryQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(SelectBulkSaleProductCategoryQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(SelectBulkSaleProductCategoryQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(SelectBulkSaleProductCategoryQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SelectBulkSaleProductCategoryQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -91,14 +91,12 @@ var Query_productCategoryOrderBy_decode = SelectBulkSaleProductCategoryQuery_gra
 
 var Query_productCategoryOrderBy_fromString = SelectBulkSaleProductCategoryQuery_graphql.Utils.productCategoryOrderBy_fromString;
 
-var Query_makeVariables = SelectBulkSaleProductCategoryQuery_graphql.Utils.makeVariables;
-
 var Query = {
   orderDirection_decode: Query_orderDirection_decode,
   orderDirection_fromString: Query_orderDirection_fromString,
   productCategoryOrderBy_decode: Query_productCategoryOrderBy_decode,
   productCategoryOrderBy_fromString: Query_productCategoryOrderBy_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -138,22 +136,22 @@ function Select_BulkSale_ProductCategory(Props) {
   var disabled = Props.disabled;
   var handleLoadOptions = function (inputValue) {
     if (cropId) {
-      return fetchPromised(RelayEnv.envFMBridge, {
-                    cropIds: [cropId.value],
-                    count: 1000,
-                    cursor: undefined,
-                    nameMatch: inputValue,
-                    orderBy: "NAME",
-                    orderDirection: "ASC"
-                  }, undefined, undefined, undefined).then(function (result) {
-                  var result$p = Garter_Array.map(result.productCategories.edges, (function (edge) {
-                          return /* Selected */{
-                                  value: edge.node.id,
-                                  label: edge.node.name
-                                };
-                        }));
-                  return Promise.resolve(result$p);
-                });
+      return Js_promise.then_((function (result) {
+                    var result$p = Garter_Array.map(result.productCategories.edges, (function (edge) {
+                            return /* Selected */{
+                                    value: edge.node.id,
+                                    label: edge.node.name
+                                  };
+                          }));
+                    return Promise.resolve(result$p);
+                  }), fetchPromised(RelayEnv.envFMBridge, {
+                      count: 1000,
+                      cropIds: [cropId.value],
+                      cursor: undefined,
+                      nameMatch: inputValue,
+                      orderBy: "NAME",
+                      orderDirection: "ASC"
+                    }, undefined, undefined, undefined));
     } else {
       return Promise.resolve(undefined);
     }
@@ -202,6 +200,5 @@ export {
   disabledStyle ,
   style ,
   make ,
-  
 }
 /* react Not a pure module */

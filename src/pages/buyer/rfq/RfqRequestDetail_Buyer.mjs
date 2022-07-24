@@ -10,20 +10,21 @@ import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as DS_Title from "../../../components/common/container/DS_Title.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as DS_TitleList from "../../../components/common/element/DS_TitleList.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RfqRequestDetailBuyer_Current_Request_Query_graphql from "../../../__generated__/RfqRequestDetailBuyer_Current_Request_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -32,7 +33,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqRequestDetailBuyer_Current_Request_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqRequestDetailBuyer_Current_Request_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -50,38 +51,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqRequestDetailBuyer_Current_Request_Query_graphql.node, RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqRequestDetailBuyer_Current_Request_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqRequestDetailBuyer_Current_Request_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqRequestDetailBuyer_Current_Request_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -98,14 +98,12 @@ var Query_rfqRequestStatus_decode = RfqRequestDetailBuyer_Current_Request_Query_
 
 var Query_rfqRequestStatus_fromString = RfqRequestDetailBuyer_Current_Request_Query_graphql.Utils.rfqRequestStatus_fromString;
 
-var Query_makeVariables = RfqRequestDetailBuyer_Current_Request_Query_graphql.Utils.makeVariables;
-
 var Query = {
   rfqRequestItemStatus_decode: Query_rfqRequestItemStatus_decode,
   rfqRequestItemStatus_fromString: Query_rfqRequestItemStatus_fromString,
   rfqRequestStatus_decode: Query_rfqRequestStatus_decode,
   rfqRequestStatus_fromString: Query_rfqRequestStatus_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -175,8 +173,7 @@ function RfqRequestDetail_Buyer$QuotationListitem(Props) {
   return React.createElement("li", {
               className: "flex items-center mx-5 p-5 cursor-pointer bg-white rounded-lg mb-3",
               onClick: (function (param) {
-                  router.push(router.asPath + "/" + itemId);
-                  
+                  router.push("" + router.asPath + "/" + itemId + "");
                 })
             }, React.createElement("div", {
                   className: "flex flex-col justify-between truncate"
@@ -211,8 +208,7 @@ function RfqRequestDetail_Buyer$BottomButton(Props) {
                     DataGtm.push({
                           event: "Expose_view_RFQ_Livestock_SelectingPart"
                         });
-                    router.push("/buyer/rfq/request/draft/basket?requestId=" + requestId);
-                    
+                    router.push("/buyer/rfq/request/draft/basket?requestId=" + requestId + "");
                   })
               });
   }
@@ -220,7 +216,7 @@ function RfqRequestDetail_Buyer$BottomButton(Props) {
               label: "담당자에게 문의하기",
               onClick: (function (param) {
                   if (Global.$$window !== undefined) {
-                    Caml_option.valFromOption(Global.$$window).open(Env.customerServiceUrl + Env.customerServicePaths.rfqContactManager, undefined, "");
+                    Caml_option.valFromOption(Global.$$window).open("" + Env.customerServiceUrl + "" + Env.customerServicePaths.rfqContactManager + "", undefined, "");
                     return ;
                   }
                   
@@ -242,13 +238,12 @@ function RfqRequestDetail_Buyer$TimerTitle(Props) {
   var time = match[0];
   React.useEffect((function () {
           var id = setInterval((function (param) {
-                  return setTime(function (time) {
-                              return Math.max(0, time - 1 | 0);
-                            });
+                  setTime(function (time) {
+                        return Math.max(0, time - 1 | 0);
+                      });
                 }), 1000);
           return (function (param) {
                     clearInterval(id);
-                    
                   });
         }), []);
   var getRemainTimes = function (s) {
@@ -284,7 +279,7 @@ function RfqRequestDetail_Buyer$TimerTitle(Props) {
       return Belt_Option.mapWithDefault(Belt_Option.keep(num, (function (x) {
                         return x > 0;
                       })), "", (function (x) {
-                    return String(x) + postfix;
+                    return "" + String(x) + "" + postfix + "";
                   }));
     };
     switch (time.TAG | 0) {
@@ -304,7 +299,7 @@ function RfqRequestDetail_Buyer$TimerTitle(Props) {
   var hourText = getTimeText(match$1[1]);
   var minuteText = getTimeText(match$1[2]);
   var secondText = getTimeText(match$1[3]);
-  var timeText = time > 0 ? dayText + hourText + minuteText + secondText + " 후 마감됩니다." : "마감되었습니다.";
+  var timeText = time > 0 ? "" + dayText + "" + hourText + "" + minuteText + "" + secondText + " 후 마감됩니다." : "마감되었습니다.";
   return React.createElement(DS_Title.Normal1.TextGroup.make, {
               title1: "견적 요청 현황",
               subTitle: timeText
@@ -373,7 +368,6 @@ function RfqRequestDetail_Buyer$Detail(Props) {
                         return x.status === "ORDERED";
                       })).length
               });
-          
         }), []);
   if (node === undefined) {
     return React.createElement("div", {
@@ -436,7 +430,6 @@ function RfqRequestDetail_Buyer(Props) {
   } else {
     React.useEffect((function () {
             router.replace("/buyer/rfq");
-            
           }), []);
     return null;
   }
@@ -453,6 +446,5 @@ export {
   Title ,
   Detail ,
   make ,
-  
 }
 /* Env Not a pure module */

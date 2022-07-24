@@ -9,9 +9,9 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Product_Parser from "../utils/Product_Parser.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as ImageWithPlaceholder from "./common/ImageWithPlaceholder.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopProductListItemBuyerFragment_graphql from "../__generated__/ShopProductListItemBuyerFragment_graphql.mjs";
@@ -20,13 +20,13 @@ import * as ShopProductListItemBuyerQuotedFragment_graphql from "../__generated_
 import * as ShopProductListItemBuyerMatchingFragment_graphql from "../__generated__/ShopProductListItemBuyerMatchingFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(ShopProductListItemBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopProductListItemBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopProductListItemBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopProductListItemBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopProductListItemBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -38,18 +38,19 @@ function useOpt(opt_fRef) {
 
 var Root = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(ShopProductListItemBuyerNormalFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopProductListItemBuyerNormalFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopProductListItemBuyerNormalFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopProductListItemBuyerNormalFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopProductListItemBuyerNormalFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -67,18 +68,19 @@ var Normal = {
   productStatus_decode: Normal_productStatus_decode,
   productStatus_fromString: Normal_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt$1
 };
 
 function use$2(fRef) {
-  var data = Hooks.useFragment(ShopProductListItemBuyerQuotedFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopProductListItemBuyerQuotedFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopProductListItemBuyerQuotedFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$2(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopProductListItemBuyerQuotedFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopProductListItemBuyerQuotedFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -90,18 +92,19 @@ function useOpt$2(opt_fRef) {
 
 var Quoted = {
   Types: undefined,
+  Operation: undefined,
   use: use$2,
   useOpt: useOpt$2
 };
 
 function use$3(fRef) {
-  var data = Hooks.useFragment(ShopProductListItemBuyerMatchingFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopProductListItemBuyerMatchingFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopProductListItemBuyerMatchingFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$3(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopProductListItemBuyerMatchingFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopProductListItemBuyerMatchingFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -113,6 +116,7 @@ function useOpt$3(opt_fRef) {
 
 var Matching = {
   Types: undefined,
+  Operation: undefined,
   use: use$3,
   useOpt: useOpt$3
 };
@@ -132,12 +136,11 @@ function ShopProductListItem_Buyer$Normal$PC(Props) {
   var id = match.id;
   var isSoldout = match.status === "SOLDOUT";
   var priceLabel = Belt_Option.mapWithDefault(match.price, "", (function (price$p) {
-          return Locale.Float.show(undefined, price$p, 0) + "원";
+          return "" + Locale.Float.show(undefined, price$p, 0) + "원";
         }));
   var onClick = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 }), param);
   };
   var tmp;
@@ -160,7 +163,7 @@ function ShopProductListItem_Buyer$Normal$PC(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl"
                     }), isSoldout ? React.createElement(React.Fragment, undefined, React.createElement("div", {
@@ -188,12 +191,11 @@ function ShopProductListItem_Buyer$Normal$MO(Props) {
   var id = match.id;
   var isSoldout = match.status === "SOLDOUT";
   var priceLabel = Belt_Option.mapWithDefault(match.price, "", (function (price$p) {
-          return Locale.Float.show(undefined, price$p, 0) + "원";
+          return "" + Locale.Float.show(undefined, price$p, 0) + "원";
         }));
   var onClick = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 }), param);
   };
   var tmp;
@@ -216,7 +218,7 @@ function ShopProductListItem_Buyer$Normal$MO(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl"
                     }), isSoldout ? React.createElement(React.Fragment, undefined, React.createElement("div", {
@@ -248,8 +250,7 @@ function ShopProductListItem_Buyer$Quoted$PC(Props) {
   var id = match.id;
   var onClick = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 }), param);
   };
   return React.createElement("div", {
@@ -261,7 +262,7 @@ function ShopProductListItem_Buyer$Quoted$PC(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl"
                     })), React.createElement("div", {
@@ -284,8 +285,7 @@ function ShopProductListItem_Buyer$Quoted$MO(Props) {
   var id = match.id;
   var onClick = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 }), param);
   };
   return React.createElement("div", {
@@ -297,7 +297,7 @@ function ShopProductListItem_Buyer$Quoted$MO(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl"
                     })), React.createElement("div", {
@@ -326,8 +326,7 @@ function ShopProductListItem_Buyer$Matching$PC(Props) {
   return React.createElement("div", {
               className: "w-[280px] h-[376px] cursor-pointer",
               onClick: (function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 })
             }, React.createElement("div", {
                   className: "w-[280px] aspect-square rounded-xl overflow-hidden relative"
@@ -335,7 +334,7 @@ function ShopProductListItem_Buyer$Matching$PC(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-2xl"
                     })), React.createElement("div", {
@@ -359,8 +358,7 @@ function ShopProductListItem_Buyer$Matching$MO(Props) {
   return React.createElement("div", {
               className: "cursor-pointer",
               onClick: (function (param) {
-                  router.push("/buyer/products/" + id);
-                  
+                  router.push("/buyer/products/" + id + "");
                 })
             }, React.createElement("div", {
                   className: "rounded-xl overflow-hidden relative aspect-square"
@@ -368,7 +366,7 @@ function ShopProductListItem_Buyer$Matching$MO(Props) {
                       src: match.image.thumb800x800,
                       placeholder: ImageWithPlaceholder.Placeholder.sm,
                       className: "w-full h-full object-cover",
-                      alt: "product-" + id
+                      alt: "product-" + id + ""
                     }), React.createElement("div", {
                       className: "w-full h-full absolute top-0 left-0 bg-black/[.03] rounded-xl"
                     })), React.createElement("div", {
@@ -488,6 +486,5 @@ export {
   Matching$1 as Matching,
   PC$3 as PC,
   MO$3 as MO,
-  
 }
 /* react Not a pure module */

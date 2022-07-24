@@ -58,8 +58,7 @@ function Select_Sorted(Props) {
     var sorted = e.target.value;
     router.query["sort"] = sorted;
     router.query["offset"] = "0";
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var displaySorted = function (q) {
     return Belt_Result.mapWithDefault(parseSorted(q), "최신순", formatSorted);
@@ -101,6 +100,5 @@ export {
   parseSorted ,
   formatSorted ,
   make ,
-  
 }
 /* react Not a pure module */

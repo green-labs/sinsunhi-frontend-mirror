@@ -8,6 +8,5 @@ function MakeCustomEvent(Detail) {
 
 export {
   MakeCustomEvent ,
-  
 }
 /* No side effect */

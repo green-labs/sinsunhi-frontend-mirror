@@ -6,21 +6,21 @@ import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import Format from "date-fns/format";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 import ParseISO from "date-fns/parseISO";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPMatchingDemeterChartBuyer_fragment_graphql from "../../../../__generated__/PDPMatchingDemeterChartBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPMatchingDemeterChartBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPMatchingDemeterChartBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPMatchingDemeterChartBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPMatchingDemeterChartBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPMatchingDemeterChartBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -32,6 +32,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -216,6 +217,5 @@ export {
   Fragment ,
   ChartParser ,
   make ,
-  
 }
 /* react Not a pure module */

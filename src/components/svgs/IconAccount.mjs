@@ -37,6 +37,5 @@ var make = IconAccount;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

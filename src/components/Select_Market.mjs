@@ -20,7 +20,7 @@ function toOption(r) {
 }
 
 function encodeMarkets(market) {
-  return JSON.stringify(markets_encode(market)).replace(/"/g, "");
+  return JSON.stringify(markets_encode(market)).replace(/\"/g, "");
 }
 
 function decodeMarket(str) {
@@ -85,6 +85,5 @@ export {
   parseMarket ,
   display ,
   make ,
-  
 }
 /* react Not a pure module */

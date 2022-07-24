@@ -14,7 +14,7 @@ function Summary_Delivery$DeliveryCard(Props) {
                       className: "text-sm"
                     }, order.productName), React.createElement("span", {
                       className: "text-green-gl font-bold ml-4"
-                    }, String(order.orderCount) + "건")), React.createElement("div", {
+                    }, "" + String(order.orderCount) + "건")), React.createElement("div", {
                   className: "text-sm text-gray-400"
                 }, order.productOptionName));
 }
@@ -68,7 +68,7 @@ function Summary_Delivery(Props) {
                     }, Garter_Array.map(match[1], (function (order) {
                             return React.createElement(Summary_Delivery$DeliveryCard, {
                                         order: order,
-                                        key: order.productName + "-" + order.productOptionName
+                                        key: "" + order.productName + "-" + order.productOptionName + ""
                                       });
                           })))));
 }
@@ -81,6 +81,5 @@ export {
   Admin ,
   DeliveryCard ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -7,10 +7,10 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as IconArrowSelect from "../../../../components/svgs/IconArrowSelect.mjs";
 import * as PDP_Parser_Buyer from "../../../../utils/PDP_Parser_Buyer.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactScrollArea from "@radix-ui/react-scroll-area";
 import * as ReactDropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -18,13 +18,13 @@ import * as PDPNormalSelectOptionBuyerFragment_graphql from "../../../../__gener
 import * as PDPNormalSelectOptionBuyerItemFragment_graphql from "../../../../__generated__/PDPNormalSelectOptionBuyerItemFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPNormalSelectOptionBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalSelectOptionBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalSelectOptionBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalSelectOptionBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalSelectOptionBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -42,18 +42,19 @@ var List = {
   productStatus_decode: List_productStatus_decode,
   productStatus_fromString: List_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(PDPNormalSelectOptionBuyerItemFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalSelectOptionBuyerItemFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalSelectOptionBuyerItemFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalSelectOptionBuyerItemFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalSelectOptionBuyerItemFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -71,6 +72,7 @@ var Item = {
   productOptionStatus_decode: Item_productOptionStatus_decode,
   productOptionStatus_fromString: Item_productOptionStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt$1
 };
@@ -106,7 +108,7 @@ function PDP_Normal_SelectOption_Buyer$Item(Props) {
   var id = match.id;
   var optionPrice = PDP_Parser_Buyer.ProductOption.makeOptionPrice(match.price, match$1.deliveryCost, match$1.isFreeShipping);
   var optionPriceLabel = Belt_Option.mapWithDefault(optionPrice, "", (function (optionPrice$p) {
-          return Locale.Float.show(undefined, optionPrice$p, 0) + "원";
+          return "" + Locale.Float.show(undefined, optionPrice$p, 0) + "원";
         }));
   if (match.status === "SOLDOUT") {
     return React.createElement("div", {
@@ -121,9 +123,9 @@ function PDP_Normal_SelectOption_Buyer$Item(Props) {
                 children: React.createElement("div", {
                       className: "rounded-lg py-3 px-2 hover:bg-gray-100",
                       onClick: (function (param) {
-                          return onSelect(function (param) {
-                                      return id;
-                                    });
+                          onSelect(function (param) {
+                                return id;
+                              });
                         })
                     }, React.createElement("span", {
                           className: "text-gray-800"
@@ -156,13 +158,13 @@ function PDP_Normal_SelectOption_Buyer$PC(Props) {
                     user !== 0 ? React.createElement(React.Fragment, undefined, React.createElement("div", {
                                 className: "w-full h-13 p-3 flex items-center justify-between border rounded-xl",
                                 onClick: (function (param) {
-                                    return setShowModal(function (param) {
-                                                return /* Show */{
-                                                        _0: /* Unauthorized */{
-                                                          _0: "로그인 후에\n단품을 선택하실 수 있습니다."
-                                                        }
-                                                      };
-                                              });
+                                    setShowModal(function (param) {
+                                          return /* Show */{
+                                                  _0: /* Unauthorized */{
+                                                    _0: "로그인 후에\n단품을 선택하실 수 있습니다."
+                                                  }
+                                                };
+                                        });
                                   })
                               }, React.createElement("span", {
                                     className: "text-gray-600"
@@ -209,7 +211,7 @@ function PDP_Normal_SelectOption_Buyer$PC(Props) {
                                                 return React.createElement(PDP_Normal_SelectOption_Buyer$Item, {
                                                             query: match.fragmentRefs,
                                                             onSelect: onSelect,
-                                                            key: "sku-" + match.stockSku
+                                                            key: "sku-" + match.stockSku + ""
                                                           });
                                               })) : []
                                     }),
@@ -238,13 +240,13 @@ function PDP_Normal_SelectOption_Buyer$MO(Props) {
                     user !== 0 ? React.createElement("div", {
                             className: "w-full h-13 p-3 flex items-center justify-between border rounded-xl",
                             onClick: (function (param) {
-                                return setShowModal(function (param) {
-                                            return /* Show */{
-                                                    _0: /* Unauthorized */{
-                                                      _0: "로그인 후에\n단품을 선택하실 수 있습니다."
-                                                    }
-                                                  };
-                                          });
+                                setShowModal(function (param) {
+                                      return /* Show */{
+                                              _0: /* Unauthorized */{
+                                                _0: "로그인 후에\n단품을 선택하실 수 있습니다."
+                                              }
+                                            };
+                                    });
                               })
                           }, React.createElement("span", {
                                 className: "text-gray-600"
@@ -291,7 +293,7 @@ function PDP_Normal_SelectOption_Buyer$MO(Props) {
                                                 return React.createElement(PDP_Normal_SelectOption_Buyer$Item, {
                                                             query: match.fragmentRefs,
                                                             onSelect: onSelect,
-                                                            key: "sku-" + match.stockSku
+                                                            key: "sku-" + match.stockSku + ""
                                                           });
                                               })) : []
                                     }),
@@ -311,6 +313,5 @@ export {
   Item$1 as Item,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

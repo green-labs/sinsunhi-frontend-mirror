@@ -26,7 +26,6 @@ function Tradematch_Ask_To_Buy_Applied_Buyer$Content(Props) {
                               ]),
                           onClick: (function (param) {
                               router.push("/buyer");
-                              
                             })
                         }, "홈으로"))), React.createElement("div", {
                   className: "h-24"
@@ -45,7 +44,6 @@ function Tradematch_Ask_To_Buy_Applied_Buyer(Props) {
                   }, React.createElement(Tradematch_Ask_To_Buy_Apply_Buyer.Header.make, {
                         handleClickLeftButton: (function (param) {
                             router.push("/buyer");
-                            
                           })
                       }), React.createElement(Tradematch_Ask_To_Buy_Applied_Buyer$Content, {})),
               title: "신청 완료"
@@ -57,6 +55,5 @@ var make = Tradematch_Ask_To_Buy_Applied_Buyer;
 export {
   Content ,
   make ,
-  
 }
 /* react Not a pure module */

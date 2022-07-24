@@ -10,11 +10,11 @@ import * as Pagination from "./common/Pagination.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as EmptyProducts from "./EmptyProducts.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Product_Option_Admin from "./Product_Option_Admin.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ProductOptionListAdminFragment_graphql from "../__generated__/ProductOptionListAdminFragment_graphql.mjs";
@@ -34,27 +34,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(ProductOptionListAdminFragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(ProductOptionListAdminFragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(ProductOptionListAdminFragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductOptionListAdminFragmentRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(ProductOptionListAdminFragmentRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use(fRef) {
-  var data = Hooks.useFragment(ProductOptionListAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ProductOptionListAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductOptionListAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ProductOptionListAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ProductOptionListAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -70,6 +70,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use,
   useOpt: useOpt,
   makeRefetchVariables: makeRefetchVariables
@@ -157,6 +158,5 @@ export {
   Fragment ,
   Skeleton$1 as Skeleton,
   make ,
-  
 }
 /* react Not a pure module */

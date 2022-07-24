@@ -91,7 +91,7 @@ function parseStringToJson(s) {
           };
   }
   catch (exn){
-    return Spice.error(undefined, "\xec\x9a\x94\xec\xb2\xad body \xed\x8c\x8c\xec\x8b\xb1\xec\x97\x90 \xec\x8b\xa4\xed\x8c\xa8\xed\x95\x98\xec\x98\x80\xec\x8a\xb5\xeb\x8b\x88\xeb\x8b\xa4.", s);
+    return Spice.error(undefined, "요청 body 파싱에 실패하였습니다.", s);
   }
 }
 
@@ -108,7 +108,7 @@ function getRelayRequestInfo(s) {
                           ]
                         };
                 } else {
-                  return Spice.error(undefined, "\xec\x9a\x94\xec\xb2\xad query, variables \xed\x8c\x8c\xec\x8b\xb1\xec\x97\x90 \xec\x8b\xa4\xed\x8c\xa8\xed\x95\x98\xec\x98\x80\xec\x8a\xb5\xeb\x8b\x88\xeb\x8b\xa4.", s);
+                  return Spice.error(undefined, "요청 query, variables 파싱에 실패하였습니다.", s);
                 }
               }));
 }
@@ -119,9 +119,7 @@ function makeWithURLError(error, url) {
         scope.setExtra("URL Input", url);
         scope.setTag("type", "InvalidUrlError");
         Nextjs.captureException(scope);
-        
       });
-  
 }
 
 function makeWithRelayError(errorType, errorMessage, body) {
@@ -135,9 +133,7 @@ function makeWithRelayError(errorType, errorMessage, body) {
         scope.setTag("type", errorType);
         scope.setExtra("message", errorMessage);
         Nextjs.captureException(scope);
-        
       });
-  
 }
 
 var CaptureException = {
@@ -154,6 +150,5 @@ export {
   parseStringToJson ,
   getRelayRequestInfo ,
   CaptureException ,
-  
 }
 /* @sentry/nextjs Not a pure module */

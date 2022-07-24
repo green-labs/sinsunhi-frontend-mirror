@@ -156,6 +156,5 @@ export {
   defaultStyle ,
   styleBySize ,
   make ,
-  
 }
 /* react Not a pure module */

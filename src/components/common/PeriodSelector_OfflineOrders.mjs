@@ -55,38 +55,38 @@ function PeriodSelector_OfflineOrders(Props) {
   return React.createElement(React.Fragment, undefined, React.createElement("button", {
                   className: Cx.cx([
                         PeriodSelector.defaultStyle,
-                        PeriodSelector.styleOnOff(Caml_obj.caml_equal(period, /* Before7Days */0))
+                        PeriodSelector.styleOnOff(Caml_obj.equal(period, /* Before7Days */0))
                       ]),
                   type: "button",
                   onClick: (function (param) {
-                      return setPeriod(onSelect, /* Before7Days */0, to_);
+                      setPeriod(onSelect, /* Before7Days */0, to_);
                     })
                 }, "직전 7일"), React.createElement("button", {
                   className: Cx.cx([
                         PeriodSelector.defaultStyle,
-                        PeriodSelector.styleOnOff(Caml_obj.caml_equal(period, /* Yesterday */1))
+                        PeriodSelector.styleOnOff(Caml_obj.equal(period, /* Yesterday */1))
                       ]),
                   type: "button",
                   onClick: (function (param) {
-                      return setPeriod(onSelect, /* Yesterday */1, to_);
+                      setPeriod(onSelect, /* Yesterday */1, to_);
                     })
                 }, "어제"), React.createElement("button", {
                   className: Cx.cx([
                         PeriodSelector.defaultStyle,
-                        PeriodSelector.styleOnOff(Caml_obj.caml_equal(period, /* ThisMonth */2))
+                        PeriodSelector.styleOnOff(Caml_obj.equal(period, /* ThisMonth */2))
                       ]),
                   type: "button",
                   onClick: (function (param) {
-                      return setPeriod(onSelect, /* ThisMonth */2, to_);
+                      setPeriod(onSelect, /* ThisMonth */2, to_);
                     })
                 }, "이번달"), React.createElement("button", {
                   className: Cx.cx([
                         PeriodSelector.defaultStyle,
-                        PeriodSelector.styleOnOff(Caml_obj.caml_equal(period, /* LastMonth */3))
+                        PeriodSelector.styleOnOff(Caml_obj.equal(period, /* LastMonth */3))
                       ]),
                   type: "button",
                   onClick: (function (param) {
-                      return setPeriod(onSelect, /* LastMonth */3, to_);
+                      setPeriod(onSelect, /* LastMonth */3, to_);
                     })
                 }, "지난달"));
 }
@@ -103,6 +103,5 @@ export {
   getPeriod ,
   setPeriod ,
   make ,
-  
 }
 /* react Not a pure module */

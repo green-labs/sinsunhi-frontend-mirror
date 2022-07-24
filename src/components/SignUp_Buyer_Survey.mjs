@@ -31,9 +31,9 @@ function SignUp_Buyer_Survey(Props) {
     var match$1 = user$p.email;
     var match$2 = user$p.phone;
     userPrefill = match$1 !== undefined ? (
-        match$2 !== undefined ? "crtk4=" + match$1 + "&d810t=" + match$2 : "crtk4=" + match$1
+        match$2 !== undefined ? "crtk4=" + match$1 + "&d810t=" + match$2 + "" : "crtk4=" + match$1 + ""
       ) : (
-        match$2 !== undefined ? "d810t=" + match$2 : undefined
+        match$2 !== undefined ? "d810t=" + match$2 + "" : undefined
       );
   }
   React.useEffect((function () {
@@ -66,6 +66,5 @@ var make = SignUp_Buyer_Survey;
 export {
   dropByK ,
   make ,
-  
 }
 /* Env Not a pure module */

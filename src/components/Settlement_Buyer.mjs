@@ -41,7 +41,7 @@ function Settlement_Buyer$Item$Table(Props) {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "whitespace-nowrap"
-                    }, Locale.Float.show(undefined, settlement.productPrice, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, settlement.productPrice, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "block"
@@ -114,7 +114,7 @@ function Settlement_Buyer$Item$Card(Props) {
                               className: "w-20 text-gray-gl"
                             }, "상품금액"), React.createElement("span", {
                               className: "ml-2 "
-                            }, Locale.Float.show(undefined, settlement.productPrice, 0) + "원")), React.createElement("div", {
+                            }, "" + Locale.Float.show(undefined, settlement.productPrice, 0) + "원")), React.createElement("div", {
                           className: "flex mt-4"
                         }, React.createElement("span", {
                               className: "w-20 text-gray-gl"
@@ -132,7 +132,7 @@ function Settlement_Buyer$Item$Card(Props) {
                               className: "flex-1 pl-2"
                             }, React.createElement("span", {
                                   className: "block"
-                                }, Belt_Option.getWithDefault(settlement.receiverName, "-") + " " + Belt_Option.getWithDefault(settlement.receiverPhone, "-")), React.createElement("span", {
+                                }, "" + Belt_Option.getWithDefault(settlement.receiverName, "-") + " " + Belt_Option.getWithDefault(settlement.receiverPhone, "-") + ""), React.createElement("span", {
                                   className: "block mt-1"
                                 }, Belt_Option.getWithDefault(settlement.receiverAddress, "-")), React.createElement("span", {
                                   className: "block mt-1"
@@ -189,6 +189,5 @@ export {
   formatTime ,
   Item ,
   make ,
-  
 }
 /* Badge Not a pure module */

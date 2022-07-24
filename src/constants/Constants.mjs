@@ -17,6 +17,5 @@ export {
   pageDisplySize ,
   defaultCountPerPage ,
   countsPerPage ,
-  
 }
 /* No side effect */

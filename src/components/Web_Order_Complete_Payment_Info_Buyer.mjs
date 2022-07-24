@@ -6,19 +6,19 @@ import * as Skeleton from "./Skeleton.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as WebOrderCompletePaymentInfoBuyerFragment_graphql from "../__generated__/WebOrderCompletePaymentInfoBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(WebOrderCompletePaymentInfoBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(WebOrderCompletePaymentInfoBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(WebOrderCompletePaymentInfoBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(WebOrderCompletePaymentInfoBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(WebOrderCompletePaymentInfoBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -42,6 +42,7 @@ var Fragment = {
   wosDeliveryType_decode: Fragment_wosDeliveryType_decode,
   wosDeliveryType_fromString: Fragment_wosDeliveryType_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -116,8 +117,8 @@ function Web_Order_Complete_Payment_Info_Buyer(Props) {
   if (wosOrder === undefined) {
     return React.createElement(Web_Order_Complete_Payment_Info_Buyer$Placeholder, {});
   }
-  var totalDeliveryCost = wosOrder.totalDeliveryCost;
   var totalOrderPrice = wosOrder.totalOrderPrice;
+  var totalDeliveryCost = wosOrder.totalDeliveryCost;
   var deliveryType = Belt_Option.flatMap(Belt_Array.get(wosOrder.orderProducts, 0), (function (a) {
           return Belt_Option.map(a, (function (b) {
                         return b.deliveryType;
@@ -149,7 +150,7 @@ function Web_Order_Complete_Payment_Info_Buyer(Props) {
                           className: "text-text-L2"
                         }, "총 결제금액"), React.createElement("span", {
                           className: "text-xl xl:text-lg text-primary font-bold"
-                        }, Locale.Int.show(undefined, match$1[0] + match$1[1] | 0) + "원"))));
+                        }, "" + Locale.Int.show(undefined, match$1[0] + match$1[1] | 0) + "원"))));
 }
 
 var make = Web_Order_Complete_Payment_Info_Buyer;
@@ -160,6 +161,5 @@ export {
   makePrice ,
   Placeholder ,
   make ,
-  
 }
 /* react Not a pure module */

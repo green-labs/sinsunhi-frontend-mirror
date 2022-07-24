@@ -116,6 +116,5 @@ var Custom = {
 export {
   Custom ,
   ToastProvider ,
-  
 }
 /* container Not a pure module */

@@ -6,6 +6,5 @@ var make = CloseSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

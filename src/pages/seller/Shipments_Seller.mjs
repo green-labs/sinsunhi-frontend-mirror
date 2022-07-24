@@ -96,7 +96,7 @@ function Shipments_Seller$Shipments(Props) {
                         className: "font-bold"
                       }, "내역", React.createElement("span", {
                             className: "ml-1 text-green-gl font-normal"
-                          }, String(shipments$1.count) + "건")), React.createElement("div", {
+                          }, "" + String(shipments$1.count) + "건")), React.createElement("div", {
                         className: "flex flex-col lg:flex-row mt-4 lg:mt-0"
                       }, React.createElement("div", {
                             className: "flex items-center"
@@ -147,6 +147,5 @@ export {
   List ,
   Shipments ,
   make ,
-  
 }
 /* react Not a pure module */

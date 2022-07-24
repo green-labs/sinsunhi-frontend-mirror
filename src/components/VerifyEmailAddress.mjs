@@ -117,7 +117,7 @@ function VerifyEmailAddress(Props) {
           return true;
         });
     var email = param.state.values.email;
-    FetchHelper.get(Env.restApiUrl + "/user/check-duplicate-email?email=" + email, (function (json) {
+    FetchHelper.get("" + Env.restApiUrl + "/user/check-duplicate-email?email=" + email + "", (function (json) {
             var json$p = response_decode(json);
             if (json$p.TAG === /* Ok */0) {
               if (json$p._0.data) {
@@ -131,16 +131,15 @@ function VerifyEmailAddress(Props) {
             } else {
               Curry._2(onEmailChange, email, undefined);
             }
-            return setLoading(function (param) {
-                        return false;
-                      });
+            setLoading(function (param) {
+                  return false;
+                });
           }), (function (param) {
             Curry._2(onEmailChange, email, undefined);
-            return setLoading(function (param) {
-                        return false;
-                      });
+            setLoading(function (param) {
+                  return false;
+                });
           }));
-    
   };
   var form = Curry._7(Form.use, initialState, /* Schema */{
         _0: Belt_Array.concatMany([Curry._3(Form.ReSchema.Validation.email, "이메일을 확인해주세요.", undefined, /* Email */0)])
@@ -178,7 +177,7 @@ function VerifyEmailAddress(Props) {
                           type: "submit",
                           onClick: (function (param) {
                               return ReactEvents.interceptingHandler((function (param) {
-                                            return Curry._1(form.submit, undefined);
+                                            Curry._1(form.submit, undefined);
                                           }), param);
                             })
                         }, "중복확인"))), React.createElement(Dialog.make, {
@@ -188,13 +187,12 @@ function VerifyEmailAddress(Props) {
                       }, "이미 가입한 계정입니다.\n로그인하시거나 비밀번호 찾기를 해주세요."),
                   onCancel: (function (param) {
                       Curry._4(form.setFieldValue, /* Email */0, "", true, undefined);
-                      return setShowEmailExisted(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowEmailExisted(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
-                      router.push("/buyer/signin/find-id-password?mode=reset-password&uid=" + form.values.email);
-                      
+                      router.push("/buyer/signin/find-id-password?mode=reset-password&uid=" + form.values.email + "");
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "비밀번호 찾기",
@@ -213,6 +211,5 @@ export {
   btnStyle ,
   btnStyleDisabled ,
   make ,
-  
 }
 /* Form Not a pure module */

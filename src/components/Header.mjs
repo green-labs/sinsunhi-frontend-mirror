@@ -146,7 +146,7 @@ function Header$Seller(Props) {
                             }))), React.createElement("div", {
                       className: "flex flex-row overflow-x-scroll scrollbar-hide"
                     }, React.createElement(Link, {
-                          href: "/seller/shipments?from=" + Format(SubDays(new Date(), 7), "yyyy-MM-dd") + "&to=" + Format(new Date(), "yyyy-MM-dd"),
+                          href: "/seller/shipments?from=" + Format(SubDays(new Date(), 7), "yyyy-MM-dd") + "&to=" + Format(new Date(), "yyyy-MM-dd") + "",
                           passHref: true,
                           children: React.createElement("a", {
                                 className: "text-lg font-bold text-green-gl px-2 cursor-pointer min-w-max"
@@ -212,6 +212,5 @@ export {
   User ,
   Seller ,
   Admin ,
-  
 }
 /* Env Not a pure module */

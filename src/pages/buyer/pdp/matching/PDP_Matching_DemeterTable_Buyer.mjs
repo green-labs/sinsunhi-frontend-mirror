@@ -7,20 +7,20 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPMatchingDemeterTableBuyer_fragment_graphql from "../../../../__generated__/PDPMatchingDemeterTableBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPMatchingDemeterTableBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPMatchingDemeterTableBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPMatchingDemeterTableBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPMatchingDemeterTableBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPMatchingDemeterTableBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -32,6 +32,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -196,13 +197,13 @@ function PDP_Matching_DemeterTable_Buyer(Props) {
                           className: "col-start-3 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.higherMax, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.higherMax, (function (eta) {
                                         return Curry._3(func, undefined, eta, 0);
                                       })), "-") + "원")), React.createElement("div", {
                           className: "col-start-4 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.higherMin, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.higherMin, (function (eta) {
                                         return Curry._3(func$1, undefined, eta, 0);
                                       })), "-") + "원"))), React.createElement("div", {
                       className: "grid grid-cols-4 grid-flow-row py-2"
@@ -214,13 +215,13 @@ function PDP_Matching_DemeterTable_Buyer(Props) {
                           className: "col-start-3 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.meanMax, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.meanMax, (function (eta) {
                                         return Curry._3(func$2, undefined, eta, 0);
                                       })), "-") + "원")), React.createElement("div", {
                           className: "col-start-4 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.meanMin, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.meanMin, (function (eta) {
                                         return Curry._3(func$3, undefined, eta, 0);
                                       })), "-") + "원"))), React.createElement("div", {
                       className: "grid grid-cols-4 grid-flow-row py-2"
@@ -232,13 +233,13 @@ function PDP_Matching_DemeterTable_Buyer(Props) {
                           className: "col-start-3 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.lowerMax, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.lowerMax, (function (eta) {
                                         return Curry._3(func$4, undefined, eta, 0);
                                       })), "-") + "원")), React.createElement("div", {
                           className: "col-start-4 text-right"
                         }, React.createElement("span", {
                               className: "font-bold"
-                            }, Belt_Option.getWithDefault(Belt_Option.map(match$1.lowerMin, (function (eta) {
+                            }, "" + Belt_Option.getWithDefault(Belt_Option.map(match$1.lowerMin, (function (eta) {
                                         return Curry._3(func$5, undefined, eta, 0);
                                       })), "-") + "원")))), React.createElement("div", {
                   className: "text-right text-xs text-gray-500 px-5"
@@ -251,6 +252,5 @@ export {
   Fragment ,
   TableParser ,
   make ,
-  
 }
 /* react Not a pure module */

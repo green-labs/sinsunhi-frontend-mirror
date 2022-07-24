@@ -42,9 +42,9 @@ function Order_Admin_Uncompleted$Item$Table(Props) {
                       disabled: match$1 === undefined,
                       type: "button",
                       onClick: (function (param) {
-                          return setShowDetail(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowDetail(function (param) {
+                                return /* Show */0;
+                              });
                         })
                     }, "조회하기")), React.createElement("div", {
                   className: "table-cell p-2 align-top"
@@ -65,9 +65,9 @@ function Order_Admin_Uncompleted$Item$Table(Props) {
                         className: "bg-white transform transition-all rounded-xl py-10 px-7"
                       }, React.createElement("h3", {
                             className: "text-2xl font-bold text-left"
-                          }, order.name + "님의 주문 내역"), React.createElement("div", {
+                          }, "" + order.name + "님의 주문 내역"), React.createElement("div", {
                             className: "flex justify-end text-gray-500 mt-4"
-                          }, "총 잔액: " + String(order.currentDeposit)), React.createElement("div", {
+                          }, "총 잔액: " + String(order.currentDeposit) + ""), React.createElement("div", {
                             className: "block overflow-y-auto overscroll-contain max-h-50"
                           }, React.createElement("div", {
                                 className: "table mt-4 text-sm"
@@ -107,16 +107,16 @@ function Order_Admin_Uncompleted$Item$Table(Props) {
                                                                     className: "table-cell p-3 border-b"
                                                                   }, React.createElement("span", {
                                                                         className: "block mt-1"
-                                                                      }, Locale.Float.show(undefined, detail.productPrice, 0) + "원"), React.createElement("span", {
+                                                                      }, "" + Locale.Float.show(undefined, detail.productPrice, 0) + "원"), React.createElement("span", {
                                                                         className: "block mt-1"
                                                                       }, detail.quantity)));
                                                   }));
                                     })))), React.createElement("button", {
                             className: "mt-8 p-4 w-full sm:w-2/3 lg:w-1/2 bg-gray-200 rounded-xl hover:bg-green-gl-dark font-bold",
                             onClick: (function (param) {
-                                return setShowDetail(function (param) {
-                                            return /* Hide */1;
-                                          });
+                                setShowDetail(function (param) {
+                                      return /* Hide */1;
+                                    });
                               })
                           }, "확인"))
                 }));
@@ -145,6 +145,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

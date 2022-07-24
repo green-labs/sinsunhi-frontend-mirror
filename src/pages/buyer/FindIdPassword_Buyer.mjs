@@ -58,7 +58,6 @@ function FindIdPassword_Buyer$FindId(Props) {
   var phoneNumberInputRef = React.useRef(null);
   React.useEffect((function () {
           ReactUtil.focusElementByRef(phoneNumberInputRef);
-          
         }), []);
   var tmp;
   switch (match[0]) {
@@ -85,8 +84,7 @@ function FindIdPassword_Buyer$FindId(Props) {
                 }, React.createElement("button", {
                       className: "btn-level1",
                       onClick: (function (param) {
-                          router.push("/buyer/signin?uid=" + Belt_Option.getWithDefault(Belt_Option.flatMap(uids, Garter_Array.first), ""));
-                          
+                          router.push("/buyer/signin?uid=" + Belt_Option.getWithDefault(Belt_Option.flatMap(uids, Garter_Array.first), "") + "");
                         })
                     }, "로그인")));
         break;
@@ -99,7 +97,6 @@ function FindIdPassword_Buyer$FindId(Props) {
                       className: "btn-level1",
                       onClick: (function (param) {
                           router.push("/buyer/signup");
-                          
                         })
                     }, "회원가입")), React.createElement("div", {
                   className: "flex h-13 mt-4"
@@ -107,7 +104,6 @@ function FindIdPassword_Buyer$FindId(Props) {
                       className: "w-full text-enabled-L1 bg-surface rounded-xl whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-1",
                       onClick: (function (param) {
                           router.push("/buyer");
-                          
                         })
                     }, "메인으로")));
         break;
@@ -164,24 +160,23 @@ function FindIdPassword_Buyer$ResetPassword(Props) {
     Belt_Option.map(JSON.stringify({
               uid: email
             }), (function (body) {
-            return FetchHelper.post(Env.restApiUrl + "/user/password-reset", body, (function (param) {
-                          return setShowResetSuccess(function (param) {
-                                      return /* Show */0;
-                                    });
+            return FetchHelper.post("" + Env.restApiUrl + "/user/password-reset", body, (function (param) {
+                          setShowResetSuccess(function (param) {
+                                return /* Show */0;
+                              });
                         }), (function (param) {
-                          return setShowResetError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowResetError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   var form = Curry._7(Form.use, initialState, /* Schema */{
         _0: Belt_Array.concatMany([Curry._3(Form.ReSchema.Validation.email, "이메일을 입력해주세요.", undefined, /* Email */0)])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var match$2 = form.values.email !== "";
@@ -190,7 +185,6 @@ function FindIdPassword_Buyer$ResetPassword(Props) {
   var emailInputRef = React.useRef(null);
   React.useEffect((function () {
           ReactUtil.focusElementByRef(emailInputRef);
-          
         }), []);
   var partial_arg = Curry._1(form.handleChange, /* Email */0);
   return React.createElement(React.Fragment, undefined, React.createElement("h2", {
@@ -229,7 +223,6 @@ function FindIdPassword_Buyer$ResetPassword(Props) {
                           }, form.values.email), "로 \n비밀번호 재설정 메일을 전송했습니다.\n메일함을 확인해주세요.\n\n*신선하이에 가입한 회원이 아닐 경우 \n이메일이 전송되지 않습니다."),
                   onConfirm: (function (param) {
                       router.replace("/buyer/signin");
-                      
                     }),
                   textOnConfirm: "확인"
                 }), React.createElement(Dialog.make, {
@@ -238,9 +231,9 @@ function FindIdPassword_Buyer$ResetPassword(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "비밀번호 재설정 요청을 실패하였습니다.\n다시 시도해주세요."),
                   onConfirm: (function (param) {
-                      return setShowResetError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowResetError(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnConfirm: "확인"
                 }));
@@ -257,7 +250,7 @@ function FindIdPassword_Buyer$Tab(Props) {
   var mode = Props.mode;
   var router = Router.useRouter();
   var style = function (self, mode) {
-    if (Caml_obj.caml_equal(self, mode)) {
+    if (Caml_obj.equal(self, mode)) {
       return "text-center text-lg py-4 font-bold border-b border-b-enabled-L1";
     } else {
       return "text-center text-lg py-4 border-b border-b-enabled-L5";
@@ -266,20 +259,19 @@ function FindIdPassword_Buyer$Tab(Props) {
   var handleOnClick = function (self) {
     var query = Js_dict.fromArray(Js_dict.entries(router.query));
     query["mode"] = self ? "reset-password" : "find-id";
-    router.push(router.pathname + "?" + new URLSearchParams(query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(query).toString() + "");
   };
   return React.createElement("ul", {
               className: "w-full grid grid-cols-2"
             }, React.createElement("li", {
                   className: style(/* FindId */0, mode),
                   onClick: (function (param) {
-                      return handleOnClick(/* FindId */0);
+                      handleOnClick(/* FindId */0);
                     })
                 }, "아이디 찾기"), React.createElement("li", {
                   className: style(/* ResetPassword */1, mode),
                   onClick: (function (param) {
-                      return handleOnClick(/* ResetPassword */1);
+                      handleOnClick(/* ResetPassword */1);
                     })
                 }, "비밀번호 찾기"));
 }
@@ -350,6 +342,5 @@ export {
   $$default ,
   $$default as default,
   getServerSideProps ,
-  
 }
 /* Form Not a pure module */

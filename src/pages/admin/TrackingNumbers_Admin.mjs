@@ -165,16 +165,13 @@ function TrackingNumbers_Admin$Orders(Props) {
           setOrdersToPacking(function (param) {
                 
               });
-          
         }), [router.query]);
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var orders$p = CustomHooks.OrdersAdmin.orders_decode(status._0);
     count = orders$p.TAG === /* Ok */0 ? String(orders$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   var handleOnCheckOrder = function (orderProductNo, e) {
     var checked = e.target.checked;
@@ -185,9 +182,9 @@ function TrackingNumbers_Admin$Orders(Props) {
                 });
     }
     var newOrdersToPacking$1 = Belt_SetString.remove(ordersToPacking, orderProductNo);
-    return setOrdersToPacking(function (param) {
-                return newOrdersToPacking$1;
-              });
+    setOrdersToPacking(function (param) {
+          return newOrdersToPacking$1;
+        });
   };
   var check = function (orderProductNo) {
     return Belt_SetString.has(ordersToPacking, orderProductNo);
@@ -212,9 +209,9 @@ function TrackingNumbers_Admin$Orders(Props) {
                     })), (function (order) {
                   return order.orderProductNo;
                 }))) : undefined;
-    return setOrdersToPacking(function (param) {
-                return allOrderProductNo;
-              });
+    setOrdersToPacking(function (param) {
+          return allOrderProductNo;
+        });
   };
   var countOfChecked = Belt_SetString.size(ordersToPacking);
   var changeOrdersToPacking = function (orders) {
@@ -224,7 +221,7 @@ function TrackingNumbers_Admin$Orders(Props) {
     Belt_Option.map(JSON.stringify({
               "order-product-numbers": orders
             }), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/packing", body, 3, (function (res) {
+            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/packing", body, 3, (function (res) {
                           var res$p = response_decode(res);
                           var result;
                           if (res$p.TAG === /* Ok */0) {
@@ -245,15 +242,14 @@ function TrackingNumbers_Admin$Orders(Props) {
                           setOrdersToPacking(function (param) {
                                 
                               });
-                          mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                          return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                         }), (function (param) {
-                          return setShowPackingError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowPackingError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   var isTotalSelected = Belt_Option.isNone(Js_dict.get(router.query, "status"));
   var isCreateSelected = Belt_Option.isSome(Belt_Option.keep(Js_dict.get(router.query, "status"), (function (status) {
@@ -275,7 +271,7 @@ function TrackingNumbers_Admin$Orders(Props) {
                                   className: "font-bold"
                                 }, "주문내역", React.createElement("span", {
                                       className: "ml-1 text-green-gl font-normal"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex items-center"
                                 }, React.createElement(Select_CountPerPage.make, {
                                       className: "mr-2"
@@ -312,12 +308,12 @@ function TrackingNumbers_Admin$Orders(Props) {
                             className: "font-bold"
                           }, "선택한 " + String(countOfChecked) + "개"), "의 주문을\n상품준비중으로 변경하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowPackingConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
-                      return changeOrdersToPacking(Belt_SetString.toArray(ordersToPacking));
+                      changeOrdersToPacking(Belt_SetString.toArray(ordersToPacking));
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -325,9 +321,9 @@ function TrackingNumbers_Admin$Orders(Props) {
                   isShow: match$3[0],
                   children: null,
                   onCancel: (function (param) {
-                      return setShowNothingToPacking(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToPacking(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }, React.createElement("a", {
@@ -347,15 +343,15 @@ function TrackingNumbers_Admin$Orders(Props) {
                               if ((totalCount - updateCount | 0) > 0) {
                                 return React.createElement(React.Fragment, undefined, React.createElement("span", {
                                                 className: "font-bold"
-                                              }, String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 상품준비중으로 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 바이어 주문취소 등의 이유로 상품준비중으로 처리되지 못했습니다");
+                                              }, "" + String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 상품준비중으로 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 바이어 주문취소 등의 이유로 상품준비중으로 처리되지 못했습니다");
                               } else {
-                                return String(totalCount) + "개의 주문을 상품준비중으로 변경에 성공하였습니다.";
+                                return "" + String(totalCount) + "개의 주문을 상품준비중으로 변경에 성공하였습니다.";
                               }
                             }))),
                   onConfirm: (function (param) {
-                      return setShowPackingSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$6[0],
@@ -363,9 +359,9 @@ function TrackingNumbers_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "상품준비중 변경에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowPackingError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -393,6 +389,5 @@ export {
   response_decode ,
   Orders ,
   make ,
-  
 }
 /* Env Not a pure module */

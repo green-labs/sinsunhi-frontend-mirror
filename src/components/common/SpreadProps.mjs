@@ -10,6 +10,5 @@ var make = SpreadProps;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

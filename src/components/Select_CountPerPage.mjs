@@ -21,12 +21,11 @@ function Select_CountPerPage(Props) {
     var limit = e.target.value;
     router.query["limit"] = limit;
     router.query["offset"] = "0";
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var displayCount = function (q) {
-    return Belt_Option.mapWithDefault(getCountPerPage(q), String(Constants.defaultCountPerPage) + "개씩 보기", (function (limit) {
-                  return String(limit) + "개씩 보기";
+    return Belt_Option.mapWithDefault(getCountPerPage(q), "" + String(Constants.defaultCountPerPage) + "개씩 보기", (function (limit) {
+                  return "" + String(limit) + "개씩 보기";
                 }));
   };
   var tmp = {};
@@ -53,7 +52,7 @@ function Select_CountPerPage(Props) {
                             return React.createElement("option", {
                                         key: String(c),
                                         value: String(c)
-                                      }, String(c) + "개씩 보기");
+                                      }, "" + String(c) + "개씩 보기");
                           })))));
 }
 
@@ -62,6 +61,5 @@ var make = Select_CountPerPage;
 export {
   getCountPerPage ,
   make ,
-  
 }
 /* react Not a pure module */

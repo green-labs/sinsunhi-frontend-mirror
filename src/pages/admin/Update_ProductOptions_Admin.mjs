@@ -9,17 +9,18 @@ import * as Js_json from "rescript/lib/es6/js_json.js";
 import * as IconError from "../../components/svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Authorization from "../../utils/Authorization.mjs";
 import * as ReactHookForm from "../../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Product_Summary_Admin from "../../components/Product_Summary_Admin.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Add_ProductOption_Admin from "../../components/Add_ProductOption_Admin.mjs";
@@ -38,7 +39,7 @@ import * as UpdateProductOptionsAdminProductTypeFragment_graphql from "../../__g
 var inequalitySignRightIcon = InequalitySignRightSvg;
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(UpdateProductOptionsAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(UpdateProductOptionsAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -47,7 +48,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(UpdateProductOptionsAdminQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(UpdateProductOptionsAdminQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -65,38 +66,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, UpdateProductOptionsAdminQuery_graphql.node, UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, UpdateProductOptionsAdminQuery_graphql.node, UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: UpdateProductOptionsAdminQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: UpdateProductOptionsAdminQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, UpdateProductOptionsAdminQuery_graphql.node, UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, UpdateProductOptionsAdminQuery_graphql.node, UpdateProductOptionsAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(UpdateProductOptionsAdminQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(UpdateProductOptionsAdminQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(UpdateProductOptionsAdminQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(UpdateProductOptionsAdminQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionsAdminQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -105,10 +105,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = UpdateProductOptionsAdminQuery_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -119,13 +117,13 @@ var Query = {
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(UpdateProductOptionsAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateProductOptionsAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionsAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionsAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateProductOptionsAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -143,18 +141,19 @@ var Fragment = {
   productOptionStatus_decode: Fragment_productOptionStatus_decode,
   productOptionStatus_fromString: Fragment_productOptionStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt
 };
 
 function use$2(fRef) {
-  var data = Hooks.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductOptionsAdminProductTypeFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateProductOptionsAdminProductTypeFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -166,6 +165,7 @@ function useOpt$1(opt_fRef) {
 
 var ProductTypeFragment = {
   Types: undefined,
+  Operation: undefined,
   use: use$2,
   useOpt: useOpt$1
 };
@@ -189,14 +189,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? UpdateProductOptionsAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$3(param) {
-  var match = Hooks.useMutation(UpdateProductOptionsAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(UpdateProductOptionsAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -204,13 +204,13 @@ function use$3(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? UpdateProductOptionsAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, UpdateProductOptionsAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: UpdateProductOptionsAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -241,18 +241,6 @@ var Mutation_weightUnit_decode = UpdateProductOptionsAdminMutation_graphql.Utils
 
 var Mutation_weightUnit_fromString = UpdateProductOptionsAdminMutation_graphql.Utils.weightUnit_fromString;
 
-var Mutation_make_upsertProductOptionsInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_upsertProductOptionsInput;
-
-var Mutation_make_createProductOptionInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_createProductOptionInput;
-
-var Mutation_make_createProductOptionCostInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_createProductOptionCostInput;
-
-var Mutation_make_updateProductOptionInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionInput;
-
-var Mutation_make_updateProductOptionCostInput = UpdateProductOptionsAdminMutation_graphql.Utils.make_updateProductOptionCostInput;
-
-var Mutation_makeVariables = UpdateProductOptionsAdminMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   errorCode_decode: Mutation_errorCode_decode,
   errorCode_fromString: Mutation_errorCode_fromString,
@@ -264,12 +252,7 @@ var Mutation = {
   sizeUnit_fromString: Mutation_sizeUnit_fromString,
   weightUnit_decode: Mutation_weightUnit_decode,
   weightUnit_fromString: Mutation_weightUnit_fromString,
-  make_upsertProductOptionsInput: Mutation_make_upsertProductOptionsInput,
-  make_createProductOptionInput: Mutation_make_createProductOptionInput,
-  make_createProductOptionCostInput: Mutation_make_createProductOptionCostInput,
-  make_updateProductOptionInput: Mutation_make_updateProductOptionInput,
-  make_updateProductOptionCostInput: Mutation_make_updateProductOptionCostInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$3
@@ -625,8 +608,8 @@ function Update_ProductOptions_Admin$Presenter(Props) {
   var productType = use$2(query);
   var router = Router.useRouter();
   var productOptions = queryData.productOptions;
-  var productDisplayName = queryData.displayName;
   var productNodeId = queryData.id;
+  var productDisplayName = queryData.displayName;
   var match = ReactToastNotifications.useToasts();
   var addToast = match.addToast;
   var match$1 = React.useState(function () {
@@ -657,20 +640,20 @@ function Update_ProductOptions_Admin$Presenter(Props) {
       Curry.app(mutate, [
             (function (err) {
                 console.log(err);
-                return addToast(React.createElement("span", {
-                                className: "flex items-center"
-                              }, React.createElement(IconError.make, {
-                                    width: "24",
-                                    height: "24",
-                                    className: "mr-2"
-                                  }), err.message), {
-                            appearance: "error"
-                          });
+                addToast(React.createElement("span", {
+                          className: "flex items-center"
+                        }, React.createElement(IconError.make, {
+                              width: "24",
+                              height: "24",
+                              className: "mr-2"
+                            }), err.message), {
+                      appearance: "error"
+                    });
               }),
             (function (param, param$1) {
-                return setShowUpdateSuccess(function (param) {
-                            return /* Show */0;
-                          });
+                setShowUpdateSuccess(function (param) {
+                      return /* Show */0;
+                    });
               }),
             undefined,
             undefined,
@@ -699,13 +682,12 @@ function Update_ProductOptions_Admin$Presenter(Props) {
                 }), err$1.message), {
           appearance: "error"
         });
-    
   };
   var handleReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setShowInitialize(function (param) {
-                              return /* Show */0;
-                            });
+                  setShowInitialize(function (param) {
+                        return /* Show */0;
+                      });
                 }), param);
   };
   if (productType.NAME === "UnselectedUnionMember") {
@@ -736,16 +718,16 @@ function Update_ProductOptions_Admin$Presenter(Props) {
                           className: "text-gray-500 text-center whitespace-pre-wrap"
                         }, "단품 등록 페이지를", React.createElement("br", undefined), "초기화 하시겠습니까?"),
                     onCancel: (function (param) {
-                        return setShowInitialize(function (param) {
-                                    return /* Hide */1;
-                                  });
+                        setShowInitialize(function (param) {
+                              return /* Hide */1;
+                            });
                       }),
                     onConfirm: (function (param) {
                         reset(undefined);
                         trigger("");
-                        return setShowInitialize(function (param) {
-                                    return /* Hide */1;
-                                  });
+                        setShowInitialize(function (param) {
+                              return /* Hide */1;
+                            });
                       }),
                     textOnCancel: "닫기",
                     textOnConfirm: "초기화",
@@ -761,7 +743,6 @@ function Update_ProductOptions_Admin$Presenter(Props) {
                               return /* Hide */1;
                             });
                         router.reload(router.pathname);
-                        
                       }),
                     textOnCancel: "확인",
                     boxStyle: "text-center rounded-2xl"
@@ -835,6 +816,5 @@ export {
   Presenter ,
   Container ,
   make ,
-  
 }
 /* inequalitySignRightIcon Not a pure module */

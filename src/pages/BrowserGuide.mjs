@@ -14,14 +14,11 @@ var chromeIcon = ChromeSvg;
 function BrowserGuide(Props) {
   React.useEffect((function () {
           new Clipboard(".btn-link");
-          
         }), []);
   var showAlertCopyToClipboard = function (param) {
     Belt_Option.map(Caml_option.undefined_to_opt(typeof window === "undefined" ? undefined : window), (function (param) {
             window.alert("클립보드에 복사되었습니다.");
-            
           }));
-    
   };
   var locationOrigin = Belt_Option.mapWithDefault(Caml_option.undefined_to_opt(typeof window === "undefined" ? undefined : window), Env.originProd, (function (param) {
           return window.location.origin;
@@ -58,7 +55,7 @@ function BrowserGuide(Props) {
                                     className: "flex justify-center items-center py-3 bg-gray-100 rounded-xl mr-2"
                                   }, "바이어 마켓 주소 복사")),
                           props: {
-                            "data-clipboard-text": locationOrigin + "/buyer/signin"
+                            "data-clipboard-text": "" + locationOrigin + "/buyer/signin"
                           }
                         }), React.createElement(ReactUtil.SpreadProps.make, {
                           children: React.createElement("div", {
@@ -68,7 +65,7 @@ function BrowserGuide(Props) {
                                     className: "flex-1 flex justify-center items-center py-3 bg-gray-100 rounded-xl"
                                   }, "생산자 마켓 주소 복사")),
                           props: {
-                            "data-clipboard-text": locationOrigin + "/seller/signin"
+                            "data-clipboard-text": "" + locationOrigin + "/seller/signin"
                           }
                         }))));
 }
@@ -78,6 +75,5 @@ var make = BrowserGuide;
 export {
   chromeIcon ,
   make ,
-  
 }
 /* chromeIcon Not a pure module */

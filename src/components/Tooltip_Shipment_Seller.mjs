@@ -61,6 +61,5 @@ var MarketType = {
 export {
   $$Date ,
   MarketType ,
-  
 }
 /* react Not a pure module */

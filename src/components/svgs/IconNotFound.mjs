@@ -94,6 +94,5 @@ var make = IconNotFound;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

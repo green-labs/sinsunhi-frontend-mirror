@@ -5,12 +5,12 @@ import * as Editor from "../../../../components/Editor.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Footer_Buyer from "../../../../components/Footer_Buyer.mjs";
 import * as Header_Buyer from "../../../../components/Header_Buyer.mjs";
 import * as PDP_Image_Buyer from "../common/PDP_Image_Buyer.mjs";
 import * as PDP_Notice_Buyer from "../common/PDP_Notice_Buyer.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as PDP_Normal_Title_Buyer from "./PDP_Normal_Title_Buyer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDP_Normal_Modals_Buyer from "./PDP_Normal_Modals_Buyer.mjs";
@@ -24,13 +24,13 @@ import * as PDP_Normal_DeliveryGuide_Buyer from "./PDP_Normal_DeliveryGuide_Buye
 import * as PDP_Normal_QuantityInput_Buyer from "./PDP_Normal_QuantityInput_Buyer.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPNormalBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -48,6 +48,7 @@ var Fragment = {
   productStatus_decode: Fragment_productStatus_decode,
   productStatus_fromString: Fragment_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -283,6 +284,5 @@ export {
   PC ,
   MO ,
   make ,
-  
 }
 /* react Not a pure module */

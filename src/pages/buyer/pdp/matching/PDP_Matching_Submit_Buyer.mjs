@@ -18,7 +18,7 @@ function PDP_Matching_Submit_Buyer$MO$CTAContainer(Props) {
                       className: "w-full h-14 flex"
                     }, React.createElement("button", {
                           onClick: (function (param) {
-                              return ChannelTalk.showMessenger(undefined);
+                              ChannelTalk.showMessenger(undefined);
                             })
                         }, React.createElement("img", {
                               className: "w-14 h-14 mr-2",
@@ -45,13 +45,13 @@ function PDP_Matching_Submit_Buyer$MO(Props) {
                   user !== 0 ? React.createElement("button", {
                           className: btnStyle,
                           onClick: (function (param) {
-                              return setShowModal(function (param) {
-                                          return /* Show */{
-                                                  _0: /* Unauthorized */{
-                                                    _0: "로그인 후에\n견적을 받으실 수 있습니다."
-                                                  }
-                                                };
-                                        });
+                              setShowModal(function (param) {
+                                    return /* Show */{
+                                            _0: /* Unauthorized */{
+                                              _0: "로그인 후에\n견적을 받으실 수 있습니다."
+                                            }
+                                          };
+                                  });
                             })
                         }, buttonText) : React.createElement("button", {
                           className: disabledStyle,
@@ -65,7 +65,7 @@ function PDP_Matching_Submit_Buyer$MO(Props) {
                           className: btnStyle,
                           onClick: (function (param) {
                               Belt_Option.map(pid, (function (pid$p) {
-                                      var prim1_pathname = "/buyer/tradematch/ask-to-buy/apply/" + pid$p;
+                                      var prim1_pathname = "/buyer/tradematch/ask-to-buy/apply/" + pid$p + "";
                                       var prim1_query = Js_dict.fromArray([[
                                               "grade",
                                               selectedGroup
@@ -75,9 +75,7 @@ function PDP_Matching_Submit_Buyer$MO(Props) {
                                         query: prim1_query
                                       };
                                       router.push(prim1);
-                                      
                                     }));
-                              
                             })
                         }, buttonText)
                 )
@@ -91,6 +89,5 @@ var MO = {
 
 export {
   MO ,
-  
 }
 /* react Not a pure module */

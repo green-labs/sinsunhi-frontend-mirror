@@ -48,17 +48,17 @@ function OfflineOrders_UploadStatus_Admin$DownloadItem(Props) {
                         }, displayStatus(data.status)), match$1 !== undefined ? React.createElement("button", {
                             className: "ml-5 focus:outline-none underline text-text-L3",
                             onClick: (function (param) {
-                                return setShowError(function (param) {
-                                            return /* Show */0;
-                                          });
+                                setShowError(function (param) {
+                                      return /* Show */0;
+                                    });
                               })
                           }, "자세히보기") : null)), React.createElement(Dialog.make, {
                   isShow: match[0],
                   children: null,
                   onCancel: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기"
                 }, React.createElement("p", {
@@ -107,6 +107,5 @@ var make = OfflineOrders_UploadStatus_Admin;
 export {
   DownloadItem ,
   make ,
-  
 }
 /* react Not a pure module */

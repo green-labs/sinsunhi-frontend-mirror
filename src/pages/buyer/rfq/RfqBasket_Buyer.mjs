@@ -11,17 +11,18 @@ import * as DS_Button from "../../../components/common/element/DS_Button.mjs";
 import * as Garter_Fn from "@greenlabs/garter/src/Garter_Fn.mjs";
 import * as RfqCommon from "./RfqCommon.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../utils/CustomHooks.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as DS_TopNavigation from "../../../components/common/container/DS_TopNavigation.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RfqBasketBuyer_MeatParts_Query_graphql from "../../../__generated__/RfqBasketBuyer_MeatParts_Query_graphql.mjs";
@@ -33,7 +34,7 @@ import * as RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql from "../../.
 import * as RfqBasketBuyer_RfqRequestItemsMeat_Fragment_Query_graphql from "../../../__generated__/RfqBasketBuyer_RfqRequestItemsMeat_Fragment_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqBasketBuyer_Current_Request_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqBasketBuyer_Current_Request_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -42,7 +43,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqBasketBuyer_Current_Request_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqBasketBuyer_Current_Request_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -60,38 +61,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqBasketBuyer_Current_Request_Query_graphql.node, RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqBasketBuyer_Current_Request_Query_graphql.node, RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqBasketBuyer_Current_Request_Query_graphql.node, RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqBasketBuyer_Current_Request_Query_graphql.node, RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqBasketBuyer_Current_Request_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqBasketBuyer_Current_Request_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_Current_Request_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -100,10 +100,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var CurrentRequest_makeVariables = RfqBasketBuyer_Current_Request_Query_graphql.Utils.makeVariables;
-
 var CurrentRequest = {
-  makeVariables: CurrentRequest_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -114,7 +112,7 @@ var CurrentRequest = {
 };
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqBasketBuyer_MeatSpecies_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqBasketBuyer_MeatSpecies_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -123,7 +121,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$1(param) {
-  var match = Hooks.useQueryLoader(RfqBasketBuyer_MeatSpecies_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqBasketBuyer_MeatSpecies_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -141,38 +139,37 @@ function useLoader$1(param) {
 }
 
 function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqBasketBuyer_MeatSpecies_Query_graphql.node, RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqBasketBuyer_MeatSpecies_Query_graphql.node, RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqBasketBuyer_MeatSpecies_Query_graphql.node, RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqBasketBuyer_MeatSpecies_Query_graphql.node, RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$1(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqBasketBuyer_MeatSpecies_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqBasketBuyer_MeatSpecies_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_MeatSpecies_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -185,12 +182,10 @@ var MeatSpecies_meatSpeciesOrderBy_decode = RfqBasketBuyer_MeatSpecies_Query_gra
 
 var MeatSpecies_meatSpeciesOrderBy_fromString = RfqBasketBuyer_MeatSpecies_Query_graphql.Utils.meatSpeciesOrderBy_fromString;
 
-var MeatSpecies_makeVariables = RfqBasketBuyer_MeatSpecies_Query_graphql.Utils.makeVariables;
-
 var MeatSpecies = {
   meatSpeciesOrderBy_decode: MeatSpecies_meatSpeciesOrderBy_decode,
   meatSpeciesOrderBy_fromString: MeatSpecies_meatSpeciesOrderBy_fromString,
-  makeVariables: MeatSpecies_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader$1,
@@ -201,7 +196,7 @@ var MeatSpecies = {
 };
 
 function use$2(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqBasketBuyer_MeatParts_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqBasketBuyer_MeatParts_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -210,7 +205,7 @@ function use$2(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$2(param) {
-  var match = Hooks.useQueryLoader(RfqBasketBuyer_MeatParts_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqBasketBuyer_MeatParts_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -228,38 +223,37 @@ function useLoader$2(param) {
 }
 
 function $$fetch$2(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqBasketBuyer_MeatParts_Query_graphql.node, RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqBasketBuyer_MeatParts_Query_graphql.node, RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$2(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqBasketBuyer_MeatParts_Query_graphql.node, RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqBasketBuyer_MeatParts_Query_graphql.node, RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$2(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqBasketBuyer_MeatParts_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqBasketBuyer_MeatParts_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_MeatParts_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -268,10 +262,8 @@ function retain$2(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var MeatParts_makeVariables = RfqBasketBuyer_MeatParts_Query_graphql.Utils.makeVariables;
-
 var MeatParts = {
-  makeVariables: MeatParts_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$2,
   useLoader: useLoader$2,
@@ -301,27 +293,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_Query_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_Query_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$3(fRef) {
-  var data = Hooks.useFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -332,7 +324,7 @@ function useOpt(opt_fRef) {
 }
 
 function usePagination(fr) {
-  var p = Hooks.usePaginationFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fr);
+  var p = ReactRelay.usePaginationFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fr);
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -363,7 +355,7 @@ function usePagination(fr) {
 }
 
 function useBlockingPagination(fRef) {
-  var p = Hooks.useBlockingPaginationFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
+  var p = ReactRelay.useBlockingPaginationFragment(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.node, fRef);
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqBasketBuyer_RfqRequestItemsMeat_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -424,6 +416,7 @@ var RequestItemsMeat = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use$3,
   useOpt: useOpt,
   usePagination: usePagination,
@@ -454,14 +447,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$4(param) {
-  var match = Hooks.useMutation(RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -469,13 +462,13 @@ function use$4(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -490,12 +483,10 @@ var CreateRequestItemsMeat_rfqRequestItemStatus_decode = RfqBasketBuyer_CreateRe
 
 var CreateRequestItemsMeat_rfqRequestItemStatus_fromString = RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Utils.rfqRequestItemStatus_fromString;
 
-var CreateRequestItemsMeat_makeVariables = RfqBasketBuyer_CreateRequestItemsMeat_Mutation_graphql.Utils.makeVariables;
-
 var CreateRequestItemsMeat = {
   rfqRequestItemStatus_decode: CreateRequestItemsMeat_rfqRequestItemStatus_decode,
   rfqRequestItemStatus_fromString: CreateRequestItemsMeat_rfqRequestItemStatus_fromString,
-  makeVariables: CreateRequestItemsMeat_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$4
@@ -520,14 +511,14 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
               optimisticResponse: optimisticResponse !== undefined ? RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$5(param) {
-  var match = Hooks.useMutation(RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -535,13 +526,13 @@ function use$5(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -556,12 +547,10 @@ var DeleteRequestItemsMeat_errorCode_decode = RfqBasketBuyer_DeleteRequestItemsM
 
 var DeleteRequestItemsMeat_errorCode_fromString = RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Utils.errorCode_fromString;
 
-var DeleteRequestItemsMeat_makeVariables = RfqBasketBuyer_DeleteRequestItemsMeat_Mutation_graphql.Utils.makeVariables;
-
 var DeleteRequestItemsMeat = {
   errorCode_decode: DeleteRequestItemsMeat_errorCode_decode,
   errorCode_fromString: DeleteRequestItemsMeat_errorCode_fromString,
-  makeVariables: DeleteRequestItemsMeat_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation$1,
   use: use$5
@@ -593,7 +582,7 @@ function RfqBasket_Buyer$BasketListItems(Props) {
                                 "aria-selected": isSelected,
                                 className: "flex items-center min-h-[48px] mx-5 cursor-pointer tab-highlight-color",
                                 onClick: (function (param) {
-                                    return Curry._1(handleClickListitem, id);
+                                    Curry._1(handleClickListitem, id);
                                   })
                               }, React.createElement("div", {
                                     className: "flex flex-col justify-between truncate"
@@ -630,7 +619,6 @@ function RfqBasket_Buyer$Basket(Props) {
           DataGtm.push({
                 event: "Expose_view_RFQ_Livestock_SelectingPart"
               });
-          
         }), []);
   var query = use$1({
         orderBy: "PRIORITY"
@@ -680,8 +668,8 @@ function RfqBasket_Buyer$Basket(Props) {
             undefined,
             undefined,
             {
-              id: selectedItemMeat.node.id,
-              connections: [data.rfqRequestItemsMeat.__id]
+              connections: [data.rfqRequestItemsMeat.__id],
+              id: selectedItemMeat.node.id
             },
             undefined,
             undefined
@@ -695,17 +683,16 @@ function RfqBasket_Buyer$Basket(Props) {
             undefined,
             undefined,
             {
-              rfqRequestId: requestId,
+              connections: [data.rfqRequestItemsMeat.__id],
               meatPartId: meatPartId,
               meatSpeciesId: selectedId,
-              status: "DRAFT",
-              connections: [data.rfqRequestItemsMeat.__id]
+              rfqRequestId: requestId,
+              status: "DRAFT"
             },
             undefined,
             undefined
           ]);
     }
-    
   };
   var getLabelCount = function (speciesId, isDomestic) {
     var count = Belt_Array.keep(Belt_Array.keep(Belt_Array.map(data.rfqRequestItemsMeat.edges, (function (x) {
@@ -740,7 +727,6 @@ function RfqBasket_Buyer$Basket(Props) {
                                   } else {
                                     window.history.back();
                                   }
-                                  
                                 })
                             }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                   height: "32",
@@ -770,12 +756,12 @@ function RfqBasket_Buyer$Basket(Props) {
                                                     selected: selectedId === id && selectedDomestic === false,
                                                     labelNumber: getLabelCount(id, false),
                                                     onClick: (function (param) {
-                                                        return setSelectedTab(function (param) {
-                                                                    return [
-                                                                            id,
-                                                                            false
-                                                                          ];
-                                                                  });
+                                                        setSelectedTab(function (param) {
+                                                              return [
+                                                                      id,
+                                                                      false
+                                                                    ];
+                                                            });
                                                       })
                                                   })
                                             }), React.createElement(DS_Tab.LeftTab.Item.make, {
@@ -784,12 +770,12 @@ function RfqBasket_Buyer$Basket(Props) {
                                                     selected: selectedId === id && selectedDomestic === true,
                                                     labelNumber: getLabelCount(id, true),
                                                     onClick: (function (param) {
-                                                        return setSelectedTab(function (param) {
-                                                                    return [
-                                                                            id,
-                                                                            true
-                                                                          ];
-                                                                  });
+                                                        setSelectedTab(function (param) {
+                                                              return [
+                                                                      id,
+                                                                      true
+                                                                    ];
+                                                            });
                                                       })
                                                   })
                                             }));
@@ -807,8 +793,7 @@ function RfqBasket_Buyer$Basket(Props) {
                   label: selectedMeatsCountText > 0 ? "" + selectedMeatsCountText + "개 선택하기" : "선택하기",
                   disabled: selectedMeatsCountText <= 0,
                   onClick: (function (param) {
-                      router.push("/buyer/rfq/request/draft/list?requestId=" + requestId);
-                      
+                      router.push("/buyer/rfq/request/draft/list?requestId=" + requestId + "");
                     }),
                   dataGtm: "Click_RFQ_Livestock_SelectingPart"
                 }));
@@ -839,7 +824,6 @@ function RfqBasket_Buyer(Props) {
   } else {
     React.useEffect((function () {
             router.push("/buyer/rfq");
-            
           }), []);
     return null;
   }
@@ -854,6 +838,5 @@ export {
   BasketListItems ,
   Basket ,
   make ,
-  
 }
 /* react Not a pure module */

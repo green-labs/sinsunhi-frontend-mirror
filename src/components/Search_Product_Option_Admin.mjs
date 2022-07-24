@@ -31,9 +31,9 @@ function Search_Product_Option_Admin(Props) {
   var selectedCrop = match$1[0];
   var handleOnChageStatus = function (e) {
     var newStatus = e.target.value;
-    return setStatus(function (param) {
-                return Belt_Option.getWithDefault(Select_Product_Option_Status.decodeStatus(newStatus), /* ALL */0);
-              });
+    setStatus(function (param) {
+          return Belt_Option.getWithDefault(Select_Product_Option_Status.decodeStatus(newStatus), /* ALL */0);
+        });
   };
   var onSubmit = function (param) {
     var state = param.state;
@@ -56,21 +56,20 @@ function Search_Product_Option_Admin(Props) {
     router.query["category-id"] = match[0];
     router.query["label"] = match[1];
     router.query["offset"] = "0";
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Product_Form_Admin.Form.use, Query_Product_Form_Admin.initialState, /* Schema */{
         _0: Belt_Array.concatMany([])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnChangeCropOrCultivar = function (e) {
     ReForm__Helpers.handleChange(Curry._1(form.handleChange, /* Std */2), e);
-    return setSelectedCrop(function (param) {
-                return /* NotSelected */0;
-              });
+    setSelectedCrop(function (param) {
+          return /* NotSelected */0;
+        });
   };
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -103,7 +102,6 @@ function Search_Product_Option_Admin(Props) {
                   }
                   
                 }));
-          
         }), [router.query]);
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -113,15 +111,15 @@ function Search_Product_Option_Admin(Props) {
                   setStatus(function (param) {
                         return /* ALL */0;
                       });
-                  return setSelectedCrop(function (param) {
-                              return /* NotSelected */0;
-                            });
+                  setSelectedCrop(function (param) {
+                        return /* NotSelected */0;
+                      });
                 }), param);
   };
   var handleChangeCrop = function (selection) {
-    return setSelectedCrop(function (param) {
-                return selection;
-              });
+    setSelectedCrop(function (param) {
+          return selection;
+        });
   };
   var partial_arg = Curry._1(form.handleChange, /* ProducerName */0);
   var partial_arg$1 = Curry._1(form.handleChange, /* ProductName */1);
@@ -235,6 +233,5 @@ export {
   Select ,
   Select_Crop_Std ,
   make ,
-  
 }
 /* Input Not a pure module */

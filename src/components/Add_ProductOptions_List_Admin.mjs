@@ -34,18 +34,18 @@ function Add_ProductOptions_List_Admin(Props) {
                   setApplyAll(function (param) {
                         return false;
                       });
-                  return prepend(formName, {}, undefined);
+                  prepend(formName, {}, undefined);
                 }), param);
   };
   var setTogether = function (fieldName, value) {
-    return Belt_Array.forEachWithIndex(Belt_Array.sliceToEnd(fields, 1), (function (index, param) {
-                  return setValue(formName + "." + String(index + 1 | 0) + "." + fieldName, value);
-                }));
+    Belt_Array.forEachWithIndex(Belt_Array.sliceToEnd(fields, 1), (function (index, param) {
+            setValue("" + formName + "." + String(index + 1 | 0) + "." + fieldName + "", value);
+          }));
   };
   var watchFirstCM = ReactHookForm.useWatch({
         name: [
-          formName + ".0.cut-off-time",
-          formName + ".0.memo"
+          "" + formName + ".0.cut-off-time",
+          "" + formName + ".0.memo"
         ]
       });
   React.useEffect((function () {
@@ -83,7 +83,7 @@ function Add_ProductOptions_List_Admin(Props) {
                   className: "flex flex-col mt-7 mb-3 gap-6"
                 }, Belt_Array.mapWithIndex(fields, (function (index, field) {
                         return React.createElement(Add_ProductOption_Admin.make, {
-                                    prefix: formName + "." + String(index),
+                                    prefix: "" + formName + "." + String(index) + "",
                                     index: index,
                                     remove: remove,
                                     prepend: prepend,
@@ -101,6 +101,5 @@ var make = Add_ProductOptions_List_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

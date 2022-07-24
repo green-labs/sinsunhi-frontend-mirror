@@ -96,6 +96,5 @@ export {
   status_decode ,
   toString ,
   make ,
-  
 }
 /* react Not a pure module */

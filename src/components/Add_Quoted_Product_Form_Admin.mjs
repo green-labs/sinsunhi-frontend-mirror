@@ -14,6 +14,7 @@ import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
 import * as DatePicker from "./DatePicker.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
@@ -21,13 +22,13 @@ import * as ProductForm from "../utils/ProductForm.mjs";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as ReactSelect from "./common/ReactSelect.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ReactHookForm$1 from "react-hook-form";
 import EndOfDay from "date-fns/endOfDay";
-import * as Hooks from "react-relay/hooks";
 import Async from "react-select/async";
 import StartOfDay from "date-fns/startOfDay";
 import * as Product_Detail_Editor from "./Product_Detail_Editor.mjs";
@@ -44,8 +45,6 @@ import * as Product_Detail_Description_Admin from "./Product_Detail_Description_
 import * as Product_Detail_Display_Categories from "./Product_Detail_Display_Categories.mjs";
 import * as AddQuotedProductFormAdminMutation_graphql from "../__generated__/AddQuotedProductFormAdminMutation_graphql.mjs";
 import * as AddQuotedProductFormAdminSelectProducerInputQuery_graphql from "../__generated__/AddQuotedProductFormAdminSelectProducerInputQuery_graphql.mjs";
-
-var makeVariables = AddQuotedProductFormAdminMutation_graphql.Utils.makeVariables;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -66,14 +65,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? AddQuotedProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(AddQuotedProductFormAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(AddQuotedProductFormAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -81,13 +80,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? AddQuotedProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, AddQuotedProductFormAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: AddQuotedProductFormAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -106,15 +105,12 @@ var Mutation_productStatus_decode = AddQuotedProductFormAdminMutation_graphql.Ut
 
 var Mutation_productStatus_fromString = AddQuotedProductFormAdminMutation_graphql.Utils.productStatus_fromString;
 
-var Mutation_make_imageInput = AddQuotedProductFormAdminMutation_graphql.Utils.make_imageInput;
-
 var Mutation = {
   errorCode_decode: Mutation_errorCode_decode,
   errorCode_fromString: Mutation_errorCode_fromString,
   productStatus_decode: Mutation_productStatus_decode,
   productStatus_fromString: Mutation_productStatus_fromString,
-  make_imageInput: Mutation_make_imageInput,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -415,7 +411,7 @@ function getTextInputStyle(disabled) {
 }
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -424,7 +420,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -442,38 +438,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -486,12 +481,10 @@ var Query_userRole_decode = AddQuotedProductFormAdminSelectProducerInputQuery_gr
 
 var Query_userRole_fromString = AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Utils.userRole_fromString;
 
-var Query_makeVariables = AddQuotedProductFormAdminSelectProducerInputQuery_graphql.Utils.makeVariables;
-
 var Query = {
   userRole_decode: Query_userRole_decode,
   userRole_fromString: Query_userRole_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader,
@@ -507,20 +500,20 @@ function Add_Quoted_Product_Form_Admin$SelectProducerInput(Props) {
         mode: "onChange"
       }, undefined);
   var handleLoadOptions = function (inputValue) {
-    return fetchPromised(RelayEnv.envSinsunMarket, {
-                  nameMatch: inputValue,
-                  role: "PRODUCER"
-                }, undefined, undefined, undefined).then(function (result) {
-                var result$p = Belt_Array.map(result.users.edges, (function (edge) {
-                        return /* Selected */{
-                                value: edge.node.id,
-                                label: Belt_Option.mapWithDefault(edge.node.bossName, edge.node.name, (function (boss) {
-                                        return edge.node.name + "(" + boss + ")";
-                                      }))
-                              };
-                      }));
-                return Promise.resolve(result$p);
-              });
+    return Js_promise.then_((function (result) {
+                  var result$p = Belt_Array.map(result.users.edges, (function (edge) {
+                          return /* Selected */{
+                                  value: edge.node.id,
+                                  label: Belt_Option.mapWithDefault(edge.node.bossName, edge.node.name, (function (boss) {
+                                          return "" + edge.node.name + "(" + boss + ")";
+                                        }))
+                                };
+                        }));
+                  return Promise.resolve(result$p);
+                }), fetchPromised(RelayEnv.envSinsunMarket, {
+                    nameMatch: inputValue,
+                    role: "PRODUCER"
+                  }, undefined, undefined, undefined));
   };
   return React.createElement("div", {
               className: "flex flex-col gap-2"
@@ -544,7 +537,7 @@ function Add_Quoted_Product_Form_Admin$SelectProducerInput(Props) {
                                               defaultOptions: false,
                                               loadOptions: Helper.Debounce.make1(handleLoadOptions, 500),
                                               onChange: (function (data) {
-                                                  return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, ReactSelect.encoderRule(data)));
+                                                  Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, ReactSelect.encoderRule(data)));
                                                 }),
                                               placeholder: "생산자명으로 찾기",
                                               noOptionsMessage: (function (param) {
@@ -781,7 +774,7 @@ function Add_Quoted_Product_Form_Admin$DisplayPriceInput(Props) {
                                       var validValue = Belt_Option.getWithDefault(Belt_Option.map(localeStringToFloat(value), (function (prim) {
                                                   return prim;
                                                 })), "");
-                                      return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, validValue));
+                                      Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, validValue));
                                     })
                                 });
                     }),
@@ -863,15 +856,15 @@ function Add_Quoted_Product_Form_Admin$OperationStatusInput(Props) {
                   isShow: match$1[0],
                   children: React.createElement("p", undefined, "영구판매중지 상태를 선택 후 저장하시면", React.createElement("br", undefined), "추후 해당 상품을 수정할 수 없습니다.", React.createElement("br", undefined), React.createElement("br", undefined), "영구판매중지 상태로 변경할까요?"),
                   onCancel: (function (param) {
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setValue(name, Select_Product_Operation_Status.Base.status_encode(/* RETIRE */3));
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "확인",
@@ -996,7 +989,7 @@ function Add_Quoted_Product_Form_Admin$NoticeAndDateInput$DateInput(Props) {
                   var tmp = {
                     id: match.name,
                     onChange: (function (e) {
-                        return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
+                        Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
                       }),
                     firstDayOfWeek: 0
                   };
@@ -1101,7 +1094,7 @@ function Add_Quoted_Product_Form_Admin$ThumbnailUploadInput(Props) {
                           return React.createElement(Upload_Thumbnail_Admin.make, {
                                       name: match.name,
                                       updateFn: (function (imageUrls) {
-                                          return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
+                                          Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
                                         }),
                                       value: Belt_Result.getWithDefault(Upload_Thumbnail_Admin.Form.image_decode(match.value), Upload_Thumbnail_Admin.Form.resetImage)
                                     });
@@ -1205,7 +1198,6 @@ function Add_Quoted_Product_Form_Admin$QuotedSuccessDialog(Props) {
                   }, React.createElement("span", undefined, "견적상품등록이 완료되었습니다.")),
               onCancel: (function (param) {
                   router.push("/admin/products");
-                  
                 }),
               textOnCancel: "확인",
               kindOfConfirm: /* Positive */0,
@@ -1238,38 +1230,50 @@ function makeQuotedProductVariables(form) {
         break;
     
   }
-  return Curry.app(makeVariables, [
-              ProductForm.makeCategoryId(form.productCategory.c5),
-              form.editor,
-              ProductForm.makeDisplayCategoryIds(form.displayCategories),
-              form.buyerProductName,
-              {
-                original: form.thumbnail.original,
-                thumb100x100: form.thumbnail.thumb100x100,
-                thumb400x400: form.thumbnail.thumb400x400,
-                thumb800x800: form.thumbnail.thumb800x800,
-                thumb1000x1000: form.thumbnail.thumb1000x1000,
-                thumb1920x1920: form.thumbnail.thumb1920x1920
-              },
-              form.producerProductName,
-              Belt_Option.keep(form.notice, (function (str) {
-                      return str !== "";
-                    })),
-              ProductForm.makeNoticeDate(form.noticeEndAt, (function (prim) {
-                      return EndOfDay(prim);
-                    })),
-              ProductForm.makeNoticeDate(form.noticeStartAt, (function (prim) {
-                      return StartOfDay(prim);
-                    })),
-              form.origin,
-              form.grade,
-              form.producerName.value,
-              Belt_Option.keep(form.documentURL, (function (str) {
-                      return str !== "";
-                    })),
-              tmp,
-              undefined
-            ]);
+  var tmp$1 = {
+    categoryId: ProductForm.makeCategoryId(form.productCategory.c5),
+    description: form.editor,
+    displayCategoryIds: ProductForm.makeDisplayCategoryIds(form.displayCategories),
+    displayName: form.buyerProductName,
+    grade: form.grade,
+    image: {
+      original: form.thumbnail.original,
+      thumb1000x1000: form.thumbnail.thumb1000x1000,
+      thumb100x100: form.thumbnail.thumb100x100,
+      thumb1920x1920: form.thumbnail.thumb1920x1920,
+      thumb400x400: form.thumbnail.thumb400x400,
+      thumb800x800: form.thumbnail.thumb800x800
+    },
+    name: form.producerProductName,
+    origin: form.origin,
+    producerId: form.producerName.value,
+    status: tmp
+  };
+  var tmp$2 = Belt_Option.keep(form.notice, (function (str) {
+          return str !== "";
+        }));
+  if (tmp$2 !== undefined) {
+    tmp$1.notice = tmp$2;
+  }
+  var tmp$3 = ProductForm.makeNoticeDate(form.noticeEndAt, (function (prim) {
+          return EndOfDay(prim);
+        }));
+  if (tmp$3 !== undefined) {
+    tmp$1.noticeEndAt = tmp$3;
+  }
+  var tmp$4 = ProductForm.makeNoticeDate(form.noticeStartAt, (function (prim) {
+          return StartOfDay(prim);
+        }));
+  if (tmp$4 !== undefined) {
+    tmp$1.noticeStartAt = tmp$4;
+  }
+  var tmp$5 = Belt_Option.keep(form.documentURL, (function (str) {
+          return str !== "";
+        }));
+  if (tmp$5 !== undefined) {
+    tmp$1.salesDocument = tmp$5;
+  }
+  return tmp$1;
 }
 
 function Add_Quoted_Product_Form_Admin(Props) {
@@ -1322,27 +1326,26 @@ function Add_Quoted_Product_Form_Admin(Props) {
                   undefined,
                   undefined
                 ]);
-            
           }));
     if (result.TAG === /* Ok */0) {
       return ;
     }
     console.log(result._0);
-    return addToast(React.createElement("div", {
-                    className: "flex items-center"
-                  }, React.createElement(IconError.make, {
-                        width: "24",
-                        height: "24",
-                        className: "mr-2"
-                      }), "오류가 발생하였습니다. 등록내용을 확인하세요."), {
-                appearance: "error"
-              });
+    addToast(React.createElement("div", {
+              className: "flex items-center"
+            }, React.createElement(IconError.make, {
+                  width: "24",
+                  height: "24",
+                  className: "mr-2"
+                }), "오류가 발생하였습니다. 등록내용을 확인하세요."), {
+          appearance: "error"
+        });
   };
   var handleReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setShowReset(function (param) {
-                              return /* Show */0;
-                            });
+                  setShowReset(function (param) {
+                        return /* Show */0;
+                      });
                 }), param);
   };
   return React.createElement(ReactHookForm.Provider.make, {
@@ -1410,15 +1413,15 @@ function Add_Quoted_Product_Form_Admin(Props) {
                         isShow: match$2[0],
                         children: React.createElement("p", undefined, "모든 내용을 초기화 하시겠어요?"),
                         onCancel: (function (param) {
-                            return setShowReset(function (param) {
-                                        return /* Hide */1;
-                                      });
+                            setShowReset(function (param) {
+                                  return /* Hide */1;
+                                });
                           }),
                         onConfirm: (function (param) {
                             reset(undefined);
-                            return setShowReset(function (param) {
-                                        return /* Hide */1;
-                                      });
+                            setShowReset(function (param) {
+                                  return /* Hide */1;
+                                });
                           }),
                         textOnCancel: "닫기",
                         textOnConfirm: "초기화",
@@ -1453,6 +1456,5 @@ export {
   QuotedSuccessDialog ,
   makeQuotedProductVariables ,
   make ,
-  
 }
 /* react Not a pure module */

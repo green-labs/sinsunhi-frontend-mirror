@@ -37,6 +37,5 @@ var make = IconCard;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

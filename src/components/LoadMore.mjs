@@ -14,6 +14,5 @@ var make = LoadMore;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

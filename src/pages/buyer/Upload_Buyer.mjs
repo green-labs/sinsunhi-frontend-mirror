@@ -28,7 +28,7 @@ function Upload_Buyer$UserDeposit(Props) {
         });
   } else if (status.TAG === /* Loaded */0) {
     var deposit$p = CustomHooks.UserDeposit.response_decode(status._0);
-    tmp = deposit$p.TAG === /* Ok */0 ? Locale.Float.show(undefined, deposit$p._0.data.deposit, 0) + "원" : React.createElement(Skeleton.Box.make, {
+    tmp = deposit$p.TAG === /* Ok */0 ? "" + Locale.Float.show(undefined, deposit$p._0.data.deposit, 0) + "원" : React.createElement(Skeleton.Box.make, {
             className: "w-40"
           });
   } else {
@@ -194,21 +194,20 @@ function Upload_Buyer(Props) {
                               setShowSuccess(function (param) {
                                     return /* Show */0;
                                   });
-                              mutate(Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID", undefined, undefined);
+                              mutate("" + Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID", undefined, undefined);
                               var target = "upload-status";
                               var el = document.getElementById(target);
-                              return Belt_Option.mapWithDefault((el == null) ? undefined : Caml_option.some(el), undefined, (function (el$p) {
-                                            el$p.scrollIntoView({
-                                                  behavior: "smooth",
-                                                  block: "start"
-                                                });
-                                            
-                                          }));
+                              Belt_Option.mapWithDefault((el == null) ? undefined : Caml_option.some(el), undefined, (function (el$p) {
+                                      el$p.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "start"
+                                          });
+                                    }));
                             }),
                           onFailure: (function (param) {
-                              return setShowError(function (param) {
-                                          return /* Show */0;
-                                        });
+                              setShowError(function (param) {
+                                    return /* Show */0;
+                                  });
                             }),
                           startIndex: 1
                         }), React.createElement("section", {
@@ -235,7 +234,7 @@ function Upload_Buyer(Props) {
                         }, "*가장 최근 요청한 3가지 등록건만 노출됩니다.")), React.createElement(UploadStatus_Buyer.make, {
                       kind: /* Buyer */1,
                       onChangeLatestUpload: (function (param) {
-                          return mutate(Env.restApiUrl + "/user/deposit?" + new URLSearchParams(router.query).toString(), undefined, true);
+                          mutate("" + Env.restApiUrl + "/user/deposit?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                         }),
                       uploadType: /* Order */0
                     }), React.createElement("p", {
@@ -246,9 +245,9 @@ function Upload_Buyer(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문서 업로드가 실행되었습니다. 성공여부를 꼭 주문서 업로드 결과에서 확인해주세요."),
                   onConfirm: (function (param) {
-                      return setShowSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$2[0],
@@ -256,9 +255,9 @@ function Upload_Buyer(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일 업로드에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -272,6 +271,5 @@ export {
   UserDeposit ,
   Tab ,
   make ,
-  
 }
 /* Env Not a pure module */

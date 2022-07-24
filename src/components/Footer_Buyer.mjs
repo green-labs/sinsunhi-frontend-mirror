@@ -56,7 +56,7 @@ function Footer_Buyer$PC(Props) {
                                       tmp.className = Caml_option.valFromOption(param.className);
                                     }
                                     return React.createElement("li", {
-                                                key: "footer-link-" + String(idx)
+                                                key: "footer-link-" + String(idx) + ""
                                               }, React.createElement(Link, {
                                                     href: param.url,
                                                     children: React.createElement("a", tmp, param.title)
@@ -81,7 +81,7 @@ function Footer_Buyer$PC(Props) {
                         }, React.createElement("button", {
                               className: "h-12 bg-green-50 border-green-500 border rounded-lg flex items-center px-4",
                               onClick: (function (param) {
-                                  return ChannelTalk.showMessenger(undefined);
+                                  ChannelTalk.showMessenger(undefined);
                                 })
                             }, React.createElement("img", {
                                   className: "w-[21px] h-[21px]",
@@ -139,7 +139,7 @@ function Footer_Buyer$MO(Props) {
                               }
                             ], (function (idx, param) {
                                 return React.createElement("li", {
-                                            key: "footer-link-" + String(idx)
+                                            key: "footer-link-" + String(idx) + ""
                                           }, React.createElement(Link, {
                                                 href: param.url,
                                                 children: React.createElement("a", {
@@ -177,7 +177,7 @@ function Footer_Buyer$MO(Props) {
                         }, React.createElement("button", {
                               className: "px-4 flex flex-1 bg-green-50 border-green-500 border rounded-lg items-center justify-center",
                               onClick: (function (param) {
-                                  return ChannelTalk.showMessenger(undefined);
+                                  ChannelTalk.showMessenger(undefined);
                                 })
                             }, React.createElement("img", {
                                   className: "w-[21px] h-[21px]",
@@ -205,6 +205,5 @@ export {
   kakaoIcon ,
   PC ,
   MO ,
-  
 }
 /* kakaoIcon Not a pure module */

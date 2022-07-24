@@ -15,7 +15,6 @@ function Terms(Props) {
                           className: "absolute right-0",
                           onClick: (function (param) {
                               window.history.back();
-                              
                             })
                         }, React.createElement(IconClose.make, {
                               height: "32",
@@ -92,6 +91,5 @@ var make = Terms;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

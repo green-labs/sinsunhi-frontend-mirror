@@ -3,8 +3,8 @@
 import * as React from "react";
 import * as IconArrow from "./svgs/IconArrow.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Select_Product_Type from "./Select_Product_Type.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Update_Normal_Product_Form_Admin from "./Update_Normal_Product_Form_Admin.mjs";
@@ -13,13 +13,13 @@ import * as Update_Matching_Product_Form_Admin from "./Update_Matching_Product_F
 import * as UpdateProductDetailAdminFragment_graphql from "../__generated__/UpdateProductDetailAdminFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(UpdateProductDetailAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateProductDetailAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateProductDetailAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateProductDetailAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateProductDetailAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -31,6 +31,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -76,7 +77,7 @@ function UpdateProduct_Detail_Admin(Props) {
                           stroke: "#262626"
                         }), React.createElement("span", undefined, "상품 수정")), React.createElement("h1", {
                       className: "text-text-L1 text-xl font-bold"
-                    }, product.name + " 수정")), React.createElement("div", undefined, React.createElement("div", {
+                    }, "" + product.name + " 수정")), React.createElement("div", undefined, React.createElement("div", {
                       className: "px-7 pt-7 mt-4 mx-4 bg-white rounded-t-md shadow-gl"
                     }, React.createElement("h2", {
                           className: "text-text-L1 text-lg font-bold"
@@ -95,6 +96,5 @@ var make = UpdateProduct_Detail_Admin;
 export {
   Fragment ,
   make ,
-  
 }
 /* react Not a pure module */

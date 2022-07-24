@@ -11,9 +11,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as BulkSaleProducerApplicationRejectedButtonMutation_graphql from "../__generated__/BulkSaleProducerApplicationRejectedButtonMutation_graphql.mjs";
@@ -37,14 +37,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProducerApplicationRejectedButtonMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProducerApplicationRejectedButtonMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -52,13 +52,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProducerApplicationRejectedButtonMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -73,15 +73,10 @@ var Mutation_bulkSaleApplicationProgress_decode = BulkSaleProducerApplicationRej
 
 var Mutation_bulkSaleApplicationProgress_fromString = BulkSaleProducerApplicationRejectedButtonMutation_graphql.Utils.bulkSaleApplicationProgress_fromString;
 
-var Mutation_make_bulkSaleApplicationProgressInput = BulkSaleProducerApplicationRejectedButtonMutation_graphql.Utils.make_bulkSaleApplicationProgressInput;
-
-var Mutation_makeVariables = BulkSaleProducerApplicationRejectedButtonMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   bulkSaleApplicationProgress_decode: Mutation_bulkSaleApplicationProgress_decode,
   bulkSaleApplicationProgress_fromString: Mutation_bulkSaleApplicationProgress_fromString,
-  make_bulkSaleApplicationProgressInput: Mutation_make_bulkSaleApplicationProgressInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -126,7 +121,7 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                   className: "dialog-overlay"
                 }), React.createElement(ReactDialog.Trigger, {
                   onClick: (function (param) {
-                      return Curry._1(_open, undefined);
+                      Curry._1(_open, undefined);
                     }),
                   children: React.createElement("span", {
                         className: "block mt-[10px]"
@@ -141,7 +136,7 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                                 className: "text-xl font-bold"
                               }, "판매 보류 사유"), React.createElement(ReactDialog.Close, {
                                 onClick: (function (param) {
-                                    return Curry._1(close, undefined);
+                                    Curry._1(close, undefined);
                                   }),
                                 children: React.createElement(IconClose.make, {
                                       height: "24",
@@ -182,7 +177,7 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                             className: "flex justify-center items-center mt-5"
                           }, React.createElement(ReactDialog.Close, {
                                 onClick: (function (param) {
-                                    return Curry._1(close, undefined);
+                                    Curry._1(close, undefined);
                                   }),
                                 children: React.createElement("span", {
                                       className: "btn-level6 py-3 px-5",
@@ -214,9 +209,9 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                                                                 }), err.message), {
                                                           appearance: "error"
                                                         });
-                                                    return setFormErrors(function (param) {
-                                                                return [];
-                                                              });
+                                                    setFormErrors(function (param) {
+                                                          return [];
+                                                        });
                                                   }),
                                                 (function (param, param$1) {
                                                     addToast(React.createElement("div", {
@@ -233,7 +228,7 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                                                     setFormErrors(function (param) {
                                                           return [];
                                                         });
-                                                    return Curry._1(refetchSummary, undefined);
+                                                    Curry._1(refetchSummary, undefined);
                                                   }),
                                                 undefined,
                                                 undefined,
@@ -249,9 +244,9 @@ function BulkSale_Producer_Application_Rejected_Button(Props) {
                                           return ;
                                         }
                                         var errors = input._0;
-                                        return setFormErrors(function (param) {
-                                                    return errors;
-                                                  });
+                                        setFormErrors(function (param) {
+                                              return errors;
+                                            });
                                       })
                                   }, "저장")))),
                   className: "dialog-content overflow-y-auto"
@@ -264,6 +259,5 @@ export {
   Mutation ,
   makeInput ,
   make ,
-  
 }
 /* Input Not a pure module */

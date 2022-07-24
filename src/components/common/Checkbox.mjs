@@ -109,6 +109,5 @@ export {
   inputCheckIcon ,
   make ,
   Uncontrolled ,
-  
 }
 /* inputCheckIcon Not a pure module */

@@ -4,6 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Spice from "@greenlabs/ppx-spice/src/rescript/Spice.mjs";
 import * as React from "react";
 import * as Js_json from "rescript/lib/es6/js_json.js";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as Converter from "../utils/Converter.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
@@ -46,7 +47,7 @@ function status_decode(v) {
   if (json_arr$1.length === 0) {
     return Spice.error(undefined, "Expected variant, found empty array", v);
   }
-  var tagged = json_arr$1.map(Js_json.classify);
+  var tagged = Js_array.map(Js_json.classify, json_arr$1);
   var match = Belt_Array.getExn(tagged, 0);
   if (typeof match !== "number" && match.TAG === /* JSONString */0) {
     switch (match._0) {
@@ -140,6 +141,5 @@ var make = Product_Badge;
 export {
   make ,
   V2 ,
-  
 }
 /* react Not a pure module */

@@ -41,9 +41,9 @@ function AddProduct_Admin$Product(Props) {
                         }, React.createElement(Select_Product_Type.make, {
                               status: productType,
                               onChange: (function (status) {
-                                  return setProductType(function (param) {
-                                              return status;
-                                            });
+                                  setProductType(function (param) {
+                                        return status;
+                                      });
                                 })
                             })))), tmp);
 }
@@ -64,6 +64,5 @@ var make = AddProduct_Admin;
 export {
   Product ,
   make ,
-  
 }
 /* react Not a pure module */

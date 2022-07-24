@@ -169,6 +169,5 @@ export {
   Normal ,
   Chip ,
   Tab ,
-  
 }
 /* make Not a pure module */

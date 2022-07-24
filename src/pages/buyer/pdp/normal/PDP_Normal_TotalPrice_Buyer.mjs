@@ -7,20 +7,20 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as PDP_Parser_Buyer from "../../../../utils/PDP_Parser_Buyer.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPNormalTotalPriceBuyerFragment_graphql from "../../../../__generated__/PDPNormalTotalPriceBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPNormalTotalPriceBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalTotalPriceBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalTotalPriceBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalTotalPriceBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalTotalPriceBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -38,6 +38,7 @@ var Fragment = {
   productStatus_decode: Fragment_productStatus_decode,
   productStatus_fromString: Fragment_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -85,7 +86,7 @@ function PDP_Normal_TotalPrice_Buyer$PC(Props) {
               }, totalDeliveryCost !== 0 ? "배송비 " + Locale.Float.show(undefined, totalDeliveryCost, 0) + "원 포함" : "배송비 무료"), React.createElement("span", {
                 className: "ml-2 text-green-500 font-bold text-2xl"
               }, Belt_Option.mapWithDefault(totalPrice, "", (function (totalPrice$p) {
-                      return Locale.Float.show(undefined, totalPrice$p, 0) + "원";
+                      return "" + Locale.Float.show(undefined, totalPrice$p, 0) + "원";
                     }))));
     } else {
       tmp = React.createElement("span", {
@@ -151,7 +152,7 @@ function PDP_Normal_TotalPrice_Buyer$MO(Props) {
               }, totalDeliveryCost !== 0 ? "배송비 " + Locale.Float.show(undefined, totalDeliveryCost, 0) + "원 포함" : "배송비 무료"), React.createElement("span", {
                 className: "ml-2 text-green-500 font-bold text-2xl"
               }, Belt_Option.mapWithDefault(totalPrice, "", (function (totalPrice$p) {
-                      return Locale.Float.show(undefined, totalPrice$p, 0) + "원";
+                      return "" + Locale.Float.show(undefined, totalPrice$p, 0) + "원";
                     }))));
     } else {
       tmp = React.createElement("span", {
@@ -174,6 +175,5 @@ export {
   Fragment ,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

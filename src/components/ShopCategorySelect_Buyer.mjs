@@ -9,24 +9,23 @@ import * as IconArrow from "./svgs/IconArrow.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
 import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_module from "rescript/lib/es6/caml_module.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as IconHamburger from "./svgs/IconHamburger.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as ReactRemoveScroll from "react-remove-scroll";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopCategorySelectBuyerQuery_graphql from "../__generated__/ShopCategorySelectBuyerQuery_graphql.mjs";
 import * as ShopCategorySelectBuyerMobileQuery_graphql from "../__generated__/ShopCategorySelectBuyerMobileQuery_graphql.mjs";
 
-var makeVariables = ShopCategorySelectBuyerQuery_graphql.Utils.makeVariables;
-
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ShopCategorySelectBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ShopCategorySelectBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -35,7 +34,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(ShopCategorySelectBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(ShopCategorySelectBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -53,38 +52,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ShopCategorySelectBuyerQuery_graphql.node, ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ShopCategorySelectBuyerQuery_graphql.node, ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ShopCategorySelectBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ShopCategorySelectBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ShopCategorySelectBuyerQuery_graphql.node, ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ShopCategorySelectBuyerQuery_graphql.node, ShopCategorySelectBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ShopCategorySelectBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ShopCategorySelectBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ShopCategorySelectBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ShopCategorySelectBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopCategorySelectBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -100,7 +98,7 @@ var Query_displayCategoryType_fromString = ShopCategorySelectBuyerQuery_graphql.
 var Query = {
   displayCategoryType_decode: Query_displayCategoryType_decode,
   displayCategoryType_fromString: Query_displayCategoryType_fromString,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -110,10 +108,8 @@ var Query = {
   retain: retain
 };
 
-var makeVariables$1 = ShopCategorySelectBuyerMobileQuery_graphql.Utils.makeVariables;
-
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ShopCategorySelectBuyerMobileQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ShopCategorySelectBuyerMobileQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -122,7 +118,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$1(param) {
-  var match = Hooks.useQueryLoader(ShopCategorySelectBuyerMobileQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(ShopCategorySelectBuyerMobileQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -140,38 +136,37 @@ function useLoader$1(param) {
 }
 
 function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ShopCategorySelectBuyerMobileQuery_graphql.node, ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ShopCategorySelectBuyerMobileQuery_graphql.node, ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ShopCategorySelectBuyerMobileQuery_graphql.node, ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ShopCategorySelectBuyerMobileQuery_graphql.node, ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$1(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ShopCategorySelectBuyerMobileQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ShopCategorySelectBuyerMobileQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopCategorySelectBuyerMobileQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -187,7 +182,7 @@ var Query_displayCategoryType_fromString$1 = ShopCategorySelectBuyerMobileQuery_
 var Query$1 = {
   displayCategoryType_decode: Query_displayCategoryType_decode$1,
   displayCategoryType_fromString: Query_displayCategoryType_fromString$1,
-  makeVariables: makeVariables$1,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader$1,
@@ -199,13 +194,17 @@ var Query$1 = {
 
 function ShopCategorySelect_Buyer$Mobile$Sub(Props) {
   var parentId = Props.parentId;
-  var match = use$1(Curry._4(makeVariables$1, parentId, ["NORMAL"], true, undefined), undefined, undefined, undefined, undefined);
+  var match = use$1({
+        onlyDisplayable: true,
+        parentId: parentId,
+        types: ["NORMAL"]
+      }, undefined, undefined, undefined, undefined);
   var parentQueryStr = new URLSearchParams([[
             "category-id",
             parentId
           ]]).toString();
   return React.createElement(React.Fragment, undefined, React.createElement(Link, {
-                  href: "/buyer/products?" + parentQueryStr,
+                  href: "/buyer/products?" + parentQueryStr + "",
                   children: React.createElement("button", {
                         className: "text-left px-5 py-3 bg-white flex justify-between items-center active:bg-bg-pressed-L2"
                       }, React.createElement("span", {
@@ -222,7 +221,7 @@ function ShopCategorySelect_Buyer$Mobile$Sub(Props) {
                               id
                             ]]).toString();
                     return React.createElement(Link, {
-                                href: "/buyer/products?" + queryStr,
+                                href: "/buyer/products?" + queryStr + "",
                                 children: React.createElement("button", {
                                       className: "text-left px-5 py-3 bg-white flex justify-between items-center active:bg-bg-pressed-L2"
                                     }, param.name, React.createElement(IconArrow.make, {
@@ -244,7 +243,10 @@ function ShopCategorySelect_Buyer$Mobile(Props) {
         return false;
       });
   var setOpen = match[1];
-  var match$1 = use$1(Curry._4(makeVariables$1, undefined, ["NORMAL"], true, undefined), undefined, undefined, undefined, undefined);
+  var match$1 = use$1({
+        onlyDisplayable: true,
+        types: ["NORMAL"]
+      }, undefined, undefined, undefined, undefined);
   var displayCategories = match$1.displayCategories;
   var defaultParentId = Belt_Option.map(Belt_Array.get(displayCategories, 0), (function (param) {
           return param.id;
@@ -264,17 +266,17 @@ function ShopCategorySelect_Buyer$Mobile(Props) {
   var makeOnClick = function (id) {
     return function (param) {
       return ReactEvents.interceptingHandler((function (param) {
-                    return setParentId(function (param) {
-                                return id;
-                              });
+                    setParentId(function (param) {
+                          return id;
+                        });
                   }), param);
     };
   };
   return React.createElement(React.Fragment, undefined, React.createElement("button", {
                   onClick: (function (param) {
-                      return setOpen(function (param) {
-                                  return true;
-                                });
+                      setOpen(function (param) {
+                            return true;
+                          });
                     })
                 }, React.createElement(IconHamburger.make, {
                       width: "28",
@@ -294,9 +296,9 @@ function ShopCategorySelect_Buyer$Mobile(Props) {
                                         }, "카테고리"), React.createElement("button", {
                                           className: "float-right",
                                           onClick: (function (param) {
-                                              return setOpen(function (param) {
-                                                          return false;
-                                                        });
+                                              setOpen(function (param) {
+                                                    return false;
+                                                  });
                                             })
                                         }, React.createElement(IconClose.make, {
                                               height: "24",
@@ -366,7 +368,14 @@ var RecursiveCategories = Caml_module.init_mod([
 function ShopCategorySelect_Buyer$PC$RecursiveCategories(Props) {
   var parentId = Props.parentId;
   var router = Router.useRouter();
-  var match = use(Curry._4(makeVariables, parentId, ["NORMAL"], true, undefined), undefined, undefined, undefined, undefined);
+  var tmp = {
+    onlyDisplayable: true,
+    types: ["NORMAL"]
+  };
+  if (parentId !== undefined) {
+    tmp.parentId = parentId;
+  }
+  var match = use(tmp, undefined, undefined, undefined, undefined);
   var displayCategories = match.displayCategories;
   var match$1 = React.useState(function () {
         
@@ -376,25 +385,23 @@ function ShopCategorySelect_Buyer$PC$RecursiveCategories(Props) {
     return React.createElement(React.Fragment, undefined, React.createElement("div", {
                     className: "w-[222px] px-8 py-5 flex flex-col"
                   }, Belt_Array.map(displayCategories, (function (param) {
-                          var children = param.children;
                           var id = param.id;
+                          var children = param.children;
                           return React.createElement(Hoverable.make, {
                                       className: "mt-3",
                                       children: React.createElement("div", {
                                             className: "w-full flex items-center justify-between group cursor-pointer group",
                                             onClick: (function (param) {
                                                 return ReactEvents.interceptingHandler((function (param) {
-                                                              var prim1_pathname = "/buyer/products";
                                                               var prim1_query = Js_dict.fromArray([[
                                                                       "category-id",
                                                                       id
                                                                     ]]);
                                                               var prim1 = {
-                                                                pathname: prim1_pathname,
+                                                                pathname: "/buyer/products",
                                                                 query: prim1_query
                                                               };
                                                               router.push(prim1);
-                                                              
                                                             }), param);
                                               })
                                           }, React.createElement("span", {
@@ -491,9 +498,9 @@ function ShopCategorySelect_Buyer$PC(Props) {
                               className: "rotate-90"
                             })),
                   onHoverChange: (function (to_) {
-                      return setIsHovered(function (param) {
-                                  return to_;
-                                });
+                      setIsHovered(function (param) {
+                            return to_;
+                          });
                     })
                 }));
 }
@@ -507,6 +514,5 @@ export {
   Query ,
   Mobile ,
   PC ,
-  
 }
 /* RecursiveCategories Not a pure module */

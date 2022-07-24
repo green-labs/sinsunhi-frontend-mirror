@@ -8,20 +8,20 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPMatchingHeaderBuyer_fragment_graphql from "../../../../__generated__/PDPMatchingHeaderBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPMatchingHeaderBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPMatchingHeaderBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPMatchingHeaderBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPMatchingHeaderBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPMatchingHeaderBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -39,6 +39,7 @@ var Fragment = {
   productStatus_decode: Fragment_productStatus_decode,
   productStatus_fromString: Fragment_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -76,14 +77,13 @@ function PDP_Matching_Header_Buyer(Props) {
   React.useEffect((function () {
           var windowWidth = window.innerWidth;
           var container = document.getElementById("horizontal-scroll-container");
-          var target = document.getElementById("display-category-" + categoryId);
+          var target = document.getElementById("display-category-" + categoryId + "");
           if (!(container == null) && !(target == null)) {
             var targetWidth = target.clientWidth;
             var target$p$p = Webapi__Dom__Element.asHtmlElement(target);
             var targetLeft = target$p$p !== undefined ? Caml_option.valFromOption(target$p$p).offsetLeft : undefined;
             Belt_Option.map(targetLeft, (function (targetLeft$p) {
                     container.scrollLeft = (targetLeft$p - (windowWidth / 2 | 0) | 0) + (targetWidth / 2 | 0) | 0;
-                    
                   }));
           }
           
@@ -97,7 +97,6 @@ function PDP_Matching_Header_Buyer(Props) {
                         }, React.createElement("button", {
                               onClick: (function (param) {
                                   router.back();
-                                  
                                 })
                             }, React.createElement("img", {
                                   className: "w-6 h-6 rotate-180",
@@ -107,7 +106,6 @@ function PDP_Matching_Header_Buyer(Props) {
                                 }, match$2[0])), React.createElement("button", {
                               onClick: (function (param) {
                                   router.push("/buyer");
-                                  
                                 })
                             }, React.createElement(IconHome.make, {
                                   width: "24",
@@ -129,14 +127,14 @@ function PDP_Matching_Header_Buyer(Props) {
                                   if (matchingProduct.status === "RETIRE") {
                                     return null;
                                   }
-                                  var key = "display-category-" + id;
+                                  var key = "display-category-" + id + "";
                                   var isSelected = categoryId === id;
                                   var btnStyle = isSelected ? "mx-2 text-gray-800 border-b-[2px] border-gray-800 pt-2 pb-3 whitespace-nowrap font-bold" : "mx-2 text-gray-400 border-b-[2px] border-transparent pt-2 pb-3 whitespace-nowrap";
                                   return React.createElement("li", {
                                               key: key,
                                               id: key
                                             }, React.createElement(Link, {
-                                                  href: "/buyer/products/" + matchingProduct.id,
+                                                  href: "/buyer/products/" + matchingProduct.id + "",
                                                   children: React.createElement("a", undefined, React.createElement("div", {
                                                             className: btnStyle
                                                           }, param.name))
@@ -151,6 +149,5 @@ var make = PDP_Matching_Header_Buyer;
 export {
   Fragment ,
   make ,
-  
 }
 /* react Not a pure module */

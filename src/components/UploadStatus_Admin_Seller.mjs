@@ -131,6 +131,5 @@ export {
   styleStatus ,
   displayStatus ,
   make ,
-  
 }
 /* react Not a pure module */

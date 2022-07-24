@@ -10,11 +10,11 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Select_Product_Type from "./Select_Product_Type.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ErrorMessage from "@hookform/error-message";
@@ -25,13 +25,13 @@ import * as Select_Product_Operation_Status from "./Select_Product_Operation_Sta
 import * as SearchProductAdminCategoriesFragment_graphql from "../__generated__/SearchProductAdminCategoriesFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(SearchProductAdminCategoriesFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(SearchProductAdminCategoriesFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SearchProductAdminCategoriesFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(SearchProductAdminCategoriesFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(SearchProductAdminCategoriesFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -49,6 +49,7 @@ var Categories = {
   displayCategoryType_decode: Categories_displayCategoryType_decode,
   displayCategoryType_fromString: Categories_displayCategoryType_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -351,11 +352,10 @@ function Search_Product_Admin(Props) {
                     param$2.c5
                   ], getSelectValue)), "");
       router.query["offset"] = "0";
-      router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
+      router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
       return ;
     }
     console.log(data$p._0);
-    
   };
   var register = methods.register;
   var reset = methods.reset;
@@ -488,7 +488,7 @@ function Search_Product_Admin(Props) {
                                                             return React.createElement(Select_Product_Operation_Status.Search.make, {
                                                                         status: tmp,
                                                                         onChange: (function (status) {
-                                                                            return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Operation_Status.Search.status_encode(status)));
+                                                                            Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Operation_Status.Search.status_encode(status)));
                                                                           }),
                                                                         forwardRef: match.ref
                                                                       });
@@ -514,7 +514,7 @@ function Search_Product_Admin(Props) {
                                                             return React.createElement(Select_Product_Type.Search.make, {
                                                                         status: tmp,
                                                                         onChange: (function (status) {
-                                                                            return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Type.Search.status_encode(status)));
+                                                                            Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Type.Search.status_encode(status)));
                                                                           })
                                                                       });
                                                           }),
@@ -533,7 +533,7 @@ function Search_Product_Admin(Props) {
                                                         return React.createElement(Select_Delivery_Available.make, {
                                                                     value: tmp,
                                                                     onChange: (function (str) {
-                                                                        return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, str));
+                                                                        Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, str));
                                                                       }),
                                                                     name: match.name
                                                                   });
@@ -549,44 +549,44 @@ function Search_Product_Admin(Props) {
                                 type: "button",
                                 value: "초기화",
                                 onClick: (function (param) {
-                                    return reset(Caml_option.some(Js_dict.fromArray([
-                                                        [
-                                                          "product-category",
-                                                          Search_Product_Category.Form.defaultProductCategory
-                                                        ],
-                                                        [
-                                                          "display-category",
-                                                          Search_Display_Category.Form.defaultDisplayCategory(/* Normal */0)
-                                                        ],
-                                                        [
-                                                          "producer-name",
-                                                          ""
-                                                        ],
-                                                        [
-                                                          "producer-codes",
-                                                          ""
-                                                        ],
-                                                        [
-                                                          "product-name",
-                                                          ""
-                                                        ],
-                                                        [
-                                                          "product-nos",
-                                                          ""
-                                                        ],
-                                                        [
-                                                          "status",
-                                                          Select_Product_Operation_Status.Search.status_encode(/* ALL */0)
-                                                        ],
-                                                        [
-                                                          "delivery",
-                                                          ""
-                                                        ],
-                                                        [
-                                                          "product-type",
-                                                          Select_Product_Type.Search.status_encode(/* ALL */0)
-                                                        ]
-                                                      ])));
+                                    reset(Caml_option.some(Js_dict.fromArray([
+                                                  [
+                                                    "product-category",
+                                                    Search_Product_Category.Form.defaultProductCategory
+                                                  ],
+                                                  [
+                                                    "display-category",
+                                                    Search_Display_Category.Form.defaultDisplayCategory(/* Normal */0)
+                                                  ],
+                                                  [
+                                                    "producer-name",
+                                                    ""
+                                                  ],
+                                                  [
+                                                    "producer-codes",
+                                                    ""
+                                                  ],
+                                                  [
+                                                    "product-name",
+                                                    ""
+                                                  ],
+                                                  [
+                                                    "product-nos",
+                                                    ""
+                                                  ],
+                                                  [
+                                                    "status",
+                                                    Select_Product_Operation_Status.Search.status_encode(/* ALL */0)
+                                                  ],
+                                                  [
+                                                    "delivery",
+                                                    ""
+                                                  ],
+                                                  [
+                                                    "product-type",
+                                                    Select_Product_Type.Search.status_encode(/* ALL */0)
+                                                  ]
+                                                ])));
                                   })
                               }), React.createElement("input", {
                                 className: "w-20 py-2 bg-green-gl text-white font-bold rounded-xl ml-2 hover:bg-green-gl-dark focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-green-gl focus:ring-opacity-100",
@@ -605,6 +605,5 @@ export {
   Form ,
   getDefault ,
   make ,
-  
 }
 /* react Not a pure module */

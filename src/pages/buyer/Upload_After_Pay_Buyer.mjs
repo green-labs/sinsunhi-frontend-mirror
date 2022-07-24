@@ -28,9 +28,9 @@ function Upload_After_Pay_Buyer$BalanceView(Props) {
       });
   var setOpen = match[1];
   var handleOrdersListOpen = function (param) {
-    return setOpen(function (param) {
-                return true;
-              });
+    setOpen(function (param) {
+          return true;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(After_Pay_Orders_List.make, {
                   open_: match[0],
@@ -47,7 +47,7 @@ function Upload_After_Pay_Buyer$BalanceView(Props) {
                                       className: "text-sm"
                                     }, "나중결제 가능 금액"), React.createElement("div", {
                                       className: "text-lg font-bold text-green-500"
-                                    }, Locale.Float.show(undefined, balance, 0) + " 원")), React.createElement("div", {
+                                    }, "" + Locale.Float.show(undefined, balance, 0) + " 원")), React.createElement("div", {
                                   className: "ml-auto"
                                 }, React.createElement(ReactUtil.SpreadProps.make, {
                                       children: React.createElement("button", {
@@ -61,7 +61,7 @@ function Upload_After_Pay_Buyer$BalanceView(Props) {
                                   className: "text-sm"
                                 }, "총 나중결제 이용 한도"), React.createElement("div", {
                                   className: "text-lg font-bold"
-                                }, Locale.Float.show(undefined, credit, 0) + " 원"))), React.createElement("div", {
+                                }, "" + Locale.Float.show(undefined, credit, 0) + " 원"))), React.createElement("div", {
                           className: "flex flex-col gap-3 text-sm py-5"
                         }, React.createElement("div", {
                               className: "flex place-content-between"
@@ -69,7 +69,7 @@ function Upload_After_Pay_Buyer$BalanceView(Props) {
                                   className: "text-gray-600"
                                 }, "수수료"), React.createElement("div", {
                                   className: "col-span-3"
-                                }, rate + "%")), React.createElement("div", {
+                                }, "" + rate + "%")), React.createElement("div", {
                               className: "flex place-content-between"
                             }, React.createElement("div", {
                                   className: "text-gray-600"
@@ -119,13 +119,13 @@ function Upload_After_Pay_Buyer$Notice(Props) {
       });
   var setText = match[1];
   var handleChange = function (value) {
-    return setText(function (param) {
-                if (value.length !== 0) {
-                  return "접기";
-                } else {
-                  return "자세히 보기";
-                }
-              });
+    setText(function (param) {
+          if (value.length !== 0) {
+            return "접기";
+          } else {
+            return "자세히 보기";
+          }
+        });
   };
   return React.createElement("div", {
               className: "text-red-500 bg-red-50 border-red-150 border py-4 px-5 container max-w-lg mx-auto mt-7"
@@ -190,7 +190,6 @@ function Upload_After_Pay_Buyer(Props) {
           } else {
             router.replace("/buyer/upload");
           }
-          
         }), [agreements]);
   return React.createElement(Authorization.Buyer.make, {
               children: null,
@@ -206,6 +205,5 @@ export {
   Balance ,
   Notice ,
   make ,
-  
 }
 /* dropdownIcon Not a pure module */

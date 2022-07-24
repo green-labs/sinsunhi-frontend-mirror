@@ -73,6 +73,5 @@ export {
   parseSearchStd ,
   formatStd ,
   make ,
-  
 }
 /* react Not a pure module */

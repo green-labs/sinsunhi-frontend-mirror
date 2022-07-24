@@ -21,7 +21,6 @@ function useLockBodyScroll(isLock) {
               bodyElement.className = "overflow-hidden";
               return (function (param) {
                         bodyElement.className = "";
-                        
                       });
             } else {
               return ;
@@ -33,7 +32,6 @@ function useLockBodyScroll(isLock) {
             return ;
           }
         }), [isLock]);
-  
 }
 
 var context = React.createContext(function (param) {
@@ -70,7 +68,7 @@ function DS_BottomDrawer$Overlay(Props) {
   return React.createElement("div", {
               className: overlayStyle("fixed top-0 left-0 w-full h-full bg-dim transition-opacity z-[12]"),
               onClick: (function (param) {
-                  return Curry._1(handleClose, undefined);
+                  Curry._1(handleClose, undefined);
                 })
             });
 }
@@ -89,7 +87,7 @@ function DS_BottomDrawer$Header(Props) {
                 }, Belt_Option.getWithDefault(children, null)), React.createElement("span", {
                   className: "cursor-pointer p-4",
                   onClick: (function (param) {
-                      return Curry._1(handleClose, undefined);
+                      Curry._1(handleClose, undefined);
                     })
                 }, React.createElement(DS_Icon.Common.CloseLarge2.make, {
                       height: "24",
@@ -148,6 +146,5 @@ export {
   Header ,
   Body ,
   Root ,
-  
 }
 /* context Not a pure module */

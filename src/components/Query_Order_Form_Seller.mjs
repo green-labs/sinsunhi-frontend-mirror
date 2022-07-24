@@ -86,6 +86,5 @@ export {
   FormFields ,
   Form ,
   initialState ,
-  
 }
 /* Form Not a pure module */

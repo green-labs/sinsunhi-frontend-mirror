@@ -2,19 +2,19 @@
 
 
 function shutdown(param) {
-  return window.ChannelIO("shutdown");
+  window.ChannelIO("shutdown");
 }
 
 function showMessenger(param) {
-  return window.ChannelIO("showMessenger");
+  window.ChannelIO("showMessenger");
 }
 
 function showChannelButton(param) {
-  return window.ChannelIO("showChannelButton");
+  window.ChannelIO("showChannelButton");
 }
 
 function hideChannelButton(param) {
-  return window.ChannelIO("hideChannelButton");
+  window.ChannelIO("hideChannelButton");
 }
 
 export {
@@ -22,6 +22,5 @@ export {
   showMessenger ,
   showChannelButton ,
   hideChannelButton ,
-  
 }
 /* No side effect */

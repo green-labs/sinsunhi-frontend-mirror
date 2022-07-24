@@ -119,6 +119,5 @@ export {
   makeResolverError ,
   notEmpty ,
   maxLength ,
-  
 }
 /* No side effect */

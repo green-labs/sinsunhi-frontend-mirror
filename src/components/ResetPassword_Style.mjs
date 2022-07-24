@@ -8,6 +8,5 @@ var disabledButton = "bg-gray-button-gl3 py-3 rounded-xl mt-2 text-white font-bo
 export {
   enabledButton ,
   disabledButton ,
-  
 }
 /* No side effect */

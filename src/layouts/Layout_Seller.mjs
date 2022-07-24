@@ -12,6 +12,5 @@ var make = Layout_Seller;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

@@ -55,7 +55,7 @@ function SignIn_Seller(Props) {
               password
             ]
           ]).toString();
-    FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
+    FetchHelper.postWithURLSearchParams("" + Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
             var result = FetchHelper.responseToken_decode(res);
             if (result.TAG !== /* Ok */0) {
               return setShowForError(function (param) {
@@ -69,13 +69,12 @@ function SignIn_Seller(Props) {
             if (user.TAG === /* Ok */0) {
               Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, String(user._0.id));
             }
-            return Redirect.setHref(redirectUrl);
+            Redirect.setHref(redirectUrl);
           }), (function (param) {
-            return setShowForError(function (param) {
-                        return /* Show */0;
-                      });
+            setShowForError(function (param) {
+                  return /* Show */0;
+                });
           }));
-    
   };
   var form = Curry._7(SignIn_Seller_Form.Form.use, SignIn_Seller_Form.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -88,24 +87,23 @@ function SignIn_Seller(Props) {
                   var phone = SignIn_Seller_Form.FormFields.get(form.values, /* Phone */0);
                   if (isCheckedSavePhone) {
                     Belt_Option.forEach(Belt_Option.flatMap(Helper.PhoneNumber.parse(phone), Helper.PhoneNumber.format), (function (phoneNumber) {
-                            return Curry._1(LocalStorageHooks.PhoneNumber.set, phoneNumber);
+                            Curry._1(LocalStorageHooks.PhoneNumber.set, phoneNumber);
                           }));
                   } else {
                     Curry._1(LocalStorageHooks.PhoneNumber.remove, undefined);
                   }
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnCheckSavePhone = function (e) {
     var checked = e.target.checked;
-    return setCheckedSavePhone(function (param) {
-                return checked;
-              });
+    setCheckedSavePhone(function (param) {
+          return checked;
+        });
   };
   var handleNavigateToSignUp = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   router.push("/seller/signup");
-                  
                 }), param);
   };
   React.useEffect((function () {
@@ -129,7 +127,7 @@ function SignIn_Seller(Props) {
   };
   var handleOnChangePhoneNumber = function (e) {
     var newValue = e.currentTarget.value.replace(/[^0-9]/g, "").replace(/(^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-");
-    return Curry._4(form.setFieldValue, /* Phone */0, newValue, true, undefined);
+    Curry._4(form.setFieldValue, /* Phone */0, newValue, true, undefined);
   };
   var user = CustomHooks.Auth.use(undefined);
   React.useEffect((function () {
@@ -238,9 +236,9 @@ function SignIn_Seller(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "로그인 정보가 일치하지 않거나 없는 계정입니다. 다시 한번 입력해주세요."),
                   onConfirm: (function (param) {
-                      return setShowForError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowForError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -255,6 +253,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Env Not a pure module */

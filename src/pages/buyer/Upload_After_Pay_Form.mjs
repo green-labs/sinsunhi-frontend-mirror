@@ -36,22 +36,21 @@ function Upload_After_Pay_Form$UploadForm(Props) {
                                     return /* Show */0;
                                   });
                               Belt_Option.forEach(userId, (function (userId$p) {
-                                      return mutate(Env.afterPayApiUrl + "/buyers/" + userId$p.toString() + "/credit", undefined, undefined);
+                                      mutate("" + Env.afterPayApiUrl + "/buyers/" + userId$p.toString() + "/credit", undefined, undefined);
                                     }));
                               var target = "upload-status";
                               var el = document.getElementById(target);
-                              return Belt_Option.mapWithDefault((el == null) ? undefined : Caml_option.some(el), undefined, (function (el$p) {
-                                            el$p.scrollIntoView({
-                                                  behavior: "smooth",
-                                                  block: "start"
-                                                });
-                                            
-                                          }));
+                              Belt_Option.mapWithDefault((el == null) ? undefined : Caml_option.some(el), undefined, (function (el$p) {
+                                      el$p.scrollIntoView({
+                                            behavior: "smooth",
+                                            block: "start"
+                                          });
+                                    }));
                             }),
                           onFailure: (function (param) {
-                              return setShowError(function (param) {
-                                          return /* Show */0;
-                                        });
+                              setShowError(function (param) {
+                                    return /* Show */0;
+                                  });
                             }),
                           startIndex: 1
                         }), React.createElement("section", {
@@ -72,9 +71,9 @@ function Upload_After_Pay_Form$UploadForm(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문서 업로드가 실행되었습니다. 성공여부를 꼭 주문서 업로드 결과에서 확인해주세요."),
                   onConfirm: (function (param) {
-                      return setShowSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$2[0],
@@ -82,9 +81,9 @@ function Upload_After_Pay_Form$UploadForm(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일 업로드에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -109,9 +108,9 @@ function Upload_After_Pay_Form$UploadResult(Props) {
                     }, "*가장 최근 요청한 3가지 등록건만 노출됩니다.")), React.createElement(UploadStatus_Buyer.make, {
                   kind: /* Buyer */1,
                   onChangeLatestUpload: (function (param) {
-                      return Belt_Option.forEach(creditUrl, (function (url) {
-                                    return mutate(url, undefined, true);
-                                  }));
+                      Belt_Option.forEach(creditUrl, (function (url) {
+                              mutate(url, undefined, true);
+                            }));
                     }),
                   uploadType: /* OrderAfterPay */3
                 }), React.createElement("p", {
@@ -126,6 +125,5 @@ var UploadResult = {
 export {
   UploadForm ,
   UploadResult ,
-  
 }
 /* Env Not a pure module */

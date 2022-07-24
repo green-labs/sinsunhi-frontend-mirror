@@ -44,7 +44,7 @@ function RfqApplyDetail_Buyer$Grade$List(Props) {
                 return React.createElement(DS_ListItem.Normal1.Item.make, {
                             children: null,
                             onClick: (function (param) {
-                                return Curry._1(handleOnChangeGrade, x.node.id);
+                                Curry._1(handleOnChangeGrade, x.node.id);
                               }),
                             key: x.node.id
                           }, React.createElement(DS_ListItem.Normal1.TextGroup.make, {
@@ -108,9 +108,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                     selected: madeIn === "KR",
                                     className: "text-sm",
                                     onClick: (function (param) {
-                                        return setMadeIn(function (param) {
-                                                    return "KR";
-                                                  });
+                                        setMadeIn(function (param) {
+                                              return "KR";
+                                            });
                                       })
                                   })
                             }) : (
@@ -120,9 +120,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                             selected: madeIn === "US",
                                             className: "text-sm",
                                             onClick: (function (param) {
-                                                return setMadeIn(function (param) {
-                                                            return "US";
-                                                          });
+                                                setMadeIn(function (param) {
+                                                      return "US";
+                                                    });
                                               })
                                           })
                                     }), React.createElement(DS_Tab.LeftTab.Item.make, {
@@ -131,9 +131,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                             selected: madeIn === "AU",
                                             className: "text-sm",
                                             onClick: (function (param) {
-                                                return setMadeIn(function (param) {
-                                                            return "AU";
-                                                          });
+                                                setMadeIn(function (param) {
+                                                      return "AU";
+                                                    });
                                               })
                                           })
                                     }), React.createElement(DS_Tab.LeftTab.Item.make, {
@@ -142,9 +142,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                             selected: madeIn === "CA",
                                             className: "text-sm",
                                             onClick: (function (param) {
-                                                return setMadeIn(function (param) {
-                                                            return "CA";
-                                                          });
+                                                setMadeIn(function (param) {
+                                                      return "CA";
+                                                    });
                                               })
                                           })
                                     }), React.createElement(DS_Tab.LeftTab.Item.make, {
@@ -153,9 +153,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                             selected: madeIn === "NZ",
                                             className: "text-sm",
                                             onClick: (function (param) {
-                                                return setMadeIn(function (param) {
-                                                            return "NZ";
-                                                          });
+                                                setMadeIn(function (param) {
+                                                      return "NZ";
+                                                    });
                                               })
                                           })
                                     })) : React.createElement(DS_Tab.LeftTab.Item.make, {
@@ -164,9 +164,9 @@ function RfqApplyDetail_Buyer$Grade(Props) {
                                         selected: madeIn === "OTHER",
                                         className: "text-sm",
                                         onClick: (function (param) {
-                                            return setMadeIn(function (param) {
-                                                        return "OTHER";
-                                                      });
+                                            setMadeIn(function (param) {
+                                                  return "OTHER";
+                                                });
                                           })
                                       })
                                 })
@@ -207,13 +207,13 @@ function RfqApplyDetail_Buyer$OrderAmount(Props) {
                               })),
                         onChange: (function (e) {
                             var value = e.target.value;
-                            return Curry._1(handleOnChangeWeightKg, convertNumberInputValue(value));
+                            Curry._1(handleOnChangeWeightKg, convertNumberInputValue(value));
                           }),
                         autoFocus: true,
                         inputMode: "decimal",
                         isClear: true,
                         fnClear: (function (param) {
-                            return Curry._1(handleOnChangeWeightKg, "");
+                            Curry._1(handleOnChangeWeightKg, "");
                           }),
                         unit: "kg",
                         errorMessage: Belt_Option.mapWithDefault(weightKg, undefined, (function (x) {
@@ -260,15 +260,15 @@ function RfqApplyDetail_Buyer$Purpose(Props) {
                           return React.createElement(DS_ListItem.Normal1.Item.make, {
                                       children: null,
                                       onClick: (function (param) {
-                                          return setUsage(function (prev) {
-                                                      if (isUnChecked) {
-                                                        return Belt_Array.concat(prev, [id]);
-                                                      } else {
-                                                        return Belt_Array.keep(prev, (function (x) {
-                                                                      return x !== id;
-                                                                    }));
-                                                      }
-                                                    });
+                                          setUsage(function (prev) {
+                                                if (isUnChecked) {
+                                                  return Belt_Array.concat(prev, [id]);
+                                                } else {
+                                                  return Belt_Array.keep(prev, (function (x) {
+                                                                return x !== id;
+                                                              }));
+                                                }
+                                              });
                                         }),
                                       key: id
                                     }, React.createElement(DS_ListItem.Normal1.TextGroup.make, {
@@ -305,7 +305,7 @@ function RfqApplyDetail_Buyer$StorageMethod$List(Props) {
                 return React.createElement(DS_ListItem.Normal1.Item.make, {
                             children: null,
                             onClick: (function (param) {
-                                return Curry._1(handleOnChangeStorageMethod, value);
+                                Curry._1(handleOnChangeStorageMethod, value);
                               }),
                             key: value
                           }, React.createElement(DS_ListItem.Normal1.TextGroup.make, {
@@ -380,7 +380,7 @@ function RfqApplyDetail_Buyer$PackageMethod(Props) {
                   children: React.createElement(DS_ListItem.Normal1.Item.make, {
                         children: null,
                         onClick: (function (param) {
-                            return Curry._1(handleOnChangePackageMethod, Belt_Option.isNone(packageMethod) ? "RAW" : "");
+                            Curry._1(handleOnChangePackageMethod, Belt_Option.isNone(packageMethod) ? "RAW" : "");
                           })
                       }, React.createElement(DS_ListItem.Normal1.TextGroup.make, {
                             title1: "원료육(박스육)"
@@ -406,7 +406,7 @@ function RfqApplyDetail_Buyer$PackageMethod(Props) {
                             className: "text-[15px] leading-6 tracking-tight font-bold rounded-lg px-3.5 py-3 border border-border-default-L1 bg-surface",
                             onClick: (function (param) {
                                 if (Global.$$window !== undefined) {
-                                  Caml_option.valFromOption(Global.$$window).open(Env.customerServiceUrl + Env.customerServicePaths.rfqMeatProcess, undefined, "");
+                                  Caml_option.valFromOption(Global.$$window).open("" + Env.customerServiceUrl + "" + Env.customerServicePaths.rfqMeatProcess + "", undefined, "");
                                   return ;
                                 }
                                 
@@ -439,12 +439,12 @@ function RfqApplyDetail_Buyer$SupplyPrice(Props) {
                         value: numberToComma(Belt_Option.getWithDefault(prevTradePricePerKg, "")),
                         onChange: (function (e) {
                             var value = e.target.value;
-                            return Curry._1(handleOnChangePrevTradePricePerKg, convertNumberInputValue(value));
+                            Curry._1(handleOnChangePrevTradePricePerKg, convertNumberInputValue(value));
                           }),
                         inputMode: "decimal",
                         isClear: true,
                         fnClear: (function (param) {
-                            return Curry._1(handleOnChangePrevTradePricePerKg, "");
+                            Curry._1(handleOnChangePrevTradePricePerKg, "");
                           }),
                         unit: "원/kg",
                         errorMessage: Belt_Option.mapWithDefault(prevTradePricePerKg, undefined, (function (x) {
@@ -465,11 +465,11 @@ function RfqApplyDetail_Buyer$SupplyPrice(Props) {
                         placeholder: "기존 거래처명",
                         value: Belt_Option.getWithDefault(prevTradeSellerName, ""),
                         onChange: (function (e) {
-                            return Curry._1(handleOnChangePrevTradeSellerName, e.target.value);
+                            Curry._1(handleOnChangePrevTradeSellerName, e.target.value);
                           }),
                         isClear: true,
                         fnClear: (function (param) {
-                            return Curry._1(handleOnChangePrevTradeSellerName, "");
+                            Curry._1(handleOnChangePrevTradeSellerName, "");
                           }),
                         maxLength: 30
                       }),
@@ -497,11 +497,11 @@ function RfqApplyDetail_Buyer$Brand(Props) {
                         placeholder: "예: Excel",
                         value: Belt_Option.getWithDefault(preferredBrand, ""),
                         onChange: (function (e) {
-                            return Curry._1(handleOnChangePreferredBrand, e.target.value);
+                            Curry._1(handleOnChangePreferredBrand, e.target.value);
                           }),
                         isClear: true,
                         fnClear: (function (param) {
-                            return Curry._1(handleOnChangePreferredBrand, "");
+                            Curry._1(handleOnChangePreferredBrand, "");
                           }),
                         maxLength: 100
                       }),
@@ -531,7 +531,7 @@ function RfqApplyDetail_Buyer$Etc(Props) {
                       placeholder: "예: 무항생제 찾습니다",
                       value: Belt_Option.getWithDefault(etc, ""),
                       onChange: (function (e) {
-                          return Curry._1(handleOnChangeEtc, e.target.value);
+                          Curry._1(handleOnChangeEtc, e.target.value);
                         }),
                       autoFocus: true,
                       maxLength: 300
@@ -553,6 +553,5 @@ export {
   SupplyPrice ,
   Brand ,
   Etc ,
-  
 }
 /* Env Not a pure module */

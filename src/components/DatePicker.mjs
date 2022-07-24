@@ -145,6 +145,5 @@ export {
   calendarIcon ,
   Styles ,
   make ,
-  
 }
 /* calendarIcon Not a pure module */

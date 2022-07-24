@@ -14,9 +14,7 @@ function DS_ProgressBar$StepGuide(Props) {
               }));
         Belt_Option.map(Caml_option.nullable_to_opt(document.getElementById("ds_progress")), (function (x) {
                 x.setAttribute("style", "width: " + String(Caml_int32.div(Math.imul(width, step), totalStep)) + "px;");
-                
               }));
-        
       });
   return React.createElement("div", {
               className: "fixed top-14 left-1/2 w-full max-w-3xl -translate-x-1/2 h-1",
@@ -35,6 +33,5 @@ var StepGuide = {
 
 export {
   StepGuide ,
-  
 }
 /* react Not a pure module */

@@ -8,7 +8,6 @@ function Index_Seller(Props) {
   var router = Router.useRouter();
   React.useEffect(function () {
         router.replace("/seller/orders?status=CREATE&sort=created");
-        
       });
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "생산자 - 신선하이")
@@ -21,6 +20,5 @@ var make = Index_Seller;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

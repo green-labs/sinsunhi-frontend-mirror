@@ -9,8 +9,10 @@ import * as Global from "../components/Global.mjs";
 import * as Helper from "./Helper.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Js_json from "rescript/lib/es6/js_json.js";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as Redirect from "../components/Redirect.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import JwtDecode from "jwt-decode";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
@@ -32,9 +34,9 @@ function useSetPassword(token) {
                 });
           }
           return (function (param) {
-                    return setShowSetPassword(function (param) {
-                                return /* Hide */1;
-                              });
+                    setShowSetPassword(function (param) {
+                          return /* Hide */1;
+                        });
                   });
         }), [token]);
   return [
@@ -51,9 +53,9 @@ function useDebounce(value, delay) {
   var setDebouncedValue = match[1];
   React.useEffect((function () {
           timeoutId.current = setTimeout((function (param) {
-                  return setDebouncedValue(function (param) {
-                              return value;
-                            });
+                  setDebouncedValue(function (param) {
+                        return value;
+                      });
                 }), delay);
           return (function (param) {
                     var id = timeoutId.current;
@@ -107,12 +109,10 @@ function useScrollDirection(param) {
               
             }
             prevScrollTop.current = currentScrollTop;
-            
           };
           window.addEventListener("scroll", handleScrollEvent);
           return (function (param) {
                     window.removeEventListener("scroll", handleScrollEvent);
-                    
                   });
         }), [scrollDirection]);
   return scrollDirection;
@@ -140,22 +140,22 @@ function useScrollObserver(thresholds, sensitive) {
   var setScrollDirection = match$4[1];
   var handleScrollEvent = function (param) {
     var currentScrollTop = window.scrollY;
-    return Belt_Option.forEach(Caml_option.nullable_to_opt(document.querySelector("body")), (function (body) {
-                  var isVisible;
-                  isVisible = thresholds.TAG === /* Pct */0 ? currentScrollTop / body.clientHeight >= thresholds._0 : currentScrollTop >= thresholds._0;
-                  Curry._1(setPrevScrollPos, (function (param) {
-                          return window.scrollY;
-                        }));
-                  if (isVisible) {
-                    return Curry._1(setVisible, (function (param) {
-                                  return /* Visible */0;
-                                }));
-                  } else {
-                    return Curry._1(setVisible, (function (param) {
-                                  return /* Hidden */1;
-                                }));
-                  }
-                }));
+    Belt_Option.forEach(Caml_option.nullable_to_opt(document.querySelector("body")), (function (body) {
+            var isVisible;
+            isVisible = thresholds.TAG === /* Pct */0 ? currentScrollTop / body.clientHeight >= thresholds._0 : currentScrollTop >= thresholds._0;
+            Curry._1(setPrevScrollPos, (function (param) {
+                    return window.scrollY;
+                  }));
+            if (isVisible) {
+              return Curry._1(setVisible, (function (param) {
+                            return /* Visible */0;
+                          }));
+            } else {
+              return Curry._1(setVisible, (function (param) {
+                            return /* Hidden */1;
+                          }));
+            }
+          }));
   };
   React.useLayoutEffect((function () {
           var diff = window.scrollY - debounceValue;
@@ -181,13 +181,11 @@ function useScrollObserver(thresholds, sensitive) {
                     return diff;
                   }));
           }
-          
         }), [prevScrollPos]);
   React.useLayoutEffect((function () {
           window.addEventListener("scroll", handleScrollEvent);
           return (function (param) {
                     window.removeEventListener("scroll", handleScrollEvent);
-                    
                   });
         }), [
         handleScrollEvent,
@@ -209,10 +207,10 @@ var Scroll = {
 function onErrorRetry(error, _key, _config, revalidate, param) {
   var retryCount = param.retryCount;
   if (error.status === 401) {
-    FetchHelper.refreshToken(undefined).catch(function (err) {
-          console.log(err);
-          return Promise.resolve(undefined);
-        });
+    Js_promise.$$catch((function (err) {
+            console.log(err);
+            return Promise.resolve(undefined);
+          }), FetchHelper.refreshToken(undefined));
   }
   if (retryCount > 3) {
     return ;
@@ -222,9 +220,7 @@ function onErrorRetry(error, _key, _config, revalidate, param) {
   };
   setTimeout((function (param) {
           Curry._1(revalidate, revalidateOptions);
-          
         }), 500);
-  
 }
 
 function use(root, target, thresholds, rootMargin, param) {
@@ -257,7 +253,6 @@ function use(root, target, thresholds, rootMargin, param) {
           observer.observe(t);
           return (function (param) {
                     observer.unobserve(t);
-                    
                   });
         }), [
         root,
@@ -581,14 +576,13 @@ function use$1(param) {
                   });
             }
           }
-          
         }), []);
   return match[0];
 }
 
 function logOut(param) {
   Curry._1(LocalStorageHooks.AccessToken.remove, undefined);
-  return Curry._1(LocalStorageHooks.RefreshToken.remove, undefined);
+  Curry._1(LocalStorageHooks.RefreshToken.remove, undefined);
 }
 
 var Auth = {
@@ -612,7 +606,7 @@ function use$2(param) {
   React.useEffect((function () {
           if (typeof user === "number") {
             if (user !== 0) {
-              Redirect.setHref("/seller/signin?redirect=" + router.asPath);
+              Redirect.setHref("/seller/signin?redirect=" + router.asPath + "");
             } else {
               setStatus(function (param) {
                     return user;
@@ -635,7 +629,6 @@ function use$2(param) {
               
             }
           }
-          
         }), [
         user,
         router.asPath
@@ -657,7 +650,7 @@ function use$3(param) {
   React.useEffect((function () {
           if (typeof user === "number") {
             if (user !== 0) {
-              Redirect.setHref("/buyer/signin?redirect=" + router.asPath);
+              Redirect.setHref("/buyer/signin?redirect=" + router.asPath + "");
             } else {
               setStatus(function (param) {
                     return /* Unknown */0;
@@ -680,7 +673,6 @@ function use$3(param) {
               
             }
           }
-          
         }), [
         user,
         router.asPath
@@ -699,7 +691,6 @@ function use2(param) {
           setStatus(function (param) {
                 return user;
               });
-          
         }), [
         user,
         router.query
@@ -722,7 +713,7 @@ function use$4(param) {
   React.useEffect((function () {
           if (typeof user === "number") {
             if (user !== 0) {
-              Redirect.setHref("/admin/signin?redirect=" + router.asPath);
+              Redirect.setHref("/admin/signin?redirect=" + router.asPath + "");
             } else {
               setStatus(function (param) {
                     return user;
@@ -745,7 +736,6 @@ function use$4(param) {
               
             }
           }
-          
         }), [
         user,
         router.asPath
@@ -795,7 +785,6 @@ function use$5(param) {
                     
                   });
         }), [user]);
-  
 }
 
 var CRMUser = {
@@ -1665,7 +1654,7 @@ function use$6(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -2780,7 +2769,7 @@ function use$7(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -3132,7 +3121,7 @@ function use$8(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/sc?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/sc?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -3792,7 +3781,7 @@ function use$9(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/failed?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/failed?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -4017,7 +4006,7 @@ function use$10(queryParams, param) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/summary?" + Belt_Option.getWithDefault(queryParams, ""), FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/summary?" + Belt_Option.getWithDefault(queryParams, "") + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -4210,7 +4199,7 @@ function use$11(param) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/farmer-delivery-summary", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/farmer-delivery-summary", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -4418,7 +4407,7 @@ function use$12(param) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/admin-dashboard-summary", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/admin-dashboard-summary", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -4541,9 +4530,9 @@ function use$13(filename, kind, userId, param) {
     onErrorRetry: onErrorRetry
   };
   var match = Swr(userId !== undefined ? (
-          kind ? Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId : Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + "&user-id=" + userId
+          kind ? "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId + "" : "" + Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + "&user-id=" + userId + ""
         ) : (
-          kind ? Env.restApiUrl + "/order/upload-url?file-name=" + filename : Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename
+          kind ? "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "" : "" + Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + ""
         ), FetchHelper.fetcher, fetcherOptions);
   var isValidating = match.isValidating;
   var error = match.error;
@@ -4701,7 +4690,7 @@ function use$14(param) {
     revalidateOnReconnect: false,
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/delivery-company-codes", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/delivery-company-codes", FetchHelper.fetcher, fetcherOptions);
   var isValidating = match.isValidating;
   var error = match.error;
   var data = match.data;
@@ -4832,7 +4821,7 @@ function use$15(param) {
     revalidateOnReconnect: false,
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/order/delivery/st-api-key", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/order/delivery/st-api-key", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -4979,7 +4968,7 @@ function errorCode_decode(v) {
   if (json_arr$1.length === 0) {
     return Spice.error(undefined, "Expected variant, found empty array", v);
   }
-  var tagged = json_arr$1.map(Js_json.classify);
+  var tagged = Js_array.map(Js_json.classify, json_arr$1);
   var match = Belt_Array.getExn(tagged, 0);
   if (typeof match !== "number" && match.TAG === /* JSONString */0) {
     switch (match._0) {
@@ -5413,7 +5402,7 @@ function failCode_decode(v) {
   if (json_arr$1.length === 0) {
     return Spice.error(undefined, "Expected variant, found empty array", v);
   }
-  var tagged = json_arr$1.map(Js_json.classify);
+  var tagged = Js_array.map(Js_json.classify, json_arr$1);
   var match = Belt_Array.getExn(tagged, 0);
   if (typeof match !== "number" && match.TAG === /* JSONString */0) {
     switch (match._0) {
@@ -5580,7 +5569,7 @@ function decoderFailCode(json) {
               TAG: /* Error */1,
               _0: {
                 path: "",
-                message: "\xec\x95\x8c \xec\x88\x98 \xec\x97\x86\xeb\x8a\x94 \xec\x98\xa4\xeb\xa5\x98",
+                message: "알 수 없는 오류",
                 value: json
               }
             };
@@ -5873,16 +5862,16 @@ function use$16(kind, uploadType) {
   var tmp;
   switch (uploadType) {
     case /* Order */0 :
-        tmp = Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID";
+        tmp = "" + Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID";
         break;
     case /* Invoice */1 :
-        tmp = Env.restApiUrl + "/order/recent-uploads?upload-type=invoice";
+        tmp = "" + Env.restApiUrl + "/order/recent-uploads?upload-type=invoice";
         break;
     case /* Offline */2 :
-        tmp = Env.restApiUrl + "/offline-order/recent-uploads?upload-type=offline";
+        tmp = "" + Env.restApiUrl + "/offline-order/recent-uploads?upload-type=offline";
         break;
     case /* OrderAfterPay */3 :
-        tmp = Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=AFTER_PAY";
+        tmp = "" + Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=AFTER_PAY";
         break;
     
   }
@@ -6329,7 +6318,7 @@ function use$17(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/user?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/user?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -6764,7 +6753,7 @@ function use$18(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/user?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/user?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -7649,7 +7638,7 @@ function use$19(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/product?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/product?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -7710,7 +7699,6 @@ function use$20(router) {
           }
           
         }), [router]);
-  
 }
 
 var NoIE = {
@@ -7724,9 +7712,9 @@ function useInvoice(initialInvoice) {
   var setInvoice = match[1];
   var handleOnChangeInvoice = function (e) {
     var cleanedValue = Helper.Invoice.cleanup(e.currentTarget.value);
-    return setInvoice(function (param) {
-                return cleanedValue;
-              });
+    setInvoice(function (param) {
+          return cleanedValue;
+        });
   };
   return [
           match[0],
@@ -8118,7 +8106,7 @@ function use$21(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/settlement/cost?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/settlement/cost?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -8454,7 +8442,7 @@ function use$22(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/settlement?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/settlement?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -8576,7 +8564,7 @@ function use$23(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/user/deposit?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/user/deposit?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -8894,7 +8882,7 @@ function use$24(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/transaction?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/transaction?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -9139,7 +9127,7 @@ function use$25(queryParams) {
     revalidateIfStale: true,
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/transaction/summary?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/transaction/summary?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -9464,7 +9452,7 @@ function use$26(queryParams) {
     refreshInterval: 10000,
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/excel-export?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/excel-export?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -9834,7 +9822,7 @@ function use$27(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/shipment?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/shipment?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -9921,7 +9909,7 @@ function use$28(queryParam) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/shipment/amounts?" + queryParam, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/shipment/amounts?" + queryParam + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -10004,7 +9992,7 @@ function use$29(param) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/shipment/monthly-amounts?market-type=all", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/shipment/monthly-amounts?market-type=all", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -10516,7 +10504,7 @@ function use$30(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/offline-order?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/offline-order?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -10600,7 +10588,7 @@ function errorCode_decode$1(v) {
   if (json_arr$1.length === 0) {
     return Spice.error(undefined, "Expected variant, found empty array", v);
   }
-  var tagged = json_arr$1.map(Js_json.classify);
+  var tagged = Js_array.map(Js_json.classify, json_arr$1);
   var match = Belt_Array.getExn(tagged, 0);
   if (typeof match !== "number" && match.TAG === /* JSONString */0) {
     switch (match._0) {
@@ -11109,7 +11097,7 @@ function use$31(param) {
     refreshInterval: 3000,
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/offline-order/recent-uploads", FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/offline-order/recent-uploads", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -11874,7 +11862,7 @@ function use$32(queryParams) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/wholesale-market-order?" + queryParams, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/wholesale-market-order?" + queryParams + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -11963,7 +11951,7 @@ function use$33(path) {
   var fetcherOptions = {
     onErrorRetry: onErrorRetry
   };
-  var match = Swr(Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/product-sale-ledger/issue-s3-get-url?path=" + path, FetchHelper.fetcher, fetcherOptions);
+  var match = Swr("" + Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/product-sale-ledger/issue-s3-get-url?path=" + path + "", FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
   var data = match.data;
   if (error !== undefined) {
@@ -12007,7 +11995,7 @@ function buyerType_decode(v) {
   if (json_arr$1.length === 0) {
     return Spice.error(undefined, "Expected variant, found empty array", v);
   }
-  var tagged = json_arr$1.map(Js_json.classify);
+  var tagged = Js_array.map(Js_json.classify, json_arr$1);
   var match = Belt_Array.getExn(tagged, 0);
   if (typeof match !== "number" && match.TAG === /* JSONString */0) {
     switch (match._0) {
@@ -12131,7 +12119,7 @@ function use$34(userId) {
   };
   var match = Swr((function (param) {
           return Belt_Option.map(userId, (function (id) {
-                        return Env.afterPayApiUrl + "/buyers/" + id.toString() + "/";
+                        return "" + Env.afterPayApiUrl + "/buyers/" + id.toString() + "/";
                       }));
         }), FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
@@ -12407,7 +12395,7 @@ function useGetUrl(param) {
   var user = use$3(undefined);
   var userId = typeof user === "number" ? undefined : user._0.id;
   return Belt_Option.map(userId, (function (id) {
-                return Env.afterPayApiUrl + "/buyers/" + id.toString() + "/credit";
+                return "" + Env.afterPayApiUrl + "/buyers/" + id.toString() + "/credit";
               }));
 }
 
@@ -12646,7 +12634,7 @@ function use$36(param) {
   };
   var match = Swr((function (param) {
           return Belt_Option.map(userId, (function (id) {
-                        return Env.afterPayApiUrl + "/buyers/" + id.toString() + "/terms";
+                        return "" + Env.afterPayApiUrl + "/buyers/" + id.toString() + "/terms";
                       }));
         }), FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
@@ -13019,7 +13007,7 @@ function use$37(page) {
   };
   var match = Swr((function (param) {
           return Belt_Option.map(userId, (function (id) {
-                        return Env.afterPayApiUrl + "/orders?buyer_id=" + String(id) + "&page=" + String(page) + "&size=10";
+                        return "" + Env.afterPayApiUrl + "/orders?buyer_id=" + String(id) + "&page=" + String(page) + "&size=10";
                       }));
         }), FetchHelper.fetcher, fetcherOptions);
   var error = match.error;
@@ -13072,10 +13060,8 @@ function useSmoothScroll(param) {
                     var currentClassName = htmlElement.className;
                     var nextClassName = currentClassName.replace("scroll-smooth", "");
                     htmlElement.className = nextClassName;
-                    
                   });
         }), []);
-  
 }
 
 var stepsOrder = [
@@ -13122,23 +13108,20 @@ function useNavigateStep(param) {
     if (nextStep !== undefined) {
       router.query["step"] = nextStep;
       var newQueryString = new URLSearchParams(router.query).toString();
-      router.push(router.pathname + "?" + newQueryString);
+      router.push("" + router.pathname + "?" + newQueryString + "");
       return ;
     }
     router.push("/buyer/tradematch/ask-to-buy/applied");
-    
   };
   var navigateToFirstStep = function (param) {
     router.query["step"] = firstStep;
     var newQueryString = new URLSearchParams(router.query).toString();
-    router.replace(router.pathname + "?" + newQueryString);
-    
+    router.replace("" + router.pathname + "?" + newQueryString + "");
   };
   var replaceToStep = function (step) {
     router.query["step"] = step;
     var newQueryString = new URLSearchParams(router.query).toString();
-    router.replace(router.pathname + "?" + newQueryString);
-    
+    router.replace("" + router.pathname + "?" + newQueryString + "");
   };
   return {
           navigateToFirstStep: navigateToFirstStep,
@@ -13198,6 +13181,5 @@ export {
   AfterPayOrdersList ,
   useSmoothScroll ,
   Tradematch ,
-  
 }
 /* Env Not a pure module */

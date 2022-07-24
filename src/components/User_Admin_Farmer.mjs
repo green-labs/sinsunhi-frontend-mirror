@@ -71,6 +71,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

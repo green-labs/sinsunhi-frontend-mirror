@@ -73,6 +73,5 @@ var MO = {
 export {
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

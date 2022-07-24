@@ -47,6 +47,5 @@ var LeftTab = {
 
 export {
   LeftTab ,
-  
 }
 /* react Not a pure module */

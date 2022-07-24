@@ -27,19 +27,18 @@ function OfflineOrders_Upload_Admin(Props) {
   var setShowRequired = match$2[1];
   var handleOnChangeFiles = function (e) {
     var values = e.target.files;
-    return setFiles(function (param) {
-                return values;
-              });
+    setFiles(function (param) {
+          return values;
+        });
   };
   var handleResetFile = function (param) {
     var inputFile = document.getElementById("input-file");
     Belt_Option.map((inputFile == null) ? undefined : Caml_option.some(inputFile), (function (inputFile$p) {
             inputFile$p.value = "";
-            
           }));
-    return setFiles(function (param) {
-                
-              });
+    setFiles(function (param) {
+          
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "flex flex-row w-full mt-6 pb-5 border-b border-border-default-L2"
@@ -61,9 +60,9 @@ function OfflineOrders_Upload_Admin(Props) {
                                         return React.createElement("span", {
                                                     className: "absolute p-2 right-0",
                                                     onClick: (function (param) {
-                                                        return setShowDelete(function (param) {
-                                                                    return /* Show */0;
-                                                                  });
+                                                        setShowDelete(function (param) {
+                                                              return /* Show */0;
+                                                            });
                                                       })
                                                   }, React.createElement(IconCloseInput.make, {
                                                         height: "28",
@@ -106,15 +105,15 @@ function OfflineOrders_Upload_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 삭제하시겠어요?"),
                   onCancel: (function (param) {
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       handleResetFile(undefined);
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "삭제"
@@ -124,9 +123,9 @@ function OfflineOrders_Upload_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 선택해주세요."),
                   onConfirm: (function (param) {
-                      return setShowRequired(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowRequired(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -135,6 +134,5 @@ var make = OfflineOrders_Upload_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

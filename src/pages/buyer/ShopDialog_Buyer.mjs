@@ -108,6 +108,5 @@ export {
   BtnSection ,
   Mo ,
   make ,
-  
 }
 /* react Not a pure module */

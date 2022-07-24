@@ -108,7 +108,7 @@ function Order_Admin_Seller_Packing$Item$Table(Props) {
                   className: "h-full flex flex-col px-4 py-2 whitespace-nowrap"
                 }, React.createElement("span", {
                       className: "block"
-                    }, Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2 whitespace-nowrap"
                 }, React.createElement("span", {
                       className: "block"
@@ -207,7 +207,7 @@ function Order_Admin_Seller_Packing(Props) {
                                               "courier-code": courierCode$p
                                             }]
                                         }), (function (body) {
-                                        return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/invoices", body, 3, (function (param) {
+                                        return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/invoices", body, 3, (function (param) {
                                                       addToast(React.createElement("div", {
                                                                 className: "flex items-center"
                                                               }, React.createElement(IconCheck.make, {
@@ -218,16 +218,15 @@ function Order_Admin_Seller_Packing(Props) {
                                                                   }), "송장번호가 입력되었습니다"), {
                                                             appearance: "success"
                                                           });
-                                                      mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, true);
-                                                      return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                                                      mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, true);
+                                                      mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                                                     }), (function (param) {
-                                                      return setShowErrorPostCourierInvoiceNo(function (param) {
-                                                                  return /* Show */0;
-                                                                });
+                                                      setShowErrorPostCourierInvoiceNo(function (param) {
+                                                            return /* Show */0;
+                                                          });
                                                     }));
                                       }));
                         }));
-                  
                 }), param);
   };
   return React.createElement(React.Fragment, undefined, React.createElement(Order_Admin_Seller_Packing$Item$Table, {
@@ -243,9 +242,9 @@ function Order_Admin_Seller_Packing(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "송장번호 저장에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowErrorPostCourierInvoiceNo(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorPostCourierInvoiceNo(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -256,6 +255,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* Env Not a pure module */

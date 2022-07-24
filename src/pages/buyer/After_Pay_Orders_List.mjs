@@ -144,7 +144,6 @@ function useFetchWithPrevios(page) {
           } else {
             previous.current = fetchedData;
           }
-          
         }), [fetchedData]);
   if (typeof fetchedData === "number") {
     return previous.current;
@@ -162,17 +161,17 @@ function After_Pay_Orders_List$View(Props) {
   var page = match[0];
   var data = useFetchWithPrevios(page);
   var handleClose = function (param) {
-    return setOpen(function (param) {
-                return false;
-              });
+    setOpen(function (param) {
+          return false;
+        });
   };
   var handleOnChangePage = function (e) {
     e.preventDefault();
     e.stopPropagation();
     var value = e.currentTarget.value;
-    return setPage(function (param) {
-                return Belt_Option.getWithDefault(Belt_Int.fromString(value), 1);
-              });
+    setPage(function (param) {
+          return Belt_Option.getWithDefault(Belt_Int.fromString(value), 1);
+        });
   };
   var totalCount;
   totalCount = typeof data === "number" || data.TAG !== /* Loaded */0 ? 0 : data._0.totalCount;
@@ -242,6 +241,5 @@ export {
   Dialog ,
   View ,
   make ,
-  
 }
 /* react Not a pure module */

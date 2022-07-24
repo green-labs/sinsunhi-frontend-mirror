@@ -9,6 +9,7 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
 import * as IconError from "./svgs/IconError.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
@@ -40,9 +41,7 @@ function User_MD_Update_Button_Admin_Farmer(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var save = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -50,7 +49,7 @@ function User_MD_Update_Button_Admin_Farmer(Props) {
                             "farmer-id": user.id,
                             "md-id": selectedUser ? Belt_Int.fromString(selectedUser.value) : undefined
                           }), (function (body) {
-                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/user/farmer", body, 3, (function (param) {
+                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/user/farmer", body, 3, (function (param) {
                                         close(undefined);
                                         addToast(React.createElement("div", {
                                                   className: "flex items-center"
@@ -63,45 +62,44 @@ function User_MD_Update_Button_Admin_Farmer(Props) {
                                               appearance: "success"
                                             });
                                         var rq = router.query;
-                                        return mutate(Env.restApiUrl + "/user?" + (rq["role"] = "farmer", new URLSearchParams(rq).toString()), undefined, true);
+                                        mutate("" + Env.restApiUrl + "/user?" + (rq["role"] = "farmer", new URLSearchParams(rq).toString()) + "", undefined, true);
                                       }), (function (param) {
-                                        return addToast(React.createElement("div", {
-                                                        className: "flex items-center"
-                                                      }, React.createElement(IconError.make, {
-                                                            width: "24",
-                                                            height: "24",
-                                                            className: "mr-2"
-                                                          }), "오류가 발생하였습니다."), {
-                                                    appearance: "error"
-                                                  });
+                                        addToast(React.createElement("div", {
+                                                  className: "flex items-center"
+                                                }, React.createElement(IconError.make, {
+                                                      width: "24",
+                                                      height: "24",
+                                                      className: "mr-2"
+                                                    }), "오류가 발생하였습니다."), {
+                                              appearance: "error"
+                                            });
                                       }));
                         }));
-                  
                 }), param);
   };
   var handleLoadOptions = function (inputValue) {
-    return FetchHelper.fetchWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/user?name=" + inputValue + "&role=admin", "", 3).then(function (result) {
-                var users$p = Curry._1(CustomHooks.QueryUser.Admin.users_decode, result);
-                if (users$p.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$1 = users$p._0;
-                if (users$p$1.data.length === 0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
-                        return /* Selected */{
-                                value: String(user.id),
-                                label: user.name + "(" + Belt_Option.getWithDefault(user.email, "") + ")\n            "
-                              };
-                      }));
-                return Promise.resolve(users$p$p);
-              });
+    return Js_promise.then_((function (result) {
+                  var users$p = Curry._1(CustomHooks.QueryUser.Admin.users_decode, result);
+                  if (users$p.TAG !== /* Ok */0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$1 = users$p._0;
+                  if (users$p$1.data.length === 0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
+                          return /* Selected */{
+                                  value: String(user.id),
+                                  label: "" + user.name + "(" + Belt_Option.getWithDefault(user.email, "") + ")\n            "
+                                };
+                        }));
+                  return Promise.resolve(users$p$p);
+                }), FetchHelper.fetchWithRetry(FetchHelper.getWithToken, "" + Env.restApiUrl + "/user?name=" + inputValue + "&role=admin", "", 3));
   };
   var handleChangeUser = function (selection) {
-    return setSelectedUser(function (param) {
-                return selection;
-              });
+    setSelectedUser(function (param) {
+          return selection;
+        });
   };
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -171,6 +169,5 @@ var make = User_MD_Update_Button_Admin_Farmer;
 export {
   editIcon ,
   make ,
-  
 }
 /* editIcon Not a pure module */

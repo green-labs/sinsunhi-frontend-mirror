@@ -25,7 +25,6 @@ function removeBodyScrollLock(param) {
   var bodyClassList = body.classList;
   bodyClassList.remove("blockScroll");
   bodyClassList.remove("ab-pause-scrolling");
-  
 }
 
 function makeScriptTag(param) {
@@ -61,9 +60,8 @@ function Paperform(Props) {
                     paperformBtn$p.click();
                     setTimeout((function (param) {
                             modifyPaperformZIndex(undefined);
-                            return removeBodyScrollLock(undefined);
+                            removeBodyScrollLock(undefined);
                           }), 500);
-                    
                   }));
             Caml_option.valFromOption(body).appendChild(script$p);
           }
@@ -83,6 +81,5 @@ export {
   makeScriptTag ,
   getPaperformBtn ,
   make ,
-  
 }
 /* Env Not a pure module */

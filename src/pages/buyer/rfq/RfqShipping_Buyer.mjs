@@ -9,11 +9,13 @@ import * as DS_Toast from "../../../components/common/container/DS_Toast.mjs";
 import * as RfqCommon from "./RfqCommon.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as DatePicker from "../../../components/DatePicker.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../utils/CustomHooks.mjs";
 import * as DS_ListItem from "../../../components/common/container/DS_ListItem.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as DS_Accordion from "../../../components/common/container/DS_Accordion.mjs";
 import * as IconNotFound from "../../../components/svgs/IconNotFound.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
@@ -23,7 +25,6 @@ import * as DS_BottomDrawer from "../../../components/common/container/DS_Bottom
 import Format from "date-fns/format";
 import * as DS_TopNavigation from "../../../components/common/container/DS_TopNavigation.mjs";
 import AddDays from "date-fns/addDays";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -36,7 +37,7 @@ import * as RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql from "../../
 import * as RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql from "../../../__generated__/RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -45,7 +46,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -63,38 +64,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -103,10 +103,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var RfqNextAcceptableDeliveryDate_makeVariables = RfqShippingBuyer_RfqNextAcceptableDeliveryDate_Query_graphql.Utils.makeVariables;
-
 var RfqNextAcceptableDeliveryDate = {
-  makeVariables: RfqNextAcceptableDeliveryDate_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -117,7 +115,7 @@ var RfqNextAcceptableDeliveryDate = {
 };
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -126,7 +124,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$1(param) {
-  var match = Hooks.useQueryLoader(RfqShippingBuyer_RfqTerms_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqShippingBuyer_RfqTerms_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -144,38 +142,37 @@ function useLoader$1(param) {
 }
 
 function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqShippingBuyer_RfqTerms_Query_graphql.node, RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$1(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqShippingBuyer_RfqTerms_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_RfqTerms_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -184,10 +181,8 @@ function retain$1(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var RfqTerms_makeVariables = RfqShippingBuyer_RfqTerms_Query_graphql.Utils.makeVariables;
-
 var RfqTerms = {
-  makeVariables: RfqTerms_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader$1,
@@ -198,7 +193,7 @@ var RfqTerms = {
 };
 
 function use$2(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqShippingBuyer_Holidays_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqShippingBuyer_Holidays_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -207,7 +202,7 @@ function use$2(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$2(param) {
-  var match = Hooks.useQueryLoader(RfqShippingBuyer_Holidays_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqShippingBuyer_Holidays_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -225,38 +220,37 @@ function useLoader$2(param) {
 }
 
 function $$fetch$2(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$2(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqShippingBuyer_Holidays_Query_graphql.node, RfqShippingBuyer_Holidays_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$2(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqShippingBuyer_Holidays_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqShippingBuyer_Holidays_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqShippingBuyer_Holidays_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -265,10 +259,8 @@ function retain$2(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Holidays_makeVariables = RfqShippingBuyer_Holidays_Query_graphql.Utils.makeVariables;
-
 var Holidays = {
-  makeVariables: Holidays_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$2,
   useLoader: useLoader$2,
@@ -303,14 +295,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$3(param) {
-  var match = Hooks.useMutation(RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -318,13 +310,13 @@ function use$3(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -347,10 +339,6 @@ var UpdateDeliveryAddress_rfqRequestStatus_decode = RfqShippingBuyer_UpdateDeliv
 
 var UpdateDeliveryAddress_rfqRequestStatus_fromString = RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Utils.rfqRequestStatus_fromString;
 
-var UpdateDeliveryAddress_make_rfqRequestUpdateInput = RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Utils.make_rfqRequestUpdateInput;
-
-var UpdateDeliveryAddress_makeVariables = RfqShippingBuyer_UpdateDeliveryAddress_Mutation_graphql.Utils.makeVariables;
-
 var UpdateDeliveryAddress = {
   errorCode_decode: UpdateDeliveryAddress_errorCode_decode,
   errorCode_fromString: UpdateDeliveryAddress_errorCode_fromString,
@@ -358,8 +346,7 @@ var UpdateDeliveryAddress = {
   rfqDeliveryMethod_fromString: UpdateDeliveryAddress_rfqDeliveryMethod_fromString,
   rfqRequestStatus_decode: UpdateDeliveryAddress_rfqRequestStatus_decode,
   rfqRequestStatus_fromString: UpdateDeliveryAddress_rfqRequestStatus_fromString,
-  make_rfqRequestUpdateInput: UpdateDeliveryAddress_make_rfqRequestUpdateInput,
-  makeVariables: UpdateDeliveryAddress_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$3
@@ -384,14 +371,14 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
               optimisticResponse: optimisticResponse !== undefined ? RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$4(param) {
-  var match = Hooks.useMutation(RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -399,13 +386,13 @@ function use$4(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -420,12 +407,10 @@ var UpdateTermAgreement_errorCode_decode = RfqShippingBuyer_UpdateTermAgreement_
 
 var UpdateTermAgreement_errorCode_fromString = RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Utils.errorCode_fromString;
 
-var UpdateTermAgreement_makeVariables = RfqShippingBuyer_UpdateTermAgreement_Mutation_graphql.Utils.makeVariables;
-
 var UpdateTermAgreement = {
   errorCode_decode: UpdateTermAgreement_errorCode_decode,
   errorCode_fromString: UpdateTermAgreement_errorCode_fromString,
-  makeVariables: UpdateTermAgreement_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation$1,
   use: use$4
@@ -488,9 +473,9 @@ function RfqShipping_Buyer$CalendarListitem(Props) {
     id: "date",
     onChange: (function (e) {
         var newDate = e.detail.valueAsDate;
-        return handleChangeDate(function (param) {
-                    return newDate;
-                  });
+        handleChangeDate(function (param) {
+              return newDate;
+            });
       }),
     maxDate: Format(maxDate, "yyyy-MM-dd"),
     minDate: Format(minDate, "yyyy-MM-dd"),
@@ -505,10 +490,9 @@ function RfqShipping_Buyer$CalendarListitem(Props) {
         }
       }),
     onFocus: (function (param) {
-        return Belt_Option.forEach(Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById("date")), Webapi__Dom__Element.asHtmlElement), (function (inputEl$p) {
-                      inputEl$p.blur();
-                      
-                    }));
+        Belt_Option.forEach(Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById("date")), Webapi__Dom__Element.asHtmlElement), (function (inputEl$p) {
+                inputEl$p.blur();
+              }));
       })
   };
   if (currentDate !== undefined) {
@@ -555,9 +539,9 @@ function RfqShipping_Buyer$DeliveryMethodContent(Props) {
                                 key: String(index),
                                 className: "bg-surface flex items-center min-h-[48px] px-5 py-4 cursor-pointer ",
                                 onClick: (function (param) {
-                                    return handleChangeDeliveryMethod(function (param) {
-                                                return data;
-                                              });
+                                    handleChangeDeliveryMethod(function (param) {
+                                          return data;
+                                        });
                                   })
                               }, React.createElement("div", {
                                     className: "flex flex-col justify-between truncate"
@@ -625,7 +609,7 @@ function RfqShipping_Buyer$AddressDrawer(Props) {
   return React.createElement(DS_BottomDrawer.Root.make, {
               isShow: isShow,
               onClose: (function (param) {
-                  return Curry._1(closeDrawer, undefined);
+                  Curry._1(closeDrawer, undefined);
                 }),
               children: null,
               full: true
@@ -740,9 +724,9 @@ function RfqShipping_Buyer$DeliveryCycleContent(Props) {
                                 children: React.createElement("li", {
                                       className: "flex py-4 items-center min-h-[48px] px-5 cursor-pointer ",
                                       onClick: (function (param) {
-                                          return handleChangeDeliveryCycle(function (param) {
-                                                      return data;
-                                                    });
+                                          handleChangeDeliveryCycle(function (param) {
+                                                return data;
+                                              });
                                         })
                                     }, React.createElement("div", {
                                           className: "flex flex-col justify-between truncate"
@@ -778,7 +762,6 @@ function RfqShipping_Buyer$Shipping(Props) {
           DataGtm.push({
                 event: "Expose_view_RFQ_Livestock_ShippingInfo"
               });
-          
         }), []);
   var match$1 = use$1(undefined, undefined, undefined, undefined, undefined);
   var match$2 = use(undefined, undefined, undefined, undefined, undefined);
@@ -792,8 +775,8 @@ function RfqShipping_Buyer$Shipping(Props) {
   var maxDate = AddDays(minDate, 30);
   var maxDateString = Format(maxDate, "yyyy-MM-dd");
   var match$3 = use$2({
-        startDate: minDateString,
-        endDate: maxDateString
+        endDate: maxDateString,
+        startDate: minDateString
       }, undefined, undefined, undefined, undefined);
   var match$4 = use$3(undefined);
   var updateRfqRequest = match$4[0];
@@ -845,9 +828,7 @@ function RfqShipping_Buyer$Shipping(Props) {
               var currentScrollY = window.scrollY;
               var targetScrollY = top + currentScrollY - 56;
               window.scrollTo(0.0, targetScrollY);
-              
             }), 350);
-      
     };
     switch (text) {
       case "deliveryCycle" :
@@ -869,18 +850,18 @@ function RfqShipping_Buyer$Shipping(Props) {
     }
   };
   var toggleDrawer = function (param) {
-    return setIsAddressDrawerShow(function (prev) {
-                return !prev;
-              });
+    setIsAddressDrawerShow(function (prev) {
+          return !prev;
+        });
   };
   var onCompleteAddressDrawer = function (data) {
-    var newAddress = (data.sido + " " + data.sigungu + " " + data.bname).replace(/[ ]{2,}/, " ").trim();
+    var newAddress = ("" + data.sido + " " + data.sigungu + " " + data.bname + "").replace(/[ ]{2,}/, " ").trim();
     setDeliveryAddress(function (param) {
           return newAddress;
         });
-    return setIsAddressDrawerShow(function (prev) {
-                return !prev;
-              });
+    setIsAddressDrawerShow(function (prev) {
+          return !prev;
+        });
   };
   var validDeliveryCycle = convertNumberInputValue(deliveryCycle.dayCount);
   var match$12 = selectedDeliveryMethod.method !== "";
@@ -912,9 +893,9 @@ function RfqShipping_Buyer$Shipping(Props) {
           }));
     Curry.app(updateRfqRequest, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.updateRfqRequest.NAME;
@@ -947,7 +928,6 @@ function RfqShipping_Buyer$Shipping(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement("div", {
               className: "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-14 pb-[96px] "
@@ -957,7 +937,6 @@ function RfqShipping_Buyer$Shipping(Props) {
                               className: "cursor-pointer",
                               onClick: (function (param) {
                                   window.history.back();
-                                  
                                 })
                             }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                   height: "32",
@@ -1040,9 +1019,9 @@ function RfqShipping_Buyer$Shipping(Props) {
                           }, React.createElement("button", {
                                 className: "text-left tab-highlight-color",
                                 onClick: (function (param) {
-                                    return setIsAgreedPrivacyPolicy(function (prev) {
-                                                return !prev;
-                                              });
+                                    setIsAgreedPrivacyPolicy(function (prev) {
+                                          return !prev;
+                                        });
                                   })
                               }, React.createElement(DS_ListItem.Information1.make, {
                                     children: React.createElement(DS_ListItem.Information1.Left.make, {
@@ -1070,9 +1049,9 @@ function RfqShipping_Buyer$Shipping(Props) {
                       } else {
                         Curry.app(updateTermAgreement, [
                               (function (param) {
-                                  return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                                              appearance: "error"
-                                            });
+                                  addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                                        appearance: "error"
+                                      });
                                 }),
                               (function (param, param$1) {
                                   var variant = param.createTerm.NAME;
@@ -1129,7 +1108,6 @@ function RfqShipping_Buyer(Props) {
   } else {
     React.useEffect((function () {
             router.push("/buyer/rfq");
-            
           }), []);
     return null;
   }
@@ -1150,6 +1128,5 @@ export {
   DeliveryCycleContent ,
   Shipping ,
   make ,
-  
 }
 /* react Not a pure module */

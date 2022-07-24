@@ -3,18 +3,19 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as IconArrowSelect from "./svgs/IconArrowSelect.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as SelectWholesalerQuery_graphql from "../__generated__/SelectWholesalerQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(SelectWholesalerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectWholesalerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(SelectWholesalerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectWholesalerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -23,7 +24,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(SelectWholesalerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(SelectWholesalerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -41,38 +42,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, SelectWholesalerQuery_graphql.node, SelectWholesalerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, SelectWholesalerQuery_graphql.node, SelectWholesalerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: SelectWholesalerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: SelectWholesalerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, SelectWholesalerQuery_graphql.node, SelectWholesalerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, SelectWholesalerQuery_graphql.node, SelectWholesalerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(SelectWholesalerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(SelectWholesalerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(SelectWholesalerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(SelectWholesalerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SelectWholesalerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -81,10 +81,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = SelectWholesalerQuery_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -167,6 +165,5 @@ export {
   Query ,
   Loading ,
   make ,
-  
 }
 /* react Not a pure module */

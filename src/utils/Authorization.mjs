@@ -17,7 +17,7 @@ function Layout(UserHook) {
     var fallback = Props.fallback;
     var user = Curry._1(UserHook.use, undefined);
     return React.createElement(React.Fragment, undefined, React.createElement(Head, {
-                    children: React.createElement("title", undefined, title + " - 신선하이")
+                    children: React.createElement("title", undefined, "" + title + " - 신선하이")
                   }), typeof user === "number" ? (
                   user !== 0 ? getFallback(fallback) : null
                 ) : children);
@@ -35,7 +35,7 @@ function Authorization$Layout(Props) {
   var fallback = Props.fallback;
   var user = Curry._1(UserHook.use, undefined);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
-                  children: React.createElement("title", undefined, title + " - 신선하이")
+                  children: React.createElement("title", undefined, "" + title + " - 신선하이")
                 }), typeof user === "number" ? (
                 user !== 0 ? getFallback(fallback) : null
               ) : children);
@@ -53,7 +53,7 @@ function Authorization$Layout$1(Props) {
   var fallback = Props.fallback;
   var user = Curry._1(UserHook$1.use, undefined);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
-                  children: React.createElement("title", undefined, title + " - 신선하이")
+                  children: React.createElement("title", undefined, "" + title + " - 신선하이")
                 }), typeof user === "number" ? (
                 user !== 0 ? getFallback(fallback) : null
               ) : children);
@@ -71,7 +71,7 @@ function Authorization$Layout$2(Props) {
   var fallback = Props.fallback;
   var user = Curry._1(UserHook$2.use, undefined);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
-                  children: React.createElement("title", undefined, title + " - 신선하이")
+                  children: React.createElement("title", undefined, "" + title + " - 신선하이")
                 }), typeof user === "number" ? (
                 user !== 0 ? getFallback(fallback) : null
               ) : children);
@@ -87,6 +87,5 @@ export {
   Admin ,
   Buyer ,
   Seller ,
-  
 }
 /* react Not a pure module */

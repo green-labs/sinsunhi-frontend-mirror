@@ -14,6 +14,5 @@ var make = EmptyProducts;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

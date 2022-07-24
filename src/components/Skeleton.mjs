@@ -19,6 +19,5 @@ var Box = {
 
 export {
   Box ,
-  
 }
 /* react Not a pure module */

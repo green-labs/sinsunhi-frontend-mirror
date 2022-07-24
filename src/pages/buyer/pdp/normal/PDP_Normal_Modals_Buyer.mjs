@@ -44,11 +44,10 @@ function PDP_Normal_Modals_Buyer$Unauthorized$PC(Props) {
                                   "redirect",
                                   router.asPath
                                 ]])).toString();
-                  router.push("/buyer/signin?" + redirectUrl);
-                  
+                  router.push("/buyer/signin?" + redirectUrl + "");
                 }),
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -95,11 +94,10 @@ function PDP_Normal_Modals_Buyer$Unauthorized$MO(Props) {
                                   "redirect",
                                   router.asPath
                                 ]])).toString();
-                  router.push("/buyer/signin?" + redirectUrl);
-                  
+                  router.push("/buyer/signin?" + redirectUrl + "");
                 }),
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -215,7 +213,7 @@ function PDP_Normal_Modals_Buyer$NoOption$PC(Props) {
               isShow: isShow,
               cancelText: "확인",
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -235,7 +233,7 @@ function PDP_Normal_Modals_Buyer$NoOption$MO(Props) {
               isShow: isShow,
               cancelText: "확인",
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -259,9 +257,9 @@ function PDP_Normal_Modals_Buyer$PC(Props) {
   var quantity = Props.quantity;
   var setQuantity = Props.setQuantity;
   var closeFn = function (param) {
-    return setShow(function (param) {
-                return /* Hide */0;
-              });
+    setShow(function (param) {
+          return /* Hide */0;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(PDP_Normal_Modals_Buyer$Confirm$PC, {
                   show: show,
@@ -289,9 +287,9 @@ function PDP_Normal_Modals_Buyer$MO(Props) {
   var quantity = Props.quantity;
   var setQuantity = Props.setQuantity;
   var closeFn = function (param) {
-    return setShow(function (param) {
-                return /* Hide */0;
-              });
+    setShow(function (param) {
+          return /* Hide */0;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(PDP_Normal_Modals_Buyer$Confirm$MO, {
                   show: show,
@@ -318,6 +316,5 @@ export {
   NoOption ,
   PC$3 as PC,
   MO$3 as MO,
-  
 }
 /* react Not a pure module */

@@ -243,6 +243,5 @@ export {
   styleByTextAlign ,
   make ,
   InputWithRef ,
-  
 }
 /* react Not a pure module */

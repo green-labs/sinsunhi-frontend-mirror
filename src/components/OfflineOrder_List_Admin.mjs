@@ -92,6 +92,5 @@ var make = OfflineOrder_List_Admin;
 export {
   Header ,
   make ,
-  
 }
 /* react Not a pure module */

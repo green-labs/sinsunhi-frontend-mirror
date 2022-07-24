@@ -17,6 +17,5 @@ var make = ErrorPanel;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

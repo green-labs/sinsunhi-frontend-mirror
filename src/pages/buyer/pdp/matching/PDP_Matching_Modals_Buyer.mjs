@@ -111,11 +111,10 @@ function PDP_Matching_Modals_Buyer$Unauthorized(Props) {
                                 "redirect",
                                 router.asPath
                               ]])).toString();
-                  router.push("/buyer/signin?" + redirectUrl);
-                  
+                  router.push("/buyer/signin?" + redirectUrl + "");
                 }),
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -134,9 +133,9 @@ function PDP_Matching_Modals_Buyer$MO(Props) {
   var setShow = Props.setShow;
   var query = Props.query;
   var closeFn = function (param) {
-    return setShow(function (param) {
-                return /* Hide */0;
-              });
+    setShow(function (param) {
+          return /* Hide */0;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(PDP_Matching_Modals_Buyer$GradeGuide, {
                   show: show,
@@ -156,6 +155,5 @@ export {
   GradeGuide ,
   Unauthorized ,
   MO ,
-  
 }
 /* react Not a pure module */

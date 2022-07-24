@@ -26,11 +26,11 @@ function PDP_Quoted_Submit_Buyer$PC(Props) {
         return React.createElement("button", {
                     className: btnStyle,
                     onClick: (function (param) {
-                        return setShowModal(function (param) {
-                                    return /* Show */{
-                                            _0: /* Unauthorized */0
-                                          };
-                                  });
+                        setShowModal(function (param) {
+                              return /* Show */{
+                                      _0: /* Unauthorized */0
+                                    };
+                            });
                       })
                   }, "최저가 견적받기");
     case /* Loading */0 :
@@ -42,7 +42,7 @@ function PDP_Quoted_Submit_Buyer$PC(Props) {
     case /* Fulfilled */3 :
         return React.createElement("div", {
                     onClick: (function (param) {
-                        return Curry._1(gtmPushClickRfq, undefined);
+                        Curry._1(gtmPushClickRfq, undefined);
                       })
                   }, React.createElement(RfqCreateRequestButton.make, {
                         className: btnStyle,
@@ -66,7 +66,7 @@ function PDP_Quoted_Submit_Buyer$MO$CTAContainer(Props) {
                       className: "w-full h-14 flex"
                     }, React.createElement("button", {
                           onClick: (function (param) {
-                              return ChannelTalk.showMessenger(undefined);
+                              ChannelTalk.showMessenger(undefined);
                             })
                         }, React.createElement("img", {
                               className: "w-14 h-14 mr-2",
@@ -101,21 +101,21 @@ function PDP_Quoted_Submit_Buyer$MO(Props) {
         return React.createElement(React.Fragment, undefined, React.createElement("button", {
                         className: btnStyle,
                         onClick: (function (param) {
-                            return setShowModal(function (param) {
-                                        return /* Show */{
-                                                _0: /* Unauthorized */0
-                                              };
-                                      });
+                            setShowModal(function (param) {
+                                  return /* Show */{
+                                          _0: /* Unauthorized */0
+                                        };
+                                });
                           })
                       }, "최저가 견적받기"), React.createElement(PDP_Quoted_Submit_Buyer$MO$CTAContainer, {
                         children: React.createElement("button", {
                               className: btnStyle,
                               onClick: (function (param) {
-                                  return setShowModal(function (param) {
-                                              return /* Show */{
-                                                      _0: /* Unauthorized */0
-                                                    };
-                                            });
+                                  setShowModal(function (param) {
+                                        return /* Show */{
+                                                _0: /* Unauthorized */0
+                                              };
+                                      });
                                 })
                             }, "최저가 견적받기")
                       }));
@@ -132,7 +132,7 @@ function PDP_Quoted_Submit_Buyer$MO(Props) {
     case /* Fulfilled */3 :
         return React.createElement(React.Fragment, undefined, React.createElement("div", {
                         onClick: (function (param) {
-                            return Curry._1(gtmPushClickRfq, undefined);
+                            Curry._1(gtmPushClickRfq, undefined);
                           })
                       }, React.createElement(RfqCreateRequestButton.make, {
                             className: btnStyle,
@@ -140,7 +140,7 @@ function PDP_Quoted_Submit_Buyer$MO(Props) {
                           })), React.createElement(PDP_Quoted_Submit_Buyer$MO$CTAContainer, {
                         children: React.createElement("div", {
                               onClick: (function (param) {
-                                  return Curry._1(gtmPushClickRfq, undefined);
+                                  Curry._1(gtmPushClickRfq, undefined);
                                 })
                             }, React.createElement(RfqCreateRequestButton.make, {
                                   className: btnStyle,
@@ -159,6 +159,5 @@ var MO = {
 export {
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

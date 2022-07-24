@@ -23,6 +23,5 @@ var make = PDP_Matching_Image_Buyer;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

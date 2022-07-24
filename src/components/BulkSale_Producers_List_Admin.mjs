@@ -2,23 +2,25 @@
 
 import * as Env from "../constants/Env.mjs";
 import * as Curry from "rescript/lib/es6/curry.js";
+import * as Fetch from "bs-fetch/src/Fetch.mjs";
 import * as React from "react";
 import * as Helper from "../utils/Helper.mjs";
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Skeleton from "./Skeleton.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as FetchHelper from "../utils/FetchHelper.mjs";
 import * as Order_Admin from "./Order_Admin.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import Format from "date-fns/format";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as IconDownloadCenter from "./svgs/IconDownloadCenter.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as Webapi__Dom__Document from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Document.mjs";
@@ -42,27 +44,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersListAdminFragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducersListAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProducersListAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use(fRef) {
-  var data = Hooks.useFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersListAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProducersListAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProducersListAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -73,7 +75,7 @@ function useOpt(opt_fRef) {
 }
 
 function usePagination(fr) {
-  var p = Hooks.usePaginationFragment(BulkSaleProducersListAdminFragment_graphql.node, fr);
+  var p = ReactRelay.usePaginationFragment(BulkSaleProducersListAdminFragment_graphql.node, fr);
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersListAdminFragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -104,7 +106,7 @@ function usePagination(fr) {
 }
 
 function useBlockingPagination(fRef) {
-  var p = Hooks.useBlockingPaginationFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
+  var p = ReactRelay.useBlockingPaginationFragment(BulkSaleProducersListAdminFragment_graphql.node, fRef);
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersListAdminFragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -141,6 +143,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use,
   useOpt: useOpt,
   usePagination: usePagination,
@@ -311,7 +314,7 @@ function BulkSale_Producers_List_Admin$List(Props) {
                           className: "text-lg font-bold"
                         }, "내역", React.createElement("span", {
                               className: "text-base ml-1 text-green-gl font-normal"
-                            }, String(count) + "건")), React.createElement("div", {
+                            }, "" + String(count) + "건")), React.createElement("div", {
                           className: "flex"
                         }, React.createElement("button", {
                               className: "btn-level6-small px-3 py-1 flex justify-center items-center text-[15px]",
@@ -319,38 +322,34 @@ function BulkSale_Producers_List_Admin$List(Props) {
                                   var progress = Belt_Option.mapWithDefault(Js_dict.get(router.query, "status"), "ALL", (function (status) {
                                           return status.toUpperCase();
                                         }));
-                                  FetchHelper.requestWithRetry(FetchHelper.getWithTokenForExcel, Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/bulk-sale-applications/export/excel?progress=" + progress, "", 3, (function (res) {
+                                  FetchHelper.requestWithRetry(FetchHelper.getWithTokenForExcel, "" + Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/bulk-sale-applications/export/excel?progress=" + progress + "", "", 3, (function (res) {
                                           var headers = res.headers;
-                                          var filename = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(Caml_option.null_to_opt(headers.get("Content-Disposition")), Helper.Filename.parseFilename), (function (prim) {
+                                          var filename = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(Fetch.$$Headers.get("Content-Disposition", headers), Helper.Filename.parseFilename), (function (prim) {
                                                       return decodeURIComponent(prim);
-                                                    })), Format(new Date(), "yyyyMMdd") + "_주문서.xlsx");
-                                          res.blob().then(function (blob) {
-                                                  var anchor = Webapi__Dom__Element.asHtmlElement(document.createElement("a"));
-                                                  var body = Belt_Option.flatMap(Webapi__Dom__Document.asHtmlDocument(document), (function (prim) {
-                                                          return Caml_option.nullable_to_opt(prim.body);
-                                                        }));
-                                                  Helper.$$Option.map2(body, anchor, (function (body$p, anchor$p) {
-                                                          var url = URL.createObjectURL(blob);
-                                                          anchor$p.setAttribute("href", url);
-                                                          anchor$p.setAttribute("download", filename);
-                                                          anchor$p.setAttribute("style", "{display: none;}");
-                                                          body$p.appendChild(anchor$p);
-                                                          anchor$p.click();
-                                                          body$p.removeChild(anchor$p);
-                                                          URL.revokeObjectURL(url);
-                                                          
-                                                        }));
-                                                  return Promise.resolve(blob);
-                                                }).catch(function (err) {
-                                                console.log(err);
-                                                return Promise.reject(Js_exn.raiseError("파일을 다운로드 할 수 없습니다."));
-                                              });
-                                          
+                                                    })), "" + Format(new Date(), "yyyyMMdd") + "_주문서.xlsx");
+                                          Js_promise.$$catch((function (err) {
+                                                  console.log(err);
+                                                  return Promise.reject(Js_exn.raiseError("파일을 다운로드 할 수 없습니다."));
+                                                }), Js_promise.then_((function (blob) {
+                                                      var anchor = Webapi__Dom__Element.asHtmlElement(document.createElement("a"));
+                                                      var body = Belt_Option.flatMap(Webapi__Dom__Document.asHtmlDocument(document), (function (prim) {
+                                                              return Caml_option.nullable_to_opt(prim.body);
+                                                            }));
+                                                      Helper.$$Option.map2(body, anchor, (function (body$p, anchor$p) {
+                                                              var url = URL.createObjectURL(blob);
+                                                              anchor$p.setAttribute("href", url);
+                                                              anchor$p.setAttribute("download", filename);
+                                                              anchor$p.setAttribute("style", "{display: none;}");
+                                                              body$p.appendChild(anchor$p);
+                                                              anchor$p.click();
+                                                              body$p.removeChild(anchor$p);
+                                                              URL.revokeObjectURL(url);
+                                                            }));
+                                                      return Promise.resolve(blob);
+                                                    }), Fetch.$$Response.blob(res)));
                                         }), (function (err) {
                                           console.log(err);
-                                          
                                         }));
-                                  
                                 })
                             }, React.createElement(IconDownloadCenter.make, {
                                   width: "20",
@@ -400,6 +399,5 @@ export {
   Skeleton$1 as Skeleton,
   List ,
   make ,
-  
 }
 /* Env Not a pure module */

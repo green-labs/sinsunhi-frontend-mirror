@@ -200,13 +200,11 @@ function Products_Buyer$Products(Props) {
   var router = Router.useRouter();
   var status = CustomHooks.Products.use(new URLSearchParams(router.query).toString());
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var products$p = CustomHooks.Products.products_decode(status._0);
     count = products$p.TAG === /* Ok */0 ? String(products$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   return React.createElement("div", {
               className: "sm:px-10 md:px-20"
@@ -220,7 +218,7 @@ function Products_Buyer$Products(Props) {
                               className: "font-bold"
                             }, "내역", React.createElement("span", {
                                   className: "ml-1 text-green-gl font-normal"
-                                }, count + "건")), React.createElement("div", {
+                                }, "" + count + "건")), React.createElement("div", {
                               className: "flex flex-col lg:flex-row mt-4 lg:mt-0"
                             }, React.createElement("div", {
                                   className: "flex items-center"
@@ -257,6 +255,5 @@ export {
   response_decode ,
   Products ,
   make ,
-  
 }
 /* react Not a pure module */

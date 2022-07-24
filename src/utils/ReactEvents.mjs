@@ -5,7 +5,6 @@ import * as Curry from "rescript/lib/es6/curry.js";
 function stopSyntheticDefaultEvent(e) {
   e.preventDefault();
   e.stopPropagation();
-  
 }
 
 function stopSyntheticEventWithTarget(e) {
@@ -22,6 +21,5 @@ export {
   stopSyntheticDefaultEvent ,
   stopSyntheticEventWithTarget ,
   interceptingHandler ,
-  
 }
 /* No side effect */

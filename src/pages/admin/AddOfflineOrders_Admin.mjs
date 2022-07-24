@@ -26,7 +26,7 @@ function AddOfflineOrders_Admin(Props) {
     setShowSuccess(function (param) {
           return /* Show */0;
         });
-    return mutate(Env.restApiUrl + "/offline-orders/recent-uploads?upload-type=order", undefined, undefined);
+    mutate("" + Env.restApiUrl + "/offline-orders/recent-uploads?upload-type=order", undefined, undefined);
   };
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "관리자 오프라인 주문등록")
@@ -47,13 +47,13 @@ function AddOfflineOrders_Admin(Props) {
                                   }, React.createElement("a", {
                                         className: "underline focus:outline-none",
                                         download: "off_order_sample.xlsx",
-                                        href: Env.s3PublicUrl + "/order/off_order_sample.xlsx"
+                                        href: "" + Env.s3PublicUrl + "/order/off_order_sample.xlsx"
                                       }, "샘플양식 다운로드"))), React.createElement(OfflineOrders_Upload_Admin.make, {
                                 onSuccess: handleUploadSuccess,
                                 onFailure: (function (param) {
-                                    return setShowError(function (param) {
-                                                return /* Hide */1;
-                                              });
+                                    setShowError(function (param) {
+                                          return /* Hide */1;
+                                        });
                                   })
                               }), React.createElement("div", {
                                 className: "mt-9"
@@ -63,9 +63,9 @@ function AddOfflineOrders_Admin(Props) {
                               className: "text-gray-500 text-center whitespace-pre-wrap"
                             }, "주문서 업로드가 실행되었습니다. 성공여부를 꼭 주문서 업로드 결과에서 확인해주세요."),
                         onConfirm: (function (param) {
-                            return setShowSuccess(function (param) {
-                                        return /* Hide */1;
-                                      });
+                            setShowSuccess(function (param) {
+                                  return /* Hide */1;
+                                });
                           })
                       }), React.createElement(Dialog.make, {
                         isShow: match$2[0],
@@ -73,9 +73,9 @@ function AddOfflineOrders_Admin(Props) {
                               className: "text-gray-500 text-center whitespace-pre-wrap"
                             }, "파일 업로드에 실패하였습니다."),
                         onConfirm: (function (param) {
-                            return setShowError(function (param) {
-                                        return /* Hide */1;
-                                      });
+                            setShowError(function (param) {
+                                  return /* Hide */1;
+                                });
                           })
                       })));
 }
@@ -90,6 +90,5 @@ export {
   UploadFile ,
   UploadStatus ,
   make ,
-  
 }
 /* Env Not a pure module */

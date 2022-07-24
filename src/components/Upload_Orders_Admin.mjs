@@ -52,11 +52,10 @@ function Upload_Orders_Admin(Props) {
     var inputFile = document.getElementById("input-file");
     Belt_Option.map((inputFile == null) ? undefined : Caml_option.some(inputFile), (function (inputFile$p) {
             inputFile$p.value = "";
-            
           }));
-    return setFiles(function (param) {
-                
-              });
+    setFiles(function (param) {
+          
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement("section", undefined, React.createElement("div", {
                       className: "flex justify-between"
@@ -81,9 +80,9 @@ function Upload_Orders_Admin(Props) {
                                 return React.createElement("span", {
                                             className: "absolute p-2 right-0",
                                             onClick: (function (param) {
-                                                return setShowDelete(function (param) {
-                                                            return /* Show */0;
-                                                          });
+                                                setShowDelete(function (param) {
+                                                      return /* Show */0;
+                                                    });
                                               })
                                           }, React.createElement(IconCloseInput.make, {
                                                 height: "28",
@@ -132,9 +131,9 @@ function Upload_Orders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "바이어와 파일을 먼저 선택해주세요."),
                   onConfirm: (function (param) {
-                      return setShowRequired(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowRequired(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$3[0],
@@ -142,9 +141,9 @@ function Upload_Orders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "바이어를 먼저 선택해주세요."),
                   onConfirm: (function (param) {
-                      return setShowUserRequired(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowUserRequired(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$4[0],
@@ -152,9 +151,9 @@ function Upload_Orders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 선택해주세요."),
                   onConfirm: (function (param) {
-                      return setShowFileRequired(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowFileRequired(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$1[0],
@@ -162,15 +161,15 @@ function Upload_Orders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일을 삭제하시겠어요?"),
                   onCancel: (function (param) {
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       handleResetFile(undefined);
-                      return setShowDelete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDelete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "삭제"
@@ -181,6 +180,5 @@ var make = Upload_Orders_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

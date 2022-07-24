@@ -47,6 +47,5 @@ var $$Error = {
 
 export {
   $$Error ,
-  
 }
 /* No side effect */

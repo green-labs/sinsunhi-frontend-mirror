@@ -7,6 +7,7 @@ import * as React from "react";
 import * as Dialog from "../../components/common/Dialog.mjs";
 import * as Helper from "../../utils/Helper.mjs";
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as CustomHooks from "../../utils/CustomHooks.mjs";
 import * as FetchHelper from "../../utils/FetchHelper.mjs";
@@ -36,12 +37,12 @@ function AddOrders_Admin$Upload(Props) {
                           setShowSuccess(function (param) {
                                 return /* Show */0;
                               });
-                          return mutate(Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID", undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order/recent-uploads?upload-type=order&pay-type=PAID", undefined, undefined);
                         }),
                       onFailure: (function (param) {
-                          return setShowError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowError(function (param) {
+                                return /* Show */0;
+                              });
                         })
                     })), React.createElement(Dialog.make, {
                   isShow: match$1[0],
@@ -49,9 +50,9 @@ function AddOrders_Admin$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문서 업로드가 실행되었습니다. 성공여부를 꼭 주문서 업로드 결과에서 확인해주세요."),
                   onConfirm: (function (param) {
-                      return setShowSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$2[0],
@@ -59,9 +60,9 @@ function AddOrders_Admin$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일 업로드에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -78,29 +79,29 @@ function AddOrders_Admin(Props) {
   var selectedUser = match[0];
   var selectedUserId = selectedUser ? selectedUser.value : undefined;
   var handleLoadOptions = function (inputValue) {
-    var __x = FetchHelper.fetchWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/user?name=" + inputValue + "&role=buyer", "", 3);
-    return __x.then(function (result) {
-                var users$p = Curry._1(CustomHooks.QueryUser.Buyer.users_decode, result);
-                if (users$p.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$1 = users$p._0;
-                if (users$p$1.data.length === 0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
-                        return /* Selected */{
-                                value: String(user.id),
-                                label: user.name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(user.phone), Helper.PhoneNumber.format), user.phone) + ")"
-                              };
-                      }));
-                return Promise.resolve(users$p$p);
-              });
+    var __x = FetchHelper.fetchWithRetry(FetchHelper.getWithToken, "" + Env.restApiUrl + "/user?name=" + inputValue + "&role=buyer", "", 3);
+    return Js_promise.then_((function (result) {
+                  var users$p = Curry._1(CustomHooks.QueryUser.Buyer.users_decode, result);
+                  if (users$p.TAG !== /* Ok */0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$1 = users$p._0;
+                  if (users$p$1.data.length === 0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
+                          return /* Selected */{
+                                  value: String(user.id),
+                                  label: "" + user.name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(user.phone), Helper.PhoneNumber.format), user.phone) + ")"
+                                };
+                        }));
+                  return Promise.resolve(users$p$p);
+                }), __x);
   };
   var handleChangeUser = function (selection) {
-    return setSelectedUser(function (param) {
-                return selection;
-              });
+    setSelectedUser(function (param) {
+          return selection;
+        });
   };
   return React.createElement(Authorization.Admin.make, {
               children: React.createElement("div", {
@@ -145,8 +146,7 @@ function AddOrders_Admin(Props) {
                                   }, "주문서 업로드 결과"), React.createElement(UploadStatus_Buyer.make, {
                                     kind: /* Admin */2,
                                     onChangeLatestUpload: (function (param) {
-                                        console.log("\xec\x97\x85\xeb\xa1\x9c\xeb\x93\x9c \xec\xb2\x98\xeb\xa6\xac \xec\x99\x84\xeb\xa3\x8c");
-                                        
+                                        console.log("업로드 처리 완료");
                                       }),
                                     uploadType: /* Order */0
                                   })), React.createElement("div", {
@@ -168,6 +168,5 @@ export {
   UploadFile ,
   Upload ,
   make ,
-  
 }
 /* Env Not a pure module */

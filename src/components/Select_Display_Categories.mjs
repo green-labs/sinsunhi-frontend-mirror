@@ -215,7 +215,7 @@ function Select_Display_Categories$Select_CategoryType(Props) {
                 }, React.createElement("div", {
                       className: "absolute w-full"
                     }, React.createElement(ReactHookForm$1.Controller, {
-                          name: name + ".categoryType",
+                          name: "" + name + ".categoryType",
                           control: control,
                           render: (function (param) {
                               var match = param.field;
@@ -299,6 +299,5 @@ export {
   categoryTypeOptions ,
   Select_CategoryType ,
   make ,
-  
 }
 /* react Not a pure module */

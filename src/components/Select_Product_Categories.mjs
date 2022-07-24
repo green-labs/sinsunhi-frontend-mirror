@@ -39,6 +39,5 @@ var make = Select_Product_Categories;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

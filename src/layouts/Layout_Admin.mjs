@@ -89,6 +89,5 @@ export {
   Head ,
   render ,
   make ,
-  
 }
 /* react Not a pure module */

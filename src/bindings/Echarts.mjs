@@ -32,7 +32,6 @@ function useInstance(id) {
           setInstance(function (param) {
                 return instance;
               });
-          
         }), []);
   return match[0];
 }
@@ -51,16 +50,13 @@ function Echarts(Props) {
               });
           window.addEventListener("resize", (function (param) {
                   instance.resize();
-                  
                 }));
           instance.setOption(option, false, false);
           return (function (param) {
                     window.removeEventListener("resize", (function (param) {
                             instance.resize();
-                            
                           }));
                     Core.dispose(instance);
-                    
                   });
         }), []);
   return React.createElement("div", {
@@ -78,6 +74,5 @@ export {
   Instance ,
   useInstance ,
   make ,
-  
 }
 /*  Not a pure module */

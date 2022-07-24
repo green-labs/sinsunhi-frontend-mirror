@@ -37,6 +37,5 @@ var Type = {
 
 export {
   Type ,
-  
 }
 /* No side effect */

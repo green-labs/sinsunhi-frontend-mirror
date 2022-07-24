@@ -10,7 +10,6 @@ function push(data) {
   } else {
     layer.push(data);
   }
-  
 }
 
 function DataGtm(Props) {
@@ -29,6 +28,5 @@ var make = DataGtm;
 export {
   push ,
   make ,
-  
 }
 /* react Not a pure module */

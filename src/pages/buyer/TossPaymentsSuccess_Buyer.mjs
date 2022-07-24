@@ -7,8 +7,8 @@ import Link from "next/link";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as TossPaymentsSuccessBuyerMutation_graphql from "../../__generated__/TossPaymentsSuccessBuyerMutation_graphql.mjs";
 
@@ -31,14 +31,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? TossPaymentsSuccessBuyerMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(TossPaymentsSuccessBuyerMutation_graphql.node);
+  var match = ReactRelay.useMutation(TossPaymentsSuccessBuyerMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -46,13 +46,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? TossPaymentsSuccessBuyerMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, TossPaymentsSuccessBuyerMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: TossPaymentsSuccessBuyerMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -67,12 +67,10 @@ var Mutation_errorCode_decode = TossPaymentsSuccessBuyerMutation_graphql.Utils.e
 
 var Mutation_errorCode_fromString = TossPaymentsSuccessBuyerMutation_graphql.Utils.errorCode_fromString;
 
-var Mutation_makeVariables = TossPaymentsSuccessBuyerMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   errorCode_decode: Mutation_errorCode_decode,
   errorCode_fromString: Mutation_errorCode_fromString,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -135,11 +133,11 @@ function TossPaymentsSuccess_Buyer(Props) {
     setErrMsg(function (param) {
           return message;
         });
-    return Belt_Option.forEach(url, (function (url$p) {
-                  return setRedirect(function (param) {
-                              return url$p;
-                            });
-                }));
+    Belt_Option.forEach(url, (function (url$p) {
+            setRedirect(function (param) {
+                  return url$p;
+                });
+          }));
   };
   React.useEffect((function () {
           var params = new URLSearchParams(router.query);
@@ -158,14 +156,14 @@ function TossPaymentsSuccess_Buyer(Props) {
           if (!(orderId == null) && !(paymentKey == null) && amount !== undefined && paymentId !== undefined && !isMutating) {
             var redirectByParams = function (message) {
               if (!(productId == null) && !(productOptionId == null) && !(quantity == null)) {
-                return handleError(message, "/buyer/web-order/" + productId$1 + "/" + productOptionId$1 + "?quantity=" + quantity$1, undefined);
+                return handleError(message, "/buyer/web-order/" + productId$1 + "/" + productOptionId$1 + "?quantity=" + quantity$1 + "", undefined);
               } else {
                 return handleError(message, "/buyer/transactions", undefined);
               }
             };
             Curry.app(mutate, [
                   (function (error) {
-                      return redirectByParams(error.message);
+                      redirectByParams(error.message);
                     }),
                   (function (param, _error) {
                       var requestPaymentApprovalTossPayments = param.requestPaymentApprovalTossPayments;
@@ -184,7 +182,7 @@ function TossPaymentsSuccess_Buyer(Props) {
                                 return true;
                               });
                           return setRedirect(function (param) {
-                                      return "/buyer/web-order/complete/" + orderId$1;
+                                      return "/buyer/web-order/complete/" + orderId$1 + "";
                                     });
                         } else {
                           setShowDialog(function (param) {
@@ -204,8 +202,8 @@ function TossPaymentsSuccess_Buyer(Props) {
                   undefined,
                   {
                     amount: amount,
-                    paymentId: paymentId,
                     orderId: orderId$1,
+                    paymentId: paymentId,
                     paymentKey: (paymentKey == null) ? undefined : Caml_option.some(paymentKey),
                     tempOrderId: tempOrderId
                   },
@@ -238,6 +236,5 @@ export {
   Mutation ,
   Dialog ,
   make ,
-  
 }
 /* react Not a pure module */

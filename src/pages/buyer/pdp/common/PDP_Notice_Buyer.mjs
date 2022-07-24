@@ -25,7 +25,7 @@ function PDP_Notice_Buyer$PC(Props) {
                       }, noticeDateLabel)), React.createElement("button", {
                     className: "w-[314px] h-[204px]",
                     onClick: (function (param) {
-                        return ChannelTalk.showMessenger(undefined);
+                        ChannelTalk.showMessenger(undefined);
                       })
                   }, React.createElement("img", {
                         className: "w-full h-full object-cover",
@@ -68,6 +68,5 @@ var MO = {
 export {
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

@@ -19,15 +19,14 @@ function Search_Farmer_Admin(Props) {
     var producerCode = Query_Farmer_Form_Admin.FormFields.get(state.values, /* ProducerCode */1);
     router.query["name"] = name;
     router.query["producer-code"] = producerCode;
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Farmer_Form_Admin.Form.use, Query_Farmer_Form_Admin.initialState, /* Schema */{
         _0: Belt_Array.concatMany([])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -43,12 +42,11 @@ function Search_Farmer_Admin(Props) {
                     return ;
                   }
                 }));
-          
         }), [router.query]);
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   Curry._4(form.setFieldValue, /* Name */0, "", false, undefined);
-                  return Curry._4(form.setFieldValue, /* ProducerCode */1, "", false, undefined);
+                  Curry._4(form.setFieldValue, /* ProducerCode */1, "", false, undefined);
                 }), param);
   };
   var partial_arg = Curry._1(form.handleChange, /* ProducerCode */1);
@@ -129,6 +127,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Input Not a pure module */

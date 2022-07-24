@@ -70,7 +70,7 @@ function $$default(props) {
               password
             ]
           ]).toString();
-    FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
+    FetchHelper.postWithURLSearchParams("" + Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
             var result = FetchHelper.responseToken_decode(res);
             if (result.TAG !== /* Ok */0) {
               return setShowForError(function (param) {
@@ -86,10 +86,10 @@ function $$default(props) {
               Curry._1(Global.$$Window.ReactNativeWebView.PostMessage.storeBrazeUserId, String(user._0.id));
             }
             Redirect.setHref(redirectUrl);
-            return DataGtm.push({
-                        login_status: true,
-                        method: "normal"
-                      });
+            DataGtm.push({
+                  login_status: true,
+                  method: "normal"
+                });
           }), (function (err) {
             if (err.status === 409) {
               setShowForExisted(function (param) {
@@ -102,12 +102,11 @@ function $$default(props) {
                     return /* Show */0;
                   });
             }
-            return DataGtm.push({
-                        login_status: false,
-                        method: "normal"
-                      });
+            DataGtm.push({
+                  login_status: false,
+                  method: "normal"
+                });
           }));
-    
   };
   var form = Curry._7(SignIn_Buyer_Form.Form.use, SignIn_Buyer_Form.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -123,14 +122,14 @@ function $$default(props) {
                   } else {
                     Curry._1(LocalStorageHooks.BuyerEmail.remove, undefined);
                   }
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnCheckSaveEmail = function (e) {
     var checked = e.target.checked;
-    return setCheckedSaveEmail(function (param) {
-                return checked;
-              });
+    setCheckedSaveEmail(function (param) {
+          return checked;
+        });
   };
   React.useEffect((function () {
           var email = uid !== undefined ? uid : Curry._1(LocalStorageHooks.BuyerEmail.get, undefined);
@@ -245,7 +244,6 @@ function $$default(props) {
                                   className: "w-full h-14 flex justify-center items-center rounded-xl border-[1px] border-green-500",
                                   onClick: (function (param) {
                                       router.push("/buyer/signup");
-                                      
                                     })
                                 }, React.createElement("span", {
                                       className: "text-green-500 font-bold"
@@ -262,9 +260,9 @@ function $$default(props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "로그인 정보가 일치하지 않거나 없는 계정입니다. 다시 한번 입력해주세요."),
                   onConfirm: (function (param) {
-                      return setShowForError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowForError(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   confirmBg: "#ECECEC",
                   confirmTextColor: "#262626"
@@ -274,9 +272,9 @@ function $$default(props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "비밀번호 재설정에 실패하였습니다.\n다시 시도해주세요."),
                   onConfirm: (function (param) {
-                      return setShowErrorSetPassword(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorSetPassword(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$4[0],
@@ -284,9 +282,9 @@ function $$default(props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "신선하이를 이용하시려면 비밀번호 재설정이 필요합니다. 이메일로 재설정 메일을 보내드렸습니다. 메일함을 확인해주세요."),
                   onConfirm: (function (param) {
-                      return setShowForExisted(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowForExisted(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -315,6 +313,5 @@ export {
   $$default ,
   $$default as default,
   getServerSideProps ,
-  
 }
 /* Env Not a pure module */

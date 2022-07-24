@@ -25,7 +25,7 @@ function Update_ProductOption_List_Admin(Props) {
       }, undefined);
   var setValue = match$1.setValue;
   var match$2 = ReactHookForm.useFieldArray({
-        name: formName + ".create",
+        name: "" + formName + ".create",
         control: match$1.control,
         shouldUnregister: true
       });
@@ -39,32 +39,32 @@ function Update_ProductOption_List_Admin(Props) {
                   setApplyAll(function (param) {
                         return false;
                       });
-                  return prepend({}, {}, undefined);
+                  prepend({}, {}, undefined);
                 }), param);
   };
   var setTogether = function (fieldName, value) {
     if (fields.length !== 0) {
       Belt_Array.forEachWithIndex(Belt_Array.sliceToEnd(fields, 1), (function (index, param) {
-              return setValue(formName + ".create." + String(index + 1 | 0) + "." + fieldName, value);
+              setValue("" + formName + ".create." + String(index + 1 | 0) + "." + fieldName + "", value);
             }));
       return Belt_Array.forEachWithIndex(edges, (function (index, param) {
-                    return setValue(formName + ".edit." + String(index) + "." + fieldName, value);
+                    setValue("" + formName + ".edit." + String(index) + "." + fieldName + "", value);
                   }));
     } else {
       return Belt_Array.forEachWithIndex(Belt_Array.sliceToEnd(edges, 1), (function (index, param) {
-                    return setValue(formName + ".edit." + String(index + 1 | 0) + "." + fieldName, value);
+                    setValue("" + formName + ".edit." + String(index + 1 | 0) + "." + fieldName + "", value);
                   }));
     }
   };
   var watchFirstCM = fields.length !== 0 ? ReactHookForm.useWatch({
           name: [
-            formName + ".create.0.cut-off-time",
-            formName + ".create.0.memo"
+            "" + formName + ".create.0.cut-off-time",
+            "" + formName + ".create.0.memo"
           ]
         }) : ReactHookForm.useWatch({
           name: [
-            formName + ".edit.0.cut-off-time",
-            formName + ".edit.0.memo"
+            "" + formName + ".edit.0.cut-off-time",
+            "" + formName + ".edit.0.memo"
           ]
         });
   React.useEffect((function () {
@@ -113,7 +113,7 @@ function Update_ProductOption_List_Admin(Props) {
                   className: "flex flex-col mt-7 mb-3 gap-6"
                 }, Belt_Array.mapWithIndex(fields, (function (index, field) {
                         return React.createElement(Add_ProductOption_Admin.make, {
-                                    prefix: formName + ".create." + String(index),
+                                    prefix: "" + formName + ".create." + String(index) + "",
                                     index: index,
                                     remove: remove,
                                     prepend: prepend,
@@ -126,7 +126,7 @@ function Update_ProductOption_List_Admin(Props) {
                                   });
                       })), Belt_Array.mapWithIndex(Belt_Array.concat(param[0], param[1]), (function (index, edge) {
                         return React.createElement(Update_ProductOption_Admin.make, {
-                                    prefix: formName + ".edit." + String(index),
+                                    prefix: "" + formName + ".edit." + String(index) + "",
                                     index: index + fields.length | 0,
                                     prepend: prepend,
                                     productDisplayName: productDisplayName,
@@ -143,6 +143,5 @@ var make = Update_ProductOption_List_Admin;
 export {
   formName ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -6,11 +6,12 @@ import * as Helper from "../utils/Helper.mjs";
 import * as RelayEnv from "../constants/RelayEnv.mjs";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconError from "./svgs/IconError.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import Async from "react-select/async";
 import * as Select_BulkSale_Crop from "./Select_BulkSale_Crop.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -25,21 +26,21 @@ function Select_BulkSale_Search$Crop(Props) {
   var disabledOpt = Props.disabled;
   var disabled = disabledOpt !== undefined ? disabledOpt : false;
   var handleLoadOptions = function (inputValue) {
-    return Select_BulkSale_Crop.Query.fetchPromised(RelayEnv.envFMBridge, {
-                  count: 1000,
-                  cursor: undefined,
-                  nameMatch: inputValue,
-                  orderBy: "NAME",
-                  orderDirection: "ASC"
-                }, undefined, undefined, undefined).then(function (result) {
-                var result$p = Garter_Array.map(result.crops.edges, (function (edge) {
-                        return /* Selected */{
-                                value: edge.node.id,
-                                label: edge.node.name
-                              };
-                      }));
-                return Promise.resolve(result$p);
-              });
+    return Js_promise.then_((function (result) {
+                  var result$p = Garter_Array.map(result.crops.edges, (function (edge) {
+                          return /* Selected */{
+                                  value: edge.node.id,
+                                  label: edge.node.name
+                                };
+                        }));
+                  return Promise.resolve(result$p);
+                }), Select_BulkSale_Crop.Query.fetchPromised(RelayEnv.envFMBridge, {
+                    count: 1000,
+                    cursor: undefined,
+                    nameMatch: inputValue,
+                    orderBy: "NAME",
+                    orderDirection: "ASC"
+                  }, undefined, undefined, undefined));
   };
   return React.createElement("article", {
               className: "w-full"
@@ -86,22 +87,22 @@ function Select_BulkSale_Search$ProductCategory(Props) {
   var disabled = disabledOpt !== undefined ? disabledOpt : false;
   var handleLoadOptions = function (inputValue) {
     if (cropId) {
-      return Select_BulkSale_ProductCategory.Query.fetchPromised(RelayEnv.envFMBridge, {
-                    cropIds: [cropId.value],
-                    count: 1000,
-                    cursor: undefined,
-                    nameMatch: inputValue,
-                    orderBy: "NAME",
-                    orderDirection: "ASC"
-                  }, undefined, undefined, undefined).then(function (result) {
-                  var result$p = Garter_Array.map(result.productCategories.edges, (function (edge) {
-                          return /* Selected */{
-                                  value: edge.node.id,
-                                  label: edge.node.name
-                                };
-                        }));
-                  return Promise.resolve(result$p);
-                });
+      return Js_promise.then_((function (result) {
+                    var result$p = Garter_Array.map(result.productCategories.edges, (function (edge) {
+                            return /* Selected */{
+                                    value: edge.node.id,
+                                    label: edge.node.name
+                                  };
+                          }));
+                    return Promise.resolve(result$p);
+                  }), Select_BulkSale_ProductCategory.Query.fetchPromised(RelayEnv.envFMBridge, {
+                      count: 1000,
+                      cropIds: [cropId.value],
+                      cursor: undefined,
+                      nameMatch: inputValue,
+                      orderBy: "NAME",
+                      orderDirection: "ASC"
+                    }, undefined, undefined, undefined));
     } else {
       return Promise.resolve(undefined);
     }
@@ -148,7 +149,7 @@ var ProductCategory = {
 };
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(SelectBulkSaleSearchStaffQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(SelectBulkSaleSearchStaffQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -157,7 +158,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(SelectBulkSaleSearchStaffQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(SelectBulkSaleSearchStaffQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -175,38 +176,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, SelectBulkSaleSearchStaffQuery_graphql.node, SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, SelectBulkSaleSearchStaffQuery_graphql.node, SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: SelectBulkSaleSearchStaffQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: SelectBulkSaleSearchStaffQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, SelectBulkSaleSearchStaffQuery_graphql.node, SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, SelectBulkSaleSearchStaffQuery_graphql.node, SelectBulkSaleSearchStaffQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(SelectBulkSaleSearchStaffQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(SelectBulkSaleSearchStaffQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(SelectBulkSaleSearchStaffQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(SelectBulkSaleSearchStaffQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SelectBulkSaleSearchStaffQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -215,10 +215,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = SelectBulkSaleSearchStaffQuery_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -227,8 +225,6 @@ var Query = {
   usePreloaded: usePreloaded,
   retain: retain
 };
-
-var make_bulkSaleApplicationUpdateInput = SelectBulkSaleSearchStaffMutation_graphql.Utils.make_bulkSaleApplicationUpdateInput;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -249,14 +245,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? SelectBulkSaleSearchStaffMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(SelectBulkSaleSearchStaffMutation_graphql.node);
+  var match = ReactRelay.useMutation(SelectBulkSaleSearchStaffMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -264,13 +260,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? SelectBulkSaleSearchStaffMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, SelectBulkSaleSearchStaffMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: SelectBulkSaleSearchStaffMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -281,11 +277,8 @@ function use$1(param) {
         ];
 }
 
-var Mutation_makeVariables = SelectBulkSaleSearchStaffMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
-  make_bulkSaleApplicationUpdateInput: make_bulkSaleApplicationUpdateInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -308,17 +301,17 @@ function Select_BulkSale_Search$Staff(Props) {
   var match$2 = use$1(undefined);
   var mutate = match$2[0];
   var handleLoadOptions = function (inputValue) {
-    return fetchPromised(RelayEnv.envFMBridge, {
-                  name: inputValue
-                }, undefined, undefined, undefined).then(function (result) {
-                var result$p = Garter_Array.map(result.adminUsers.edges, (function (edge) {
-                        return /* Selected */{
-                                value: edge.node.id,
-                                label: edge.node.name + "( " + Garter_Array.firstExn(edge.node.emailAddress.split("@")) + " )"
-                              };
-                      }));
-                return Promise.resolve(result$p);
-              });
+    return Js_promise.then_((function (result) {
+                  var result$p = Garter_Array.map(result.adminUsers.edges, (function (edge) {
+                          return /* Selected */{
+                                  value: edge.node.id,
+                                  label: edge.node.name + "( " + Garter_Array.firstExn(edge.node.emailAddress.split("@")) + " )"
+                                };
+                        }));
+                  return Promise.resolve(result$p);
+                }), fetchPromised(RelayEnv.envFMBridge, {
+                    name: inputValue
+                  }, undefined, undefined, undefined));
   };
   var handleOnChange = function (selectValue) {
     if (onChange !== undefined) {
@@ -330,7 +323,9 @@ function Select_BulkSale_Search$Staff(Props) {
     if (applicationId === undefined) {
       return ;
     }
-    var input_input = Curry._3(make_bulkSaleApplicationUpdateInput, undefined, selectValue ? selectValue.value : "", undefined);
+    var input_input = {
+      staffId: selectValue ? selectValue.value : ""
+    };
     var input = {
       id: applicationId,
       input: input_input
@@ -338,15 +333,15 @@ function Select_BulkSale_Search$Staff(Props) {
     Curry.app(mutate, [
           (function (err) {
               console.log(err.message);
-              return addToast(React.createElement("div", {
-                              className: "flex items-center"
-                            }, React.createElement(IconError.make, {
-                                  width: "24",
-                                  height: "24",
-                                  className: "mr-2"
-                                }), "담당자 변경중 오류가 발생하였습니다. 관리자에게 문의해주세요."), {
-                          appearance: "error"
-                        });
+              addToast(React.createElement("div", {
+                        className: "flex items-center"
+                      }, React.createElement(IconError.make, {
+                            width: "24",
+                            height: "24",
+                            className: "mr-2"
+                          }), "담당자 변경중 오류가 발생하였습니다. 관리자에게 문의해주세요."), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               addToast(React.createElement("div", {
@@ -359,9 +354,9 @@ function Select_BulkSale_Search$Staff(Props) {
                           }), "담당자를 수정하였습니다."), {
                     appearance: "success"
                   });
-              return setSelectStaff(function (param) {
-                          return selectValue;
-                        });
+              setSelectStaff(function (param) {
+                    return selectValue;
+                  });
             }),
           undefined,
           undefined,
@@ -371,7 +366,6 @@ function Select_BulkSale_Search$Staff(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement("article", {
               className: "w-full"
@@ -416,6 +410,5 @@ export {
   Crop ,
   ProductCategory ,
   Staff ,
-  
 }
 /* react Not a pure module */

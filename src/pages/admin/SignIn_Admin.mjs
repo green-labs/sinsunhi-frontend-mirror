@@ -48,7 +48,7 @@ function SignIn_Admin(Props) {
               password
             ]
           ]).toString();
-    FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
+    FetchHelper.postWithURLSearchParams("" + Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
             var result = FetchHelper.responseToken_decode(res);
             if (result.TAG !== /* Ok */0) {
               return setShowLoginError(function (param) {
@@ -59,13 +59,11 @@ function SignIn_Admin(Props) {
             Curry._1(LocalStorageHooks.AccessToken.set, res$1.token);
             Curry._1(LocalStorageHooks.RefreshToken.set, res$1.refreshToken);
             router.push(redirectUrl);
-            
           }), (function (param) {
-            return setShowLoginError(function (param) {
-                        return /* Show */0;
-                      });
+            setShowLoginError(function (param) {
+                  return /* Show */0;
+                });
           }));
-    
   };
   var form = Curry._7(SignIn_Admin_Form.Form.use, SignIn_Admin_Form.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -81,14 +79,14 @@ function SignIn_Admin(Props) {
                   } else {
                     Curry._1(LocalStorageHooks.EmailAdmin.remove, undefined);
                   }
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnCheckSaveEmail = function (e) {
     var checked = e.target.checked;
-    return setCheckedSaveEmail(function (param) {
-                return checked;
-              });
+    setCheckedSaveEmail(function (param) {
+          return checked;
+        });
   };
   React.useEffect((function () {
           var email = Curry._1(LocalStorageHooks.EmailAdmin.get, undefined);
@@ -96,7 +94,6 @@ function SignIn_Admin(Props) {
                 return true;
               });
           Curry._4(form.setFieldValue, /* Email */0, email, true, undefined);
-          
         }), []);
   var partial_arg = Curry._1(form.handleChange, /* Email */0);
   var partial_arg$1 = Curry._1(form.handleChange, /* Password */1);
@@ -168,9 +165,9 @@ function SignIn_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "로그인 정보가 일치하지 않거나 없는 계정입니다.\n다시  한번 입력해주세요."),
                   onConfirm: (function (param) {
-                      return setShowLoginError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowLoginError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -185,6 +182,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Env Not a pure module */

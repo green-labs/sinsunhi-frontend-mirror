@@ -85,7 +85,7 @@ function Select_Product_Type(Props) {
                             status !== 0 ? "text-text-L2" : "text-text-L1"
                           ]),
                       onClick: (function (param) {
-                          return Curry._1(onChange, /* NORMAL */0);
+                          Curry._1(onChange, /* NORMAL */0);
                         })
                     }, toString(/* NORMAL */0)), React.createElement("div", {
                       className: Cx.cx([
@@ -93,7 +93,7 @@ function Select_Product_Type(Props) {
                             status !== 1 ? "text-text-L2" : "text-text-L1"
                           ]),
                       onClick: (function (param) {
-                          return Curry._1(onChange, /* QUOTED */1);
+                          Curry._1(onChange, /* QUOTED */1);
                         })
                     }, toString(/* QUOTED */1)), React.createElement("div", {
                       className: Cx.cx([
@@ -101,7 +101,7 @@ function Select_Product_Type(Props) {
                             status >= 2 ? "text-text-L1" : "text-text-L2"
                           ]),
                       onClick: (function (param) {
-                          return Curry._1(onChange, /* MATCHING */2);
+                          Curry._1(onChange, /* MATCHING */2);
                         })
                     }, "매칭상품")));
 }
@@ -245,6 +245,5 @@ export {
   toString ,
   make ,
   Search ,
-  
 }
 /* react Not a pure module */

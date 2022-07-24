@@ -587,53 +587,53 @@ function submit_decode(v) {
         };
 }
 
-var names_orderUserId = name + ".order-user-id";
+var names_orderUserId = "" + name + ".order-user-id";
 
-var names_paymentPurpose = name + ".payment-purpose";
+var names_paymentPurpose = "" + name + ".payment-purpose";
 
-var names_totalDeliveryCost = name + ".total-delivery-cost";
+var names_totalDeliveryCost = "" + name + ".total-delivery-cost";
 
-var names_totalOrderPrice = name + ".total-order-price";
+var names_totalOrderPrice = "" + name + ".total-order-price";
 
-var names_paymentMethod = name + ".payment-method";
+var names_paymentMethod = "" + name + ".payment-method";
 
-var names_deliveryCost = name + ".product-options.0.delivery-cost";
+var names_deliveryCost = "" + name + ".product-options.0.delivery-cost";
 
-var names_deliveryDesiredDate = name + ".product-options.0.delivery-desired-date";
+var names_deliveryDesiredDate = "" + name + ".product-options.0.delivery-desired-date";
 
-var names_deliveryMessage = name + ".product-options.0.delivery-message";
+var names_deliveryMessage = "" + name + ".product-options.0.delivery-message";
 
-var names_deliveryType = name + ".product-options.0.delivery-type";
+var names_deliveryType = "" + name + ".product-options.0.delivery-type";
 
-var names_grade = name + ".product-options.0.grade";
+var names_grade = "" + name + ".product-options.0.grade";
 
-var names_isTaxFree = name + ".product-options.0.is-tax-free";
+var names_isTaxFree = "" + name + ".product-options.0.is-tax-free";
 
-var names_ordererName = name + ".product-options.0.orderer-name";
+var names_ordererName = "" + name + ".product-options.0.orderer-name";
 
-var names_ordererPhone = name + ".product-options.0.orderer-phone";
+var names_ordererPhone = "" + name + ".product-options.0.orderer-phone";
 
-var names_price = name + ".product-options.0.price";
+var names_price = "" + name + ".product-options.0.price";
 
-var names_productId = name + ".product-options.0.product-id";
+var names_productId = "" + name + ".product-options.0.product-id";
 
-var names_productName = name + ".product-options.0.product-name";
+var names_productName = "" + name + ".product-options.0.product-name";
 
-var names_productOptionName = name + ".product-options.0.product-option-name";
+var names_productOptionName = "" + name + ".product-options.0.product-option-name";
 
-var names_quantity = name + ".product-options.0.quantity";
+var names_quantity = "" + name + ".product-options.0.quantity";
 
-var names_receiverAddress = name + ".product-options.0.receiver-address";
+var names_receiverAddress = "" + name + ".product-options.0.receiver-address";
 
-var names_receiverName = name + ".product-options.0.receiver-name";
+var names_receiverName = "" + name + ".product-options.0.receiver-name";
 
-var names_receiverPhone = name + ".product-options.0.receiver-phone";
+var names_receiverPhone = "" + name + ".product-options.0.receiver-phone";
 
-var names_receiverZipCode = name + ".product-options.0.receiver-zipcode";
+var names_receiverZipCode = "" + name + ".product-options.0.receiver-zipcode";
 
-var names_receiverDetailAddress = name + ".product-options.0.receiver-detail-address";
+var names_receiverDetailAddress = "" + name + ".product-options.0.receiver-detail-address";
 
-var names_stockSku = name + ".product-options.0.stock-sku";
+var names_stockSku = "" + name + ".product-options.0.stock-sku";
 
 var names = {
   orderUserId: names_orderUserId,
@@ -683,6 +683,5 @@ export {
   submit_decode ,
   names ,
   defaultValue ,
-  
 }
 /* No side effect */

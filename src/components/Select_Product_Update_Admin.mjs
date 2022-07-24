@@ -142,6 +142,5 @@ export {
   decodeSizeUnit ,
   Weight ,
   Size ,
-  
 }
 /* react Not a pure module */

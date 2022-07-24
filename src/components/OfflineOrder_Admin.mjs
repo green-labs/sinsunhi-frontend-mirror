@@ -54,20 +54,20 @@ function OfflineOrder_Admin$Item$Table(Props) {
       }, undefined);
   var setValue = match$1.setValue;
   var checked = ReactHookForm$1.useWatch({
-        name: String(order.id) + ".checkbox"
+        name: "" + String(order.id) + ".checkbox"
       });
   var watchQuantitiesAndPrice = ReactHookForm$1.useWatch({
         name: [
-          String(order.id) + ".order-quantity",
-          String(order.id) + ".order-quantity-complete",
-          String(order.id) + ".buyer-sell-price"
+          "" + String(order.id) + ".order-quantity",
+          "" + String(order.id) + ".order-quantity-complete",
+          "" + String(order.id) + ".buyer-sell-price"
         ]
       });
   var watchNewReleaseDueDate = ReactHookForm$1.useWatch({
-        name: String(order.id) + ".release-due-date"
+        name: "" + String(order.id) + ".release-due-date"
       });
   var watchNewOrderQuantity = ReactHookForm$1.useWatch({
-        name: String(order.id) + ".order-quantity"
+        name: "" + String(order.id) + ".order-quantity"
       });
   var partial_arg = [
     order.orderQuantity,
@@ -100,11 +100,11 @@ function OfflineOrder_Admin$Item$Table(Props) {
   var newOrderQuantity = Belt_Option.getWithDefault(Belt_Option.flatMap(watchNewOrderQuantity, Belt_Float.fromString), order.orderQuantity);
   var handleInputFloatChange = function (fn, e) {
     var value = e.target.value;
-    setValue(String(order.id) + ".checkbox", true);
+    setValue("" + String(order.id) + ".checkbox", true);
     return Curry._1(fn, Curry._1(ReactHookForm.Controller.OnChangeArg.value, cutOffFloatDigits(value, 2)));
   };
   var handleInputDateChange = function (fn, e) {
-    setValue(String(order.id) + ".checkbox", true);
+    setValue("" + String(order.id) + ".checkbox", true);
     return Curry._1(fn, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
   };
   var handleInputClick = function (param) {
@@ -126,11 +126,10 @@ function OfflineOrder_Admin$Item$Table(Props) {
   };
   var validateOnlyEditMode = mode === /* Pending */2;
   React.useEffect((function () {
-          var mode = Caml_obj.caml_equal(checked, true) ? /* Edit */1 : /* Display */0;
+          var mode = Caml_obj.equal(checked, true) ? /* Edit */1 : /* Display */0;
           setMode(function (param) {
                 return mode;
               });
-          
         }), [checked]);
   var editStyle = mode === /* Edit */1 ? "bg-primary-light" : "";
   var unit = Belt_Option.getWithDefault(Js_json.decodeString(CustomHooks.Products.weightUnit_encode(order.weightUnit)), "g");
@@ -142,7 +141,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                 }, React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement(ReactHookForm$1.Controller, {
-                          name: String(order.id) + ".checkbox",
+                          name: "" + String(order.id) + ".checkbox",
                           render: (function (param) {
                               var match = param.field;
                               var onChange = match.onChange;
@@ -152,7 +151,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                                           name: name,
                                           checked: Belt_Option.getWithDefault(Js_json.decodeBoolean(match.value), false),
                                           onChange: (function (e) {
-                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
+                                              Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
                                             })
                                         });
                             }),
@@ -170,7 +169,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                               className: "w-full border border-border-default-L1 rounded-lg py-2 px-3 text-sm h-8 flex items-center",
                               onClick: handleInputClick
                             }, formatDate(order.releaseDueDate, "yyyy. MM. dd. ")), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".release-due-date",
+                                name: "" + String(order.id) + ".release-due-date",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -231,7 +230,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                             }, Belt_Option.mapWithDefault(order.releaseDate, "연도. 월. 일. ", (function (d) {
                                     return formatDate(d, "yyyy. MM. dd. ");
                                   }))), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".release-date",
+                                name: "" + String(order.id) + ".release-date",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -315,9 +314,9 @@ function OfflineOrder_Admin$Item$Table(Props) {
                     }, order.sku), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 ml-2"
                     }, React.createElement("div", undefined, Belt_Option.mapWithDefault(order.weight, "", (function (w) {
-                                return String(w) + unit;
+                                return "" + String(w) + "" + unit + "";
                               }))), React.createElement("div", undefined, Belt_Option.mapWithDefault(order.packageType, "", (function (p) {
-                                return "/" + p;
+                                return "/" + p + "";
                               })))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 ml-3"
                     }, Belt_Option.getWithDefault(order.grade, "")), React.createElement("div", {
@@ -328,7 +327,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                               className: "w-full border border-border-default-L1 rounded-lg py-2 px-3 text-sm h-8 flex items-center",
                               onClick: handleInputClick
                             }, Locale.Float.show(undefined, order.orderQuantity, 2)), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".order-quantity",
+                                name: "" + String(order.id) + ".order-quantity",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -376,7 +375,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                               className: "w-full border border-border-default-L1 rounded-lg py-2 px-3 text-sm h-8 flex items-center",
                               onClick: handleInputClick
                             }, Locale.Float.show(undefined, Belt_Option.getWithDefault(order.confirmedOrderQuantity, 0), 2)), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".order-quantity-complete",
+                                name: "" + String(order.id) + ".order-quantity-complete",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -441,7 +440,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                               className: "w-full border border-border-default-L1 rounded-lg py-2 px-3 text-sm h-8 flex items-center",
                               onClick: handleInputClick
                             }, Locale.Float.show(undefined, order.cost, 0)), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".producer-product-cost",
+                                name: "" + String(order.id) + ".producer-product-cost",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -486,7 +485,7 @@ function OfflineOrder_Admin$Item$Table(Props) {
                               className: "w-full mt-1 border border-border-default-L1 rounded-lg py-2 px-3 text-sm h-8 flex items-center",
                               onClick: handleInputClick
                             }, Locale.Float.show(undefined, order.price, 0)), isShowInput ? React.createElement(ReactHookForm$1.Controller, {
-                                name: String(order.id) + ".buyer-sell-price",
+                                name: "" + String(order.id) + ".buyer-sell-price",
                                 render: (function (param) {
                                     var match = param.field;
                                     var onChange = match.onChange;
@@ -555,6 +554,5 @@ export {
   cutOffFloatDigits ,
   Item ,
   make ,
-  
 }
 /* Input Not a pure module */

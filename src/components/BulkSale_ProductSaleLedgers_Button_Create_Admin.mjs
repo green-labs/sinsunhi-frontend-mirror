@@ -10,6 +10,7 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
@@ -17,7 +18,6 @@ import * as IconCloseInput from "./svgs/IconCloseInput.mjs";
 import Format from "date-fns/format";
 import GetTime from "date-fns/getTime";
 import IsValid from "date-fns/isValid";
-import * as Hooks from "react-relay/hooks";
 import * as IconDownloadCenter from "./svgs/IconDownloadCenter.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as Select_WholesalerMarket from "./Select_WholesalerMarket.mjs";
@@ -45,14 +45,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -60,13 +60,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -81,21 +81,10 @@ var MutationCreate_productPackageMassUnit_decode = BulkSaleProductSaleLedgersBut
 
 var MutationCreate_productPackageMassUnit_fromString = BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Utils.productPackageMassUnit_fromString;
 
-var MutationCreate_make_bulkSaleProductSaleLedgerCreateInput = BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Utils.make_bulkSaleProductSaleLedgerCreateInput;
-
-var MutationCreate_make_bulkSaleProductSaleLedgerEntryCreateInput = BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Utils.make_bulkSaleProductSaleLedgerEntryCreateInput;
-
-var MutationCreate_make_productPackageMassInput = BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Utils.make_productPackageMassInput;
-
-var MutationCreate_makeVariables = BulkSaleProductSaleLedgersButtonCreateAdminMutation_graphql.Utils.makeVariables;
-
 var MutationCreate = {
   productPackageMassUnit_decode: MutationCreate_productPackageMassUnit_decode,
   productPackageMassUnit_fromString: MutationCreate_productPackageMassUnit_fromString,
-  make_bulkSaleProductSaleLedgerCreateInput: MutationCreate_make_bulkSaleProductSaleLedgerCreateInput,
-  make_bulkSaleProductSaleLedgerEntryCreateInput: MutationCreate_make_bulkSaleProductSaleLedgerEntryCreateInput,
-  make_productPackageMassInput: MutationCreate_make_productPackageMassInput,
-  makeVariables: MutationCreate_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -229,25 +218,24 @@ function BulkSale_ProductSaleLedgers_Button_Create_Admin(Props) {
   var setShowFileRequired = match$9[1];
   var handleOnChangeFiles = function (e) {
     var values = e.target.files;
-    return setFiles(function (param) {
-                return values;
-              });
+    setFiles(function (param) {
+          return values;
+        });
   };
   var handleResetFile = function (param) {
     var inputFile = document.getElementById("input-file");
     Belt_Option.map((inputFile == null) ? undefined : Caml_option.some(inputFile), (function (inputFile$p) {
             inputFile$p.value = "";
-            
           }));
-    return setFiles(function (param) {
-                
-              });
+    setFiles(function (param) {
+          
+        });
   };
   var handleOnChangeDate = function (e) {
     var newDate = e.target.value;
-    return setDate(function (param) {
-                return newDate;
-              });
+    setDate(function (param) {
+          return newDate;
+        });
   };
   var handleOnChange = function (setFn, e) {
     var value = e.target.value;
@@ -273,7 +261,7 @@ function BulkSale_ProductSaleLedgers_Button_Create_Admin(Props) {
                                     return React.createElement("span", {
                                                 className: "absolute p-2 right-0",
                                                 onClick: (function (param) {
-                                                    return handleResetFile(undefined);
+                                                    handleResetFile(undefined);
                                                   })
                                               }, React.createElement(IconCloseInput.make, {
                                                     height: "28",
@@ -393,9 +381,9 @@ function BulkSale_ProductSaleLedgers_Button_Create_Admin(Props) {
                                         },
                                         volume: ""
                                       });
-                                  return setNewEntries(function (param) {
-                                              return entries;
-                                            });
+                                  setNewEntries(function (param) {
+                                        return entries;
+                                      });
                                 })
                             }, "등급추가")))), React.createElement("section", undefined, React.createElement("article", {
                       className: "flex justify-center items-center mt-5"
@@ -459,35 +447,35 @@ function BulkSale_ProductSaleLedgers_Button_Create_Admin(Props) {
                                     Curry.app(mutate, [
                                           (function (err) {
                                               console.log(err);
-                                              return addToast(React.createElement("div", {
-                                                              className: "flex items-center"
-                                                            }, React.createElement(IconError.make, {
-                                                                  width: "24",
-                                                                  height: "24",
-                                                                  className: "mr-2"
-                                                                }), err.message), {
-                                                          appearance: "error"
-                                                        });
+                                              addToast(React.createElement("div", {
+                                                        className: "flex items-center"
+                                                      }, React.createElement(IconError.make, {
+                                                            width: "24",
+                                                            height: "24",
+                                                            className: "mr-2"
+                                                          }), err.message), {
+                                                    appearance: "error"
+                                                  });
                                             }),
                                           (function (param, param$1) {
-                                              return addToast(React.createElement("div", {
-                                                              className: "flex items-center"
-                                                            }, React.createElement(IconCheck.make, {
-                                                                  height: "24",
-                                                                  width: "24",
-                                                                  fill: "#12B564",
-                                                                  className: "mr-2"
-                                                                }), "수정 요청에 성공하였습니다."), {
-                                                          appearance: "success"
-                                                        });
+                                              addToast(React.createElement("div", {
+                                                        className: "flex items-center"
+                                                      }, React.createElement(IconCheck.make, {
+                                                            height: "24",
+                                                            width: "24",
+                                                            fill: "#12B564",
+                                                            className: "mr-2"
+                                                          }), "수정 요청에 성공하였습니다."), {
+                                                    appearance: "success"
+                                                  });
                                             }),
                                           undefined,
                                           undefined,
                                           undefined,
                                           undefined,
                                           {
-                                            input: input._0,
-                                            connections: [connectionId]
+                                            connections: [connectionId],
+                                            input: input._0
                                           },
                                           undefined,
                                           undefined
@@ -495,9 +483,9 @@ function BulkSale_ProductSaleLedgers_Button_Create_Admin(Props) {
                                     return ;
                                   }
                                   var errors = input._0;
-                                  return setFormErrors(function (prev) {
-                                              return Belt_Array.concat(prev, errors);
-                                            });
+                                  setFormErrors(function (prev) {
+                                        return Belt_Array.concat(prev, errors);
+                                      });
                                 })
                             }, "저장")))));
 }
@@ -513,6 +501,5 @@ export {
   makeInputCreate ,
   makeEntryInputCreate ,
   make ,
-  
 }
 /* Input Not a pure module */

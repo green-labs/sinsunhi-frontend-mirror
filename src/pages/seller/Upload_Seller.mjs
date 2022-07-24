@@ -63,12 +63,12 @@ function Upload_Seller$Upload(Props) {
                                   setShowSuccess(function (param) {
                                         return /* Show */0;
                                       });
-                                  return mutate(Env.restApiUrl + "/order/recent-uploads?upload-type=invoice", undefined, undefined);
+                                  mutate("" + Env.restApiUrl + "/order/recent-uploads?upload-type=invoice", undefined, undefined);
                                 }),
                               onFailure: (function (param) {
-                                  return setShowError(function (param) {
-                                              return /* Show */0;
-                                            });
+                                  setShowError(function (param) {
+                                        return /* Show */0;
+                                      });
                                 })
                             }))), React.createElement("div", {
                       className: "p-5 sm:p-7 mt-4 md:shadow-gl"
@@ -82,9 +82,9 @@ function Upload_Seller$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "다운로드에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowDownloadError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDownloadError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$2[0],
@@ -92,9 +92,9 @@ function Upload_Seller$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "다운로드할 주문이 없습니다."),
                   onCancel: (function (param) {
-                      return setShowNothingToDownload(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToDownload(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -103,9 +103,9 @@ function Upload_Seller$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일 업로드가 시작되었습니다."),
                   onConfirm: (function (param) {
-                      return setShowSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$4[0],
@@ -113,9 +113,9 @@ function Upload_Seller$Upload(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "파일 업로드에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -139,6 +139,5 @@ export {
   UploadFile ,
   Upload ,
   make ,
-  
 }
 /* Env Not a pure module */

@@ -51,7 +51,6 @@ function UncompletedOrders_Admin(Props) {
                         to_: to_
                       };
               });
-          
         }), [router.query]);
   var handleOnChangeDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -71,20 +70,19 @@ function UncompletedOrders_Admin(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnClickQuery = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   router.query["from"] = Format(query.from, "yyyyMMdd");
                   router.query["to"] = Format(query.to_, "yyyyMMdd");
                   var newQueryString = new URLSearchParams(router.query).toString();
-                  router.push(router.pathname + "?" + newQueryString);
-                  
+                  router.push("" + router.pathname + "?" + newQueryString + "");
                 }), param);
   };
   return React.createElement(Authorization.Admin.make, {
@@ -145,9 +143,9 @@ function UncompletedOrders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "선택하신 주문을 취소하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       
@@ -158,9 +156,9 @@ function UncompletedOrders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문 취소에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowCancelError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$3[0],
@@ -168,9 +166,9 @@ function UncompletedOrders_Admin(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "다운로드에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowDownloadError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDownloadError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -182,6 +180,5 @@ var make = UncompletedOrders_Admin;
 export {
   List ,
   make ,
-  
 }
 /* react Not a pure module */

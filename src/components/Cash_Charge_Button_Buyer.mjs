@@ -15,11 +15,11 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as DetectBrowser from "detect-browser";
 import * as ReactHookForm$1 from "react-hook-form";
-import * as Hooks from "react-relay/hooks";
 import * as InputWithAdornment from "./common/InputWithAdornment.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
@@ -174,9 +174,7 @@ function form_decode(v) {
 function setValueToHtmlInputElement(name, v) {
   Belt_Option.map(Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById(name)), Webapi__Dom__HtmlInputElement.ofElement), (function (e) {
           e.value = v;
-          
         }));
-  
 }
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
@@ -198,14 +196,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? CashChargeButtonBuyerMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(CashChargeButtonBuyerMutation_graphql.node);
+  var match = ReactRelay.useMutation(CashChargeButtonBuyerMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -213,13 +211,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? CashChargeButtonBuyerMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, CashChargeButtonBuyerMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: CashChargeButtonBuyerMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -246,8 +244,6 @@ var MutationCreateCharge_paymentPurpose_decode = CashChargeButtonBuyerMutation_g
 
 var MutationCreateCharge_paymentPurpose_fromString = CashChargeButtonBuyerMutation_graphql.Utils.paymentPurpose_fromString;
 
-var MutationCreateCharge_makeVariables = CashChargeButtonBuyerMutation_graphql.Utils.makeVariables;
-
 var MutationCreateCharge = {
   device_decode: MutationCreateCharge_device_decode,
   device_fromString: MutationCreateCharge_device_fromString,
@@ -257,7 +253,7 @@ var MutationCreateCharge = {
   paymentMethod_fromString: MutationCreateCharge_paymentMethod_fromString,
   paymentPurpose_decode: MutationCreateCharge_paymentPurpose_decode,
   paymentPurpose_fromString: MutationCreateCharge_paymentPurpose_fromString,
-  makeVariables: MutationCreateCharge_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -287,9 +283,8 @@ function Cash_Charge_Button_Buyer(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    return reset(undefined);
+    reset(undefined);
   };
   var errorElement = React.createElement(React.Fragment, undefined, React.createElement("img", {
             src: noticeIcon
@@ -297,15 +292,15 @@ function Cash_Charge_Button_Buyer(Props) {
             className: "ml-1.5 text-sm"
           }, "최소 결제금액(1,000원 이상)을 입력해주세요."));
   var handleError = function (message, param) {
-    return addToast(React.createElement("div", {
-                    className: "flex items-center"
-                  }, React.createElement(IconError.make, {
-                        width: "24",
-                        height: "24",
-                        className: "mr-2"
-                      }), "결제가 실패하였습니다. " + Belt_Option.getWithDefault(message, "")), {
-                appearance: "error"
-              });
+    addToast(React.createElement("div", {
+              className: "flex items-center"
+            }, React.createElement(IconError.make, {
+                  width: "24",
+                  height: "24",
+                  className: "mr-2"
+                }), "결제가 실패하였습니다. " + Belt_Option.getWithDefault(message, "") + ""), {
+          appearance: "error"
+        });
   };
   var detectIsMobile = function (param) {
     var match = DetectBrowser.detect();
@@ -329,7 +324,7 @@ function Cash_Charge_Button_Buyer(Props) {
       setValueToHtmlInputElement("pay_method", paymentMethodToKCPValue(data$p$1.paymentMethod));
       Curry.app(mutate, [
             (function (err) {
-                return handleError(err.message, undefined);
+                handleError(err.message, undefined);
               }),
             (function (param, param$1) {
                 var requestPayment = param.requestPayment;
@@ -348,10 +343,10 @@ function Cash_Charge_Button_Buyer(Props) {
                   return window.tossPayments.requestPayment(paymentMethodToTossValue(data$p$1.paymentMethod), {
                               amount: requestPaymentTossPaymentsResult.amount,
                               orderId: requestPaymentTossPaymentsResult.orderId,
-                              orderName: "신선하이 " + String(requestPaymentTossPaymentsResult.amount),
+                              orderName: "신선하이 " + String(requestPaymentTossPaymentsResult.amount) + "",
                               customerName: requestPaymentTossPaymentsResult.customerName,
-                              successUrl: window.location.origin + "/buyer/toss-payments/success?payment-id=" + String(requestPaymentTossPaymentsResult.paymentId),
-                              failUrl: window.location.origin + "/buyer/toss-payments/fail",
+                              successUrl: "" + window.location.origin + "/buyer/toss-payments/success?payment-id=" + String(requestPaymentTossPaymentsResult.paymentId) + "",
+                              failUrl: "" + window.location.origin + "/buyer/toss-payments/fail",
                               validHours: tossPaymentsValidHours(data$p$1.paymentMethod),
                               cashReceipt: tossPaymentsCashReceipt(data$p$1.paymentMethod)
                             });
@@ -381,9 +376,9 @@ function Cash_Charge_Button_Buyer(Props) {
             undefined,
             undefined,
             {
-              paymentMethod: data$p$1.paymentMethod,
               amount: data$p$1.amount,
               device: detectIsMobile(undefined) ? "MOBILE" : "PC",
+              paymentMethod: data$p$1.paymentMethod,
               purpose: "SINSUN_CASH"
             },
             undefined,
@@ -393,7 +388,7 @@ function Cash_Charge_Button_Buyer(Props) {
     }
     var msg = data$p._0;
     console.log(msg);
-    return handleError(msg.message, undefined);
+    handleError(msg.message, undefined);
   };
   var changeToFormattedFloat = function (j) {
     return Belt_Option.mapWithDefault(Js_json.decodeNumber(j), "", (function (f) {
@@ -423,7 +418,7 @@ function Cash_Charge_Button_Buyer(Props) {
                             }, "신선캐시 충전"), React.createElement("button", {
                               className: "cursor-pointer border-none",
                               onClick: (function (param) {
-                                  return close(undefined);
+                                  close(undefined);
                                 })
                             }, React.createElement(IconClose.make, {
                                   height: "1.5rem",
@@ -539,10 +534,10 @@ function Cash_Charge_Button_Buyer(Props) {
                                                                 onClick: (function (e) {
                                                                     e.preventDefault();
                                                                     e.stopPropagation();
-                                                                    return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, v));
+                                                                    Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, v));
                                                                   })
                                                               }, React.createElement("img", {
-                                                                    src: Caml_obj.caml_equal(value, v) ? radioFilledIcon : radioDefaultIcon
+                                                                    src: Caml_obj.equal(value, v) ? radioFilledIcon : radioDefaultIcon
                                                                   }), name);
                                                   })));
                                 }),
@@ -553,9 +548,9 @@ function Cash_Charge_Button_Buyer(Props) {
                               }, React.createElement("button", {
                                     className: "flex items-center cursor-pointer",
                                     onClick: (function (param) {
-                                        return setRequireTerms(function (prev) {
-                                                    return !prev;
-                                                  });
+                                        setRequireTerms(function (prev) {
+                                              return !prev;
+                                            });
                                       })
                                   }, React.createElement("img", {
                                         src: match$3[0] ? checkboxCheckedIcon : checkboxUncheckedIcon
@@ -576,7 +571,7 @@ function Cash_Charge_Button_Buyer(Props) {
                                   disabled: isMutating,
                                   type: "button",
                                   onClick: (function (param) {
-                                      return close(undefined);
+                                      close(undefined);
                                     })
                                 }, "닫기"), React.createElement("button", {
                                   className: isDirty ? "w-1/2 py-3 btn-level1 font-bold" : "w-1/2 py-3 btn-level1-disabled font-bold",
@@ -604,6 +599,5 @@ export {
   setValueToHtmlInputElement ,
   MutationCreateCharge ,
   make ,
-  
 }
 /* checkboxCheckedIcon Not a pure module */

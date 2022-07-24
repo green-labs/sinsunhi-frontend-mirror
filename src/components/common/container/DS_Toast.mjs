@@ -71,6 +71,5 @@ function getToastComponent(text, appearance) {
 export {
   Normal ,
   getToastComponent ,
-  
 }
 /* react Not a pure module */

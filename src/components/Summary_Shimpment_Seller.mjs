@@ -53,7 +53,7 @@ function Summary_Shimpment_Seller$StatusBoard(Props) {
                     className: "text-gray-gl"
                   }, "(검색기간 내)")), React.createElement("div", {
                 className: "font-bold"
-              }, Locale.Float.show(undefined, response._0.price, 0) + " 원"));
+              }, "" + Locale.Float.show(undefined, response._0.price, 0) + " 원"));
     } else {
       console.log(response._0);
       tmp = null;
@@ -69,11 +69,11 @@ function Summary_Shimpment_Seller$StatusBoard(Props) {
             className: "flex-1"
           }, React.createElement("div", {
                 className: "text-sm text-gray-800"
-              }, Format(new Date(), "MM") + "월 출하", React.createElement("span", {
+              }, "" + Format(new Date(), "MM") + "월 출하", React.createElement("span", {
                     className: "text-gray-gl"
                   }, "(" + firstDayOfMonth + "~" + today + ")")), React.createElement("div", {
                 className: "font-bold"
-              }, Locale.Float.show(undefined, response$1._0.price, 0) + " 원"));
+              }, "" + Locale.Float.show(undefined, response$1._0.price, 0) + " 원"));
     } else {
       console.log(response$1._0);
       tmp$1 = null;
@@ -149,8 +149,7 @@ function Summary_Shimpment_Seller(Props) {
           }));
     router.query["category-id"] = match[0];
     router.query["label"] = match[1];
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Shipment_Form_Seller.Form.use, {
         market: Belt_Option.getWithDefault(defaults.market, ""),
@@ -160,19 +159,19 @@ function Summary_Shimpment_Seller(Props) {
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnChangeCropOrCultivar = function (e) {
     ReForm__Helpers.handleChange(Curry._1(form.handleChange, /* Std */1), e);
-    return setSelectedCrop(function (param) {
-                return /* NotSelected */0;
-              });
+    setSelectedCrop(function (param) {
+          return /* NotSelected */0;
+        });
   };
   var handleChangeCrop = function (selection) {
-    return setSelectedCrop(function (param) {
-                return selection;
-              });
+    setSelectedCrop(function (param) {
+          return selection;
+        });
   };
   var handleOnChangeDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -192,20 +191,20 @@ function Summary_Shimpment_Seller(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnChangePeriod = function (d) {
-    return setQuery(function (prev) {
-                return {
-                        from: d,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: d,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -217,9 +216,9 @@ function Summary_Shimpment_Seller(Props) {
                                 to_: new Date()
                               };
                       });
-                  return setSelectedCrop(function (param) {
-                              return /* NotSelected */0;
-                            });
+                  setSelectedCrop(function (param) {
+                        return /* NotSelected */0;
+                      });
                 }), param);
   };
   var partial_arg = Curry._1(form.handleChange, /* Market */0);
@@ -337,6 +336,5 @@ export {
   Select_Crop_Std ,
   getProps ,
   make ,
-  
 }
 /* react Not a pure module */

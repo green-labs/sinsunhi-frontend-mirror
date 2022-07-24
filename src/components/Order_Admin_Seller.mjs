@@ -45,9 +45,9 @@ function Order_Admin_Seller$Item$Table(Props) {
   var setShowPackingConfirm = match[1];
   var status = CustomHooks.Courier.use(undefined);
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.mapWithDefault(Belt_Option.flatMap(order.courierCode, (function (courierCode$p) {
                 return Belt_Result.mapWithDefault(CustomHooks.Courier.response_decode(couriers), undefined, (function (couriers$p) {
@@ -58,8 +58,6 @@ function Order_Admin_Seller$Item$Table(Props) {
               })), "-", (function (courier) {
             return courier.name;
           }));
-  } else {
-    courierName = "-";
   }
   var match$1 = order.status;
   var isDisabedCheckbox = match$1 !== 0;
@@ -72,9 +70,9 @@ function Order_Admin_Seller$Item$Table(Props) {
         tmp = React.createElement("button", {
               className: "max-w-min p-2 bg-green-gl text-white rounded-md whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-green-gl focus:ring-offset-1 focus:ring-opacity-100",
               onClick: (function (param) {
-                  return setShowPackingConfirm(function (param) {
-                              return /* Show */0;
-                            });
+                  setShowPackingConfirm(function (param) {
+                        return /* Show */0;
+                      });
                 })
             }, "상품준비중 처리");
         break;
@@ -136,7 +134,7 @@ function Order_Admin_Seller$Item$Table(Props) {
                 }, React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement(Checkbox.make, {
-                          id: "checkbox-" + order.orderProductNo,
+                          id: "checkbox-" + order.orderProductNo + "",
                           checked: Curry._1(check, order.orderProductNo),
                           onChange: Curry._1(onCheckOrder, order.orderProductNo),
                           disabled: isDisabedCheckbox
@@ -156,7 +154,7 @@ function Order_Admin_Seller$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2 min-w-max"
                     }, React.createElement("span", {
                           className: "block text-gray-400 mb-2"
-                        }, String(order.productId) + " ・ " + order.productSku), React.createElement(Badge_Admin.make, {
+                        }, "" + String(order.productId) + " ・ " + order.productSku + ""), React.createElement(Badge_Admin.make, {
                           status: order.status
                         })), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
@@ -182,7 +180,7 @@ function Order_Admin_Seller$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2 whitespace-nowrap"
                     }, React.createElement("span", {
                           className: "block"
-                        }, Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
+                        }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 whitespace-nowrap"
                     }, React.createElement("span", {
                           className: "block"
@@ -204,15 +202,15 @@ function Order_Admin_Seller$Item$Table(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "선택한 주문을 상품준비중으로 변경하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowPackingConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setShowPackingConfirm(function (param) {
                             return /* Hide */1;
                           });
-                      return Curry._1(onClickPacking, [order.orderProductNo]);
+                      Curry._1(onClickPacking, [order.orderProductNo]);
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -310,7 +308,7 @@ function Order_Admin_Seller(Props) {
                                               "courier-code": courierCode$p
                                             }]
                                         }), (function (body) {
-                                        return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/invoices", body, 3, (function (param) {
+                                        return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/invoices", body, 3, (function (param) {
                                                       addToast(React.createElement("div", {
                                                                 className: "flex items-center"
                                                               }, React.createElement(IconCheck.make, {
@@ -321,16 +319,15 @@ function Order_Admin_Seller(Props) {
                                                                   }), "송장번호가 입력되었습니다"), {
                                                             appearance: "success"
                                                           });
-                                                      mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                                                      return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                                                      mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                                                      mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                                                     }), (function (param) {
-                                                      return setShowErrorPostCourierInvoiceNo(function (param) {
-                                                                  return /* Show */0;
-                                                                });
+                                                      setShowErrorPostCourierInvoiceNo(function (param) {
+                                                            return /* Show */0;
+                                                          });
                                                     }));
                                       }));
                         }));
-                  
                 }), param);
   };
   return React.createElement(React.Fragment, undefined, React.createElement(Order_Admin_Seller$Item$Table, {
@@ -349,9 +346,9 @@ function Order_Admin_Seller(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "송장번호 저장에 실패하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowErrorPostCourierInvoiceNo(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorPostCourierInvoiceNo(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -362,6 +359,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* Env Not a pure module */

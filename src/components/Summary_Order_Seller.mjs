@@ -80,8 +80,7 @@ function Summary_Order_Seller(Props) {
     router.query["sku"] = sku;
     router.query["from"] = Format(query.from, "yyyyMMdd");
     router.query["to"] = Format(query.to_, "yyyyMMdd");
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Order_Form_Seller.Form.use, Query_Order_Form_Seller.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -91,7 +90,7 @@ function Summary_Order_Seller(Props) {
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -127,7 +126,6 @@ function Summary_Order_Seller(Props) {
                     return ;
                   }
                 }));
-          
         }), [router.query]);
   var handleOnChangeDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -147,20 +145,20 @@ function Summary_Order_Seller(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnChangePeriod = function (d) {
-    return setQuery(function (prev) {
-                return {
-                        from: d,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: d,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -169,12 +167,12 @@ function Summary_Order_Seller(Props) {
                   Curry._4(form.setFieldValue, /* OrdererName */2, "", true, undefined);
                   Curry._4(form.setFieldValue, /* ReceiverName */3, "", true, undefined);
                   Curry._4(form.setFieldValue, /* Sku */4, "", true, undefined);
-                  return setQuery(function (param) {
-                              return {
-                                      from: SubDays(new Date(), 7),
-                                      to_: new Date()
-                                    };
-                            });
+                  setQuery(function (param) {
+                        return {
+                                from: SubDays(new Date(), 7),
+                                to_: new Date()
+                              };
+                      });
                 }), param);
   };
   var partial_arg = Curry._1(form.handleChange, /* OrdererName */2);
@@ -348,6 +346,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Input Not a pure module */

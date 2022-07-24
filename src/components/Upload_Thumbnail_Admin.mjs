@@ -9,10 +9,10 @@ import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as IconCloseInput from "./svgs/IconCloseInput.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as UploadFileToS3PresignedUrl from "../utils/UploadFileToS3PresignedUrl.mjs";
 import * as UploadThumbnailAdminMutation_graphql from "../__generated__/UploadThumbnailAdminMutation_graphql.mjs";
 
@@ -35,14 +35,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? UploadThumbnailAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(UploadThumbnailAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(UploadThumbnailAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -50,13 +50,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? UploadThumbnailAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, UploadThumbnailAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: UploadThumbnailAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -67,10 +67,8 @@ function use(param) {
         ];
 }
 
-var Mutation_makeVariables = UploadThumbnailAdminMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -242,9 +240,7 @@ function Upload_Thumbnail_Admin(Props) {
     var inputFile = document.getElementById("thumbnail");
     Belt_Option.map((inputFile == null) ? undefined : Caml_option.some(inputFile), (function (inputFile$p) {
             inputFile$p.value = "";
-            
           }));
-    
   };
   var onFailureWithReset = function (resetFn, updateFn, param) {
     setThumbnailURL(function (param) {
@@ -255,9 +251,9 @@ function Upload_Thumbnail_Admin(Props) {
   };
   var imageUrlStateReset = function (param) {
     Curry._1(updateFn, resetImage);
-    return setThumbnailURL(function (param) {
-                return /* Loading */1;
-              });
+    setThumbnailURL(function (param) {
+          return /* Loading */1;
+        });
   };
   var handleOnChangeFile = function (e) {
     var files = e.target.files;
@@ -271,7 +267,7 @@ function Upload_Thumbnail_Admin(Props) {
     Curry.app(mutate, [
           (function (err) {
               console.log(err);
-              return onFailureWithReset(resetFile, updateFn, err);
+              onFailureWithReset(resetFile, updateFn, err);
             }),
           (function (param, param$1) {
               var res = param.createPresignedUrlForImage;
@@ -289,11 +285,10 @@ function Upload_Thumbnail_Admin(Props) {
                                     _0: filename
                                   };
                           });
-                      return Curry._1(updateFn, imageUrls);
+                      Curry._1(updateFn, imageUrls);
                     }), (function (err) {
-                      return onFailureWithReset(resetFile, updateFn, err);
+                      onFailureWithReset(resetFile, updateFn, err);
                     }), undefined);
-              
             }),
           undefined,
           undefined,
@@ -305,7 +300,6 @@ function Upload_Thumbnail_Admin(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var displayName = Belt_Option.flatMap(Belt_Option.flatMap(Belt_Option.map(Caml_option.null_to_opt(/[^/]+$/.exec(value.original)), (function (prim) {
                   return prim;
@@ -339,7 +333,7 @@ function Upload_Thumbnail_Admin(Props) {
                         onClick: (function (param) {
                             return ReactEvents.interceptingHandler((function (param) {
                                           resetFile(undefined);
-                                          return Curry._1(updateFn, resetImage);
+                                          Curry._1(updateFn, resetImage);
                                         }), param);
                           })
                       }, React.createElement(IconCloseInput.make, {
@@ -363,6 +357,5 @@ export {
   Form ,
   mutationImageToFormImage ,
   make ,
-  
 }
 /* react Not a pure module */

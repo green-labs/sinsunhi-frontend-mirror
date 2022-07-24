@@ -110,7 +110,7 @@ function errorMessage(errorCode) {
     case /* OrderProductNo */7 :
     case /* OrdererId */8 :
     case /* Etc */9 :
-        return errorCode._0 + "\n";
+        return "" + errorCode._0 + "\n";
     case /* AfterPay */10 :
         return React.createElement(React.Fragment, undefined, "나중결제 잔여 한도 부족으로 발주에 실패했습니다.\n주문 금액을 조정하여 다시 재업로드해주세요.\n");
     default:
@@ -215,20 +215,18 @@ function UploadStatus_Buyer(Props) {
                                             children: React.createElement("span", {
                                                   className: "whitespace-nowrap ml-1 text-gray-400 underline",
                                                   onClick: (function (param) {
-                                                      return setErrorDetail(function (param) {
-                                                                  return {
-                                                                          errorCode: d.errorCode,
-                                                                          isShow: /* Show */0
-                                                                        };
-                                                                });
+                                                      setErrorDetail(function (param) {
+                                                            return {
+                                                                    errorCode: d.errorCode,
+                                                                    isShow: /* Show */0
+                                                                  };
+                                                          });
                                                     })
                                                 }, uploadType >= 3 ? (
                                                     match$1 !== 2 ? (
                                                         match$2 !== undefined ? "자세히보기" : null
                                                       ) : (
-                                                        match$2 !== undefined ? (
-                                                            match$2 !== undefined ? "자세히보기" : null
-                                                          ) : "자세히보기"
+                                                        match$2 !== undefined && match$2 === undefined ? null : "자세히보기"
                                                       )
                                                   ) : (
                                                     match$2 !== undefined ? "자세히보기" : null
@@ -274,12 +272,12 @@ function UploadStatus_Buyer(Props) {
                   isShow: errorDetail.isShow,
                   children: null,
                   onCancel: (function (param) {
-                      return setErrorDetail(function (param) {
-                                  return {
-                                          errorCode: undefined,
-                                          isShow: /* Hide */1
-                                        };
-                                });
+                      setErrorDetail(function (param) {
+                            return {
+                                    errorCode: undefined,
+                                    isShow: /* Hide */1
+                                  };
+                          });
                     }),
                   onConfirm: (function (param) {
                       setErrorDetail(function (param) {
@@ -319,6 +317,5 @@ export {
   linkOfGuide ,
   openInNewTab ,
   make ,
-  
 }
 /* Env Not a pure module */

@@ -9,6 +9,7 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Js_json from "rescript/lib/es6/js_json.js";
 import Head from "next/head";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
@@ -58,9 +59,9 @@ function make(from, to_) {
 
 function format(param) {
   var formatForDisplay = function (date) {
-    return Format(date, "MM") + "월 " + Format(date, "dd") + "일 " + Format(date, "HH") + "시";
+    return "" + Format(date, "MM") + "월 " + Format(date, "dd") + "일 " + Format(date, "HH") + "시";
   };
-  return formatForDisplay(param.from) + " ~ " + Belt_Option.getWithDefault(Belt_Option.map(param.to_, formatForDisplay), "");
+  return "" + formatForDisplay(param.from) + " ~ " + Belt_Option.getWithDefault(Belt_Option.map(param.to_, formatForDisplay), "") + "";
 }
 
 var MaintenanceTime = {
@@ -442,34 +443,34 @@ function incidents_decode(v) {
 
 function use(target) {
   var apiFetcher = function (url) {
-    return fetch(url, Fetch.RequestInit.make(/* Get */0, {
-                            Authorization: "OAuth " + Env.statusPageKey
-                          }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                    if (res.ok) {
-                      return res.json();
-                    } else {
-                      return res.json().then(function (errJson) {
-                                    var error = new Error("요청에 실패했습니다.");
-                                    error.status = res.status;
-                                    error.info = errJson;
-                                    var errJson$p = FetchHelper.errJson_decode(errJson);
-                                    if (errJson$p.TAG === /* Ok */0) {
-                                      error.message = errJson$p._0.message;
-                                    }
-                                    return Promise.reject(error);
-                                  }).catch(function (err) {
-                                  return Promise.reject(err);
-                                });
-                    }
-                  }).then(function (data) {
-                  return Promise.resolve(data);
-                }).catch(function (param) {
-                return Promise.resolve(null);
-              });
+    return Js_promise.$$catch((function (param) {
+                  return Promise.resolve(null);
+                }), Js_promise.then_((function (data) {
+                      return Promise.resolve(data);
+                    }), Js_promise.then_((function (res) {
+                          if (res.ok) {
+                            return Fetch.$$Response.json(res);
+                          } else {
+                            return Js_promise.$$catch((function (err) {
+                                          return Promise.reject(err);
+                                        }), Js_promise.then_((function (errJson) {
+                                              var error = new Error("요청에 실패했습니다.");
+                                              error.status = res.status;
+                                              error.info = errJson;
+                                              var errJson$p = FetchHelper.errJson_decode(errJson);
+                                              if (errJson$p.TAG === /* Ok */0) {
+                                                error.message = errJson$p._0.message;
+                                              }
+                                              return Promise.reject(error);
+                                            }), Fetch.$$Response.json(res)));
+                          }
+                        }), fetch(url, Fetch.RequestInit.make(/* Get */0, {
+                                  Authorization: "OAuth " + Env.statusPageKey + ""
+                                }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
   };
   var match = Swr("https://api.statuspage.io/v1/pages/" + Env.statusPagePageId + "/incidents/" + (
         target ? "scheduled" : "unresolved"
-      ), apiFetcher, {
+      ) + "", apiFetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -593,7 +594,6 @@ function Maintenance(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   if (match[0]) {
     return React.createElement(Maintenance$Content, {});
@@ -611,6 +611,5 @@ export {
   View ,
   Content ,
   make$2 as make,
-  
 }
 /* Env Not a pure module */

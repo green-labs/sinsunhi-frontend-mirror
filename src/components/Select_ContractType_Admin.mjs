@@ -50,6 +50,5 @@ export {
   toString ,
   toContractTypeDisplay ,
   make ,
-  
 }
 /* react Not a pure module */

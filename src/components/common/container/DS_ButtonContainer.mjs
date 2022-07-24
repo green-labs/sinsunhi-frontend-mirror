@@ -105,6 +105,5 @@ var Full1 = {
 export {
   Floating1 ,
   Full1 ,
-  
 }
 /* react Not a pure module */

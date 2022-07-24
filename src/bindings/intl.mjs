@@ -19,6 +19,5 @@ var Currency = {
 
 export {
   Currency ,
-  
 }
 /* No side effect */

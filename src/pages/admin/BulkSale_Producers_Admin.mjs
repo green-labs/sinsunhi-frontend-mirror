@@ -4,16 +4,17 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as RelayEnv from "../../constants/RelayEnv.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Authorization from "../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import Format from "date-fns/format";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
 import * as BulkSale_Producers_List_Admin from "../../components/BulkSale_Producers_List_Admin.mjs";
@@ -25,7 +26,7 @@ import * as BulkSaleProducersAdminTotalSummaryRefetchQuery_graphql from "../../_
 import * as BulkSaleProducersAdminSearchSummaryRefetchQuery_graphql from "../../__generated__/BulkSaleProducersAdminSearchSummaryRefetchQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(BulkSaleProducersAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(BulkSaleProducersAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -34,7 +35,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(BulkSaleProducersAdminQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(BulkSaleProducersAdminQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -52,38 +53,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, BulkSaleProducersAdminQuery_graphql.node, BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, BulkSaleProducersAdminQuery_graphql.node, BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: BulkSaleProducersAdminQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: BulkSaleProducersAdminQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, BulkSaleProducersAdminQuery_graphql.node, BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, BulkSaleProducersAdminQuery_graphql.node, BulkSaleProducersAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(BulkSaleProducersAdminQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(BulkSaleProducersAdminQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(BulkSaleProducersAdminQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(BulkSaleProducersAdminQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersAdminQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -102,6 +102,7 @@ var Query = {
   bulkSaleApplicationProgress_decode: Query_bulkSaleApplicationProgress_decode,
   bulkSaleApplicationProgress_fromString: Query_bulkSaleApplicationProgress_fromString,
   makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -125,27 +126,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersAdminTotalSummaryFragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducersAdminTotalSummaryRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProducersAdminTotalSummaryRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersAdminTotalSummaryFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProducersAdminTotalSummaryFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -161,6 +162,7 @@ var Total = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt,
   makeRefetchVariables: makeRefetchVariables
@@ -180,27 +182,27 @@ function internal_makeRefetchableFnOpts$1(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable$1(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersAdminSearchSummaryFragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducersAdminSearchSummaryRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts$1(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProducersAdminSearchSummaryRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts$1(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$2(fRef) {
-  var data = Hooks.useFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducersAdminSearchSummaryFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProducersAdminSearchSummaryFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -216,6 +218,7 @@ var Search = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts$1,
   useRefetchable: useRefetchable$1,
+  Operation: undefined,
   use: use$2,
   useOpt: useOpt$1,
   makeRefetchVariables: makeRefetchVariables$1
@@ -381,7 +384,6 @@ function BulkSale_Producers_Admin$SummaryAndList(Props) {
     };
     Curry._4(refetchTotal, undefined, /* StoreAndNetwork */2, undefined, undefined);
     Curry._4(refetchSearch, searchInput, /* StoreAndNetwork */2, undefined, undefined);
-    
   };
   return React.createElement(React.Fragment, undefined, React.createElement(Summary_BulkSale_Producers_Admin.make, {
                   summary: match[0].totalStatistics
@@ -483,6 +485,5 @@ export {
   Skeleton ,
   Producers ,
   make ,
-  
 }
 /* react Not a pure module */

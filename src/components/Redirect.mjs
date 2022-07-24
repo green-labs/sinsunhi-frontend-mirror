@@ -7,9 +7,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 function setHref(path) {
   Belt_Option.map(Caml_option.undefined_to_opt(typeof window === "undefined" ? undefined : window), (function (param) {
           window.location.href = path;
-          
         }));
-  
 }
 
 function Redirect(Props) {
@@ -17,7 +15,6 @@ function Redirect(Props) {
   var message = Props.message;
   React.useEffect((function () {
           setHref(path);
-          
         }), []);
   return React.createElement("div", undefined, message !== undefined ? message : React.createElement("div", {
                     className: "container mx-auto flex justify-center items-center h-screen"
@@ -29,6 +26,5 @@ var make = Redirect;
 export {
   setHref ,
   make ,
-  
 }
 /* react Not a pure module */

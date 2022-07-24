@@ -3,19 +3,19 @@
 import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopMainSubBannerBuyer_graphql from "../__generated__/ShopMainSubBannerBuyer_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(ShopMainSubBannerBuyer_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopMainSubBannerBuyer_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopMainSubBannerBuyer_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopMainSubBannerBuyer_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopMainSubBannerBuyer_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -27,6 +27,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -40,7 +41,7 @@ function ShopMain_SubBanner_Buyer$PC$Placeholder(Props) {
                   3
                 ], (function (idx) {
                     return React.createElement("div", {
-                                key: "sub-banner-skeleton-" + String(idx),
+                                key: "sub-banner-skeleton-" + String(idx) + "",
                                 className: "flex flex-1 aspect-[300/124] rounded-xl animate-pulse bg-gray-150"
                               });
                   })));
@@ -56,7 +57,7 @@ function ShopMain_SubBanner_Buyer$PC(Props) {
   return React.createElement("div", {
               className: "w-full flex flex-col gap-3"
             }, Belt_Array.map(match.subBanners, (function (param) {
-                    var key = "sub-banner-" + param.id;
+                    var key = "sub-banner-" + param.id + "";
                     var target = param.isNewTabPc ? "_blank" : "_self";
                     return React.createElement("div", {
                                 key: key,
@@ -87,7 +88,7 @@ function ShopMain_SubBanner_Buyer$MO$Placeholder(Props) {
                   3
                 ], (function (idx) {
                     return React.createElement("div", {
-                                key: "sub-banner-skeleton-" + String(idx),
+                                key: "sub-banner-skeleton-" + String(idx) + "",
                                 className: "flex flex-1 aspect-[228/168] rounded-xl animate-pulse bg-gray-150"
                               });
                   })));
@@ -103,7 +104,7 @@ function ShopMain_SubBanner_Buyer$MO(Props) {
   return React.createElement("div", {
               className: "w-full flex items-center gap-[10px]"
             }, Belt_Array.map(match.subBanners, (function (param) {
-                    var key = "sub-banner-" + param.id;
+                    var key = "sub-banner-" + param.id + "";
                     var target = param.isNewTabMobile ? "_blank" : "_self";
                     return React.createElement("div", {
                                 key: key,
@@ -129,6 +130,5 @@ export {
   Fragment ,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

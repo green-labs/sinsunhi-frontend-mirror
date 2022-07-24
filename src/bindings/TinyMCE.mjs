@@ -29,6 +29,5 @@ export {
   Menu ,
   Tool ,
   $$Plugin ,
-  
 }
 /* No side effect */

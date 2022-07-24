@@ -253,16 +253,13 @@ function Orders_Admin$Orders(Props) {
           setSelectedOrders(function (param) {
                 
               });
-          
         }), [router.query]);
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var orders$p = CustomHooks.OrdersAdmin.orders_decode(status._0);
     count = orders$p.TAG === /* Ok */0 ? String(orders$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   var handleOnCheckOrder = function (orderProductNo, e) {
     var checked = e.target.checked;
@@ -273,9 +270,9 @@ function Orders_Admin$Orders(Props) {
                 });
     }
     var newOrders$1 = Belt_SetString.remove(selectedOrders, orderProductNo);
-    return setSelectedOrders(function (param) {
-                return newOrders$1;
-              });
+    setSelectedOrders(function (param) {
+          return newOrders$1;
+        });
   };
   var check = function (orderProductNo) {
     return Belt_SetString.has(selectedOrders, orderProductNo);
@@ -298,9 +295,9 @@ function Orders_Admin$Orders(Props) {
     allOrderProductNo = orders$p.TAG === /* Ok */0 ? Belt_SetString.fromArray(Garter_Array.map(Garter_Array.keep(orders$p._0.data, Order_Admin.isCheckableOrder), (function (order) {
                   return order.orderProductNo;
                 }))) : undefined;
-    return setSelectedOrders(function (param) {
-                return allOrderProductNo;
-              });
+    setSelectedOrders(function (param) {
+          return allOrderProductNo;
+        });
   };
   var countOfChecked = Belt_SetString.size(selectedOrders);
   var cancelOrder = function (orders) {
@@ -310,7 +307,7 @@ function Orders_Admin$Orders(Props) {
     Belt_Option.map(JSON.stringify({
               "order-product-numbers": orders
             }), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/cancel", body, 3, (function (res) {
+            return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/cancel", body, 3, (function (res) {
                           var res$p = response_decode(res);
                           var result;
                           if (res$p.TAG === /* Ok */0) {
@@ -331,15 +328,14 @@ function Orders_Admin$Orders(Props) {
                           setSelectedOrders(function (param) {
                                 
                               });
-                          mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                          return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                         }), (function (param) {
-                          return setShowCancelError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowCancelError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   var handleOnChangeRefundReason = function (e) {
     var value = e.target.value;
@@ -350,9 +346,9 @@ function Orders_Admin$Orders(Props) {
                 });
     }
     var refundReason$1 = refundReason._0;
-    return setRefundReason(function (param) {
-                return refundReason$1;
-              });
+    setRefundReason(function (param) {
+          return refundReason$1;
+        });
   };
   var match$18 = Belt_Option.flatMap(Js_dict.get(router.query, "status"), (function (status$p) {
           var status$p$p = CustomHooks.OrdersAdmin.status_decode(status$p);
@@ -458,7 +454,7 @@ function Orders_Admin$Orders(Props) {
                                   className: "font-bold"
                                 }, "주문내역", React.createElement("span", {
                                       className: "ml-1 text-green-gl font-normal"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex"
                                 }, React.createElement(Select_CountPerPage.make, {
                                       className: "mr-2"
@@ -482,12 +478,12 @@ function Orders_Admin$Orders(Props) {
                             className: "font-bold"
                           }, "선택한 " + String(countOfChecked) + "개"), "의 주문을 취소하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowCancelConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
-                      return cancelOrder(Belt_SetString.toArray(selectedOrders));
+                      cancelOrder(Belt_SetString.toArray(selectedOrders));
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -531,9 +527,9 @@ function Orders_Admin$Orders(Props) {
                                                     }, rr ? "상품불량" : "배송지연");
                                         })))))),
                   onCancel: (function (param) {
-                      return setShowRefundConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowRefundConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       var orders = Belt_SetString.toArray(selectedOrders);
@@ -544,7 +540,7 @@ function Orders_Admin$Orders(Props) {
                                 "order-product-numbers": orders,
                                 reason: refundReason ? "defective-product" : "delivery-delayed"
                               }), (function (body) {
-                              return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/refund", body, 3, (function (res) {
+                              return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/refund", body, 3, (function (res) {
                                             var res$p = response_decode(res);
                                             var result;
                                             if (res$p.TAG === /* Ok */0) {
@@ -565,15 +561,14 @@ function Orders_Admin$Orders(Props) {
                                             setSelectedOrders(function (param) {
                                                   
                                                 });
-                                            mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                                            return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                                            mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                                            mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                                           }), (function (param) {
-                                            return setShowCancelError(function (param) {
-                                                        return /* Show */0;
-                                                      });
+                                            setShowCancelError(function (param) {
+                                                  return /* Show */0;
+                                                });
                                           }));
                             }));
-                      
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -585,9 +580,9 @@ function Orders_Admin$Orders(Props) {
                             className: "font-bold"
                           }, "선택한 " + String(countOfChecked) + "개"), "의 주문을 배송완료처리 하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowCompleteConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCompleteConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       var orders = Belt_SetString.toArray(selectedOrders);
@@ -597,7 +592,7 @@ function Orders_Admin$Orders(Props) {
                       Belt_Option.map(JSON.stringify({
                                 "order-product-numbers": orders
                               }), (function (body) {
-                              return FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/order/complete", body, 3, (function (res) {
+                              return FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/order/complete", body, 3, (function (res) {
                                             var res$p = response_decode(res);
                                             var result;
                                             if (res$p.TAG === /* Ok */0) {
@@ -618,15 +613,14 @@ function Orders_Admin$Orders(Props) {
                                             setSelectedOrders(function (param) {
                                                   
                                                 });
-                                            mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
-                                            return mutate(Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router), undefined, undefined);
+                                            mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
+                                            mutate("" + Env.restApiUrl + "/order/summary?" + Period.currentPeriod(router) + "", undefined, undefined);
                                           }), (function (param) {
-                                            return setShowCompleteError(function (param) {
-                                                        return /* Show */0;
-                                                      });
+                                            setShowCompleteError(function (param) {
+                                                  return /* Show */0;
+                                                });
                                           }));
                             }));
-                      
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -636,9 +630,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "취소할 주문을 선택해주세요."),
                   onCancel: (function (param) {
-                      return setShowNothingToCancel(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToCancel(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -647,9 +641,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "환불 처리할 주문을 선택해주세요."),
                   onCancel: (function (param) {
-                      return setShowNothingToRefund(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToRefund(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -658,9 +652,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "배송완료할 주문을 선택해주세요."),
                   onCancel: (function (param) {
-                      return setShowNothingToComplete(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToComplete(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -673,15 +667,15 @@ function Orders_Admin$Orders(Props) {
                               if ((totalCount - updateCount | 0) > 0) {
                                 return React.createElement(React.Fragment, undefined, React.createElement("span", {
                                                 className: "font-bold"
-                                              }, String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 주문취소 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 주문취소 처리되지 못했습니다");
+                                              }, "" + String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 주문취소 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 주문취소 처리되지 못했습니다");
                               } else {
-                                return String(totalCount) + "개의 주문이 정상적으로 주문취소 처리되었습니다.";
+                                return "" + String(totalCount) + "개의 주문이 정상적으로 주문취소 처리되었습니다.";
                               }
                             }))),
                   onConfirm: (function (param) {
-                      return setShowCancelSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$5[0],
@@ -689,9 +683,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "주문 취소에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowCancelError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$10[0],
@@ -703,15 +697,15 @@ function Orders_Admin$Orders(Props) {
                               if ((totalCount - updateCount | 0) > 0) {
                                 return React.createElement(React.Fragment, undefined, React.createElement("span", {
                                                 className: "font-bold"
-                                              }, String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 환불 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 환불 처리되지 못했습니다");
+                                              }, "" + String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 환불 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 환불 처리되지 못했습니다");
                               } else {
-                                return String(totalCount) + "개의 주문이 정상적으로 환불 처리되었습니다.";
+                                return "" + String(totalCount) + "개의 주문이 정상적으로 환불 처리되었습니다.";
                               }
                             }))),
                   onConfirm: (function (param) {
-                      return setShowRefundSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowRefundSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$11[0],
@@ -719,9 +713,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "환불 처리에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowRefundError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowRefundError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$15[0],
@@ -733,15 +727,15 @@ function Orders_Admin$Orders(Props) {
                               if ((totalCount - updateCount | 0) > 0) {
                                 return React.createElement(React.Fragment, undefined, React.createElement("span", {
                                                 className: "font-bold"
-                                              }, String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 배송완료 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 배송완료 처리되지 못했습니다");
+                                              }, "" + String(totalCount) + "개 중 " + String(updateCount) + "개가 정상적으로 배송완료 처리되었습니다."), "\n\n" + String(totalCount - updateCount | 0) + "개의 주문은 상품준비중 등의 이유로 배송완료 처리되지 못했습니다");
                               } else {
-                                return String(totalCount) + "개의 주문이 정상적으로 배송완료 처리되었습니다.";
+                                return "" + String(totalCount) + "개의 주문이 정상적으로 배송완료 처리되었습니다.";
                               }
                             }))),
                   onConfirm: (function (param) {
-                      return setShowCompleteSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCompleteSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$16[0],
@@ -749,9 +743,9 @@ function Orders_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "배송완료 처리에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowCompleteError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCompleteError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -782,6 +776,5 @@ export {
   displayRefundReason ,
   Orders ,
   make ,
-  
 }
 /* Env Not a pure module */

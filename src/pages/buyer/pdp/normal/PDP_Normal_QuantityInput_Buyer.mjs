@@ -6,20 +6,20 @@ import * as Spinbox from "../../../../components/common/Spinbox.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as PDP_Parser_Buyer from "../../../../utils/PDP_Parser_Buyer.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPNormalQuantityInputBuyerFragment_graphql from "../../../../__generated__/PDPNormalQuantityInputBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPNormalQuantityInputBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPNormalQuantityInputBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalQuantityInputBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPNormalQuantityInputBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPNormalQuantityInputBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -31,6 +31,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -72,7 +73,7 @@ function PDP_Normal_QuantityInput_Buyer$PC(Props) {
                     }, React.createElement("span", undefined, match$2.optionName)), React.createElement("span", {
                       className: "mt-1 text-gray-800 font-bold text-xl text-right"
                     }, Belt_Option.mapWithDefault(totalProductPrice, "", (function (totalProductPrice$p) {
-                            return Locale.Float.show(undefined, totalProductPrice$p, 0) + "원";
+                            return "" + Locale.Float.show(undefined, totalProductPrice$p, 0) + "원";
                           })))));
 }
 
@@ -117,7 +118,7 @@ function PDP_Normal_QuantityInput_Buyer$MO(Props) {
                     }, React.createElement("span", undefined, match$2.optionName)), React.createElement("span", {
                       className: "mt-1 text-gray-800 font-bold text-xl text-right"
                     }, Belt_Option.mapWithDefault(totalProductPrice, "", (function (totalProductPrice$p) {
-                            return Locale.Float.show(undefined, totalProductPrice$p, 0) + "원";
+                            return "" + Locale.Float.show(undefined, totalProductPrice$p, 0) + "원";
                           })))));
 }
 
@@ -129,6 +130,5 @@ export {
   Fragment ,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

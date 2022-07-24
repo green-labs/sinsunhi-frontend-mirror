@@ -11,10 +11,12 @@ import * as RelayEnv from "../constants/RelayEnv.mjs";
 import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactSelect from "./common/ReactSelect.mjs";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
@@ -22,7 +24,6 @@ import * as RelayRuntime from "relay-runtime";
 import * as Select_Delivery from "./Select_Delivery.mjs";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Select_Tax_Status from "./Select_Tax_Status.mjs";
-import * as Hooks from "react-relay/hooks";
 import Async from "react-select/async";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ErrorMessage from "@hookform/error-message";
@@ -32,7 +33,7 @@ import * as Product_Detail_Display_Categories from "./Product_Detail_Display_Cat
 import * as ProductDetailBasicAdminQuery_graphql from "../__generated__/ProductDetailBasicAdminQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ProductDetailBasicAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ProductDetailBasicAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -41,7 +42,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(ProductDetailBasicAdminQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(ProductDetailBasicAdminQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -59,38 +60,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ProductDetailBasicAdminQuery_graphql.node, ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ProductDetailBasicAdminQuery_graphql.node, ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ProductDetailBasicAdminQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ProductDetailBasicAdminQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ProductDetailBasicAdminQuery_graphql.node, ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ProductDetailBasicAdminQuery_graphql.node, ProductDetailBasicAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ProductDetailBasicAdminQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ProductDetailBasicAdminQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ProductDetailBasicAdminQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ProductDetailBasicAdminQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductDetailBasicAdminQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -103,12 +103,10 @@ var Query_userRole_decode = ProductDetailBasicAdminQuery_graphql.Utils.userRole_
 
 var Query_userRole_fromString = ProductDetailBasicAdminQuery_graphql.Utils.userRole_fromString;
 
-var Query_makeVariables = ProductDetailBasicAdminQuery_graphql.Utils.makeVariables;
-
 var Query = {
   userRole_decode: Query_userRole_decode,
   userRole_fromString: Query_userRole_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -154,18 +152,18 @@ function Product_Detail_Basic_Admin$SelectProducerInput(Props) {
         mode: "onChange"
       }, undefined);
   var handleLoadOptions = function (inputValue) {
-    return fetchPromised(RelayEnv.envSinsunMarket, {
-                  nameMatch: inputValue,
-                  role: "PRODUCER"
-                }, undefined, undefined, undefined).then(function (result) {
-                var result$p = Belt_Array.map(result.users.edges, (function (edge) {
-                        return /* Selected */{
-                                value: edge.node.id,
-                                label: edge.node.name
-                              };
-                      }));
-                return Promise.resolve(result$p);
-              });
+    return Js_promise.then_((function (result) {
+                  var result$p = Belt_Array.map(result.users.edges, (function (edge) {
+                          return /* Selected */{
+                                  value: edge.node.id,
+                                  label: edge.node.name
+                                };
+                        }));
+                  return Promise.resolve(result$p);
+                }), fetchPromised(RelayEnv.envSinsunMarket, {
+                    nameMatch: inputValue,
+                    role: "PRODUCER"
+                  }, undefined, undefined, undefined));
   };
   return React.createElement("div", {
               className: "flex flex-col gap-2"
@@ -189,7 +187,7 @@ function Product_Detail_Basic_Admin$SelectProducerInput(Props) {
                                               defaultOptions: false,
                                               loadOptions: Helper.Debounce.make1(handleLoadOptions, 500),
                                               onChange: (function (data) {
-                                                  return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, ReactSelect.encoderRule(data)));
+                                                  Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, ReactSelect.encoderRule(data)));
                                                 }),
                                               placeholder: "생산자명으로 찾기",
                                               noOptionsMessage: (function (param) {
@@ -290,7 +288,7 @@ function Product_Detail_Basic_Admin$DisplayPriceInput(Props) {
                                       var validValue = Belt_Option.getWithDefault(Belt_Option.map(localeStringToFloat(value), (function (prim) {
                                                   return prim;
                                                 })), "");
-                                      return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, validValue));
+                                      Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, validValue));
                                     })
                                 });
                     }),
@@ -440,7 +438,7 @@ function Product_Detail_Basic_Admin(Props) {
                                 return status;
                               })),
                         onChange: (function (e) {
-                            return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
+                            Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
                           }),
                         forwardRef: match.ref,
                         disabled: allFieldsDisabled || vatDisabled
@@ -476,7 +474,7 @@ function Product_Detail_Basic_Admin(Props) {
                                 return status;
                               })),
                         onChange: (function (e) {
-                            return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
+                            Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.$$event, e));
                           }),
                         forwardRef: match.ref,
                         disabled: allFieldsDisabled || deliveryDisabled
@@ -656,15 +654,15 @@ function Product_Detail_Basic_Admin(Props) {
                   isShow: match$1[0],
                   children: React.createElement("p", undefined, "영구판매중지 상태를 선택 후 저장하시면", React.createElement("br", undefined), "추후 해당 상품을 수정할 수 없습니다.", React.createElement("br", undefined), React.createElement("br", undefined), "영구판매중지 상태로 변경할까요?"),
                   onCancel: (function (param) {
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setValue("product-operation-status", Select_Product_Operation_Status.Base.status_encode(/* NOSALE */2));
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "확인",
@@ -683,6 +681,5 @@ export {
   DisplayPriceInput ,
   ReadOnlyProductId ,
   make ,
-  
 }
 /* react Not a pure module */

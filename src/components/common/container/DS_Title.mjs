@@ -79,6 +79,5 @@ var Normal1 = {
 
 export {
   Normal1 ,
-  
 }
 /* react Not a pure module */

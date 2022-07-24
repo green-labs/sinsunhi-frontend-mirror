@@ -6,6 +6,5 @@ var make = SearchSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

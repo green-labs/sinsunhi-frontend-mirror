@@ -63,7 +63,7 @@ function FreightDeliveryCost_Table_Buyer$TitleAndCloseButton(Props) {
                 }, "화물배송 운송비용 표"), React.createElement("button", {
                   className: "cursor-pointer border-none",
                   onClick: (function (param) {
-                      return Curry._1(close, undefined);
+                      Curry._1(close, undefined);
                     })
                 }, React.createElement(IconClose.make, {
                       height: "1.5rem",
@@ -87,12 +87,12 @@ function render(l, isLeft) {
   var price = l$p$p[1];
   var distance = l$p$p[0];
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
-                  key: String(distance) + "-" + String(price),
+                  key: "" + String(distance) + "-" + String(price) + "",
                   className: Cx.cx([
                         "flex w-full xl:w-1/2 justify-between items-center px-4 py-3 text-sm border-t-0 border-div-border-L2",
                         isLeft ? "border border-x-0 xl:border-r-[1px]" : "border border-x-0"
                       ])
-                }, React.createElement("span", undefined, String(distance) + "km미만"), React.createElement("span", undefined, Locale.Int.show(undefined, price) + " 원")), render(Belt_List.tail(l), !isLeft));
+                }, React.createElement("span", undefined, "" + String(distance) + "km미만"), React.createElement("span", undefined, "" + Locale.Int.show(undefined, price) + " 원")), render(Belt_List.tail(l), !isLeft));
 }
 
 var TableRow = {
@@ -111,15 +111,13 @@ function FreightDeliveryCost_Table_Buyer(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var handleOnChangeWeight = function (e) {
     var value = e.currentTarget.value;
-    return setWeight(function (param) {
-                return value;
-              });
+    setWeight(function (param) {
+          return value;
+        });
   };
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -158,7 +156,7 @@ function FreightDeliveryCost_Table_Buyer(Props) {
                       className: "md:hidden"
                     }, React.createElement(Dialog.ButtonBox.make, {
                           onCancel: (function (param) {
-                              return close(undefined);
+                              close(undefined);
                             }),
                           textOnCancel: "닫기"
                         }))));
@@ -171,6 +169,5 @@ export {
   TitleAndCloseButton ,
   TableRow ,
   make ,
-  
 }
 /* react Not a pure module */

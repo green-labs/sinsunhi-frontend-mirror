@@ -18,7 +18,6 @@ function RfqComplete_Buyer$Complete(Props) {
           DataGtm.push({
                 event: "Expose_view_RFQ_Livestock_RequestCompleted"
               });
-          
         }), []);
   return React.createElement("div", {
               className: "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-11"
@@ -28,7 +27,6 @@ function RfqComplete_Buyer$Complete(Props) {
                               className: "cursor-pointer",
                               onClick: (function (param) {
                                   router.push("/buyer/rfq");
-                                  
                                 })
                             }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                   height: "32",
@@ -76,6 +74,5 @@ var make = RfqComplete_Buyer;
 export {
   Complete ,
   make ,
-  
 }
 /* Env Not a pure module */

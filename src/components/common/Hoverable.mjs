@@ -33,6 +33,5 @@ var make = Hoverable;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

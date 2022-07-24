@@ -25,6 +25,5 @@ var make = Layout_Admin_Sub;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

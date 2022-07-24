@@ -7,20 +7,20 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ShopProductListItem_Buyer from "./ShopProductListItem_Buyer.mjs";
 import * as ShopMainSpecialShowcaseListBuyerFragment_graphql from "../__generated__/ShopMainSpecialShowcaseListBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(ShopMainSpecialShowcaseListBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ShopMainSpecialShowcaseListBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ShopMainSpecialShowcaseListBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ShopMainSpecialShowcaseListBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ShopMainSpecialShowcaseListBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -32,6 +32,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -40,7 +41,7 @@ function ShopMainSpecialShowcaseList_Buyer$PC$Placeholder(Props) {
   return React.createElement("div", undefined, Belt_Array.map(Belt_Array.range(1, 10), (function (categoryIdx) {
                     var containerStyle = categoryIdx === 1 ? "w-full bg-[#F9F9F9] py-16" : "w-full bg-white py-16";
                     return React.createElement("section", {
-                                key: "showcase-skeleton-" + String(categoryIdx),
+                                key: "showcase-skeleton-" + String(categoryIdx) + "",
                                 className: containerStyle
                               }, React.createElement("div", {
                                     className: "w-[1280px] mx-auto px-5"
@@ -50,7 +51,7 @@ function ShopMainSpecialShowcaseList_Buyer$PC$Placeholder(Props) {
                                         className: "mt-12 grid grid-cols-4 gap-x-10 gap-y-16"
                                       }, Belt_Array.map(Belt_Array.range(1, 8), (function (idx) {
                                               return React.createElement(ShopProductListItem_Buyer.PC.Placeholder.make, {
-                                                          key: "category-" + String(categoryIdx) + "-product-skeleton-" + String(idx)
+                                                          key: "category-" + String(categoryIdx) + "-product-skeleton-" + String(idx) + ""
                                                         });
                                             })))));
                   })));
@@ -102,7 +103,6 @@ function ShopMainSpecialShowcaseList_Buyer$PC(Props) {
                                                                 query: prim1_query
                                                               };
                                                               router.push(prim1);
-                                                              
                                                             }), param);
                                               })
                                           }, "전체보기", React.createElement(IconArrow.make, {
@@ -125,7 +125,7 @@ var PC = {
 function ShopMainSpecialShowcaseList_Buyer$MO$Placeholder(Props) {
   return React.createElement("div", undefined, Belt_Array.map(Belt_Array.range(1, 10), (function (categoryIdx) {
                     return React.createElement("section", {
-                                key: "showcase-skeleton-" + String(categoryIdx),
+                                key: "showcase-skeleton-" + String(categoryIdx) + "",
                                 className: "w-full px-5 mt-12"
                               }, React.createElement("div", {
                                     className: "w-full"
@@ -135,7 +135,7 @@ function ShopMainSpecialShowcaseList_Buyer$MO$Placeholder(Props) {
                                         className: "mt-4 grid grid-cols-2 gap-x-4 gap-y-8"
                                       }, Belt_Array.map(Belt_Array.range(1, 6), (function (idx) {
                                               return React.createElement(ShopProductListItem_Buyer.MO.Placeholder.make, {
-                                                          key: "category-" + String(categoryIdx) + "-product-skeleton-" + String(idx)
+                                                          key: "category-" + String(categoryIdx) + "-product-skeleton-" + String(idx) + ""
                                                         });
                                             })))));
                   })));
@@ -186,7 +186,6 @@ function ShopMainSpecialShowcaseList_Buyer$MO(Props) {
                                                                 query: prim1_query
                                                               };
                                                               router.push(prim1);
-                                                              
                                                             }), param);
                                               })
                                           }, "전체보기", React.createElement(IconArrow.make, {
@@ -210,6 +209,5 @@ export {
   Fragment ,
   PC ,
   MO ,
-  
 }
 /* react Not a pure module */

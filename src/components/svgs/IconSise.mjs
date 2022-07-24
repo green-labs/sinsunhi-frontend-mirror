@@ -39,6 +39,5 @@ var make = IconSise;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

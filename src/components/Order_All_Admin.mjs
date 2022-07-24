@@ -42,7 +42,7 @@ function Order_All_Admin$Item$Table(Props) {
                           className: "block mb-1"
                         }, order.productCategory)), React.createElement("div", undefined, React.createElement("span", {
                           className: "whitespace-nowrap"
-                        }, Locale.Float.show(undefined, order.totalPrice, 0) + "원")), React.createElement("div", {
+                        }, "" + Locale.Float.show(undefined, order.totalPrice, 0) + "원")), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block text-gray-400 mb-1"
@@ -121,6 +121,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

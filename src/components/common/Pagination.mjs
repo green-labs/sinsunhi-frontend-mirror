@@ -104,7 +104,7 @@ function Pagination(Props) {
     if (onChangePage !== undefined) {
       return Curry._1(onChangePage, newQueryString);
     } else {
-      router.push(router.pathname + "?" + newQueryString);
+      router.push("" + router.pathname + "?" + newQueryString + "");
       return ;
     }
   };
@@ -122,6 +122,5 @@ var make = Pagination;
 export {
   Template ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -91,6 +91,5 @@ var Detail = {
 
 export {
   Detail ,
-  
 }
 /* react Not a pure module */

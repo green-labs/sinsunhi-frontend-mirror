@@ -6,6 +6,5 @@ var make = CheckOnlineMarketInfoSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

@@ -23,7 +23,7 @@ function makeWeightLabel(weight, unit) {
     }
   };
   return Helper.$$Option.map2(Belt_Option.map(weight, weightToStr), Belt_Option.map(unit, unitToStr), (function (wLabel, uLabel) {
-                return wLabel + uLabel;
+                return "" + wLabel + "" + uLabel + "";
               }));
 }
 
@@ -48,7 +48,7 @@ function makePerSizeLabel(max, unit) {
   return Helper.$$Option.map2(Belt_Option.map(max, (function (prim) {
                     return String(prim);
                   })), Belt_Option.map(unit, unitToStr), (function (mLabel, uLabel) {
-                return "최대 " + mLabel + uLabel;
+                return "최대 " + mLabel + "" + uLabel + "";
               }));
 }
 
@@ -68,7 +68,7 @@ function makePerWeightLabel(max, unit) {
     }
   };
   return Helper.$$Option.map2(Belt_Option.map(max, maxWeightToStr), Belt_Option.map(unit, unitToStr), (function (wLabel, uLabel) {
-                return "최대 " + wLabel + uLabel;
+                return "최대 " + wLabel + "" + uLabel + "";
               }));
 }
 
@@ -132,12 +132,12 @@ function makePkgLabel(pkgs) {
 function makeNoticeDateLabel(startDate, endDate) {
   if (startDate !== undefined) {
     if (endDate !== undefined) {
-      return "적용기준일: " + Format(new Date(startDate), "y.MM.dd") + "~" + Format(new Date(endDate), "y.MM.dd");
+      return "적용기준일: " + Format(new Date(startDate), "y.MM.dd") + "~" + Format(new Date(endDate), "y.MM.dd") + "";
     } else {
       return "적용기준일: " + Format(new Date(startDate), "y.MM.dd") + "~";
     }
   } else if (endDate !== undefined) {
-    return "적용기준일: ~" + Format(new Date(endDate), "y.MM.dd");
+    return "적용기준일: ~" + Format(new Date(endDate), "y.MM.dd") + "";
   } else {
     return "";
   }
@@ -158,6 +158,5 @@ var Product = {
 export {
   ProductOption ,
   Product ,
-  
 }
 /* Helper Not a pure module */

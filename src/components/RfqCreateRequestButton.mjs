@@ -8,14 +8,15 @@ import * as DS_Toast from "./common/container/DS_Toast.mjs";
 import * as DS_Button from "./common/element/DS_Button.mjs";
 import * as DS_Dialog from "./common/container/DS_Dialog.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as RfqCreateRequestButton_RfqRequests_Query_graphql from "../__generated__/RfqCreateRequestButton_RfqRequests_Query_graphql.mjs";
@@ -25,7 +26,7 @@ import * as RfqCreateRequestButton_Delete_Request_Mutation_graphql from "../__ge
 import * as RfqCreateRequestButton_RfqRequests_Fragment_Query_graphql from "../__generated__/RfqCreateRequestButton_RfqRequests_Fragment_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqCreateRequestButton_RfqRequests_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqCreateRequestButton_RfqRequests_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -34,7 +35,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqCreateRequestButton_RfqRequests_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqCreateRequestButton_RfqRequests_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -52,38 +53,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqCreateRequestButton_RfqRequests_Query_graphql.node, RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqCreateRequestButton_RfqRequests_Query_graphql.node, RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqCreateRequestButton_RfqRequests_Query_graphql.node, RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqCreateRequestButton_RfqRequests_Query_graphql.node, RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqCreateRequestButton_RfqRequests_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqCreateRequestButton_RfqRequests_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqCreateRequestButton_RfqRequests_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -92,10 +92,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = RfqCreateRequestButton_RfqRequests_Query_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -121,27 +119,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqCreateRequestButton_RfqRequests_Fragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqCreateRequestButton_RfqRequests_Fragment_Query_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(RfqCreateRequestButton_RfqRequests_Fragment_Query_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqCreateRequestButton_RfqRequests_Fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -152,7 +150,7 @@ function useOpt(opt_fRef) {
 }
 
 function usePagination(fr) {
-  var p = Hooks.usePaginationFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fr);
+  var p = ReactRelay.usePaginationFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fr);
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqCreateRequestButton_RfqRequests_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -183,7 +181,7 @@ function usePagination(fr) {
 }
 
 function useBlockingPagination(fRef) {
-  var p = Hooks.useBlockingPaginationFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
+  var p = ReactRelay.useBlockingPaginationFragment(RfqCreateRequestButton_RfqRequests_Fragment_graphql.node, fRef);
   var data = RescriptRelay_Internal.internal_useConvertedValue(RfqCreateRequestButton_RfqRequests_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -224,6 +222,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt,
   usePagination: usePagination,
@@ -250,14 +249,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$2(param) {
-  var match = Hooks.useMutation(RfqCreateRequestButton_Create_Request_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqCreateRequestButton_Create_Request_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -265,13 +264,13 @@ function use$2(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqCreateRequestButton_Create_Request_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -286,12 +285,10 @@ var Create_rfqRequestStatus_decode = RfqCreateRequestButton_Create_Request_Mutat
 
 var Create_rfqRequestStatus_fromString = RfqCreateRequestButton_Create_Request_Mutation_graphql.Utils.rfqRequestStatus_fromString;
 
-var Create_makeVariables = RfqCreateRequestButton_Create_Request_Mutation_graphql.Utils.makeVariables;
-
 var Create = {
   rfqRequestStatus_decode: Create_rfqRequestStatus_decode,
   rfqRequestStatus_fromString: Create_rfqRequestStatus_fromString,
-  makeVariables: Create_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$2
@@ -316,14 +313,14 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
               optimisticResponse: optimisticResponse !== undefined ? RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$3(param) {
-  var match = Hooks.useMutation(RfqCreateRequestButton_Delete_Request_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqCreateRequestButton_Delete_Request_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -331,13 +328,13 @@ function use$3(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqCreateRequestButton_Delete_Request_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -348,10 +345,8 @@ function use$3(param) {
         ];
 }
 
-var Delete_makeVariables = RfqCreateRequestButton_Delete_Request_Mutation_graphql.Utils.makeVariables;
-
 var Delete = {
-  makeVariables: Delete_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation$1,
   use: use$3
@@ -378,18 +373,17 @@ function RfqCreateRequestButton$Button$Buyer(Props) {
   var match$3 = use$3(undefined);
   var deleteRequest = match$3[0];
   var moveBasketWithRequestId = function (requestId) {
-    router.push("/buyer/rfq/request/draft/basket?requestId=" + requestId);
-    
+    router.push("/buyer/rfq/request/draft/basket?requestId=" + requestId + "");
   };
   var createToast = function (text) {
-    return addToast(DS_Toast.getToastComponent(text, "error"), {
-                appearance: "error"
-              });
+    addToast(DS_Toast.getToastComponent(text, "error"), {
+          appearance: "error"
+        });
   };
   var createNewRequest = function (param) {
     Curry.app(createRequest, [
           (function (param) {
-              return createToast("새로운 견적 생성에 실패했습니다.");
+              createToast("새로운 견적 생성에 실패했습니다.");
             }),
           (function (param, param$1) {
               var createRfqRequest = param.createRfqRequest;
@@ -413,12 +407,11 @@ function RfqCreateRequestButton$Button$Buyer(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var btnComponent = React.createElement("button", {
         className: className,
         onClick: (function (param) {
-            return createNewRequest(undefined);
+            createNewRequest(undefined);
           })
       }, buttonText);
   var dataGtm = Belt_Option.mapWithDefault(position, "", (function (p) {
@@ -461,23 +454,22 @@ function RfqCreateRequestButton$Button$Buyer(Props) {
                                                                   var id = request.id;
                                                                   Curry.app(deleteRequest, [
                                                                         (function (param) {
-                                                                            return createToast("작성 중이던 견적 삭제에 실패했습니다.");
+                                                                            createToast("작성 중이던 견적 삭제에 실패했습니다.");
                                                                           }),
                                                                         (function (param, param$1) {
-                                                                            return createNewRequest(undefined);
+                                                                            createNewRequest(undefined);
                                                                           }),
                                                                         undefined,
                                                                         undefined,
                                                                         undefined,
                                                                         undefined,
                                                                         {
-                                                                          id: id,
-                                                                          connections: [data.rfqRequests.__id]
+                                                                          connections: [data.rfqRequests.__id],
+                                                                          id: id
                                                                         },
                                                                         undefined,
                                                                         undefined
                                                                       ]);
-                                                                  
                                                                 }),
                                                               buttonType: "white"
                                                             })),
@@ -494,7 +486,7 @@ function RfqCreateRequestButton$Button$Buyer(Props) {
                                                         }, React.createElement(DS_Button.Normal.Large1.make, {
                                                               label: "이어서 작성하기",
                                                               onClick: (function (param) {
-                                                                  return moveBasketWithRequestId(request.id);
+                                                                  moveBasketWithRequestId(request.id);
                                                                 })
                                                             })),
                                                     dataGtm: dataGtm
@@ -567,8 +559,7 @@ function RfqCreateRequestButton(Props) {
                                     "redirect",
                                     router.asPath
                                   ]])).toString();
-                    router.push("/buyer/signin?" + redirectUrl);
-                    
+                    router.push("/buyer/signin?" + redirectUrl + "");
                   })
               }, buttonText);
   }
@@ -597,6 +588,5 @@ export {
   Mutation ,
   Button ,
   make ,
-  
 }
 /* react Not a pure module */

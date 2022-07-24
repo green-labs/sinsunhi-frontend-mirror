@@ -27,27 +27,27 @@ function SignUp_Seller_Terms(Props) {
   var isPersonalInformation = match$2[0];
   var handleOnChangeAgreeAll = function (e) {
     var value = e.target.checked;
-    return setAgreedAll(function (param) {
-                return value;
-              });
+    setAgreedAll(function (param) {
+          return value;
+        });
   };
   var handleOnChangeBasic = function (e) {
     var value = e.target.checked;
-    return setBasic(function (param) {
-                return value;
-              });
+    setBasic(function (param) {
+          return value;
+        });
   };
   var handleOnChangePersonalInformation = function (e) {
     var value = e.target.checked;
-    return setPersonalInformation(function (param) {
-                return value;
-              });
+    setPersonalInformation(function (param) {
+          return value;
+        });
   };
   var handleOnChangeMarketing = function (e) {
     var value = e.target.checked;
-    return setMarketing(function (param) {
-                return value;
-              });
+    setMarketing(function (param) {
+          return value;
+        });
   };
   React.useEffect((function () {
           if (isAgreedAll) {
@@ -176,6 +176,5 @@ var make = SignUp_Seller_Terms;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

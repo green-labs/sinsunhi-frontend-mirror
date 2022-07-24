@@ -32,7 +32,7 @@ function User_Admin_Buyer$Item$Table(Props) {
                   className: "px-4 py-2 text-right"
                 }, React.createElement("span", {
                       className: "block mb-4"
-                    }, Locale.Float.show(undefined, user.deposit, 0) + "원"), React.createElement(Buyer_Cash_Refund_Button_Admin.make, {
+                    }, "" + Locale.Float.show(undefined, user.deposit, 0) + "원"), React.createElement(Buyer_Cash_Refund_Button_Admin.make, {
                       buyerId: user.id
                     })), React.createElement("div", {
                   className: "py-2 text-center"
@@ -83,6 +83,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

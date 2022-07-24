@@ -7,22 +7,21 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Spinbox from "../../../../components/common/Spinbox.mjs";
 import * as IconArrow from "../../../../components/svgs/IconArrow.mjs";
 import Link from "next/link";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../../../../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as PDP_Parser_Buyer from "../../../../utils/PDP_Parser_Buyer.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as ReactTabs from "@radix-ui/react-tabs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPNormalOrderSpecificationBuyerQuery_graphql from "../../../../__generated__/PDPNormalOrderSpecificationBuyerQuery_graphql.mjs";
 
-var makeVariables = PDPNormalOrderSpecificationBuyerQuery_graphql.Utils.makeVariables;
-
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(PDPNormalOrderSpecificationBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(PDPNormalOrderSpecificationBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -31,7 +30,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(PDPNormalOrderSpecificationBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(PDPNormalOrderSpecificationBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -49,38 +48,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, PDPNormalOrderSpecificationBuyerQuery_graphql.node, PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, PDPNormalOrderSpecificationBuyerQuery_graphql.node, PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, PDPNormalOrderSpecificationBuyerQuery_graphql.node, PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, PDPNormalOrderSpecificationBuyerQuery_graphql.node, PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(PDPNormalOrderSpecificationBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(PDPNormalOrderSpecificationBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPNormalOrderSpecificationBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -90,7 +88,7 @@ function retain(environment, variables) {
 }
 
 var Query = {
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -131,7 +129,9 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
   var quantity = Props.quantity;
   var setQuantity = Props.setQuantity;
   var router = Router.useRouter();
-  var match = use(Curry._1(makeVariables, selectedSkuId), /* StoreOrNetwork */1, undefined, undefined, undefined);
+  var match = use({
+        id: selectedSkuId
+      }, /* StoreOrNetwork */1, undefined, undefined, undefined);
   var node = match.node;
   var match$1 = React.useState(function () {
         return "dropShipping";
@@ -149,11 +149,11 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
     var productNoLabel = String(match$3.productId);
     var optionPrice = PDP_Parser_Buyer.ProductOption.makeOptionPrice(node.price, deliveryCost, isFreeShipping);
     var priceLabel = Belt_Option.mapWithDefault(optionPrice, "", (function (optionPrice$p) {
-            return Locale.Float.show(undefined, Math.imul(optionPrice$p, quantity), 0) + "원";
+            return "" + Locale.Float.show(undefined, Math.imul(optionPrice$p, quantity), 0) + "원";
           }));
     var optionDeliveryCost = PDP_Parser_Buyer.ProductOption.makeOptionDeliveryCost(deliveryCost, isFreeShipping);
     var totalDeliveryCost = Math.imul(optionDeliveryCost, quantity);
-    var deliveryCostLabel = totalDeliveryCost !== 0 ? Locale.Float.show(undefined, totalDeliveryCost, 0) + "원" : "무료";
+    var deliveryCostLabel = totalDeliveryCost !== 0 ? "" + Locale.Float.show(undefined, totalDeliveryCost, 0) + "원" : "무료";
     var quantityLabel = String(quantity);
     tmp = React.createElement(React.Fragment, undefined, React.createElement("div", {
               className: "my-4 w-full flex items-center justify-between"
@@ -171,15 +171,15 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
                       className: "w-full bg-gray-50 p-4 text-text-L1 flex flex-col"
                     }, React.createElement("span", {
                           className: "font-bold"
-                        }, "상품번호 : " + productNoLabel), React.createElement("span", {
+                        }, "상품번호 : " + productNoLabel + ""), React.createElement("span", {
                           className: "mt-2"
-                        }, "단품번호 : " + node.stockSku), React.createElement("span", {
+                        }, "단품번호 : " + node.stockSku + ""), React.createElement("span", {
                           className: "mt-2"
-                        }, "수량 : " + quantityLabel), React.createElement("span", {
+                        }, "수량 : " + quantityLabel + ""), React.createElement("span", {
                           className: "mt-2"
-                        }, "상품가 : " + priceLabel), React.createElement("span", {
+                        }, "상품가 : " + priceLabel + ""), React.createElement("span", {
                           className: "mt-2"
-                        }, "배송비 : " + deliveryCostLabel)), React.createElement("section", {
+                        }, "배송비 : " + deliveryCostLabel + "")), React.createElement("section", {
                       className: "mt-2 flex flex-col"
                     }, React.createElement("span", {
                           className: "text-sm text-gray-600"
@@ -203,7 +203,6 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
                       onClick: (function (param) {
                           return ReactEvents.interceptingHandler((function (param) {
                                         router.push("/buyer/upload");
-                                        
                                       }), param);
                         })
                     }, "주문서 업로드하기"))), React.createElement(ReactTabs.Content, {
@@ -213,9 +212,9 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
                   className: "w-full h-[273px]"
                 }, React.createElement("section", {
                       className: "w-full bg-gray-50 p-4 text-text-L1 flex flex-col"
-                    }, React.createElement("span", undefined, "수량 : " + quantityLabel), React.createElement("span", {
+                    }, React.createElement("span", undefined, "수량 : " + quantityLabel + ""), React.createElement("span", {
                           className: "mt-2"
-                        }, "상품가 : " + priceLabel), React.createElement("span", {
+                        }, "상품가 : " + priceLabel + ""), React.createElement("span", {
                           className: "mt-2"
                         }, "배송비 : 배송타입 선택 후 확인 가능"))), React.createElement("section", {
                   className: "w-full py-5"
@@ -223,7 +222,7 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
                       className: "w-full h-16 bg-primary text-white font-bold flex items-center justify-center rounded-xl",
                       onClick: (function (param) {
                           return ReactEvents.interceptingHandler((function (param) {
-                                        var prim1_pathname = "/buyer/web-order/" + productNodeId + "/" + productOptionNodeId;
+                                        var prim1_pathname = "/buyer/web-order/" + productNodeId + "/" + productOptionNodeId + "";
                                         var prim1_query = Js_dict.fromArray([[
                                                 "quantity",
                                                 String(quantity)
@@ -233,7 +232,6 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
                                           query: prim1_query
                                         };
                                         router.push(prim1);
-                                        
                                       }), param);
                         })
                     }, "바로 구매하기"))));
@@ -244,9 +242,9 @@ function PDP_Normal_OrderSpecification_Buyer(Props) {
               children: null,
               defaultValue: "dropShipping",
               onValueChange: (function (selected) {
-                  return setSelectedMethod(function (param) {
-                              return selected;
-                            });
+                  setSelectedMethod(function (param) {
+                        return selected;
+                      });
                 })
             }, React.createElement(ReactTabs.List, {
                   children: null,
@@ -269,6 +267,5 @@ export {
   Placeholder ,
   Tab ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -30,6 +30,5 @@ var make = IconInfo;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

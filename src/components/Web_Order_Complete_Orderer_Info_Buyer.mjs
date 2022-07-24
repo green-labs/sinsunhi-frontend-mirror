@@ -73,6 +73,5 @@ var make = Web_Order_Complete_Orderer_Info_Buyer;
 export {
   Placeholder ,
   make ,
-  
 }
 /* react Not a pure module */

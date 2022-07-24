@@ -18,6 +18,5 @@ var make = Divider;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

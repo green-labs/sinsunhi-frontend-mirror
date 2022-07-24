@@ -76,6 +76,5 @@ var make = EchartsPOC;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

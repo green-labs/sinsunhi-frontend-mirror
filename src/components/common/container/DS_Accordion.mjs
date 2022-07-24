@@ -227,6 +227,5 @@ export {
   Item ,
   Header ,
   Content ,
-  
 }
 /* make Not a pure module */

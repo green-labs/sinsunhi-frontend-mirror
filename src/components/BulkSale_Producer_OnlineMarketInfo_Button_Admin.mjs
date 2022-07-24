@@ -20,10 +20,10 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Admin$OnlineMarket(Props) {
   var markets = Props.markets;
   var onClick = Props.onClick;
   var hasInfo = Belt_Array.some(markets.bulkSaleOnlineSalesInfo.edges, (function (info) {
-          return Caml_obj.caml_equal(info.node.market, market);
+          return Caml_obj.equal(info.node.market, market);
         }));
   var style = selectedMarket !== undefined ? (
-      Caml_obj.caml_equal(market, selectedMarket) ? "relative font-bold text-primary bg-primary-light border border-primary py-2 flex justify-center items-center rounded-lg" : (
+      Caml_obj.equal(market, selectedMarket) ? "relative font-bold text-primary bg-primary-light border border-primary py-2 flex justify-center items-center rounded-lg" : (
           hasInfo ? "relative font-bold border border-bg-pressed-L2 py-2 flex justify-center items-center rounded-lg text-text-L1" : "relative border border-bg-pressed-L2 py-2 flex justify-center items-center rounded-lg text-text-L1"
         )
     ) : (
@@ -31,7 +31,7 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Admin$OnlineMarket(Props) {
     );
   var svgFill = selectedMarket !== undefined ? (
       hasInfo ? (
-          Caml_obj.caml_equal(market, selectedMarket) ? "#12b564" : (
+          Caml_obj.equal(market, selectedMarket) ? "#12b564" : (
               hasInfo ? "#999999" : ""
             )
         ) : ""
@@ -41,7 +41,7 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Admin$OnlineMarket(Props) {
   return React.createElement("li", {
               className: style,
               onClick: (function (param) {
-                  return Curry._1(onClick, market);
+                  Curry._1(onClick, market);
                 })
             }, BulkSale_Producer_OnlineMarketInfo_Button_Util.displayMarket(market), React.createElement(IconCheckOnlineMarketInfo.make, {
                   height: "20",
@@ -104,7 +104,7 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Admin$Form(Props) {
   var selectedMarket = match[0];
   var market = Belt_Option.flatMap(selectedMarket, (function (selectedMarket$p) {
           return Garter_Array.first(Belt_Array.keep(markets.bulkSaleOnlineSalesInfo.edges, (function (m) {
-                            return Caml_obj.caml_equal(m.node.market, selectedMarket$p);
+                            return Caml_obj.equal(m.node.market, selectedMarket$p);
                           })));
         }));
   return React.createElement(React.Fragment, undefined, React.createElement(BulkSale_Producer_OnlineMarketInfo_Button_Admin$OnlineMarkets, {
@@ -183,6 +183,5 @@ export {
   OnlineMarkets ,
   Form ,
   make ,
-  
 }
 /* react Not a pure module */

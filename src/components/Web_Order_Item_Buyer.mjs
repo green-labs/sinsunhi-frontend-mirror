@@ -3,8 +3,8 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as Web_Order_Orderer_Info_Buyer from "./Web_Order_Orderer_Info_Buyer.mjs";
 import * as Web_Order_Payment_Info_Buyer from "./Web_Order_Payment_Info_Buyer.mjs";
 import * as Web_Order_Product_Info_Buyer from "./Web_Order_Product_Info_Buyer.mjs";
@@ -30,14 +30,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? WebOrderItemBuyerMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(WebOrderItemBuyerMutation_graphql.node);
+  var match = ReactRelay.useMutation(WebOrderItemBuyerMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -45,13 +45,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? WebOrderItemBuyerMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, WebOrderItemBuyerMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: WebOrderItemBuyerMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -74,8 +74,6 @@ var Mutation_paymentPurpose_decode = WebOrderItemBuyerMutation_graphql.Utils.pay
 
 var Mutation_paymentPurpose_fromString = WebOrderItemBuyerMutation_graphql.Utils.paymentPurpose_fromString;
 
-var Mutation_makeVariables = WebOrderItemBuyerMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   errorCode_decode: Mutation_errorCode_decode,
   errorCode_fromString: Mutation_errorCode_fromString,
@@ -83,7 +81,7 @@ var Mutation = {
   paymentMethod_fromString: Mutation_paymentMethod_fromString,
   paymentPurpose_decode: Mutation_paymentPurpose_decode,
   paymentPurpose_fromString: Mutation_paymentPurpose_fromString,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -146,6 +144,5 @@ export {
   Mutation ,
   PlaceHolder ,
   make ,
-  
 }
 /* react Not a pure module */

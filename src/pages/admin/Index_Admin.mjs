@@ -8,7 +8,6 @@ function Index_Admin(Props) {
   var router = Router.useRouter();
   React.useEffect((function () {
           router.replace("/admin/dashboard");
-          
         }), []);
   return React.createElement(Authorization.Admin.make, {
               children: React.createElement("div", {
@@ -22,6 +21,5 @@ var make = Index_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

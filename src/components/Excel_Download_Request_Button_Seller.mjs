@@ -51,27 +51,26 @@ function Excel_Download_Request_Button_Seller(Props) {
     Belt_Option.map(Belt_Option.flatMap(bodyOption, (function (prim) {
                 return JSON.stringify(prim);
               })), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.postWithTokenForExcel, Env.restApiUrl + requestUrl, body, 3, (function (param) {
-                          return setIsShowMoveToDownloadCenter(function (param) {
-                                      return /* Show */0;
-                                    });
+            return FetchHelper.requestWithRetry(FetchHelper.postWithTokenForExcel, "" + Env.restApiUrl + "" + requestUrl + "", body, 3, (function (param) {
+                          setIsShowMoveToDownloadCenter(function (param) {
+                                return /* Show */0;
+                              });
                         }), (function (err) {
                           setErrorMessageDownload(function (param) {
                                 return err.message;
                               });
-                          return setShowDownloadError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowDownloadError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   return React.createElement(React.Fragment, undefined, React.createElement("button", {
                   className: "text-white font-bold p-3 w-28 bg-green-gl rounded-xl focus:outline-none hover:bg-green-gl-dark whitespace-nowrap",
                   onClick: (function (param) {
-                      return setIsShowRequest(function (param) {
-                                  return /* Show */0;
-                                });
+                      setIsShowRequest(function (param) {
+                            return /* Show */0;
+                          });
                     })
                 }, Belt_Option.getWithDefault(buttonText, "다운로드")), React.createElement(Dialog.make, {
                   isShow: match$1[0],
@@ -79,25 +78,25 @@ function Excel_Download_Request_Button_Seller(Props) {
                         className: "flex items-center justify-center w-full py-10"
                       }, React.createElement("strong", undefined, "엑셀 다운로드"), React.createElement("span", undefined, "를 요청하시겠어요?")),
                   onCancel: (function (param) {
-                      return setIsShowRequest(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setIsShowRequest(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       download(undefined);
                       setIsShowRequest(function (param) {
                             return /* Hide */1;
                           });
-                      return addToast(React.createElement("div", {
-                                      className: "flex items-center"
-                                    }, React.createElement(IconCheck.make, {
-                                          height: "24",
-                                          width: "24",
-                                          fill: "#12B564",
-                                          className: "mr-2"
-                                        }), "다운로드 파일 생성을 요청합니다."), {
-                                  appearance: "success"
-                                });
+                      addToast(React.createElement("div", {
+                                className: "flex items-center"
+                              }, React.createElement(IconCheck.make, {
+                                    height: "24",
+                                    width: "24",
+                                    fill: "#12B564",
+                                    className: "mr-2"
+                                  }), "다운로드 파일 생성을 요청합니다."), {
+                            appearance: "success"
+                          });
                     }),
                   textOnCancel: "닫기"
                 }), React.createElement(Dialog.make, {
@@ -110,13 +109,12 @@ function Excel_Download_Request_Button_Seller(Props) {
                             className: "mt-10 whitespace-pre-wrap"
                           }, "*다운로드 파일 생성 진행은 " + menuLocation + "\n 다운로드 센터에서 확인하실 수 있어요.")),
                   onCancel: (function (param) {
-                      return setIsShowMoveToDownloadCenter(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setIsShowMoveToDownloadCenter(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       router.push(downloadCenterPath);
-                      
                     }),
                   textOnCancel: "닫기"
                 }), React.createElement(Dialog.make, {
@@ -125,9 +123,9 @@ function Excel_Download_Request_Button_Seller(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, Belt_Option.getWithDefault(match$3[0], "다운로드에 실패하였습니다.\n다시 시도하시기 바랍니다.")),
                   onConfirm: (function (param) {
-                      return setShowDownloadError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDownloadError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -136,6 +134,5 @@ var make = Excel_Download_Request_Button_Seller;
 
 export {
   make ,
-  
 }
 /* Env Not a pure module */

@@ -7,22 +7,22 @@ import * as IconClose from "../../../../components/svgs/IconClose.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as DS_BottomDrawer from "../../../../components/common/container/DS_BottomDrawer.mjs";
 import * as IconArrowSelect from "../../../../components/svgs/IconArrowSelect.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactRadioGroup from "@radix-ui/react-radio-group";
 import * as PDPMatchingSelectGradeBuyer_fragment_graphql from "../../../../__generated__/PDPMatchingSelectGradeBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPMatchingSelectGradeBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPMatchingSelectGradeBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPMatchingSelectGradeBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPMatchingSelectGradeBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPMatchingSelectGradeBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -34,6 +34,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -46,7 +47,7 @@ function PDP_Matching_SelectGrade_Buyer$Item(Props) {
   var price = Props.price;
   var representativeWeight = Props.representativeWeight;
   var priceLabel = Belt_Option.mapWithDefault(price, "", (function (price$p) {
-          return Locale.Float.show(undefined, price$p * representativeWeight, 0) + "원(" + String(representativeWeight) + "kg당)";
+          return "" + Locale.Float.show(undefined, price$p * representativeWeight, 0) + "원(" + String(representativeWeight) + "kg당)";
         }));
   return React.createElement("div", {
               className: "py-4 flex justify-between items-center"
@@ -82,15 +83,15 @@ function PDP_Matching_SelectGrade_Buyer$RadioSelector(Props) {
   if (recentMarketPrice === undefined) {
     return null;
   }
-  var qualityStandard = match.qualityStandard;
   var representativeWeight = match.representativeWeight;
+  var qualityStandard = match.qualityStandard;
   return React.createElement(ReactRadioGroup.Root, {
               children: null,
               value: selectedGroup,
               onValueChange: (function (value) {
-                  return setSelectedGroup(function (param) {
-                              return value;
-                            });
+                  setSelectedGroup(function (param) {
+                        return value;
+                      });
                 }),
               name: "grade-select",
               className: "flex flex-col"
@@ -138,11 +139,11 @@ function PDP_Matching_SelectGrade_Buyer$BottomSheet(Props) {
                 }, React.createElement("button", {
                       className: "w-10 h-10 flex items-center justify-center",
                       onClick: (function (param) {
-                          return setShowModal(function (param) {
-                                      return /* Show */{
-                                              _0: /* GradeGuide */0
-                                            };
-                                    });
+                          setShowModal(function (param) {
+                                return /* Show */{
+                                        _0: /* GradeGuide */0
+                                      };
+                              });
                         })
                     }, React.createElement("img", {
                           className: "w-6 h-6 object-contain",
@@ -152,7 +153,7 @@ function PDP_Matching_SelectGrade_Buyer$BottomSheet(Props) {
                     }, "가격대 선택"), React.createElement("button", {
                       className: "w-10 h-10 flex items-center justify-center",
                       onClick: (function (param) {
-                          return Curry._1(onClose, undefined);
+                          Curry._1(onClose, undefined);
                         })
                     }, React.createElement(IconClose.make, {
                           height: "24",
@@ -171,7 +172,7 @@ function PDP_Matching_SelectGrade_Buyer$BottomSheet(Props) {
                     }, React.createElement("button", {
                           className: "w-full h-14 rounded-xl bg-primary text-white font-bold text-base",
                           onClick: (function (param) {
-                              return Curry._1(onClose, undefined);
+                              Curry._1(onClose, undefined);
                             })
                         }, "선택"))));
 }
@@ -195,13 +196,13 @@ function PDP_Matching_SelectGrade_Buyer(Props) {
     tmp = user !== 0 ? React.createElement("button", {
             className: "w-full h-12 px-4 border border-gray-250 rounded-xl flex items-center justify-between text-base text-black",
             onClick: (function (param) {
-                return setShowModal(function (param) {
-                            return /* Show */{
-                                    _0: /* Unauthorized */{
-                                      _0: "로그인 후에\n견적을 받으실 수 있습니다."
-                                    }
-                                  };
-                          });
+                setShowModal(function (param) {
+                      return /* Show */{
+                              _0: /* Unauthorized */{
+                                _0: "로그인 후에\n견적을 받으실 수 있습니다."
+                              }
+                            };
+                    });
               })
           }, "가격 상위 그룹", React.createElement(IconArrowSelect.make, {
                 height: "24",
@@ -233,9 +234,9 @@ function PDP_Matching_SelectGrade_Buyer(Props) {
     tmp = React.createElement(React.Fragment, undefined, React.createElement("button", {
               className: "w-full h-12 px-4 border border-gray-250 rounded-xl flex items-center justify-between text-base text-black",
               onClick: (function (param) {
-                  return setShowBottomSheet(function (param) {
-                              return true;
-                            });
+                  setShowBottomSheet(function (param) {
+                        return true;
+                      });
                 })
             }, label, React.createElement(IconArrowSelect.make, {
                   height: "24",
@@ -244,9 +245,9 @@ function PDP_Matching_SelectGrade_Buyer(Props) {
                 })), React.createElement(PDP_Matching_SelectGrade_Buyer$BottomSheet, {
               show: match[0],
               onClose: (function (param) {
-                  return setShowBottomSheet(function (param) {
-                              return false;
-                            });
+                  setShowBottomSheet(function (param) {
+                        return false;
+                      });
                 }),
               setShowModal: setShowModal,
               query: query,
@@ -265,6 +266,5 @@ export {
   RadioSelector ,
   BottomSheet ,
   make ,
-  
 }
 /* react Not a pure module */

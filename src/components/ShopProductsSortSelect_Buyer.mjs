@@ -72,7 +72,6 @@ function ShopProductsSortSelect_Buyer(Props) {
                           pathname: router.pathname,
                           query: newQuery
                         });
-                    
                   }), param);
     };
   };
@@ -84,9 +83,9 @@ function ShopProductsSortSelect_Buyer(Props) {
                   children: null,
                   open: match[0],
                   onOpenChange: (function (to_) {
-                      return setOpen(function (param) {
-                                  return to_;
-                                });
+                      setOpen(function (param) {
+                            return to_;
+                          });
                     })
                 }, React.createElement(ReactDropdownMenu.Trigger, {
                       children: React.createElement("div", {
@@ -131,7 +130,6 @@ function ShopProductsSortSelect_Buyer$MO(Props) {
                           pathname: router.pathname,
                           query: newQuery
                         });
-                    
                   }), param);
     };
   };
@@ -141,9 +139,9 @@ function ShopProductsSortSelect_Buyer$MO(Props) {
                   children: null,
                   open: match[0],
                   onOpenChange: (function (to_) {
-                      return setOpen(function (param) {
-                                  return to_;
-                                });
+                      setOpen(function (param) {
+                            return to_;
+                          });
                     })
                 }, React.createElement(ReactDropdownMenu.Trigger, {
                       children: React.createElement("div", {
@@ -182,6 +180,5 @@ export {
   makeSortLabel ,
   make ,
   MO ,
-  
 }
 /* arrowUpDownIcon Not a pure module */

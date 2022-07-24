@@ -14,9 +14,7 @@ function getFromLS(k) {
 function setToLS(k, v) {
   Belt_Option.map(Caml_option.undefined_to_opt(typeof window === "undefined" ? undefined : window), (function (param) {
           localStorage.setItem(k, v);
-          
         }));
-  
 }
 
 function Make(Config) {
@@ -30,13 +28,12 @@ function Make(Config) {
             setState(function (param) {
                   return Caml_option.some(Curry._1(Config.fromString, getFromLS(key)));
                 });
-            
           }), []);
     var setValue = function (value) {
       setToLS(key, Curry._1(Config.toString, value));
-      return setState(function (param) {
-                  return Caml_option.some(value);
-                });
+      setState(function (param) {
+            return Caml_option.some(value);
+          });
     };
     return [
             match[0],
@@ -47,15 +44,13 @@ function Make(Config) {
     return Curry._1(Config.fromString, getFromLS(Config.key));
   };
   var set = function (value) {
-    return setToLS(Config.key, Curry._1(Config.toString, value));
+    setToLS(Config.key, Curry._1(Config.toString, value));
   };
   var remove = function (param) {
     var k = Config.key;
     Belt_Option.map(Caml_option.undefined_to_opt(typeof window === "undefined" ? undefined : window), (function (param) {
             localStorage.removeItem(k);
-            
           }));
-    
   };
   return {
           useLocalStorage: useLocalStorage,
@@ -67,6 +62,5 @@ function Make(Config) {
 
 export {
   Make ,
-  
 }
 /* react Not a pure module */

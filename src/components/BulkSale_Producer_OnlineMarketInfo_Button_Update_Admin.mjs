@@ -12,9 +12,9 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as Select_Delivery_Company from "./Select_Delivery_Company.mjs";
@@ -41,14 +41,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -56,13 +56,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -77,15 +77,10 @@ var Mutation_onlineMarket_decode = BulkSaleProducerOnlineMarketInfoButtonUpdateA
 
 var Mutation_onlineMarket_fromString = BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Utils.onlineMarket_fromString;
 
-var Mutation_make_bulkSaleOnlineSalesInfoUpdateInput = BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Utils.make_bulkSaleOnlineSalesInfoUpdateInput;
-
-var Mutation_makeVariables = BulkSaleProducerOnlineMarketInfoButtonUpdateAdminMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   onlineMarket_decode: Mutation_onlineMarket_decode,
   onlineMarket_fromString: Mutation_onlineMarket_fromString,
-  make_bulkSaleOnlineSalesInfoUpdateInput: Mutation_make_bulkSaleOnlineSalesInfoUpdateInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -157,7 +152,6 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Update_Admin$Form(Props) {
           setNumberOfComments(function (param) {
                 return String(market.node.numberOfComments);
               });
-          
         }), [market]);
   return React.createElement("section", {
               className: "pb-5"
@@ -242,15 +236,15 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Update_Admin$Form(Props) {
                                 Curry.app(mutate, [
                                       (function (err) {
                                           console.log(err);
-                                          return addToast(React.createElement("div", {
-                                                          className: "flex items-center"
-                                                        }, React.createElement(IconError.make, {
-                                                              width: "24",
-                                                              height: "24",
-                                                              className: "mr-2"
-                                                            }), err.message), {
-                                                      appearance: "error"
-                                                    });
+                                          addToast(React.createElement("div", {
+                                                    className: "flex items-center"
+                                                  }, React.createElement(IconError.make, {
+                                                        width: "24",
+                                                        height: "24",
+                                                        className: "mr-2"
+                                                      }), err.message), {
+                                                appearance: "error"
+                                              });
                                         }),
                                       (function (param, param$1) {
                                           addToast(React.createElement("div", {
@@ -266,18 +260,16 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Update_Admin$Form(Props) {
                                           var buttonClose = document.getElementById("btn-close");
                                           Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
                                                   buttonClose$p.click();
-                                                  
                                                 }));
-                                          
                                         }),
                                       undefined,
                                       undefined,
                                       undefined,
                                       undefined,
                                       {
+                                        connections: [connectionId],
                                         id: market.node.id,
-                                        input: input._0,
-                                        connections: [connectionId]
+                                        input: input._0
                                       },
                                       undefined,
                                       undefined
@@ -285,9 +277,9 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Update_Admin$Form(Props) {
                                 return ;
                               }
                               var errors = input._0;
-                              return setFormErrors(function (param) {
-                                          return errors;
-                                        });
+                              setFormErrors(function (param) {
+                                    return errors;
+                                  });
                             })
                         }, "저장"))));
 }
@@ -303,6 +295,5 @@ export {
   Mutation ,
   makeInput ,
   Form ,
-  
 }
 /* Input Not a pure module */

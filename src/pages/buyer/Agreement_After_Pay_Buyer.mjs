@@ -80,9 +80,9 @@ function Agreement_After_Pay_Buyer$AgreementItem(Props) {
                       onBlur: r.onBlur,
                       onChange: (function (e) {
                           Curry._1(r.onChange, e);
-                          return Belt_Option.forEach(onChange, (function (f) {
-                                        return Curry._1(f, e);
-                                      }));
+                          Belt_Option.forEach(onChange, (function (f) {
+                                  Curry._1(f, e);
+                                }));
                         }),
                       disabled: false,
                       inputRef: r.ref
@@ -125,7 +125,7 @@ function Agreement_After_Pay_Buyer$Agreement(Props) {
   var getValues = match.getValues;
   var didAllCheck = function (arr) {
     return Belt_Array.every(Belt_Array.map(Belt_Option.getWithDefault(Js_json.decodeArray(arr), [false]), Js_json.decodeBoolean), (function (x) {
-                  return Caml_obj.caml_equal(x, true);
+                  return Caml_obj.equal(x, true);
                 }));
   };
   var onSubmit = function (param, param$1) {
@@ -149,12 +149,10 @@ function Agreement_After_Pay_Buyer$Agreement(Props) {
               })));
     if (didAllCheck(data)) {
       if (userId !== undefined && body !== undefined) {
-        FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.afterPayApiUrl + "/buyers/" + String(userId) + "/terms", body, 3, (function (param) {
+        FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.afterPayApiUrl + "/buyers/" + String(userId) + "/terms", body, 3, (function (param) {
                 router.replace("/buyer/after-pay/upload");
-                
               }), (function (err) {
                 console.error("fail", err);
-                
               }));
         return ;
       } else {
@@ -170,7 +168,7 @@ function Agreement_After_Pay_Buyer$Agreement(Props) {
     setValue(agree1, value);
     setValue(agree2, value);
     setValue(agree3, value);
-    return setValue(agree4, value);
+    setValue(agree4, value);
   };
   var handleAgreementChange = function (param) {
     var names = [
@@ -180,7 +178,7 @@ function Agreement_After_Pay_Buyer$Agreement(Props) {
       agree4
     ];
     var agreeAll = didAllCheck(getValues(names));
-    return setValue("agreeAll", agreeAll);
+    setValue("agreeAll", agreeAll);
   };
   return React.createElement("div", {
               className: "pt-7 pb-9"
@@ -269,7 +267,6 @@ function Agreement_After_Pay_Buyer(Props) {
           } else {
             router.replace("/buyer/upload");
           }
-          
         }), [agreements]);
   return React.createElement(Authorization.Buyer.make, {
               children: null,
@@ -286,6 +283,5 @@ export {
   AgreementItem ,
   Agreement ,
   make ,
-  
 }
 /* Env Not a pure module */

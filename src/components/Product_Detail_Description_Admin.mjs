@@ -55,7 +55,7 @@ function Product_Detail_Description_Admin$NoticeDateInput(Props) {
                   var tmp = {
                     id: match.name,
                     onChange: (function (e) {
-                        return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
+                        Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
                       }),
                     firstDayOfWeek: 0
                   };
@@ -104,7 +104,7 @@ function Product_Detail_Description_Admin$ThumbnailUploadInput(Props) {
                           return React.createElement(Upload_Thumbnail_Admin.make, {
                                       name: match.name,
                                       updateFn: (function (imageUrls) {
-                                          return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
+                                          Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
                                         }),
                                       value: Belt_Result.getWithDefault(Upload_Thumbnail_Admin.Form.image_decode(match.value), Upload_Thumbnail_Admin.Form.resetImage),
                                       disabled: disabled
@@ -285,6 +285,5 @@ export {
   NoticeDateInput ,
   ThumbnailUploadInput ,
   make ,
-  
 }
 /* react Not a pure module */

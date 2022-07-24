@@ -5,9 +5,9 @@ import * as React from "react";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as BulkSale_Producer_Sample_Review_Button_Create_Admin from "./BulkSale_Producer_Sample_Review_Button_Create_Admin.mjs";
@@ -29,27 +29,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducerSampleReviewButtonAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProducerSampleReviewButtonAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use(fRef) {
-  var data = Hooks.useFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProducerSampleReviewButtonAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -77,6 +77,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use,
   useOpt: useOpt,
   makeRefetchVariables: makeRefetchVariables
@@ -92,7 +93,6 @@ function BulkSale_Producer_Sample_Review_Button_Admin(Props) {
         }));
   var refetchSampleReviews = function (param) {
     Curry._4(refetch, Curry._2(makeRefetchVariables, undefined, undefined), /* StoreAndNetwork */2, undefined, undefined);
-    
   };
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -116,6 +116,5 @@ var make = BulkSale_Producer_Sample_Review_Button_Admin;
 export {
   Fragment ,
   make ,
-  
 }
 /* react Not a pure module */

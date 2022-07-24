@@ -5,20 +5,20 @@ import * as Locale from "../utils/Locale.mjs";
 import Link from "next/link";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Product_Badge from "./Product_Badge.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ProductOptionAdminFragment_graphql from "../__generated__/ProductOptionAdminFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(ProductOptionAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ProductOptionAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductOptionAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ProductOptionAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ProductOptionAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -48,6 +48,7 @@ var Fragment = {
   weightUnit_decode: Fragment_weightUnit_decode,
   weightUnit_fromString: Fragment_weightUnit_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -113,7 +114,7 @@ function Product_Option_Admin$Item$Table(Props) {
                     }, React.createElement("span", {
                           className: "block truncate underline"
                         }, React.createElement(Link, {
-                              href: "/admin/products/" + productOption.product.id,
+                              href: "/admin/products/" + productOption.product.id + "",
                               children: React.createElement("a", undefined, productOption.product.name)
                             })), React.createElement("span", {
                           className: "block text-gray-500 truncate underline"
@@ -124,7 +125,7 @@ function Product_Option_Admin$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2 ml-4"
                     }, React.createElement("span", {
                           className: "whitespace-nowrap"
-                        }, Belt_Option.getWithDefault(Belt_Option.map(productOption.price, (function (p) {
+                        }, "" + Belt_Option.getWithDefault(Belt_Option.map(productOption.price, (function (p) {
                                     return Locale.Float.show(undefined, p, 0);
                                   })), "-") + "원")), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 ml-4"
@@ -137,27 +138,27 @@ function Product_Option_Admin$Item$Table(Props) {
                     }, React.createElement("span", {
                           className: "block"
                         }, Belt_Option.mapWithDefault(productOption.weight, "", (function (w) {
-                                return String(w) + Belt_Option.mapWithDefault(productOption.weightUnit, "", weightUnitToString);
+                                return "" + String(w) + "" + Belt_Option.mapWithDefault(productOption.weightUnit, "", weightUnitToString) + "";
                               }))), React.createElement("span", {
                           className: "block"
                         }, match$1 !== undefined ? (
-                            match$2 !== undefined ? String(match$1) + " ~ " + String(match$2) : String(match$1) + " ~"
+                            match$2 !== undefined ? "" + String(match$1) + " ~ " + String(match$2) + "" : "" + String(match$1) + " ~"
                           ) : (
-                            match$2 !== undefined ? "~ " + String(match$2) : ""
+                            match$2 !== undefined ? "~ " + String(match$2) + "" : ""
                           ))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 ml-4"
                     }, React.createElement("span", {
                           className: "block"
                         }, match$3 !== undefined ? (
-                            match$4 !== undefined ? String(match$3) + " ~ " + String(match$4) + unit : String(match$3) + " ~ " + unit
+                            match$4 !== undefined ? "" + String(match$3) + " ~ " + String(match$4) + "" + unit + "" : "" + String(match$3) + " ~ " + unit + ""
                           ) : (
-                            match$4 !== undefined ? "~ " + String(match$4) + unit : ""
+                            match$4 !== undefined ? "~ " + String(match$4) + "" + unit + "" : ""
                           )), React.createElement("span", {
                           className: "block"
                         }, match$5 !== undefined ? (
-                            match$6 !== undefined ? String(match$5) + " ~ " + String(match$6) + unit$1 : String(match$5) + " ~ " + unit$1
+                            match$6 !== undefined ? "" + String(match$5) + " ~ " + String(match$6) + "" + unit$1 + "" : "" + String(match$5) + " ~ " + unit$1 + ""
                           ) : (
-                            match$6 !== undefined ? "~ " + String(match$6) + unit$1 : ""
+                            match$6 !== undefined ? "~ " + String(match$6) + "" + unit$1 + "" : ""
                           ))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2 ml-4"
                     }, React.createElement("span", {
@@ -202,6 +203,5 @@ export {
   Fragment ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

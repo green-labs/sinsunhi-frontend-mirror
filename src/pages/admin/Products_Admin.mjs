@@ -6,13 +6,14 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Garter_Fn from "@greenlabs/garter/src/Garter_Fn.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Authorization from "../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as Products_List_Admin from "../../components/Products_List_Admin.mjs";
 import * as Select_CountPerPage from "../../components/Select_CountPerPage.mjs";
 import * as Select_Product_Type from "../../components/Select_Product_Type.mjs";
@@ -25,7 +26,7 @@ import * as Select_Product_Operation_Status from "../../components/Select_Produc
 import * as ProductsAdminCategoriesQuery_graphql from "../../__generated__/ProductsAdminCategoriesQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ProductsAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductsAdminQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ProductsAdminQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductsAdminQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -34,7 +35,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(ProductsAdminQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(ProductsAdminQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -52,38 +53,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ProductsAdminQuery_graphql.node, ProductsAdminQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ProductsAdminQuery_graphql.node, ProductsAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ProductsAdminQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ProductsAdminQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ProductsAdminQuery_graphql.node, ProductsAdminQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ProductsAdminQuery_graphql.node, ProductsAdminQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ProductsAdminQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ProductsAdminQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ProductsAdminQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ProductsAdminQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductsAdminQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -100,14 +100,12 @@ var Query_productType_decode = ProductsAdminQuery_graphql.Utils.productType_deco
 
 var Query_productType_fromString = ProductsAdminQuery_graphql.Utils.productType_fromString;
 
-var Query_makeVariables = ProductsAdminQuery_graphql.Utils.makeVariables;
-
 var Query = {
   productStatus_decode: Query_productStatus_decode,
   productStatus_fromString: Query_productStatus_fromString,
   productType_decode: Query_productType_decode,
   productType_fromString: Query_productType_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -118,7 +116,7 @@ var Query = {
 };
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ProductsAdminCategoriesQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ProductsAdminCategoriesQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -127,7 +125,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$1(param) {
-  var match = Hooks.useQueryLoader(ProductsAdminCategoriesQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(ProductsAdminCategoriesQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -145,38 +143,37 @@ function useLoader$1(param) {
 }
 
 function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ProductsAdminCategoriesQuery_graphql.node, ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ProductsAdminCategoriesQuery_graphql.node, ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ProductsAdminCategoriesQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ProductsAdminCategoriesQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ProductsAdminCategoriesQuery_graphql.node, ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ProductsAdminCategoriesQuery_graphql.node, ProductsAdminCategoriesQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ProductsAdminCategoriesQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ProductsAdminCategoriesQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$1(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ProductsAdminCategoriesQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ProductsAdminCategoriesQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductsAdminCategoriesQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -185,10 +182,8 @@ function retain$1(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var QueryCategories_makeVariables = ProductsAdminCategoriesQuery_graphql.Utils.makeVariables;
-
 var QueryCategories = {
-  makeVariables: QueryCategories_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader$1,
@@ -267,27 +262,57 @@ function useSearchInput(param) {
   } else {
     tmp = undefined;
   }
-  var match$2 = Belt_Option.map(Js_dict.get(query, "status"), (function (str) {
-          return Select_Product_Operation_Status.Base.status_decode(str);
+  var match$2 = Belt_Option.map(Js_dict.get(query, "type"), (function (str) {
+          return Select_Product_Type.Search.status_decode(str);
         }));
   var tmp$1;
+  if (match$2 !== undefined) {
+    if (match$2.TAG === /* Ok */0) {
+      switch (match$2._0) {
+        case /* ALL */0 :
+            tmp$1 = [];
+            break;
+        case /* NORMAL */1 :
+            tmp$1 = ["NORMAL"];
+            break;
+        case /* QUOTED */2 :
+            tmp$1 = ["QUOTED"];
+            break;
+        case /* QUOTABLE */3 :
+            tmp$1 = ["QUOTABLE"];
+            break;
+        case /* MATCHING */4 :
+            tmp$1 = ["MATCHING"];
+            break;
+        
+      }
+    } else {
+      tmp$1 = [];
+    }
+  } else {
+    tmp$1 = [];
+  }
+  var match$3 = Belt_Option.map(Js_dict.get(query, "status"), (function (str) {
+          return Select_Product_Operation_Status.Base.status_decode(str);
+        }));
+  var tmp$2;
   var exit = 0;
-  if (match$2 !== undefined && match$2.TAG === /* Ok */0) {
-    switch (match$2._0) {
+  if (match$3 !== undefined && match$3.TAG === /* Ok */0) {
+    switch (match$3._0) {
       case /* SALE */0 :
-          tmp$1 = ["SALE"];
+          tmp$2 = ["SALE"];
           break;
       case /* SOLDOUT */1 :
-          tmp$1 = ["SOLDOUT"];
+          tmp$2 = ["SOLDOUT"];
           break;
       case /* NOSALE */2 :
-          tmp$1 = ["NOSALE"];
+          tmp$2 = ["NOSALE"];
           break;
       case /* RETIRE */3 :
-          tmp$1 = ["RETIRE"];
+          tmp$2 = ["RETIRE"];
           break;
       case /* HIDDEN_SALE */4 :
-          tmp$1 = ["HIDDEN_SALE"];
+          tmp$2 = ["HIDDEN_SALE"];
           break;
       
     }
@@ -295,7 +320,7 @@ function useSearchInput(param) {
     exit = 1;
   }
   if (exit === 1) {
-    tmp$1 = [
+    tmp$2 = [
       "SALE",
       "SOLDOUT",
       "NOSALE",
@@ -303,66 +328,36 @@ function useSearchInput(param) {
       "HIDDEN_SALE"
     ];
   }
-  var match$3 = Belt_Option.map(Js_dict.get(query, "type"), (function (str) {
-          return Select_Product_Type.Search.status_decode(str);
-        }));
-  var tmp$2;
-  if (match$3 !== undefined) {
-    if (match$3.TAG === /* Ok */0) {
-      switch (match$3._0) {
-        case /* ALL */0 :
-            tmp$2 = [];
-            break;
-        case /* NORMAL */1 :
-            tmp$2 = ["NORMAL"];
-            break;
-        case /* QUOTED */2 :
-            tmp$2 = ["QUOTED"];
-            break;
-        case /* QUOTABLE */3 :
-            tmp$2 = ["QUOTABLE"];
-            break;
-        case /* MATCHING */4 :
-            tmp$2 = ["MATCHING"];
-            break;
-        
-      }
-    } else {
-      tmp$2 = [];
-    }
-  } else {
-    tmp$2 = [];
-  }
   return {
+          displayCategoryId: Belt_Option.getWithDefault(Js_dict.get(query, "display-category-id"), ""),
+          isDelivery: tmp,
           limit: Belt_Option.getWithDefault(Belt_Option.flatMap(Js_dict.get(query, "limit"), Belt_Int.fromString), 25),
           name: Belt_Option.keep(Js_dict.get(query, "name"), (function (str) {
                   return str !== "";
                 })),
-          isDelivery: tmp,
           offset: Belt_Option.flatMap(Js_dict.get(query, "offset"), Belt_Int.fromString),
-          producerName: Belt_Option.keep(Js_dict.get(query, "producer-name"), (function (str) {
-                  return str !== "";
-                })),
           producerCodes: Belt_Option.map(Belt_Option.map(Belt_Option.keep(Js_dict.get(query, "producer-codes"), (function (a) {
                           return a !== "";
                         })), (function (str) {
-                      return str.split(new RegExp("\\s*[,\n\\s]\\s*"));
+                      return str.split(new RegExp("\s*[,\n\s]\s*"));
                     })), (function (a) {
                   return Belt_Array.keep(Belt_Array.keepMap(a, Garter_Fn.identity), (function (str) {
                                 return str !== "";
                               }));
                 })),
+          producerName: Belt_Option.keep(Js_dict.get(query, "producer-name"), (function (str) {
+                  return str !== "";
+                })),
+          productCategoryId: Belt_Option.getWithDefault(Js_dict.get(query, "category-id"), ""),
           productNos: Belt_Option.map(Belt_Option.map(Belt_Option.keep(Js_dict.get(query, "product-nos"), (function (a) {
                           return a !== "";
                         })), (function (str) {
-                      return str.split(new RegExp("\\s*[,\n\\s]\\s*"));
+                      return str.split(new RegExp("\s*[,\n\s]\s*"));
                     })), (function (a) {
                   return Belt_Array.keepMap(Belt_Array.keepMap(a, Garter_Fn.identity), Belt_Int.fromString);
                 })),
-          displayCategoryId: Belt_Option.getWithDefault(Js_dict.get(query, "display-category-id"), ""),
-          productCategoryId: Belt_Option.getWithDefault(Js_dict.get(query, "category-id"), ""),
-          statuses: tmp$1,
-          productType: tmp$2
+          productType: tmp$1,
+          statuses: tmp$2
         };
 }
 
@@ -377,7 +372,7 @@ function Products_Admin$List(Props) {
                           className: "font-bold"
                         }, "내역", React.createElement("span", {
                               className: "ml-1 text-green-gl font-normal"
-                            }, String(queryData.products.totalCount) + "건")), React.createElement("div", {
+                            }, "" + String(queryData.products.totalCount) + "건")), React.createElement("div", {
                           className: "flex"
                         }, React.createElement(Select_CountPerPage.make, {
                               className: "mr-2"
@@ -441,6 +436,5 @@ export {
   List ,
   Products ,
   make ,
-  
 }
 /* react Not a pure module */

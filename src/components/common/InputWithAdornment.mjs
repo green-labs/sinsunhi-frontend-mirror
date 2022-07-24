@@ -50,14 +50,14 @@ function InputWithAdornment(Props) {
                       type: type_,
                       value: value,
                       onFocus: (function (param) {
-                          return setBlur(function (param) {
-                                      return false;
-                                    });
+                          setBlur(function (param) {
+                                return false;
+                              });
                         }),
                       onBlur: (function (param) {
-                          return setBlur(function (param) {
-                                      return true;
-                                    });
+                          setBlur(function (param) {
+                                return true;
+                              });
                         }),
                       onChange: onChange
                     })), notice ? React.createElement("div", {
@@ -71,6 +71,5 @@ var make = InputWithAdornment;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

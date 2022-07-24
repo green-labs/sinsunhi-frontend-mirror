@@ -143,13 +143,13 @@ function each_decode(v) {
 
 function getNamesWithPrefix(prefix) {
   return {
-          unitWeight: prefix + ".each.weightUnit",
-          minSize: prefix + ".each.sizeMin",
-          maxSize: prefix + ".each.sizeMax",
-          unitSize: prefix + ".each.sizeUnit",
-          minNum: prefix + ".each.numMin",
-          maxNum: prefix + ".each.numMax",
-          values: prefix + ".each"
+          unitWeight: "" + prefix + ".each.weightUnit",
+          minSize: "" + prefix + ".each.sizeMin",
+          maxSize: "" + prefix + ".each.sizeMax",
+          unitSize: "" + prefix + ".each.sizeUnit",
+          minNum: "" + prefix + ".each.numMin",
+          maxNum: "" + prefix + ".each.numMax",
+          values: "" + prefix + ".each"
         };
 }
 
@@ -324,7 +324,6 @@ function Product_Option_Each_Admin(Props) {
   React.useEffect((function () {
           setValue(inputNames.unitSize, Select_Product_Option_Unit.Size.status_encode(Belt_Option.getWithDefault(defaultUnitSize, /* MM */0)));
           setValue(inputNames.unitWeight, Select_Product_Option_Unit.Weight.status_encode(Belt_Option.getWithDefault(defaultEachWeightUnit, /* KG */1)));
-          
         }), []);
   return React.createElement("div", {
               className: "py-6 flex flex-col gap-2"
@@ -334,9 +333,9 @@ function Product_Option_Each_Admin(Props) {
                       className: "block"
                     }, "입수 정보"), React.createElement("div", {
                       className: "px-3 py-2 border border-border-default-L1 rounded-lg h-9 bg-disabled-L3 w-36 leading-4.5"
-                    }, Belt_Option.mapWithDefault(weight, "", (function (prim) {
+                    }, "" + Belt_Option.mapWithDefault(weight, "", (function (prim) {
                             return String(prim);
-                          })) + "\n          " + Select_Product_Option_Unit.Weight.toString(weightUnit)), React.createElement("div", undefined, React.createElement("input", {
+                          })) + "\n          " + Select_Product_Option_Unit.Weight.toString(weightUnit) + ""), React.createElement("div", undefined, React.createElement("input", {
                           ref: eachMinNum.ref,
                           defaultValue: Belt_Option.mapWithDefault(defaultMinNum, "0", (function (prim) {
                                   return String(prim);
@@ -404,15 +403,11 @@ function Product_Option_Each_Admin(Props) {
                           className: "px-3 py-2 border border-border-default-L1 rounded-lg h-9 bg-disabled-L3 w-36 text-disabled-L1 leading-4.5 focus:outline-none"
                         }, Belt_Option.getWithDefault(Belt_Option.map(defaultMinWeight, (function (prim) {
                                     return String(prim);
-                                  })), weight !== undefined ? (
-                                watchMaxNum !== undefined ? getPerWeight(weight, weightUnit, watchMaxNum, watchWeightUnit) : "자동계산"
-                              ) : "자동계산")), React.createElement("span", undefined, "~"), React.createElement("div", {
+                                  })), weight !== undefined && watchMaxNum !== undefined ? getPerWeight(weight, weightUnit, watchMaxNum, watchWeightUnit) : "자동계산")), React.createElement("span", undefined, "~"), React.createElement("div", {
                           className: "px-3 py-2 border border-border-default-L1 rounded-lg h-9 bg-disabled-L3 w-36 text-disabled-L1 leading-4.5 focus:outline-none"
                         }, Belt_Option.getWithDefault(Belt_Option.map(defaultMaxWeight, (function (prim) {
                                     return String(prim);
-                                  })), weight !== undefined ? (
-                                watchMinNum !== undefined ? getPerWeight(weight, weightUnit, watchMinNum, watchWeightUnit) : "자동계산"
-                              ) : "자동계산")), React.createElement(ReactHookForm$1.Controller, {
+                                  })), weight !== undefined && watchMinNum !== undefined ? getPerWeight(weight, weightUnit, watchMinNum, watchWeightUnit) : "자동계산")), React.createElement(ReactHookForm$1.Controller, {
                           name: inputNames.unitWeight,
                           control: control,
                           render: (function (param) {
@@ -421,7 +416,7 @@ function Product_Option_Each_Admin(Props) {
                               return React.createElement(Select_Product_Option_Unit.Weight.make, {
                                           status: Belt_Result.getWithDefault(Select_Product_Option_Unit.Weight.status_decode(match.value), /* KG */1),
                                           onChange: (function (status) {
-                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Option_Unit.Weight.status_encode(status)));
+                                              Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Option_Unit.Weight.status_encode(status)));
                                             }),
                                           forwardRef: match.ref,
                                           disabled: readOnly
@@ -498,7 +493,7 @@ function Product_Option_Each_Admin(Props) {
                               return React.createElement(Select_Product_Option_Unit.Size.make, {
                                           status: Belt_Result.getWithDefault(Select_Product_Option_Unit.Size.status_decode(match.value), /* MM */0),
                                           onChange: (function (status) {
-                                              return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Option_Unit.Size.status_encode(status)));
+                                              Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Select_Product_Option_Unit.Size.status_encode(status)));
                                             }),
                                           forwardRef: match.ref,
                                           disabled: readOnly
@@ -517,6 +512,5 @@ export {
   divideNum ,
   getPerWeight ,
   make ,
-  
 }
 /* react Not a pure module */

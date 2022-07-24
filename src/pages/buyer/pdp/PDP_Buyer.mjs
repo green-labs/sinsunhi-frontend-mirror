@@ -4,8 +4,10 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import Head from "next/head";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Footer_Buyer from "../../../components/Footer_Buyer.mjs";
 import * as Header_Buyer from "../../../components/Header_Buyer.mjs";
 import * as PDP_Gtm_Buyer from "./PDP_Gtm_Buyer.mjs";
@@ -16,7 +18,6 @@ import * as PDP_Normal_Buyer from "./normal/PDP_Normal_Buyer.mjs";
 import * as PDP_Quoted_Buyer from "./quoted/PDP_Quoted_Buyer.mjs";
 import * as ChannelTalkHelper from "../../../utils/ChannelTalkHelper.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as PDP_Matching_Buyer from "./matching/PDP_Matching_Buyer.mjs";
 import * as PDPBuyerQuery_graphql from "../../../__generated__/PDPBuyerQuery_graphql.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -25,7 +26,7 @@ import * as ReactSeparator from "@radix-ui/react-separator";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(PDPBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PDPBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(PDPBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PDPBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -34,7 +35,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(PDPBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(PDPBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -52,38 +53,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, PDPBuyerQuery_graphql.node, PDPBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, PDPBuyerQuery_graphql.node, PDPBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: PDPBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: PDPBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, PDPBuyerQuery_graphql.node, PDPBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, PDPBuyerQuery_graphql.node, PDPBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(PDPBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(PDPBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(PDPBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(PDPBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -92,10 +92,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = PDPBuyerQuery_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -106,13 +104,13 @@ var Query = {
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(PDPBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -124,6 +122,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt
 };
@@ -365,7 +364,6 @@ function PDP_Buyer$Presenter(Props) {
       }, undefined);
   React.useEffect((function () {
           Curry._1(pushGtmPageView, undefined);
-          
         }), []);
   var match$1 = Product_Parser.Type.decode(match.__typename);
   if (match$1 !== undefined) {
@@ -431,7 +429,6 @@ function PDP_Buyer(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "신선하이")
@@ -462,6 +459,5 @@ export {
   Presenter ,
   Container ,
   make ,
-  
 }
 /* react Not a pure module */

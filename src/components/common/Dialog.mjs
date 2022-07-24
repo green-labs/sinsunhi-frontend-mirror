@@ -127,6 +127,5 @@ var make = Dialog;
 export {
   ButtonBox ,
   make ,
-  
 }
 /* react Not a pure module */

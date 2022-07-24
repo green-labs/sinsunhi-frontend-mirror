@@ -105,6 +105,5 @@ export {
   parseStatus ,
   formatStatus ,
   make ,
-  
 }
 /* react Not a pure module */

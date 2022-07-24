@@ -34,6 +34,5 @@ var make = DownloadCenter_Render;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

@@ -62,6 +62,5 @@ var InputText1 = {
 
 export {
   InputText1 ,
-  
 }
 /* react Not a pure module */

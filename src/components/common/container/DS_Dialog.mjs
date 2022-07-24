@@ -230,6 +230,5 @@ var Popup = {
 
 export {
   Popup ,
-  
 }
 /* make Not a pure module */

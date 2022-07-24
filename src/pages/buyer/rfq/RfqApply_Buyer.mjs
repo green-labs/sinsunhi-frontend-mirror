@@ -8,16 +8,17 @@ import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as DS_Toast from "../../../components/common/container/DS_Toast.mjs";
 import * as RfqCommon from "./RfqCommon.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as DS_ProgressBar from "../../../components/common/element/DS_ProgressBar.mjs";
 import * as DS_TopNavigation from "../../../components/common/container/DS_TopNavigation.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as RfqApplyDetail_Buyer from "../../../components/RfqApplyDetail_Buyer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -26,7 +27,7 @@ import * as RfqApplyBuyer_Query_graphql from "../../../__generated__/RfqApplyBuy
 import * as RfqApplyBuyer_Update_Mutation_graphql from "../../../__generated__/RfqApplyBuyer_Update_Mutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqApplyBuyer_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqApplyBuyer_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -35,7 +36,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqApplyBuyer_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqApplyBuyer_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -53,38 +54,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqApplyBuyer_Query_graphql.node, RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqApplyBuyer_Query_graphql.node, RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqApplyBuyer_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqApplyBuyer_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqApplyBuyer_Query_graphql.node, RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqApplyBuyer_Query_graphql.node, RfqApplyBuyer_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqApplyBuyer_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqApplyBuyer_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqApplyBuyer_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqApplyBuyer_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqApplyBuyer_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -105,8 +105,6 @@ var Query_rfqMeatStorageMethod_decode = RfqApplyBuyer_Query_graphql.Utils.rfqMea
 
 var Query_rfqMeatStorageMethod_fromString = RfqApplyBuyer_Query_graphql.Utils.rfqMeatStorageMethod_fromString;
 
-var Query_makeVariables = RfqApplyBuyer_Query_graphql.Utils.makeVariables;
-
 var Query = {
   meatMadeIn_decode: Query_meatMadeIn_decode,
   meatMadeIn_fromString: Query_meatMadeIn_fromString,
@@ -114,7 +112,7 @@ var Query = {
   rfqMeatPackageMethod_fromString: Query_rfqMeatPackageMethod_fromString,
   rfqMeatStorageMethod_decode: Query_rfqMeatStorageMethod_decode,
   rfqMeatStorageMethod_fromString: Query_rfqMeatStorageMethod_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -143,14 +141,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqApplyBuyer_Update_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(RfqApplyBuyer_Update_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqApplyBuyer_Update_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -158,13 +156,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqApplyBuyer_Update_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqApplyBuyer_Update_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqApplyBuyer_Update_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -195,10 +193,6 @@ var Mutation_rfqRequestItemStatus_decode = RfqApplyBuyer_Update_Mutation_graphql
 
 var Mutation_rfqRequestItemStatus_fromString = RfqApplyBuyer_Update_Mutation_graphql.Utils.rfqRequestItemStatus_fromString;
 
-var Mutation_make_rfqRequestItemMeatUpdateInput = RfqApplyBuyer_Update_Mutation_graphql.Utils.make_rfqRequestItemMeatUpdateInput;
-
-var Mutation_makeVariables = RfqApplyBuyer_Update_Mutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   errorCode_decode: Mutation_errorCode_decode,
   errorCode_fromString: Mutation_errorCode_fromString,
@@ -210,8 +204,7 @@ var Mutation = {
   rfqMeatStorageMethod_fromString: Mutation_rfqMeatStorageMethod_fromString,
   rfqRequestItemStatus_decode: Mutation_rfqRequestItemStatus_decode,
   rfqRequestItemStatus_fromString: Mutation_rfqRequestItemStatus_fromString,
-  make_rfqRequestItemMeatUpdateInput: Mutation_make_rfqRequestItemMeatUpdateInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -508,13 +501,12 @@ function RfqApply_Buyer$Apply(Props) {
           DataGtm.push({
                 event: tmp
               });
-          
         }), [step$1]);
   var getTitle = Belt_Option.mapWithDefault(node, "", (function (node$p) {
           return Belt_Option.mapWithDefault(node$p.part, "", (function (part$p) {
-                        return part$p.name + " / " + (
+                        return "" + part$p.name + " / " + (
                                 part$p.isDomestic ? "국내" : "수입"
-                              );
+                              ) + "";
                       }));
         }));
   var handleOnChange = function (setFn, value) {
@@ -609,15 +601,15 @@ function RfqApply_Buyer$Apply(Props) {
     };
     Curry.app(mutateUpdate, [
           (function (param) {
-              return addToast(DS_Toast.getToastComponent("저장중 문제가 발생하였습니다. 관리자에게 문의해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("저장중 문제가 발생하였습니다. 관리자에게 문의해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var updateRfqRequestItemsMeat = param.updateRfqRequestItemsMeat;
               var variant = updateRfqRequestItemsMeat.NAME;
               if (variant === "RfqRequestItemMeatMutationPayload") {
-                addToast(DS_Toast.getToastComponent(getTitle + " 작성이 완료되었어요!", "succ"), {
+                addToast(DS_Toast.getToastComponent("" + getTitle + " 작성이 완료되었어요!", "succ"), {
                       appearance: "succ"
                     });
               } else if (variant === "UnselectedUnionMember") {
@@ -628,8 +620,7 @@ function RfqApply_Buyer$Apply(Props) {
                       appearance: "error"
                     });
               }
-              router.push("/buyer/rfq/request/draft/list?requestId=" + requestId);
-              
+              router.push("/buyer/rfq/request/draft/list?requestId=" + requestId + "");
             }),
           undefined,
           undefined,
@@ -642,7 +633,6 @@ function RfqApply_Buyer$Apply(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var handleModifyMutation = function (step, param) {
     if (isModifyDetail) {
@@ -725,7 +715,7 @@ function RfqApply_Buyer$Apply(Props) {
               label: isModifyDetail ? "저장" : "다음",
               disabled: checkDisabled(step$1),
               onClick: (function (param) {
-                  return updateItem(undefined, undefined, undefined, undefined);
+                  updateItem(undefined, undefined, undefined, undefined);
                 }),
               dataGtm: "Click_RFQ_Livestock_OtherRequirements"
             });
@@ -806,7 +796,7 @@ function RfqApply_Buyer$Apply(Props) {
                                 className: "cursor-pointer",
                                 onClick: (function (param) {
                                     if (isModifyDetail) {
-                                      router.push("/buyer/rfq/request/draft/list?requestId=" + requestId);
+                                      router.push("/buyer/rfq/request/draft/list?requestId=" + requestId + "");
                                       return ;
                                     }
                                     switch (step$1) {
@@ -831,7 +821,7 @@ function RfqApply_Buyer$Apply(Props) {
                                                       return /* Usage */2;
                                                     });
                                       case /* PackageMethod */4 :
-                                          router.push("/buyer/rfq/request/draft/list?requestId=" + requestId);
+                                          router.push("/buyer/rfq/request/draft/list?requestId=" + requestId + "");
                                           return ;
                                       case /* SupplyPrice */5 :
                                           return setStep(function (param) {
@@ -1009,7 +999,6 @@ function RfqApply_Buyer(Props) {
   }
   React.useEffect((function () {
           router.push("/buyer/rfq");
-          
         }), []);
   return null;
 }
@@ -1024,6 +1013,5 @@ export {
   toStringPackageMethod ,
   Apply ,
   make ,
-  
 }
 /* react Not a pure module */

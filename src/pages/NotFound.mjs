@@ -94,7 +94,6 @@ function NotFound(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "신선하이")
@@ -110,6 +109,5 @@ export {
   Default ,
   Container ,
   make ,
-  
 }
 /* react Not a pure module */

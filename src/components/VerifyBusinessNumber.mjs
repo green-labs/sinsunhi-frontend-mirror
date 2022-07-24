@@ -130,15 +130,15 @@ function VerifyBusinessNumber(Props) {
     } else {
       Curry._1(onChange, nextStatus._0);
     }
-    return setStatus(function (param) {
-                return nextStatus;
-              });
+    setStatus(function (param) {
+          return nextStatus;
+        });
   };
   var submit = function (param) {
     setLoading(function (param) {
           return true;
         });
-    var businessNumber = param.state.values.businessNumber.replace(new RegExp("\\-", "g"), "");
+    var businessNumber = param.state.values.businessNumber.replace(new RegExp("\-", "g"), "");
     var dict = Js_dict.fromList({
           hd: [
             "b-no",
@@ -147,7 +147,7 @@ function VerifyBusinessNumber(Props) {
           tl: /* [] */0
         });
     var queryStr = new URLSearchParams(dict).toString();
-    FetchHelper.get(Env.restApiUrl + "/user/validate-business-number?" + queryStr, (function (json) {
+    FetchHelper.get("" + Env.restApiUrl + "/user/validate-business-number?" + queryStr + "", (function (json) {
             var json$p = response_decode(json);
             if (json$p.TAG === /* Ok */0) {
               return updateStatus(parseMessage(json$p._0.message, businessNumber));
@@ -158,23 +158,22 @@ function VerifyBusinessNumber(Props) {
                         });
             }
           }), (function (param) {
-            return updateStatus({
-                        TAG: /* Invalid */1,
-                        _0: /* Unexpected */3
-                      });
+            updateStatus({
+                  TAG: /* Invalid */1,
+                  _0: /* Unexpected */3
+                });
           }));
     setLoading(function (param) {
           return false;
         });
-    
   };
   var form = Curry._7(Form.use, initialState, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(Form.ReSchema.Validation.regExp, "사업자 등록번호 형식을 확인해주세요.", "^\\d{3}-\\d{2}-\\d{5}$", undefined, /* BusinessNumber */0)])
+        _0: Belt_Array.concatMany([Curry._4(Form.ReSchema.Validation.regExp, "사업자 등록번호 형식을 확인해주세요.", "^\d{3}-\d{2}-\d{5}$", undefined, /* BusinessNumber */0)])
       }, submit, undefined, undefined, /* OnChange */0, undefined);
   var onChangeBusinessNumber = function (e) {
     updateStatus(/* Waiting */0);
     var businessNumber = e.currentTarget.value.replace(/[^\d]/g, "").replace(/(^\d{3})(\d+)?(\d{5})$/, "$1-$2-$3").replace("--", "-");
-    return Curry._4(form.setFieldValue, /* BusinessNumber */0, businessNumber, true, undefined);
+    Curry._4(form.setFieldValue, /* BusinessNumber */0, businessNumber, true, undefined);
   };
   var statusErr;
   statusErr = typeof status === "number" || status.TAG === /* Valid */0 ? undefined : (
@@ -208,7 +207,7 @@ function VerifyBusinessNumber(Props) {
                       type: "button",
                       onClick: (function (param) {
                           return ReactEvents.interceptingHandler((function (param) {
-                                        return Curry._1(form.submit, undefined);
+                                        Curry._1(form.submit, undefined);
                                       }), param);
                         })
                     }, "인증")));
@@ -227,6 +226,5 @@ export {
   btnStyle ,
   btnStyleDisabled ,
   make ,
-  
 }
 /* Form Not a pure module */

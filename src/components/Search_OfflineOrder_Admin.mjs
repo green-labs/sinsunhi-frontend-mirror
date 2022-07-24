@@ -96,8 +96,7 @@ function Search_OfflineOrder_Admin(Props) {
           }));
     router.query["category-id"] = match[0];
     router.query["label"] = match[1];
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_OfflineOrder_Form_Admin.Form.use, {
         sellerName: Belt_Option.getWithDefault(defaults.seller, ""),
@@ -111,22 +110,22 @@ function Search_OfflineOrder_Admin(Props) {
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnChangeCropOrCultivar = function (e) {
     ReForm__Helpers.handleChange(Curry._1(form.handleChange, /* Std */2), e);
-    return setSelectedCrop(function (param) {
-                return /* NotSelected */0;
-              });
+    setSelectedCrop(function (param) {
+          return /* NotSelected */0;
+        });
   };
   var handleOnChangeOrderPeriod = function (f, t) {
-    return setOrderQuery(function (param) {
-                return {
-                        from: f,
-                        to_: t
-                      };
-              });
+    setOrderQuery(function (param) {
+          return {
+                  from: f,
+                  to_: t
+                };
+        });
   };
   var handleOnChangeOrderDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -146,20 +145,20 @@ function Search_OfflineOrder_Admin(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setOrderQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setOrderQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnChangeShipmentPeriod = function (f, t) {
-    return setShipmentQuery(function (param) {
-                return {
-                        from: f,
-                        to_: t
-                      };
-              });
+    setShipmentQuery(function (param) {
+          return {
+                  from: f,
+                  to_: t
+                };
+        });
   };
   var handleOnChangeShipmentDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -179,12 +178,12 @@ function Search_OfflineOrder_Admin(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setShipmentQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setShipmentQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -205,15 +204,15 @@ function Search_OfflineOrder_Admin(Props) {
                                 to_: m_to
                               };
                       });
-                  return setSelectedCrop(function (param) {
-                              return /* NotSelected */0;
-                            });
+                  setSelectedCrop(function (param) {
+                        return /* NotSelected */0;
+                      });
                 }), param);
   };
   var handleChangeCrop = function (selection) {
-    return setSelectedCrop(function (param) {
-                return selection;
-              });
+    setSelectedCrop(function (param) {
+          return selection;
+        });
   };
   var partial_arg = Curry._1(form.handleChange, /* SellerName */0);
   var partial_arg$1 = Curry._1(form.handleChange, /* BuyerName */1);
@@ -383,6 +382,5 @@ export {
   Select_Crop_Std ,
   getDefaults ,
   make ,
-  
 }
 /* Input Not a pure module */

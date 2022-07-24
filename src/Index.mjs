@@ -14,6 +14,5 @@ var make = Index;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

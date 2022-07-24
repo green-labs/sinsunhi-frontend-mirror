@@ -13,9 +13,9 @@ function Layout_Admin_Root(Props) {
   var openedAdminMenu = Props.openedAdminMenu;
   var setOpenedAdminMenu = Props.setOpenedAdminMenu;
   var onValueChange = function (arr) {
-    return Curry._1(setOpenedAdminMenu, Belt_Array.some(arr, (function (x) {
-                      return x === accordianItemValue;
-                    })) ? Belt_SetString.toArray(Belt_SetString.add(Belt_SetString.fromArray(openedAdminMenu), accordianItemValue)) : Belt_SetString.toArray(Belt_SetString.remove(Belt_SetString.fromArray(openedAdminMenu), accordianItemValue)));
+    Curry._1(setOpenedAdminMenu, Belt_Array.some(arr, (function (x) {
+                return x === accordianItemValue;
+              })) ? Belt_SetString.toArray(Belt_SetString.add(Belt_SetString.fromArray(openedAdminMenu), accordianItemValue)) : Belt_SetString.toArray(Belt_SetString.remove(Belt_SetString.fromArray(openedAdminMenu), accordianItemValue)));
   };
   return React.createElement(ReactAccordion.Root, {
               children: React.createElement(ReactAccordion.Item, {
@@ -43,6 +43,5 @@ var make = Layout_Admin_Root;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

@@ -9,6 +9,7 @@ import * as DS_Icon from "../../../components/svgs/DS_Icon.mjs";
 import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as DS_Title from "../../../components/common/container/DS_Title.mjs";
 import * as DS_Toast from "../../../components/common/container/DS_Toast.mjs";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as DS_Button from "../../../components/common/element/DS_Button.mjs";
 import * as DS_Dialog from "../../../components/common/container/DS_Dialog.mjs";
 import * as RfqCommon from "./RfqCommon.mjs";
@@ -145,15 +146,12 @@ function RfqList_Buyer$List(Props) {
           DataGtm.push({
                 event: "Expose_view_RFQ_Livestock_PartList"
               });
-          
         }), []);
   var handleMove = function (itemId) {
-    router.push(itemId !== undefined ? "/buyer/rfq/request/draft/apply?itemId=" + itemId + "&requestId=" + requestId : "/buyer/rfq/request/draft/basket?requestId=" + requestId);
-    
+    router.push(itemId !== undefined ? "/buyer/rfq/request/draft/apply?itemId=" + itemId + "&requestId=" + requestId + "" : "/buyer/rfq/request/draft/basket?requestId=" + requestId + "");
   };
   var handleMoveDetail = function (itemId, step, param) {
-    router.push("/buyer/rfq/request/draft/apply?itemId=" + itemId + "&requestId=" + requestId + "&step=" + convertToString(step));
-    
+    router.push("/buyer/rfq/request/draft/apply?itemId=" + itemId + "&requestId=" + requestId + "&step=" + convertToString(step) + "");
   };
   var match$3 = getItemCountInfo(arrItem);
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
@@ -164,7 +162,6 @@ function RfqList_Buyer$List(Props) {
                                   className: "cursor-pointer",
                                   onClick: (function (param) {
                                       router.push("/buyer/rfq/request/draft/basket?requestId=" + requestId + "&from=list");
-                                      
                                     })
                                 }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                       height: "32",
@@ -234,7 +231,7 @@ function RfqList_Buyer$List(Props) {
                                                       children: null,
                                                       className: "px-5 flex justify-between items-start cursor-pointer",
                                                       onClick: (function (param) {
-                                                          return handleMove(itemId);
+                                                          handleMove(itemId);
                                                         })
                                                     }, React.createElement(DS_TitleList.Left.Title3Subtitle1.make, {
                                                           title1: Belt_Option.mapWithDefault(species, "", (function (x) {
@@ -254,7 +251,6 @@ function RfqList_Buyer$List(Props) {
                                                           onClick: (function (e) {
                                                               e.preventDefault();
                                                               e.stopPropagation();
-                                                              
                                                             })
                                                         }, React.createElement(DS_Dialog.Popup.Root.make, {
                                                               children: null
@@ -279,7 +275,7 @@ function RfqList_Buyer$List(Props) {
                                                                     }, React.createElement(DS_Dialog.Popup.Title.make, {
                                                                           children: "아래 부위를 삭제할까요?"
                                                                         }), React.createElement(DS_Dialog.Popup.Description.make, {
-                                                                          children: Belt_Option.mapWithDefault(species, "", (function (x) {
+                                                                          children: "" + Belt_Option.mapWithDefault(species, "", (function (x) {
                                                                                   return x.shortName;
                                                                                 })) + " / " + Belt_Option.mapWithDefault(part, "", (function (x) {
                                                                                   return x.name;
@@ -289,7 +285,7 @@ function RfqList_Buyer$List(Props) {
                                                                                   } else {
                                                                                     return "수입";
                                                                                   }
-                                                                                }))
+                                                                                })) + ""
                                                                         }), React.createElement(DS_Dialog.Popup.Buttons.make, {
                                                                           children: null
                                                                         }, React.createElement(DS_Dialog.Popup.Close.make, {
@@ -321,13 +317,12 @@ function RfqList_Buyer$List(Props) {
                                                                                               undefined,
                                                                                               undefined,
                                                                                               {
-                                                                                                id: itemId,
-                                                                                                connections: [data.rfqRequestItemsMeat.__id]
+                                                                                                connections: [data.rfqRequestItemsMeat.__id],
+                                                                                                id: itemId
                                                                                               },
                                                                                               undefined,
                                                                                               undefined
                                                                                             ]);
-                                                                                        
                                                                                       })
                                                                                   }),
                                                                               asChild: true
@@ -354,16 +349,16 @@ function RfqList_Buyer$List(Props) {
                                                                     })), Belt_Option.mapWithDefault(node.weightKg, null, (function (x) {
                                                                     return React.createElement(RfqList_Buyer$List$Item, {
                                                                                 title: "주문량",
-                                                                                value: numberToComma(Garter_Array.firstExn(x.split("."))) + " kg",
+                                                                                value: "" + numberToComma(Garter_Array.firstExn(x.split("."))) + " kg",
                                                                                 onClick: (function (param) {
                                                                                     return handleMoveDetail(itemId, "orderAmount", param);
                                                                                   })
                                                                               });
                                                                   })), Garter_Array.isEmpty(node.usages.edges) ? null : React.createElement(RfqList_Buyer$List$Item, {
                                                                     title: "사용용도",
-                                                                    value: Belt_Array.map(node.usages.edges, (function (edge) {
-                                                                              return edge.node.name;
-                                                                            })).join(", "),
+                                                                    value: Js_array.joinWith(", ", Belt_Array.map(node.usages.edges, (function (edge) {
+                                                                                return edge.node.name;
+                                                                              }))),
                                                                     onClick: (function (param) {
                                                                         return handleMoveDetail(itemId, "usage", param);
                                                                       })
@@ -384,7 +379,7 @@ function RfqList_Buyer$List(Props) {
                                                                   }), Belt_Option.mapWithDefault(node.prevTradePricePerKg, null, (function (x) {
                                                                     return React.createElement(RfqList_Buyer$List$Item, {
                                                                                 title: "기존공급가",
-                                                                                value: numberToComma(String(x)) + "원/kg",
+                                                                                value: "" + numberToComma(String(x)) + "원/kg",
                                                                                 onClick: (function (param) {
                                                                                     return handleMoveDetail(itemId, "supplyPrice", param);
                                                                                   })
@@ -405,7 +400,7 @@ function RfqList_Buyer$List(Props) {
                                                         children: React.createElement("div", {
                                                               className: "px-5 mt-5 flex justify-center cursor-pointer",
                                                               onClick: (function (param) {
-                                                                  return handleMove(itemId);
+                                                                  handleMove(itemId);
                                                                 })
                                                             }, React.createElement("span", {
                                                                   className: "text-primary"
@@ -422,7 +417,7 @@ function RfqList_Buyer$List(Props) {
                               children: React.createElement("button", {
                                     className: "w-full py-3 flex justify-center items-center gap-1 leading-6 cursor-pointer mt-4 text-enabled-L2 pb-[104px] tab-highlight-color",
                                     onClick: (function (param) {
-                                        return handleMove(undefined);
+                                        handleMove(undefined);
                                       })
                                   }, React.createElement(DS_Icon.Common.PlusSmall1.make, {
                                         height: "12",
@@ -434,8 +429,7 @@ function RfqList_Buyer$List(Props) {
                   label: "작성 완료",
                   disabled: !match$3[2],
                   onClick: (function (param) {
-                      router.push("/buyer/rfq/request/draft/shipping?requestId=" + requestId);
-                      
+                      router.push("/buyer/rfq/request/draft/shipping?requestId=" + requestId + "");
                     }),
                   dataGtm: "Click_RFQ_Livestock_PartList"
                 }));
@@ -467,7 +461,6 @@ function RfqList_Buyer(Props) {
   } else {
     React.useEffect((function () {
             router.push("/buyer/rfq");
-            
           }), []);
     return null;
   }
@@ -494,6 +487,5 @@ export {
   numberToComma ,
   List ,
   make ,
-  
 }
 /* react Not a pure module */

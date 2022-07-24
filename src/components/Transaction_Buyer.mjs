@@ -32,11 +32,11 @@ function Transaction_Buyer$Item$Table(Props) {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "whitespace-nowrap"
-                    }, Locale.Float.show(undefined, transaction.amount, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, transaction.amount, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "block font-bold"
-                    }, Locale.Float.show(undefined, transaction.deposit, 0) + "원")));
+                    }, "" + Locale.Float.show(undefined, transaction.deposit, 0) + "원")));
 }
 
 var Table = {
@@ -57,9 +57,9 @@ function Transaction_Buyer$Item$Card(Props) {
                       className: "flex flex-col"
                     }, React.createElement("span", {
                           className: "text-right"
-                        }, Locale.Float.show(undefined, transaction.amount, 0) + "원"), React.createElement("span", {
+                        }, "" + Locale.Float.show(undefined, transaction.amount, 0) + "원"), React.createElement("span", {
                           className: "text-right font-bold"
-                        }, Locale.Float.show(undefined, transaction.deposit, 0) + "원"))));
+                        }, "" + Locale.Float.show(undefined, transaction.deposit, 0) + "원"))));
 }
 
 var Card = {
@@ -88,6 +88,5 @@ export {
   formatTime ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

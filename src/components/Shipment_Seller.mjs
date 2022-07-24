@@ -43,7 +43,7 @@ function Shipment_Seller$Item$Table(Props) {
                         }, shipment.cultivar)), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-3 whitespace-nowrap justify-center"
                     }, React.createElement("div", undefined, Belt_Option.getWithDefault(Helper.$$Option.map2(shipment.weight, shipment.weightUnit, (function (w, wu) {
-                                    return String(w) + Belt_Option.getWithDefault(Js_json.decodeString(CustomHooks.Products.weightUnit_encode(wu)), "g");
+                                    return "" + String(w) + "" + Belt_Option.getWithDefault(Js_json.decodeString(CustomHooks.Products.weightUnit_encode(wu)), "g") + "";
                                   })), "")), React.createElement("div", {
                           className: "text-gray-gl"
                         }, Belt_Option.getWithDefault(shipment.packageType, ""))), React.createElement("div", {
@@ -52,7 +52,7 @@ function Shipment_Seller$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-3 whitespace-nowrap justify-center ml-4"
                     }, String(shipment.totalQuantity)), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-3 whitespace-nowrap justify-center"
-                    }, Locale.Float.show(undefined, shipment.totalPrice, 0) + "원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, shipment.totalPrice, 0) + "원"), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-3 whitespace-nowrap justify-center"
                     }, match !== 1 ? null : React.createElement(Shipment_Detail_Button_Seller.make, {
                             date: Format(new Date(shipment.date), "yyyy-MM-dd"),
@@ -84,15 +84,15 @@ function Shipment_Seller$Item$Card(Props) {
                                   className: "w-20 text-gray-gl"
                                 }, "작물·품종"), React.createElement("span", {
                                   className: "ml-2"
-                                }, shipment.crop + "·" + shipment.cultivar)), React.createElement("div", {
+                                }, "" + shipment.crop + "·" + shipment.cultivar + "")), React.createElement("div", {
                               className: "flex mt-2"
                             }, React.createElement("span", {
                                   className: "w-20 text-gray-gl"
                                 }, "거래중량단위·포장규격"), React.createElement("span", {
                                   className: "ml-2"
-                                }, Belt_Option.mapWithDefault(shipment.weight, "", (function (prim) {
+                                }, "" + Belt_Option.mapWithDefault(shipment.weight, "", (function (prim) {
                                         return String(prim);
-                                      })) + "·" + Belt_Option.getWithDefault(shipment.packageType, ""))), React.createElement("div", {
+                                      })) + "·" + Belt_Option.getWithDefault(shipment.packageType, "") + "")), React.createElement("div", {
                               className: "flex mt-2"
                             }, React.createElement("span", {
                                   className: "w-20 text-gray-gl"
@@ -112,7 +112,7 @@ function Shipment_Seller$Item$Card(Props) {
                                   className: "w-20 text-gray-gl"
                                 }, "총 금액"), React.createElement("span", {
                                   className: "ml-2"
-                                }, Locale.Float.show(undefined, shipment.totalPrice, 0) + "원"))))));
+                                }, "" + Locale.Float.show(undefined, shipment.totalPrice, 0) + "원"))))));
 }
 
 var Card = {
@@ -140,6 +140,5 @@ export {
   displayKind ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

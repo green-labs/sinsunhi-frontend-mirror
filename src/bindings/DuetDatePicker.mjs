@@ -76,6 +76,5 @@ export {
   krMonths ,
   krLocalization ,
   today ,
-  
 }
 /* DuetOnChangeEvent Not a pure module */

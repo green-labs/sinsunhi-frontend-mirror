@@ -38,9 +38,9 @@ Jest.describe("TEST Parser PhoneNumber", (function (param) {
         Jest.test("mobile number - 070-{4}-{4}", (function (param) {
                 return Jest.Expect.toEqual("070-1234-5678", Jest.Expect.expect(Belt_Option.flatMap(Helper.PhoneNumber.parse("07012345678"), Helper.PhoneNumber.format)));
               }));
-        return Jest.test("mobile number - 0504-{4}-{4}", (function (param) {
-                      return Jest.Expect.toEqual("0502-1234-5678", Jest.Expect.expect(Belt_Option.flatMap(Helper.PhoneNumber.parse("050212345678"), Helper.PhoneNumber.format)));
-                    }));
+        Jest.test("mobile number - 0504-{4}-{4}", (function (param) {
+                return Jest.Expect.toEqual("0502-1234-5678", Jest.Expect.expect(Belt_Option.flatMap(Helper.PhoneNumber.parse("050212345678"), Helper.PhoneNumber.format)));
+              }));
       }));
 
 export {

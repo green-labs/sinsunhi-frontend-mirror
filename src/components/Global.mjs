@@ -13,7 +13,6 @@ function storeBrazeUserId(userId) {
   dict["type"] = "STORE_BRAZE_USER_ID";
   dict["userId"] = userId;
   webView.postMessage(JSON.stringify(dict));
-  
 }
 
 var PostMessage = {
@@ -33,6 +32,5 @@ var $$window$2 = $$window === undefined ? undefined : Caml_option.some($$window)
 export {
   $$window$2 as $$window,
   $$Window ,
-  
 }
 /* window Not a pure module */

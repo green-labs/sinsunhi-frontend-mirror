@@ -17,6 +17,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ProductForm from "../utils/ProductForm.mjs";
 import * as ReactEvents from "../utils/ReactEvents.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RelayRuntime from "relay-runtime";
@@ -24,7 +25,6 @@ import Format from "date-fns/format";
 import * as ReactHookForm$1 from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 import EndOfDay from "date-fns/endOfDay";
-import * as Hooks from "react-relay/hooks";
 import StartOfDay from "date-fns/startOfDay";
 import * as Product_Detail_Editor from "./Product_Detail_Editor.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -41,13 +41,13 @@ import * as UpdateMatchingProductFormAdminFragment_graphql from "../__generated_
 import * as UpdateMatchingProductFormAdminMutation_graphql from "../__generated__/UpdateMatchingProductFormAdminMutation_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(UpdateMatchingProductFormAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(UpdateMatchingProductFormAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(UpdateMatchingProductFormAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(UpdateMatchingProductFormAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(UpdateMatchingProductFormAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -71,11 +71,10 @@ var Fragment = {
   productStatus_decode: Fragment_productStatus_decode,
   productStatus_fromString: Fragment_productStatus_fromString,
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
-
-var makeVariables = UpdateMatchingProductFormAdminMutation_graphql.Utils.makeVariables;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -96,14 +95,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? UpdateMatchingProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(UpdateMatchingProductFormAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(UpdateMatchingProductFormAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -111,13 +110,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? UpdateMatchingProductFormAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, UpdateMatchingProductFormAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: UpdateMatchingProductFormAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -132,13 +131,10 @@ var Mutation_productStatus_decode = UpdateMatchingProductFormAdminMutation_graph
 
 var Mutation_productStatus_fromString = UpdateMatchingProductFormAdminMutation_graphql.Utils.productStatus_fromString;
 
-var Mutation_make_imageInput = UpdateMatchingProductFormAdminMutation_graphql.Utils.make_imageInput;
-
 var Mutation = {
   productStatus_decode: Mutation_productStatus_decode,
   productStatus_fromString: Mutation_productStatus_fromString,
-  make_imageInput: Mutation_make_imageInput,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -690,15 +686,15 @@ function Update_Matching_Product_Form_Admin$OperationStatusInput(Props) {
                   isShow: match$1[0],
                   children: React.createElement("p", undefined, "영구판매중지 상태를 선택 후 저장하시면", React.createElement("br", undefined), "추후 해당 상품을 수정할 수 없습니다.", React.createElement("br", undefined), React.createElement("br", undefined), "영구판매중지 상태로 변경할까요?"),
                   onCancel: (function (param) {
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setValue(name, Select_Product_Operation_Status.Base.status_encode(/* RETIRE */3));
-                      return setShowProductOperationNoSale(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowProductOperationNoSale(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "확인",
@@ -890,7 +886,7 @@ function Update_Matching_Product_Form_Admin$NoticeAndDateInput$DateInput(Props) 
                   var tmp = {
                     id: match.name,
                     onChange: (function (e) {
-                        return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
+                        Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, e.detail.value));
                       }),
                     firstDayOfWeek: 0
                   };
@@ -1019,7 +1015,7 @@ function Update_Matching_Product_Form_Admin$ThumbnailUploadInput(Props) {
                           return React.createElement(Upload_Thumbnail_Admin.make, {
                                       name: match.name,
                                       updateFn: (function (imageUrls) {
-                                          return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
+                                          Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, Upload_Thumbnail_Admin.Form.image_encode(imageUrls)));
                                         }),
                                       value: Belt_Result.getWithDefault(Upload_Thumbnail_Admin.Form.image_decode(match.value), Upload_Thumbnail_Admin.Form.resetImage),
                                       disabled: disabled
@@ -1253,38 +1249,50 @@ function encodeStatus(status) {
 }
 
 function makeMatchingProductVariables(productId, form) {
-  return Curry.app(makeVariables, [
-              productId,
-              form.editor,
-              ProductForm.makeDisplayCategoryIds(form.displayCategories),
-              form.buyerProductName,
-              {
-                original: form.thumbnail.original,
-                thumb100x100: form.thumbnail.thumb100x100,
-                thumb400x400: form.thumbnail.thumb400x400,
-                thumb800x800: form.thumbnail.thumb800x800,
-                thumb1000x1000: form.thumbnail.thumb1000x1000,
-                thumb1920x1920: form.thumbnail.thumb1920x1920
-              },
-              form.producerProductName,
-              Belt_Option.keep(form.notice, (function (str) {
-                      return str !== "";
-                    })),
-              ProductForm.makeNoticeDate(form.noticeEndAt, (function (prim) {
-                      return EndOfDay(prim);
-                    })),
-              ProductForm.makeNoticeDate(form.noticeStartAt, (function (prim) {
-                      return StartOfDay(prim);
-                    })),
-              form.origin,
-              Belt_Option.keep(form.documentURL, (function (str) {
-                      return str !== "";
-                    })),
-              encodeStatus(form.operationStatus),
-              form.shipmentTo | 0,
-              form.shipmentFrom | 0,
-              undefined
-            ]);
+  var tmp = {
+    description: form.editor,
+    displayCategoryIds: ProductForm.makeDisplayCategoryIds(form.displayCategories),
+    displayName: form.buyerProductName,
+    id: productId,
+    image: {
+      original: form.thumbnail.original,
+      thumb1000x1000: form.thumbnail.thumb1000x1000,
+      thumb100x100: form.thumbnail.thumb100x100,
+      thumb1920x1920: form.thumbnail.thumb1920x1920,
+      thumb400x400: form.thumbnail.thumb400x400,
+      thumb800x800: form.thumbnail.thumb800x800
+    },
+    name: form.producerProductName,
+    origin: form.origin,
+    releaseEndMonth: form.shipmentTo | 0,
+    releaseStartMonth: form.shipmentFrom | 0,
+    status: encodeStatus(form.operationStatus)
+  };
+  var tmp$1 = Belt_Option.keep(form.notice, (function (str) {
+          return str !== "";
+        }));
+  if (tmp$1 !== undefined) {
+    tmp.notice = tmp$1;
+  }
+  var tmp$2 = ProductForm.makeNoticeDate(form.noticeEndAt, (function (prim) {
+          return EndOfDay(prim);
+        }));
+  if (tmp$2 !== undefined) {
+    tmp.noticeEndAt = tmp$2;
+  }
+  var tmp$3 = ProductForm.makeNoticeDate(form.noticeStartAt, (function (prim) {
+          return StartOfDay(prim);
+        }));
+  if (tmp$3 !== undefined) {
+    tmp.noticeStartAt = tmp$3;
+  }
+  var tmp$4 = Belt_Option.keep(form.documentURL, (function (str) {
+          return str !== "";
+        }));
+  if (tmp$4 !== undefined) {
+    tmp.salesDocument = tmp$4;
+  }
+  return tmp;
 }
 
 function Update_Matching_Product_Form_Admin(Props) {
@@ -1325,9 +1333,9 @@ function Update_Matching_Product_Form_Admin(Props) {
             Curry.app(matchingMutate, [
                   undefined,
                   (function (param, param$1) {
-                      return setShowUpdateSuccess(function (param) {
-                                  return /* Show */0;
-                                });
+                      setShowUpdateSuccess(function (param) {
+                            return /* Show */0;
+                          });
                     }),
                   undefined,
                   undefined,
@@ -1337,27 +1345,26 @@ function Update_Matching_Product_Form_Admin(Props) {
                   undefined,
                   undefined
                 ]);
-            
           }));
     if (result.TAG === /* Ok */0) {
       return ;
     }
     console.log(result._0);
-    return addToast(React.createElement("div", {
-                    className: "flex items-center"
-                  }, React.createElement(IconError.make, {
-                        width: "24",
-                        height: "24",
-                        className: "mr-2"
-                      }), "오류가 발생하였습니다. 수정내용을 확인하세요."), {
-                appearance: "error"
-              });
+    addToast(React.createElement("div", {
+              className: "flex items-center"
+            }, React.createElement(IconError.make, {
+                  width: "24",
+                  height: "24",
+                  className: "mr-2"
+                }), "오류가 발생하였습니다. 수정내용을 확인하세요."), {
+          appearance: "error"
+        });
   };
   var handleReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setShowInitialize(function (param) {
-                              return /* Show */0;
-                            });
+                  setShowInitialize(function (param) {
+                        return /* Show */0;
+                      });
                 }), param);
   };
   var match$4 = product.status;
@@ -1453,15 +1460,15 @@ function Update_Matching_Product_Form_Admin(Props) {
                   isShow: match$3[0],
                   children: React.createElement("p", undefined, "수정한 모든 내용을 초기화 하시겠어요?"),
                   onCancel: (function (param) {
-                      return setShowInitialize(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowInitialize(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       router.reload(router.pathname);
-                      return setShowInitialize(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowInitialize(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   textOnConfirm: "초기화",
@@ -1477,7 +1484,6 @@ function Update_Matching_Product_Form_Admin(Props) {
                             return /* Hide */1;
                           });
                       router.reload(router.pathname);
-                      
                     }),
                   textOnCancel: "확인",
                   boxStyle: "text-center rounded-2xl"
@@ -1509,6 +1515,5 @@ export {
   encodeStatus ,
   makeMatchingProductVariables ,
   make ,
-  
 }
 /* react Not a pure module */

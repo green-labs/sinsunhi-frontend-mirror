@@ -61,6 +61,5 @@ export {
   Int ,
   Float ,
   DateTime ,
-  
 }
 /* date-fns/format Not a pure module */

@@ -205,6 +205,5 @@ export {
   Infomation1 ,
   Infomation2 ,
   Selection1 ,
-  
 }
 /* react Not a pure module */

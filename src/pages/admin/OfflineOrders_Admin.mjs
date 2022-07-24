@@ -370,7 +370,6 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
                                                   var input = Js_json.decodeObject(v);
                                                   Belt_Option.forEach(input, (function (v$p) {
                                                           v$p["id"] = k;
-                                                          
                                                         }));
                                                   return input;
                                                 }));
@@ -398,13 +397,13 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
     Belt_Option.map(Belt_Option.flatMap(Belt_Option.map(orders, body_encode), (function (prim) {
                 return JSON.stringify(prim);
               })), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/offline-order", body, 3, (function (res) {
+            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/offline-order", body, 3, (function (res) {
                           console.log("success");
-                          mutate(Env.restApiUrl + "/offline-order?" + new URLSearchParams(router.query).toString(), undefined, undefined);
+                          mutate("" + Env.restApiUrl + "/offline-order?" + new URLSearchParams(router.query).toString() + "", undefined, undefined);
                           methods.reset(undefined);
-                          return setShowSuccessToSave(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowSuccessToSave(function (param) {
+                                return /* Show */0;
+                              });
                         }), (function (error) {
                           setErrorMessage(function (param) {
                                 return Belt_Option.getWithDefault(error.message, "요청에 실패했습니다.");
@@ -412,18 +411,17 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
                           setShowError(function (param) {
                                 return /* Show */0;
                               });
-                          return addToast(React.createElement("div", {
-                                          className: "flex items-center"
-                                        }, React.createElement(IconError.make, {
-                                              width: "24",
-                                              height: "24",
-                                              className: "mr-2"
-                                            }), "저장 실패"), {
-                                      appearance: "error"
-                                    });
+                          addToast(React.createElement("div", {
+                                    className: "flex items-center"
+                                  }, React.createElement(IconError.make, {
+                                        width: "24",
+                                        height: "24",
+                                        className: "mr-2"
+                                      }), "저장 실패"), {
+                                appearance: "error"
+                              });
                         }));
           }));
-    
   };
   var tmp;
   if (typeof status === "number" || status.TAG !== /* Loaded */0) {
@@ -439,7 +437,7 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
                         className: "font-bold text-lg"
                       }, "내역", React.createElement("span", {
                             className: "ml-2 text-base text-primary font-normal"
-                          }, Locale.Float.show(undefined, data$p._0.count, 0) + "개")), React.createElement("div", {
+                          }, "" + Locale.Float.show(undefined, data$p._0.count, 0) + "개")), React.createElement("div", {
                         className: "flex"
                       }, React.createElement(Select_CountPerPage.make, {
                             className: "mr-2"
@@ -483,9 +481,9 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, match$4[0]),
                   onCancel: (function (param) {
-                      return setShowError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowError(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -494,9 +492,9 @@ function OfflineOrders_Admin$OfflineOrders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "선택한 오프라인주문 정보가 저장되었습니다."),
                   onCancel: (function (param) {
-                      return setShowSuccessToSave(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccessToSave(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }));
@@ -531,6 +529,5 @@ export {
   body_decode ,
   OfflineOrders ,
   make ,
-  
 }
 /* Env Not a pure module */

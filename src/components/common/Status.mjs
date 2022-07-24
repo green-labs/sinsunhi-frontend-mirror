@@ -48,8 +48,7 @@ function handleOnClickStatus(router, status, param) {
                     Js_dict.unsafeDeleteKey(newQueries, "status");
                   }
                   var newQueryString = new URLSearchParams(newQueries).toString();
-                  router.push(router.pathname + "?" + newQueryString);
-                  
+                  router.push("" + router.pathname + "?" + newQueryString + "");
                 }), param);
   };
 }
@@ -112,7 +111,7 @@ function displayCount(status, s) {
   }
   var orders$p = CustomHooks.OrdersSummary.orders_decode(status._0);
   if (orders$p.TAG === /* Ok */0) {
-    return String(Belt_Option.mapWithDefault(Garter_Array.getBy(orders$p._0.data, (function (d) {
+    return "" + String(Belt_Option.mapWithDefault(Garter_Array.getBy(orders$p._0.data, (function (d) {
                           return d.status === s;
                         })), 0, (function (d) {
                       return d.count;
@@ -165,7 +164,7 @@ function Status$Total(Props) {
     }
     var orders$p = CustomHooks.OrdersSummary.orders_decode(status._0);
     if (orders$p.TAG === /* Ok */0) {
-      return String(Garter_Array.reduce(orders$p._0.data, 0, (function (acc, cur) {
+      return "" + String(Garter_Array.reduce(orders$p._0.data, 0, (function (acc, cur) {
                         return acc + cur.count | 0;
                       }))) + "건";
     } else {
@@ -215,6 +214,5 @@ export {
   Tooltip ,
   Total ,
   Item ,
-  
 }
 /* react Not a pure module */

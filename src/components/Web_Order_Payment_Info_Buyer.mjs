@@ -7,21 +7,21 @@ import * as Skeleton from "./Skeleton.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as ReactHookForm from "react-hook-form";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as Web_Order_Buyer_Form from "./Web_Order_Buyer_Form.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as WebOrderPaymentInfoBuyerFragment_graphql from "../__generated__/WebOrderPaymentInfoBuyerFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(WebOrderPaymentInfoBuyerFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(WebOrderPaymentInfoBuyerFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(WebOrderPaymentInfoBuyerFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(WebOrderPaymentInfoBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(WebOrderPaymentInfoBuyerFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -33,6 +33,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -90,37 +91,30 @@ function Web_Order_Payment_Info_Buyer(Props) {
             })), 0);
   var match = fragments.node;
   var match$1;
-  if (match !== undefined) {
-    if (deliveryType !== undefined) {
-      var match$2 = match.productOptionCost;
-      var deliveryCost = match$2.deliveryCost;
-      var price = match.price;
-      var decode = Web_Order_Buyer_Form.deliveryType_decode(deliveryType);
-      if (decode.TAG === /* Ok */0) {
-        var decode$1 = decode._0;
-        match$1 = decode$1 === "PARCEL" ? (
-            match$2.isFreeShipping ? [
-                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
-                "무료"
-              ] : [
-                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0) - deliveryCost | 0, quantity)) + "원",
-                Locale.Int.show(undefined, Math.imul(deliveryCost, quantity)) + "원"
-              ]
-          ) : (
-            decode$1 === "SELF" ? [
-                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
-                "0원"
-              ] : [
-                Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
-                "협의"
-              ]
-          );
-      } else {
-        match$1 = [
-          "-",
-          "-"
-        ];
-      }
+  if (match !== undefined && deliveryType !== undefined) {
+    var match$2 = match.productOptionCost;
+    var deliveryCost = match$2.deliveryCost;
+    var price = match.price;
+    var decode = Web_Order_Buyer_Form.deliveryType_decode(deliveryType);
+    if (decode.TAG === /* Ok */0) {
+      var decode$1 = decode._0;
+      match$1 = decode$1 === "PARCEL" ? (
+          match$2.isFreeShipping ? [
+              "" + Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+              "무료"
+            ] : [
+              "" + Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0) - deliveryCost | 0, quantity)) + "원",
+              "" + Locale.Int.show(undefined, Math.imul(deliveryCost, quantity)) + "원"
+            ]
+        ) : (
+          decode$1 === "SELF" ? [
+              "" + Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+              "0원"
+            ] : [
+              "" + Locale.Int.show(undefined, Math.imul(Belt_Option.getWithDefault(price, 0), quantity)) + "원",
+              "협의"
+            ]
+        );
     } else {
       match$1 = [
         "-",
@@ -157,7 +151,6 @@ function Web_Order_Payment_Info_Buyer(Props) {
           setIsFixedOff(function (param) {
                 return ((scrollHeight - innerHeight | 0) - (scrollY | 0) | 0) < 140;
               });
-          
         }), [
         scrollHeight,
         innerHeight,
@@ -193,7 +186,7 @@ function Web_Order_Payment_Info_Buyer(Props) {
                           className: "text-text-L2"
                         }, "총 결제금액"), React.createElement("span", {
                           className: "text-xl xl:text-lg text-primary font-bold"
-                        }, Locale.Int.show(undefined, Math.imul(optionPrice, quantity)) + "원"))), React.createElement("div", {
+                        }, "" + Locale.Int.show(undefined, Math.imul(optionPrice, quantity)) + "원"))), React.createElement("div", {
                   className: "mt-7 mb-10 text-center text-text-L1"
                 }, React.createElement("span", undefined, "주문 내용을 확인했으며, 정보 제공에 동의합니다.")), React.createElement("button", {
                   className: "w-full h-14 flex justify-center items-center bg-primary text-lg text-white rounded-xl",
@@ -210,6 +203,5 @@ export {
   Fragment ,
   PlaceHolder ,
   make ,
-  
 }
 /* react Not a pure module */

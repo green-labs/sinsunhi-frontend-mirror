@@ -50,14 +50,14 @@ function Download_Center_Table$DownloadTableRow(Props) {
     setErrorMessageDownload(function (param) {
           return message;
         });
-    return setShowDownloadError(function (param) {
-                return /* Show */0;
-              });
+    setShowDownloadError(function (param) {
+          return /* Show */0;
+        });
   };
   var isExpired = function (expiredAt) {
     var now = new Date(Date.now());
     if (expiredAt !== undefined) {
-      return Caml_obj.caml_lessthan(new Date(expiredAt), now);
+      return Caml_obj.lessthan(new Date(expiredAt), now);
     } else {
       return false;
     }
@@ -88,7 +88,7 @@ function Download_Center_Table$DownloadTableRow(Props) {
                       src: naviDownloadIcon,
                       onClick: (function (param) {
                           var requestId = String(id);
-                          FetchHelper.requestWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/excel-export/" + requestId + "/download-url", "", 3, (function (res) {
+                          FetchHelper.requestWithRetry(FetchHelper.getWithToken, "" + Env.restApiUrl + "/excel-export/" + requestId + "/download-url", "", 3, (function (res) {
                                   var err = CustomHooks.AdminS3PresignedUrl.response_decode(res);
                                   if (err.TAG !== /* Ok */0) {
                                     return handleErr(err._0.message);
@@ -105,13 +105,10 @@ function Download_Center_Table$DownloadTableRow(Props) {
                                           body$p.appendChild(link$p);
                                           link$p.click();
                                           body$p.removeChild(link$p);
-                                          
                                         }));
-                                  
                                 }), (function (err) {
-                                  return handleErr(err.message);
+                                  handleErr(err.message);
                                 }));
-                          
                         })
                     }));
     }
@@ -148,9 +145,9 @@ function Download_Center_Table$DownloadTableRow(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, Belt_Option.getWithDefault(match$1[0], "다운로드에 실패하였습니다.\n다시 시도하시기 바랍니다.")),
                   onConfirm: (function (param) {
-                      return setShowDownloadError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowDownloadError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -170,7 +167,7 @@ function Download_Center_Table(Props) {
                       className: "font-bold"
                     }, "다운로드 요청내역"), React.createElement("span", {
                       className: "ml-2 text-primary"
-                    }, String(count) + "건")), React.createElement("div", {
+                    }, "" + String(count) + "건")), React.createElement("div", {
                   className: "flex flex-col sm:flex-row sm:justify-between sm:items-center"
                 }, React.createElement("span", {
                       className: "sm:text-sm"
@@ -199,6 +196,5 @@ export {
   DownloadTableHead ,
   DownloadTableRow ,
   make ,
-  
 }
 /* naviDownloadIcon Not a pure module */

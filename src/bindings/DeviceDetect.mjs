@@ -38,6 +38,5 @@ function detectDevice(param) {
 export {
   detectDeviceFromCtx ,
   detectDevice ,
-  
 }
 /* react-device-detect Not a pure module */

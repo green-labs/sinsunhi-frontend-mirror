@@ -19,23 +19,23 @@ function toOnlyNumber(value) {
 
 function toTon(v) {
   if (v.slice(-2) !== "00") {
-    return v + "kg";
+    return "" + v + "kg";
   }
   var ton = v.slice(0, v.length - 3 | 0);
   if (v.slice(-3) === "000") {
-    return ton + "톤";
+    return "" + ton + "톤";
   } else {
-    return ton + "." + v.slice(-3, -2) + "톤";
+    return "" + ton + "." + v.slice(-3, -2) + "톤";
   }
 }
 
 function convertNumber(labelType, value) {
   if (labelType === "won") {
-    return KoreanNumeral.fromInt64(Caml_format.caml_int64_of_string(value), undefined, undefined) + " 원";
+    return "" + KoreanNumeral.fromInt64(Caml_format.int64_of_string(value), undefined, undefined) + " 원";
   } else if (value.length > 3) {
     return toTon(value);
   } else {
-    return value + "kg";
+    return "" + value + "kg";
   }
 }
 
@@ -100,14 +100,14 @@ function DS_InputField$Line1$Input(Props) {
   var tmp = {
     type_: type_,
     onFocus: (function (param) {
-        return setFocused(function (param) {
-                    return true;
-                  });
+        setFocused(function (param) {
+              return true;
+            });
       }),
     onBlur: (function (param) {
-        return setFocused(function (param) {
-                    return false;
-                  });
+        setFocused(function (param) {
+              return false;
+            });
       })
   };
   if (className !== undefined) {
@@ -139,11 +139,7 @@ function DS_InputField$Line1$Input(Props) {
         }));
   var getUnderLabel = React.createElement("span", {
         className: "text-gray-400 text-sm leading-5 mt-3"
-      }, value !== undefined ? (
-          match$1 ? (
-              underLabelType !== undefined ? convertNumber(underLabelType, toOnlyNumber(value)) : Belt_Option.getWithDefault(underLabel, "")
-            ) : Belt_Option.getWithDefault(underLabel, "")
-        ) : Belt_Option.getWithDefault(underLabel, ""));
+      }, value !== undefined && match$1 && underLabelType !== undefined ? convertNumber(underLabelType, toOnlyNumber(value)) : Belt_Option.getWithDefault(underLabel, ""));
   var tmp$1;
   var exit = 0;
   if (disabled !== undefined && disabled) {
@@ -170,9 +166,9 @@ function DS_InputField$Line1$Input(Props) {
                           })) ? React.createElement("button", {
                             className: "h-[30px]",
                             onClick: (function (param) {
-                                return Belt_Option.mapWithDefault(fnClear, undefined, (function (fn) {
-                                              return Curry._1(fn, undefined);
-                                            }));
+                                Belt_Option.mapWithDefault(fnClear, undefined, (function (fn) {
+                                        Curry._1(fn, undefined);
+                                      }));
                               })
                           }, React.createElement("img", {
                                 src: searchBarClear
@@ -198,6 +194,5 @@ export {
   searchBarClear ,
   Convert ,
   Line1 ,
-  
 }
 /* searchBarClear Not a pure module */

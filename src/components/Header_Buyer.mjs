@@ -44,16 +44,16 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
   var logOutAction = function (param) {
     CustomHooks.Auth.logOut(undefined);
     ChannelTalkHelper.logout(undefined);
-    return Redirect.setHref("/");
+    Redirect.setHref("/");
   };
   var itemStyle = "cursor-pointer w-full h-full py-3 px-4 whitespace-nowrap flex items-center justify-center";
   return React.createElement(ReactDropdownMenu.Root, {
               children: null,
               open: match[0],
               onOpenChange: (function (to_) {
-                  return setOpen(function (param) {
-                              return to_;
-                            });
+                  setOpen(function (param) {
+                        return to_;
+                      });
                 })
             }, React.createElement(ReactDropdownMenu.Trigger, {
                   children: React.createElement("img", {
@@ -72,7 +72,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("https://drive.google.com/drive/u/0/folders/1DbaGUxpkYnJMrl4RPKRzpCqTfTUH7bYN");
-                                  
                                 })
                           }, React.createElement("span", undefined, "판매자료 다운로드")),
                       className: "focus:outline-none"
@@ -81,7 +80,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("/buyer/upload");
-                                  
                                 })
                           }, React.createElement("span", undefined, "주문서 업로드")),
                       className: "focus:outline-none"
@@ -90,7 +88,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("/buyer/orders");
-                                  
                                 })
                           }, React.createElement("span", undefined, "주문 내역")),
                       className: "focus:outline-none"
@@ -99,7 +96,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("/buyer/transactions");
-                                  
                                 })
                           }, React.createElement("span", undefined, "결제 내역")),
                       className: "focus:outline-none"
@@ -108,7 +104,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("/buyer/download-center");
-                                  
                                 })
                           }, React.createElement("span", undefined, "다운로드 센터")),
                       className: "focus:outline-none"
@@ -117,7 +112,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("https://shinsunmarket.co.kr/532");
-                                  
                                 })
                           }, React.createElement("span", undefined, "고객지원")),
                       className: "focus:outline-none"
@@ -126,7 +120,6 @@ function Header_Buyer$Mobile$LoggedInUserMenu(Props) {
                             className: itemStyle,
                             onClick: makeOnClick(function (param) {
                                   router.push("/buyer/products/advanced-search");
-                                  
                                 })
                           }, React.createElement("span", undefined, "단품 확인")),
                       className: "focus:outline-none"
@@ -155,7 +148,6 @@ function Header_Buyer$Mobile$Normal(Props) {
                         }, React.createElement("button", {
                               onClick: (function (param) {
                                   router.back();
-                                  
                                 })
                             }, React.createElement("img", {
                                   className: "w-6 h-6 rotate-180",
@@ -165,7 +157,6 @@ function Header_Buyer$Mobile$Normal(Props) {
                                 }, title)), React.createElement("button", {
                               onClick: (function (param) {
                                   router.push("/buyer");
-                                  
                                 })
                             }, React.createElement("img", {
                                   src: homeIcon
@@ -194,7 +185,6 @@ function Header_Buyer$Mobile$NoBack(Props) {
                                 }, title)), React.createElement("button", {
                               onClick: (function (param) {
                                   router.push("/buyer");
-                                  
                                 })
                             }, React.createElement("img", {
                                   src: homeIcon
@@ -218,7 +208,6 @@ function Header_Buyer$Mobile$GnbHome(Props) {
           setCsr(function (param) {
                 return true;
               });
-          
         }), []);
   var redirect = Js_dict.get(router.query, "redirect");
   var redirectUrl = redirect !== undefined ? new URLSearchParams(Js_dict.fromArray([[
@@ -254,7 +243,7 @@ function Header_Buyer$Mobile$GnbHome(Props) {
                       className: "flex flex-1 justify-end"
                     }, typeof user === "number" ? (
                         user !== 0 ? React.createElement(Link, {
-                                href: "/buyer/signin?" + redirectUrl,
+                                href: "/buyer/signin?" + redirectUrl + "",
                                 children: React.createElement("a", {
                                       className: "px-3 py-[6px] bg-green-50 flex items-center justify-center rounded-full text-[15px] text-green-500"
                                     }, "로그인")
@@ -278,7 +267,6 @@ function Header_Buyer$Mobile$Search(Props) {
                           className: "mr-1",
                           onClick: (function (param) {
                               router.back();
-                              
                             })
                         }, React.createElement("img", {
                               className: "w-6 h-6 rotate-180",
@@ -397,7 +385,7 @@ function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
     return ReactEvents.interceptingHandler((function (param) {
                   CustomHooks.Auth.logOut(undefined);
                   ChannelTalkHelper.logout(undefined);
-                  return Redirect.setHref("/");
+                  Redirect.setHref("/");
                 }), param);
   };
   var itemStyle = "cursor-pointer w-full h-full py-3 px-8 whitespace-nowrap flex items-center justify-center";
@@ -429,7 +417,6 @@ function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/orders");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "주문 내역")),
@@ -440,7 +427,6 @@ function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/transactions");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "결제 내역")),
@@ -451,7 +437,6 @@ function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/download-center");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "다운로드 센터")),
@@ -462,7 +447,6 @@ function Header_Buyer$PC_Old$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/products/advanced-search");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "단품 확인")),
@@ -494,12 +478,12 @@ function Header_Buyer$PC_Old$NotLoggedInUserMenu(Props) {
   return React.createElement("div", {
               className: "flex items-center justify-center"
             }, React.createElement(Link, {
-                  href: "/buyer/signin?" + redirectUrl,
+                  href: "/buyer/signin?" + redirectUrl + "",
                   children: React.createElement("a", {
                         className: buttonStyle
                       }, "로그인")
                 }), React.createElement(Link, {
-                  href: "/buyer/signup?" + redirectUrl,
+                  href: "/buyer/signup?" + redirectUrl + "",
                   children: React.createElement("a", {
                         className: buttonStyle
                       }, "회원가입")
@@ -601,7 +585,7 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
     return ReactEvents.interceptingHandler((function (param) {
                   CustomHooks.Auth.logOut(undefined);
                   ChannelTalkHelper.logout(undefined);
-                  return Redirect.setHref("/");
+                  Redirect.setHref("/");
                 }), param);
   };
   var itemStyle = "cursor-pointer w-full h-full py-3 px-8 whitespace-nowrap flex items-center justify-center";
@@ -633,7 +617,6 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/orders");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "주문 내역")),
@@ -644,7 +627,6 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/transactions");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "결제 내역")),
@@ -655,7 +637,6 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/download-center");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "다운로드 센터")),
@@ -666,7 +647,6 @@ function Header_Buyer$PC$LoggedInUserMenu(Props) {
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
                                                   router.push("/buyer/products/advanced-search");
-                                                  
                                                 }), param);
                                   })
                               }, React.createElement("span", undefined, "단품 확인")),
@@ -698,12 +678,12 @@ function Header_Buyer$PC$NotLoggedInUserMenu(Props) {
   return React.createElement("div", {
               className: "flex items-center justify-center"
             }, React.createElement(Link, {
-                  href: "/buyer/signin?" + redirectUrl,
+                  href: "/buyer/signin?" + redirectUrl + "",
                   children: React.createElement("a", {
                         className: buttonStyle
                       }, "로그인")
                 }), React.createElement(Link, {
-                  href: "/buyer/signup?" + redirectUrl,
+                  href: "/buyer/signup?" + redirectUrl + "",
                   children: React.createElement("a", {
                         className: buttonStyle
                       }, "회원가입")
@@ -801,6 +781,5 @@ export {
   Mobile ,
   PC_Old ,
   PC ,
-  
 }
 /* homeIcon Not a pure module */

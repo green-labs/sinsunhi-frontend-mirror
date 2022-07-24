@@ -44,9 +44,9 @@ function Order_Buyer$Item$Table(Props) {
   var setShowCancelConfirm = match[1];
   var status = CustomHooks.Courier.use(undefined);
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "입력전";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(order.courierCode, (function (courierCode$p) {
                     return Belt_Result.getWithDefault(Belt_Result.map(CustomHooks.Courier.response_decode(couriers), (function (couriers$p) {
@@ -57,8 +57,6 @@ function Order_Buyer$Item$Table(Props) {
                   })), (function (courier) {
                 return courier.name;
               })), "입력전");
-  } else {
-    courierName = "입력전";
   }
   var match$1 = order.status;
   var isDisabedCheckbox = match$1 !== 0;
@@ -93,7 +91,7 @@ function Order_Buyer$Item$Table(Props) {
                 }, React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement(Checkbox.make, {
-                          id: "checkbox-" + order.orderProductNo,
+                          id: "checkbox-" + order.orderProductNo + "",
                           checked: Curry._1(check, order.orderProductNo),
                           onChange: Curry._1(onCheckOrder, order.orderProductNo),
                           disabled: isDisabedCheckbox
@@ -111,7 +109,7 @@ function Order_Buyer$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block text-gray-400"
-                        }, String(order.productId) + " ・ " + order.productSku), React.createElement("span", {
+                        }, "" + String(order.productId) + " ・ " + order.productSku + ""), React.createElement("span", {
                           className: "block truncate"
                         }, order.productName), React.createElement("span", {
                           className: "block"
@@ -119,7 +117,7 @@ function Order_Buyer$Item$Table(Props) {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "whitespace-nowrap text-right"
-                        }, Locale.Float.show(undefined, order.productPrice, 0) + "원", React.createElement("br", undefined), order.payType ? "나중결제" : "신선캐시")), React.createElement("div", {
+                        }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원", React.createElement("br", undefined), order.payType ? "나중결제" : "신선캐시")), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
                           className: "block"
@@ -138,9 +136,9 @@ function Order_Buyer$Item$Table(Props) {
                                     className: "px-3 max-h-10 bg-gray-gl text-gray-gl rounded-lg whitespace-nowrap py-1 mt-2 max-w-min",
                                     type: "button",
                                     onClick: (function (param) {
-                                        return setShowCancelConfirm(function (param) {
-                                                    return /* Show */0;
-                                                  });
+                                        setShowCancelConfirm(function (param) {
+                                              return /* Show */0;
+                                            });
                                       })
                                   }, "주문취소"))
                       ) : "미등록"), tmp, React.createElement("div", {
@@ -159,15 +157,15 @@ function Order_Buyer$Item$Table(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "선택한 주문을 취소하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowCancelConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setShowCancelConfirm(function (param) {
                             return /* Hide */1;
                           });
-                      return Curry._1(onClickCancel, [order.orderProductNo]);
+                      Curry._1(onClickCancel, [order.orderProductNo]);
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -187,9 +185,9 @@ function Order_Buyer$Item$Card(Props) {
   var setShowCancelConfirm = match[1];
   var status = CustomHooks.Courier.use(undefined);
   var courierName;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     courierName = "택배사 선택";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var couriers = status._0;
     courierName = Belt_Option.getWithDefault(Belt_Option.map(Belt_Option.flatMap(order.courierCode, (function (courierCode$p) {
                     return Belt_Result.getWithDefault(Belt_Result.map(CustomHooks.Courier.response_decode(couriers), (function (couriers$p) {
@@ -200,8 +198,6 @@ function Order_Buyer$Item$Card(Props) {
                   })), (function (courier) {
                 return courier.name;
               })), "택배사 선택");
-  } else {
-    courierName = "택배사 선택";
   }
   var match$1 = order.status;
   var match$2 = order.deliveryType;
@@ -217,7 +213,7 @@ function Order_Buyer$Item$Card(Props) {
   if (exit === 1) {
     tmp = React.createElement(React.Fragment, undefined, React.createElement("span", {
               className: "block"
-            }, Belt_Option.getWithDefault(order.receiverName, "-") + " " + Belt_Option.getWithDefault(order.receiverPhone, "-")), React.createElement("span", {
+            }, "" + Belt_Option.getWithDefault(order.receiverName, "-") + " " + Belt_Option.getWithDefault(order.receiverPhone, "-") + ""), React.createElement("span", {
               className: "block mt-1"
             }, Belt_Option.getWithDefault(order.receiverAddress, "-")), React.createElement("span", {
               className: "block mt-1"
@@ -255,7 +251,7 @@ function Order_Buyer$Item$Card(Props) {
                                   className: "ml-2 "
                                 }, React.createElement("span", {
                                       className: "block"
-                                    }, String(order.productId) + " ・ " + order.productSku), React.createElement("span", {
+                                    }, "" + String(order.productId) + " ・ " + order.productSku + ""), React.createElement("span", {
                                       className: "block mt-1"
                                     }, order.productName), React.createElement("span", {
                                       className: "block mt-1"
@@ -265,7 +261,7 @@ function Order_Buyer$Item$Card(Props) {
                                   className: "w-20 text-gray-gl"
                                 }, "상품금액"), React.createElement("span", {
                                   className: "ml-2 "
-                                }, Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
+                                }, "" + Locale.Float.show(undefined, order.productPrice, 0) + "원")), React.createElement("div", {
                               className: "flex mt-4 "
                             }, React.createElement("span", {
                                   className: "w-20 text-gray-gl"
@@ -304,9 +300,9 @@ function Order_Buyer$Item$Card(Props) {
                                                 className: "w-full py-3 px-3 bg-gray-gl text-gray-gl rounded-lg whitespace-nowrap text-base font-bold",
                                                 type: "button",
                                                 onClick: (function (param) {
-                                                    return setShowCancelConfirm(function (param) {
-                                                                return /* Show */0;
-                                                              });
+                                                    setShowCancelConfirm(function (param) {
+                                                          return /* Show */0;
+                                                        });
                                                   })
                                               }, "주문취소")))
                               ) : "미등록"), React.createElement("div", {
@@ -345,15 +341,15 @@ function Order_Buyer$Item$Card(Props) {
                         className: "text-black-gl text-center whitespace-pre-wrap"
                       }, "선택한 주문을 취소하시겠습니까?"),
                   onCancel: (function (param) {
-                      return setShowCancelConfirm(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowCancelConfirm(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   onConfirm: (function (param) {
                       setShowCancelConfirm(function (param) {
                             return /* Hide */1;
                           });
-                      return Curry._1(onClickCancel, [order.orderProductNo]);
+                      Curry._1(onClickCancel, [order.orderProductNo]);
                     }),
                   textOnCancel: "취소",
                   textOnConfirm: "확인"
@@ -394,6 +390,5 @@ export {
   payTypeToText ,
   Item ,
   make ,
-  
 }
 /* Badge Not a pure module */

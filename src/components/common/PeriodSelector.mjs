@@ -57,10 +57,10 @@ function PeriodSelector(Props) {
                   }), param);
     };
   };
-  var on = Caml_obj.caml_equal(period, /* Today */0);
-  var on$1 = Caml_obj.caml_equal(period, /* OneWeek */1);
-  var on$2 = Caml_obj.caml_equal(period, /* OneMonth */2);
-  var on$3 = Caml_obj.caml_equal(period, /* ThreeMonth */3);
+  var on = Caml_obj.equal(period, /* Today */0);
+  var on$1 = Caml_obj.equal(period, /* OneWeek */1);
+  var on$2 = Caml_obj.equal(period, /* OneMonth */2);
+  var on$3 = Caml_obj.equal(period, /* ThreeMonth */3);
   return React.createElement(React.Fragment, undefined, React.createElement("button", {
                   className: Cx.cx([
                         defaultStyle,
@@ -99,6 +99,5 @@ export {
   styleOnOff ,
   getPeriod ,
   make ,
-  
 }
 /* react Not a pure module */

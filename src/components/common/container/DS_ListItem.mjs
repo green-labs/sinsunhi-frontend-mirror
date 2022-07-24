@@ -124,6 +124,5 @@ var Information1 = {
 export {
   Normal1 ,
   Information1 ,
-  
 }
 /* react Not a pure module */

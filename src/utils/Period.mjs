@@ -8,11 +8,10 @@ import SubDays from "date-fns/subDays";
 function currentPeriod(router) {
   var currentFrom = Belt_Option.getWithDefault(Caml_option.nullable_to_opt(new URLSearchParams(router.query).get("from")), Format(SubDays(new Date(), 7), "yyyyMMdd"));
   var currentTo = Belt_Option.getWithDefault(Caml_option.nullable_to_opt(new URLSearchParams(router.query).get("to")), Format(new Date(), "yyyyMMdd"));
-  return "from=" + currentFrom + "&to=" + currentTo;
+  return "from=" + currentFrom + "&to=" + currentTo + "";
 }
 
 export {
   currentPeriod ,
-  
 }
 /* date-fns/format Not a pure module */

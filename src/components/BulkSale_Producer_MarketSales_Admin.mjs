@@ -14,6 +14,5 @@ var make = BulkSale_Producer_MarketSales_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

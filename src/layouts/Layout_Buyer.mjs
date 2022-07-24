@@ -69,6 +69,5 @@ var make = Layout_Buyer;
 export {
   Responsive ,
   make ,
-  
 }
 /* react Not a pure module */

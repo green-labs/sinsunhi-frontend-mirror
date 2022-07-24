@@ -6,17 +6,18 @@ import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import Head from "next/head";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../utils/CustomHooks.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Footer_Buyer from "../../../components/Footer_Buyer.mjs";
 import * as Header_Buyer from "../../../components/Header_Buyer.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ChannelTalkHelper from "../../../utils/ChannelTalkHelper.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as SRPBuyerQuery_graphql from "../../../__generated__/SRPBuyerQuery_graphql.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as SRPBuyer_fragment_graphql from "../../../__generated__/SRPBuyer_fragment_graphql.mjs";
@@ -25,10 +26,8 @@ import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactEr
 import * as ShopProductsSortSelect_Buyer from "../../../components/ShopProductsSortSelect_Buyer.mjs";
 import * as ShopSearchBuyerRefetchQuery_graphql from "../../../__generated__/ShopSearchBuyerRefetchQuery_graphql.mjs";
 
-var makeVariables = SRPBuyerQuery_graphql.Utils.makeVariables;
-
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(SRPBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SRPBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(SRPBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(SRPBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -37,7 +36,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(SRPBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(SRPBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -55,38 +54,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, SRPBuyerQuery_graphql.node, SRPBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, SRPBuyerQuery_graphql.node, SRPBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: SRPBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: SRPBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, SRPBuyerQuery_graphql.node, SRPBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, SRPBuyerQuery_graphql.node, SRPBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(SRPBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(SRPBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(SRPBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(SRPBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SRPBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -102,7 +100,7 @@ var Query_productsQueryInputSort_fromString = SRPBuyerQuery_graphql.Utils.produc
 var Query = {
   productsQueryInputSort_decode: Query_productsQueryInputSort_decode,
   productsQueryInputSort_fromString: Query_productsQueryInputSort_fromString,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -126,27 +124,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(SRPBuyer_fragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(SRPBuyer_fragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(SRPBuyer_fragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ShopSearchBuyerRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(ShopSearchBuyerRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(SRPBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(SRPBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(SRPBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(SRPBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(SRPBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -157,7 +155,7 @@ function useOpt(opt_fRef) {
 }
 
 function usePagination(fr) {
-  var p = Hooks.usePaginationFragment(SRPBuyer_fragment_graphql.node, fr);
+  var p = ReactRelay.usePaginationFragment(SRPBuyer_fragment_graphql.node, fr);
   var data = RescriptRelay_Internal.internal_useConvertedValue(SRPBuyer_fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -188,7 +186,7 @@ function usePagination(fr) {
 }
 
 function useBlockingPagination(fRef) {
-  var p = Hooks.useBlockingPaginationFragment(SRPBuyer_fragment_graphql.node, fRef);
+  var p = ReactRelay.useBlockingPaginationFragment(SRPBuyer_fragment_graphql.node, fRef);
   var data = RescriptRelay_Internal.internal_useConvertedValue(SRPBuyer_fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -225,6 +223,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt,
   usePagination: usePagination,
@@ -261,7 +260,7 @@ function SRP_Buyer$Placeholder(Props) {
                                     className: "grid grid-cols-4 gap-x-10 gap-y-16"
                                   }, Belt_Array.map(Belt_Array.range(1, 300), (function (number) {
                                           return React.createElement(ShopProductListItem_Buyer.PC.Placeholder.make, {
-                                                      key: "box-" + String(number)
+                                                      key: "box-" + String(number) + ""
                                                     });
                                         })))))), React.createElement(Footer_Buyer.PC.make, {}));
     case /* Mobile */2 :
@@ -281,7 +280,7 @@ function SRP_Buyer$Placeholder(Props) {
                                     className: "grid grid-cols-2 gap-x-4 gap-y-8"
                                   }, Belt_Array.map(Belt_Array.range(1, 300), (function (idx) {
                                           return React.createElement(ShopProductListItem_Buyer.MO.Placeholder.make, {
-                                                      key: "search-result-skeleton-" + String(idx)
+                                                      key: "search-result-skeleton-" + String(idx) + ""
                                                     });
                                         })))))), React.createElement(Footer_Buyer.MO.make, {}));
     
@@ -457,14 +456,18 @@ function SRP_Buyer$Container(Props) {
   var keyword = Props.keyword;
   var sort = Props.sort;
   ChannelTalkHelper.Hook.use(undefined, undefined, undefined);
-  var match = use(Curry._6(makeVariables, 20, undefined, keyword, sort, true, undefined), /* StoreOrNetwork */1, undefined, undefined, undefined);
+  var match = use({
+        count: 20,
+        name: keyword,
+        onlyBuyable: true,
+        sort: sort
+      }, /* StoreOrNetwork */1, undefined, undefined, undefined);
   var fragmentRefs = match.fragmentRefs;
   React.useEffect((function () {
           DataGtm.push({
                 event: "view_search_results",
                 keyword: keyword
               });
-          
         }), [keyword]);
   switch (deviceType) {
     case /* Unknown */0 :
@@ -502,7 +505,6 @@ function SRP_Buyer(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "신선하이")
@@ -542,6 +544,5 @@ export {
   MO ,
   Container ,
   make ,
-  
 }
 /* react Not a pure module */

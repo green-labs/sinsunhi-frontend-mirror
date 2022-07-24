@@ -8,9 +8,9 @@ import * as IconClose from "./svgs/IconClose.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as Select_BulkSale_Crop from "./Select_BulkSale_Crop.mjs";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
@@ -38,14 +38,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProductCreateButtonMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProductCreateButtonMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProductCreateButtonMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -53,13 +53,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProductCreateButtonMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProductCreateButtonMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProductCreateButtonMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -74,18 +74,10 @@ var Mutation_productPackageMassUnit_decode = BulkSaleProductCreateButtonMutation
 
 var Mutation_productPackageMassUnit_fromString = BulkSaleProductCreateButtonMutation_graphql.Utils.productPackageMassUnit_fromString;
 
-var Mutation_make_bulkSaleCampaignCreateInput = BulkSaleProductCreateButtonMutation_graphql.Utils.make_bulkSaleCampaignCreateInput;
-
-var Mutation_make_productPackageMassInput = BulkSaleProductCreateButtonMutation_graphql.Utils.make_productPackageMassInput;
-
-var Mutation_makeVariables = BulkSaleProductCreateButtonMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   productPackageMassUnit_decode: Mutation_productPackageMassUnit_decode,
   productPackageMassUnit_fromString: Mutation_productPackageMassUnit_fromString,
-  make_bulkSaleCampaignCreateInput: Mutation_make_bulkSaleCampaignCreateInput,
-  make_productPackageMassInput: Mutation_make_productPackageMassInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -210,9 +202,9 @@ function BulkSale_Product_Create_Button(Props) {
       return ;
     }
     var value$p$1 = value$p._0;
-    return setPreferredQuantityUnit(function (param) {
-                return value$p$1;
-              });
+    setPreferredQuantityUnit(function (param) {
+          return value$p$1;
+        });
   };
   var partial_arg = (function (param) {
       setProductCategoryId(function (param) {
@@ -224,9 +216,9 @@ function BulkSale_Product_Create_Button(Props) {
       setPreferredQuantityAmount(function (param) {
             
           });
-      return setPreferredQuantityUnit(function (param) {
-                  return "KG";
-                });
+      setPreferredQuantityUnit(function (param) {
+            return "KG";
+          });
     });
   var partial_arg$1 = (function (param) {
       setPreferredGrade(function (param) {
@@ -235,9 +227,9 @@ function BulkSale_Product_Create_Button(Props) {
       setPreferredQuantityAmount(function (param) {
             
           });
-      return setPreferredQuantityUnit(function (param) {
-                  return "KG";
-                });
+      setPreferredQuantityUnit(function (param) {
+            return "KG";
+          });
     });
   return React.createElement(ReactDialog.Root, {
               children: null,
@@ -422,17 +414,15 @@ function BulkSale_Product_Create_Button(Props) {
                                                     var buttonClose = document.getElementById("btn-close");
                                                     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
                                                             buttonClose$p.click();
-                                                            
                                                           }));
-                                                    
                                                   }),
                                                 undefined,
                                                 undefined,
                                                 undefined,
                                                 undefined,
                                                 {
-                                                  input: input._0,
-                                                  connections: [connectionId]
+                                                  connections: [connectionId],
+                                                  input: input._0
                                                 },
                                                 undefined,
                                                 undefined
@@ -440,9 +430,9 @@ function BulkSale_Product_Create_Button(Props) {
                                           return ;
                                         }
                                         var errors = input._0;
-                                        return setFormErrors(function (param) {
-                                                    return errors;
-                                                  });
+                                        setFormErrors(function (param) {
+                                              return errors;
+                                            });
                                       })
                                   }, "저장")))),
                   className: "dialog-content overflow-y-auto"
@@ -455,6 +445,5 @@ export {
   Mutation ,
   makeInput ,
   make ,
-  
 }
 /* Input Not a pure module */

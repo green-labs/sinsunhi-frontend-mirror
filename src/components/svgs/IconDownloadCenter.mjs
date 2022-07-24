@@ -6,6 +6,5 @@ var make = DownloadCenterSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

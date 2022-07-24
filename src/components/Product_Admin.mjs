@@ -7,22 +7,22 @@ import Link from "next/link";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ProductAdminFragment_graphql from "../__generated__/ProductAdminFragment_graphql.mjs";
 import * as Product_Operation_Status_Badge from "./Product_Operation_Status_Badge.mjs";
 import * as ProductAdminTypedProductFragment_graphql from "../__generated__/ProductAdminTypedProductFragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(ProductAdminFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ProductAdminFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductAdminFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ProductAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ProductAdminFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -34,18 +34,19 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
 
 function use$1(fRef) {
-  var data = Hooks.useFragment(ProductAdminTypedProductFragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(ProductAdminTypedProductFragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ProductAdminTypedProductFragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt$1(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(ProductAdminTypedProductFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(ProductAdminTypedProductFragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -57,6 +58,7 @@ function useOpt$1(opt_fRef) {
 
 var TypedProductFragment = {
   Types: undefined,
+  Operation: undefined,
   use: use$1,
   useOpt: useOpt$1
 };
@@ -154,10 +156,10 @@ function Product_Admin(Props) {
                       )), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement(Link, {
-                          href: "/admin/products/" + product.id,
+                          href: "/admin/products/" + product.id + "",
                           children: React.createElement("a", {
                                 className: "underline"
-                              }, product.displayName + "(" + String(product.productId) + ")")
+                              }, "" + product.displayName + "(" + String(product.productId) + ")")
                         })), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement(Product_Admin$Product_Option_Link_Button, {
@@ -167,7 +169,7 @@ function Product_Admin(Props) {
                     }, React.createElement("span", {
                           className: "block"
                         }, Belt_Option.mapWithDefault(product.producer, "-", (function (param) {
-                                return param.name + "(" + Belt_Option.getWithDefault(param.producerCode, "") + ")";
+                                return "" + param.name + "(" + Belt_Option.getWithDefault(param.producerCode, "") + ")";
                               })))), React.createElement("div", {
                       className: "h-full flex flex-col px-4 py-2"
                     }, React.createElement("span", {
@@ -210,6 +212,5 @@ export {
   TypedProductFragment ,
   Product_Option_Link_Button ,
   make ,
-  
 }
 /* react Not a pure module */

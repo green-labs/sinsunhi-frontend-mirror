@@ -46,9 +46,9 @@ function Shipment_Detail_Button_Seller$Detail(Props) {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "중량·포장"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 "
-                    }, Belt_Option.mapWithDefault(wholesale.weight, "", (function (prim) {
+                    }, "" + Belt_Option.mapWithDefault(wholesale.weight, "", (function (prim) {
                             return String(prim);
-                          })) + ", " + wholesale.packageType), React.createElement("div", {
+                          })) + ", " + wholesale.packageType + ""), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "등급"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
@@ -56,7 +56,7 @@ function Shipment_Detail_Button_Seller$Detail(Props) {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 경매금액"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalSettlementAmount, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalSettlementAmount, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 경매수량"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
@@ -64,27 +64,27 @@ function Shipment_Detail_Button_Seller$Detail(Props) {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "평균경매단가*"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.avgUnitPirce, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.avgUnitPirce, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 상장수수료"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalAuctionFee, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalAuctionFee, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 하차비용"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalUnloadingCost, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalUnloadingCost, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 운송비용"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalTransportCost, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalTransportCost, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 포장재지원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalPackageCostSpt, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalPackageCostSpt, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 운송비지원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2"
-                    }, Locale.Float.show(undefined, wholesale.totalTransportCostSpt, 0) + " 원")), React.createElement("span", {
+                    }, "" + Locale.Float.show(undefined, wholesale.totalTransportCostSpt, 0) + " 원")), React.createElement("span", {
                   className: "col-span-4 mt-1 text-text-L2"
                 }, "*평균경매단가는 소수점 첫번째 자리에서 반올림됩니다"));
 }
@@ -104,15 +104,15 @@ function Shipment_Detail_Button_Seller$BulkSale(Props) {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "전량판매 단가"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, bulksale.unitPrice, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, bulksale.unitPrice, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "차액*"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-border-default-L2"
-                    }, Locale.Float.show(undefined, bulksale.difference, 0) + " 원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, bulksale.difference, 0) + " 원"), React.createElement("div", {
                       className: "align-middle py-3 pl-3 border-t border-b border-border-default-L2 bg-bg-pressed-L1 text-text-L2"
                     }, "총 차액**"), React.createElement("div", {
                       className: "col-span-3 align-middle py-3 pl-3 border-t border-b border-border-default-L2"
-                    }, Locale.Float.show(undefined, bulksale.totalDiff, 0) + " 원"), React.createElement("span", {
+                    }, "" + Locale.Float.show(undefined, bulksale.totalDiff, 0) + " 원"), React.createElement("span", {
                       className: "col-span-4 mt-1 text-text-L2"
                     }, "*전량판매 단가 - 평균단가 = 차액  **차액 X 경매수량 = 총 차액")));
 }
@@ -127,9 +127,9 @@ function Shipment_Detail_Button_Seller$OrderList$AuctionItem(Props) {
               className: "grid grid-cols-3-shipment-auction-seller"
             }, React.createElement("div", {
                   className: "border-b border-border-default-L2 py-3 pl-4"
-                }, order.marketName + "(" + order.wholesalerName + ")"), React.createElement("div", {
+                }, "" + order.marketName + "(" + order.wholesalerName + ")"), React.createElement("div", {
                   className: "border-b border-border-default-L2 py-3"
-                }, Locale.Float.show(undefined, order.unitPrice, 0) + " 원"), React.createElement("div", {
+                }, "" + Locale.Float.show(undefined, order.unitPrice, 0) + " 원"), React.createElement("div", {
                   className: "border-b border-border-default-L2 py-3"
                 }, String(order.quantity)));
 }
@@ -155,7 +155,6 @@ function Shipment_Detail_Button_Seller$OrderList$Pagination(Props) {
     Belt_Option.map(Belt_Option.map(Belt_Int.fromString(value), (function (v) {
                 return Math.imul(v - 1 | 0, itemPerPage);
               })), onChangePage);
-    
   };
   var isDisabledLeft = start <= 1;
   var isDisabledRight = end >= totalPage;
@@ -237,9 +236,9 @@ function Shipment_Detail_Button_Seller$OrderList(Props) {
                       total: orders.length,
                       itemPerPage: 10,
                       onChangePage: (function (offset) {
-                          return setOffset(function (param) {
-                                      return offset;
-                                    });
+                          setOffset(function (param) {
+                                return offset;
+                              });
                         })
                     })));
 }
@@ -322,6 +321,5 @@ export {
   BulkSale ,
   OrderList ,
   make ,
-  
 }
 /* react Not a pure module */

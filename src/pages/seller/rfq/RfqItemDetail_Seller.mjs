@@ -9,15 +9,18 @@ import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as DS_Title from "../../../components/common/container/DS_Title.mjs";
 import * as DS_Toast from "../../../components/common/container/DS_Toast.mjs";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as DS_Button from "../../../components/common/element/DS_Button.mjs";
 import * as DS_Dialog from "../../../components/common/container/DS_Dialog.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as DS_ListItem from "../../../components/common/container/DS_ListItem.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as DS_TitleList from "../../../components/common/element/DS_TitleList.mjs";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
@@ -27,7 +30,6 @@ import * as RelayRuntime from "relay-runtime";
 import * as DS_BottomDrawer from "../../../components/common/container/DS_BottomDrawer.mjs";
 import Format from "date-fns/format";
 import * as DS_TopNavigation from "../../../components/common/container/DS_TopNavigation.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
@@ -36,7 +38,7 @@ import * as RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql from "..
 import * as RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql from "../../../__generated__/RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -45,7 +47,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -63,38 +65,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -131,8 +132,6 @@ var Query_rfqRequestStatus_decode = RfqItemDetailSeller_RfqRequestItemMeatNode_Q
 
 var Query_rfqRequestStatus_fromString = RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Utils.rfqRequestStatus_fromString;
 
-var Query_makeVariables = RfqItemDetailSeller_RfqRequestItemMeatNode_Query_graphql.Utils.makeVariables;
-
 var Query = {
   meatMadeIn_decode: Query_meatMadeIn_decode,
   meatMadeIn_fromString: Query_meatMadeIn_fromString,
@@ -148,7 +147,7 @@ var Query = {
   rfqRequestItemStatus_fromString: Query_rfqRequestItemStatus_fromString,
   rfqRequestStatus_decode: Query_rfqRequestStatus_decode,
   rfqRequestStatus_fromString: Query_rfqRequestStatus_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -177,14 +176,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -192,13 +191,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -217,17 +216,12 @@ var CreateRfqQuotationMeat_rfqQuotationStatus_decode = RfqItemDetailSeller_Creat
 
 var CreateRfqQuotationMeat_rfqQuotationStatus_fromString = RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Utils.rfqQuotationStatus_fromString;
 
-var CreateRfqQuotationMeat_make_rfqQuotationMeatInput = RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Utils.make_rfqQuotationMeatInput;
-
-var CreateRfqQuotationMeat_makeVariables = RfqItemDetailSeller_CreateRfqQuotationMeat_Mutation_graphql.Utils.makeVariables;
-
 var CreateRfqQuotationMeat = {
   errorCode_decode: CreateRfqQuotationMeat_errorCode_decode,
   errorCode_fromString: CreateRfqQuotationMeat_errorCode_fromString,
   rfqQuotationStatus_decode: CreateRfqQuotationMeat_rfqQuotationStatus_decode,
   rfqQuotationStatus_fromString: CreateRfqQuotationMeat_rfqQuotationStatus_fromString,
-  make_rfqQuotationMeatInput: CreateRfqQuotationMeat_make_rfqQuotationMeatInput,
-  makeVariables: CreateRfqQuotationMeat_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -252,14 +246,14 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
               optimisticResponse: optimisticResponse !== undefined ? RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$2(param) {
-  var match = Hooks.useMutation(RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -267,13 +261,13 @@ function use$2(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -292,17 +286,12 @@ var UpdateRfqQuotationMeat_rfqQuotationStatus_decode = RfqItemDetailSeller_Updat
 
 var UpdateRfqQuotationMeat_rfqQuotationStatus_fromString = RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Utils.rfqQuotationStatus_fromString;
 
-var UpdateRfqQuotationMeat_make_rfqQuotationMeatInput = RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Utils.make_rfqQuotationMeatInput;
-
-var UpdateRfqQuotationMeat_makeVariables = RfqItemDetailSeller_UpdateRfqQuotationMeat_Mutation_graphql.Utils.makeVariables;
-
 var UpdateRfqQuotationMeat = {
   errorCode_decode: UpdateRfqQuotationMeat_errorCode_decode,
   errorCode_fromString: UpdateRfqQuotationMeat_errorCode_fromString,
   rfqQuotationStatus_decode: UpdateRfqQuotationMeat_rfqQuotationStatus_decode,
   rfqQuotationStatus_fromString: UpdateRfqQuotationMeat_rfqQuotationStatus_fromString,
-  make_rfqQuotationMeatInput: UpdateRfqQuotationMeat_make_rfqQuotationMeatInput,
-  makeVariables: UpdateRfqQuotationMeat_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation$1,
   use: use$2
@@ -324,12 +313,10 @@ function displayDeleveryMethod(v) {
     return "상관없음";
   } else if (v === "WAREHOUSE_TRANSFER") {
     return "창고배송";
-  } else if (v === "OTHER") {
+  } else if (v === "OTHER" || v !== "WAREHOUSE_PICKUP") {
     return "기타";
-  } else if (v === "WAREHOUSE_PICKUP") {
-    return "창고수령";
   } else {
-    return "기타";
+    return "창고수령";
   }
 }
 
@@ -402,13 +389,12 @@ function RfqItemDetail_Seller$TimerTitle(Props) {
   var time = match[0];
   React.useEffect((function () {
           var id = setInterval((function (param) {
-                  return setTime(function (time) {
-                              return Math.max(0, time - 1 | 0);
-                            });
+                  setTime(function (time) {
+                        return Math.max(0, time - 1 | 0);
+                      });
                 }), 1000);
           return (function (param) {
                     clearInterval(id);
-                    
                   });
         }), []);
   var getRemainTimes = function (s) {
@@ -444,7 +430,7 @@ function RfqItemDetail_Seller$TimerTitle(Props) {
       return Belt_Option.mapWithDefault(Belt_Option.keep(num, (function (x) {
                         return x > 0;
                       })), "", (function (x) {
-                    return String(x) + postfix;
+                    return "" + String(x) + "" + postfix + "";
                   }));
     };
     switch (time.TAG | 0) {
@@ -465,7 +451,7 @@ function RfqItemDetail_Seller$TimerTitle(Props) {
   var minuteText = getTimeText(match$1[2]);
   var secondText = getTimeText(match$1[3]);
   if (time > 0) {
-    return dayText + hourText + minuteText + secondText + " 후 요청 마감";
+    return "" + dayText + "" + hourText + "" + minuteText + "" + secondText + " 후 요청 마감";
   } else {
     return "요청 마감";
   }
@@ -578,7 +564,7 @@ function RfqItemDetail_Seller$Detail$MyQuotation(Props) {
                           className: "flex flex-col px-5 gap-3.5"
                         }, React.createElement(RfqItemDetail_Seller$Detail$Item, {
                               title: "단가",
-                              value: numberToComma(Belt_Option.getWithDefault(quotationPrice, "")) + "원/kg"
+                              value: "" + numberToComma(Belt_Option.getWithDefault(quotationPrice, "")) + "원/kg"
                             }), isGradeIgnore ? React.createElement(RfqItemDetail_Seller$Detail$Item, {
                                 title: "등급",
                                 value: Belt_Option.mapWithDefault(gradeText, "", (function (x) {
@@ -654,13 +640,13 @@ function RfqItemDetail_Seller$Detail$Request(Props) {
                                 })), Belt_Option.mapWithDefault(itemMeat.weightKg, null, (function (x) {
                                 return React.createElement(RfqItemDetail_Seller$Detail$Item, {
                                             title: "주문량",
-                                            value: numberToComma(Garter_Array.firstExn(x.split("."))) + " kg"
+                                            value: "" + numberToComma(Garter_Array.firstExn(x.split("."))) + " kg"
                                           });
                               })), Garter_Array.isEmpty(itemMeat.usages.edges) ? null : React.createElement(RfqItemDetail_Seller$Detail$Item, {
                                 title: "사용용도",
-                                value: Belt_Array.map(itemMeat.usages.edges, (function (edge) {
-                                          return edge.node.name;
-                                        })).join(", ")
+                                value: Js_array.joinWith(", ", Belt_Array.map(itemMeat.usages.edges, (function (edge) {
+                                            return edge.node.name;
+                                          })))
                               }), Belt_Option.mapWithDefault(itemMeat.storageMethod, null, (function (x) {
                                 return React.createElement(RfqItemDetail_Seller$Detail$Item, {
                                             title: "보관상태",
@@ -744,7 +730,7 @@ function RfqItemDetail_Seller$Detail$Button(Props) {
                     "selected_grade_id",
                     selectedGrade
                   ]])).toString();
-      router.push(router.asPath + "?" + newQueryString);
+      router.push("" + router.asPath + "?" + newQueryString + "");
     }
     
   };
@@ -767,9 +753,9 @@ function RfqItemDetail_Seller$Detail$Button(Props) {
                 }), React.createElement(DS_BottomDrawer.Root.make, {
                   isShow: isDrawerShow,
                   onClose: (function (param) {
-                      return setDrawerShow(function (param) {
-                                  return !isDrawerShow;
-                                });
+                      setDrawerShow(function (param) {
+                            return !isDrawerShow;
+                          });
                     }),
                   children: null
                 }, React.createElement(DS_BottomDrawer.Header.make, {}), React.createElement(DS_BottomDrawer.Body.make, {
@@ -778,7 +764,7 @@ function RfqItemDetail_Seller$Detail$Button(Props) {
                           className: "text-text-L3 leading-6 tracking-tight px-5 mb-3"
                         }, "구매자가 " + madeInText + "/등급무관을 선택했어요"), React.createElement(DS_Title.Normal1.Root.make, {
                           children: React.createElement(DS_Title.Normal1.TextGroup.make, {
-                                title1: Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
+                                title1: "" + Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
                                         return x.name;
                                       })) + "/" + (
                                   isDomestic ? "국내산" : "수입산"
@@ -793,9 +779,9 @@ function RfqItemDetail_Seller$Detail$Button(Props) {
                                   return React.createElement(DS_ListItem.Normal1.Item.make, {
                                               children: null,
                                               onClick: (function (param) {
-                                                  return setSelectedGrade(function (param) {
-                                                              return x.id;
-                                                            });
+                                                  setSelectedGrade(function (param) {
+                                                        return x.id;
+                                                      });
                                                 }),
                                               key: x.id
                                             }, React.createElement(DS_ListItem.Normal1.TextGroup.make, {
@@ -817,7 +803,7 @@ function RfqItemDetail_Seller$Detail$Button(Props) {
                           label: "다음",
                           disabled: Belt_Option.isNone(selectedGrade),
                           onClick: (function (param) {
-                              return navigatePriceFormPage(undefined);
+                              navigatePriceFormPage(undefined);
                             })
                         }), React.createElement("div", undefined))));
 }
@@ -872,13 +858,13 @@ function RfqItemDetail_Seller$Apply(Props) {
   var hasSubmittedQuotation = Belt_Option.isSome(submittedQuotation);
   var handleChangeInput = function (e) {
     var value = convertNumberInputValue(e.target.value);
-    return setPrice(function (param) {
-                if (value.trim() === "") {
-                  return ;
-                } else {
-                  return value;
-                }
-              });
+    setPrice(function (param) {
+          if (value.trim() === "") {
+            return ;
+          } else {
+            return value;
+          }
+        });
   };
   var addToastWhenAfterMutate = function (mutationType, hasError) {
     var submitTypeText = mutationType ? "수정" : "제출";
@@ -918,7 +904,7 @@ function RfqItemDetail_Seller$Apply(Props) {
                 var match = updateRfqQuotationMeat.VAL.result;
                 if (match !== undefined) {
                   addToastWhenAfterMutate(/* Update */1, false);
-                  router.replace("/seller/rfq/request/" + itemMeat.id);
+                  router.replace("/seller/rfq/request/" + itemMeat.id + "");
                   return ;
                 } else {
                   return addToastWhenAfterMutate(/* Update */1, true);
@@ -961,7 +947,7 @@ function RfqItemDetail_Seller$Apply(Props) {
               var match = createRfqQuotationMeat.VAL.result;
               if (match !== undefined) {
                 addToastWhenAfterMutate(/* Create */0, false);
-                router.replace("/seller/rfq/request/" + itemMeat.id);
+                router.replace("/seller/rfq/request/" + itemMeat.id + "");
                 return ;
               } else {
                 return addToastWhenAfterMutate(/* Create */0, true);
@@ -977,12 +963,11 @@ function RfqItemDetail_Seller$Apply(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var part = Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
-          return x.name + "/" + (
+          return "" + x.name + "/" + (
                   x.isDomestic ? "국산" : "수입"
-                );
+                ) + "";
         }));
   var price$p = Belt_Option.getWithDefault(price, "");
   return React.createElement(React.Fragment, undefined, React.createElement("section", {
@@ -994,7 +979,6 @@ function RfqItemDetail_Seller$Apply(Props) {
                                 className: "cursor-pointer",
                                 onClick: (function (param) {
                                     window.history.back();
-                                    
                                   })
                               }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                     height: "32",
@@ -1004,10 +988,10 @@ function RfqItemDetail_Seller$Apply(Props) {
                         }), React.createElement(DS_TopNavigation.Detail.Center.make, {
                           children: "견적서 " + (
                             hasSubmittedQuotation ? "수정" : "작성"
-                          )
+                          ) + ""
                         })), React.createElement(DS_Title.Normal1.Root.make, {
                       children: React.createElement(DS_Title.Normal1.TextGroup.make, {
-                            title1: Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
+                            title1: "" + Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
                                     return x.name;
                                   })) + "/" + Belt_Option.mapWithDefault(itemMeat.part, "", (function (x) {
                                     if (x.isDomestic) {
@@ -1030,9 +1014,9 @@ function RfqItemDetail_Seller$Apply(Props) {
                             inputMode: "decimal",
                             isClear: true,
                             fnClear: (function (param) {
-                                return setPrice(function (param) {
-                                            
-                                          });
+                                setPrice(function (param) {
+                                      
+                                    });
                               }),
                             unit: "원/kg",
                             underLabelType: "won",
@@ -1046,9 +1030,9 @@ function RfqItemDetail_Seller$Apply(Props) {
                             label: "다음",
                             disabled: Belt_Option.isNone(price),
                             onClick: (function (param) {
-                                return DataGtm.push({
-                                            event: "Expose_view_RFQ_Livestock_EnteraPrice_Check_Popup"
-                                          });
+                                DataGtm.push({
+                                      event: "Expose_view_RFQ_Livestock_EnteraPrice_Check_Popup"
+                                    });
                               }),
                             dataGtm: "Click_RFQ_Livestock_EnteraPrice"
                           }),
@@ -1060,11 +1044,11 @@ function RfqItemDetail_Seller$Apply(Props) {
                         }, React.createElement(DS_Dialog.Popup.Title.make, {
                               children: "아래 내용으로 견적서를 " + (
                                 hasSubmittedQuotation ? "수정합니다." : "보냅니다."
-                              )
+                              ) + ""
                             }), React.createElement(DS_Dialog.Popup.Description.make, {
                               children: React.createElement("div", {
                                     className: "text-base leading-6 tracking-tight text-enabled-L2"
-                                  }, React.createElement("div", undefined, part + " - " + numberToComma(price$p) + " 원/kg"), React.createElement("div", undefined, "등급 - " + sellerSelectedGradeNode.grade))
+                                  }, React.createElement("div", undefined, "" + part + " - " + numberToComma(price$p) + " 원/kg"), React.createElement("div", undefined, "등급 - " + sellerSelectedGradeNode.grade + ""))
                             }), React.createElement(DS_Dialog.Popup.Buttons.make, {
                               children: null
                             }, React.createElement(DS_Dialog.Popup.Close.make, {
@@ -1184,6 +1168,5 @@ export {
   Apply ,
   DetailPageRouter ,
   make ,
-  
 }
 /* react Not a pure module */

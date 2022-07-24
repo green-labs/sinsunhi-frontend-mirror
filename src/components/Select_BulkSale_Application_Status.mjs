@@ -5,18 +5,14 @@ import * as React from "react";
 import * as IconCheck from "./svgs/IconCheck.mjs";
 import * as IconError from "./svgs/IconError.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as IconArrowSelect from "./svgs/IconArrowSelect.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as BulkSale_Producer_Application_Rejected_Button from "./BulkSale_Producer_Application_Rejected_Button.mjs";
 import * as BulkSale_Producer_Application_Withdrawn_Button from "./BulkSale_Producer_Application_Withdrawn_Button.mjs";
 import * as SelectBulkSaleApplicationStatusMutation_graphql from "../__generated__/SelectBulkSaleApplicationStatusMutation_graphql.mjs";
-
-var make_bulkSaleApplicationProgressInput = SelectBulkSaleApplicationStatusMutation_graphql.Utils.make_bulkSaleApplicationProgressInput;
-
-var makeVariables = SelectBulkSaleApplicationStatusMutation_graphql.Utils.makeVariables;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -37,14 +33,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(SelectBulkSaleApplicationStatusMutation_graphql.node);
+  var match = ReactRelay.useMutation(SelectBulkSaleApplicationStatusMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -52,13 +48,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: SelectBulkSaleApplicationStatusMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -76,8 +72,7 @@ var Mutation_bulkSaleApplicationProgress_fromString = SelectBulkSaleApplicationS
 var Mutation = {
   bulkSaleApplicationProgress_decode: Mutation_bulkSaleApplicationProgress_decode,
   bulkSaleApplicationProgress_fromString: Mutation_bulkSaleApplicationProgress_fromString,
-  make_bulkSaleApplicationProgressInput: make_bulkSaleApplicationProgressInput,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -199,15 +194,15 @@ function Select_BulkSale_Application_Status(Props) {
       } else {
         Curry.app(mutate, [
               (function (err) {
-                  return addToast(React.createElement("div", {
-                                  className: "flex items-center"
-                                }, React.createElement(IconError.make, {
-                                      width: "24",
-                                      height: "24",
-                                      className: "mr-2"
-                                    }), err.message), {
-                              appearance: "error"
-                            });
+                  addToast(React.createElement("div", {
+                            className: "flex items-center"
+                          }, React.createElement(IconError.make, {
+                                width: "24",
+                                height: "24",
+                                className: "mr-2"
+                              }), err.message), {
+                        appearance: "error"
+                      });
                 }),
               (function (param, param$1) {
                   addToast(React.createElement("div", {
@@ -220,13 +215,18 @@ function Select_BulkSale_Application_Status(Props) {
                               }), "수정 요청에 성공하였습니다."), {
                         appearance: "success"
                       });
-                  return Curry._1(refetchSummary, undefined);
+                  Curry._1(refetchSummary, undefined);
                 }),
               undefined,
               undefined,
               undefined,
               undefined,
-              Curry._2(makeVariables, application.id, Curry._3(make_bulkSaleApplicationProgressInput, progress$1, undefined, undefined)),
+              {
+                id: application.id,
+                input: {
+                  progress: progress$1
+                }
+              },
               undefined,
               undefined
             ]);
@@ -234,7 +234,6 @@ function Select_BulkSale_Application_Status(Props) {
       }
     }
     console.log("알 수 없는 진행 상태");
-    
   };
   return React.createElement("div", {
               className: "relative"
@@ -273,14 +272,14 @@ function Select_BulkSale_Application_Status(Props) {
                   application: application,
                   isShow: match$2[0],
                   open: (function (param) {
-                      return setShowRejectedDialog(function (param) {
-                                  return true;
-                                });
+                      setShowRejectedDialog(function (param) {
+                            return true;
+                          });
                     }),
                   close: (function (param) {
-                      return setShowRejectedDialog(function (param) {
-                                  return false;
-                                });
+                      setShowRejectedDialog(function (param) {
+                            return false;
+                          });
                     }),
                   refetchSummary: refetchSummary
                 }));
@@ -294,6 +293,5 @@ export {
   stringifyStatus ,
   displayStatus ,
   make ,
-  
 }
 /* react Not a pure module */

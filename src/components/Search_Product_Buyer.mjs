@@ -22,24 +22,23 @@ function Search_Product_Buyer(Props) {
   var status = match[0];
   var handleOnChageStatus = function (e) {
     var newStatus = e.target.value;
-    return setStatus(function (param) {
-                return Belt_Option.getWithDefault(Select_Product_Status.decodeStatus(newStatus), /* ALL */0);
-              });
+    setStatus(function (param) {
+          return Belt_Option.getWithDefault(Select_Product_Status.decodeStatus(newStatus), /* ALL */0);
+        });
   };
   var onSubmit = function (param) {
     var productName = Query_Product_Form_Buyer.FormFields.get(param.state.values, /* ProductName */0);
     router.query["product-name"] = productName;
     router.query["status"] = Select_Product_Status.encodeStatus(status);
     router.query["offset"] = "0";
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Product_Form_Buyer.Form.use, Query_Product_Form_Buyer.initialState, /* Schema */{
         _0: Belt_Array.concatMany([])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -57,11 +56,10 @@ function Search_Product_Buyer(Props) {
                     return ;
                   }
                 }));
-          
         }), [router.query]);
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._4(form.setFieldValue, /* ProductName */0, "", false, undefined);
+                  Curry._4(form.setFieldValue, /* ProductName */0, "", false, undefined);
                 }), param);
   };
   var partial_arg = Curry._1(form.handleChange, /* ProductName */0);
@@ -136,6 +134,5 @@ export {
   Form ,
   Select ,
   make ,
-  
 }
 /* Input Not a pure module */

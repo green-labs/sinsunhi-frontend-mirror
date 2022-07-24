@@ -4,19 +4,19 @@ import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDPGtmBuyer_fragment_graphql from "../../../__generated__/PDPGtmBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPGtmBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPGtmBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPGtmBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPGtmBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPGtmBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -28,15 +28,16 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
 
 function use$1(query) {
   var match = use(query);
+  var productId = match.productId;
   var price = match.price;
   var displayName = match.displayName;
-  var productId = match.productId;
   var categoryNames = Belt_Array.map(match.category.fullyQualifiedName, (function (param) {
           return param.name;
         }));
@@ -59,22 +60,22 @@ function use$1(query) {
       typename = undefined;
   }
   return function (param) {
-    return DataGtm.push({
-                event: "view_item",
-                items: [{
-                    item_type: Js_null_undefined.fromOption(typename),
-                    currency: "KRW",
-                    item_id: String(productId),
-                    item_name: displayName,
-                    item_brand: Js_null_undefined.fromOption(producerCode),
-                    price: Js_null_undefined.fromOption(price),
-                    item_category: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 0)),
-                    item_category2: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 1)),
-                    item_category3: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 2)),
-                    item_category4: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 3)),
-                    item_category5: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 4))
-                  }]
-              });
+    DataGtm.push({
+          event: "view_item",
+          items: [{
+              item_type: Js_null_undefined.fromOption(typename),
+              currency: "KRW",
+              item_id: String(productId),
+              item_name: displayName,
+              item_brand: Js_null_undefined.fromOption(producerCode),
+              price: Js_null_undefined.fromOption(price),
+              item_category: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 0)),
+              item_category2: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 1)),
+              item_category3: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 2)),
+              item_category4: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 3)),
+              item_category5: Js_null_undefined.fromOption(Belt_Array.get(categoryNames, 4))
+            }]
+        });
   };
 }
 
@@ -85,6 +86,5 @@ var PageView = {
 
 export {
   PageView ,
-  
 }
 /* DataGtm Not a pure module */

@@ -27,6 +27,5 @@ var make = ErrorPage;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

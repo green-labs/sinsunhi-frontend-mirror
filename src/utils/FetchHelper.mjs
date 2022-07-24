@@ -10,6 +10,7 @@ import * as GraphQL from "./GraphQL.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Js_json from "rescript/lib/es6/js_json.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
@@ -52,291 +53,291 @@ function errJson_decode(v) {
 }
 
 function get(url, onSuccess, onFailure) {
-  return fetch(url, Fetch.RequestInit.make(/* Get */0, {
-                          "Content-Type": "application/json"
-                        }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return res.json();
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (json) {
-                return Promise.resolve(Curry._1(onSuccess, json));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    return Promise.resolve(Curry._1(onSuccess, json));
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Fetch.$$Response.json(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch(url, Fetch.RequestInit.make(/* Get */0, {
+                                "Content-Type": "application/json"
+                              }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function post(url, body, onSuccess, onFailure) {
-  return fetch(url, Fetch.RequestInit.make(/* Post */2, {
-                          "Content-Type": "application/json"
-                        }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return res.json();
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (json) {
-                return Promise.resolve(Curry._1(onSuccess, json));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    return Promise.resolve(Curry._1(onSuccess, json));
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Fetch.$$Response.json(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch(url, Fetch.RequestInit.make(/* Post */2, {
+                                "Content-Type": "application/json"
+                              }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function postWithURLSearchParams(url, urlSearchParams, onSuccess, onFailure) {
-  return fetch(url, Fetch.RequestInit.make(/* Post */2, {
-                          "Content-Type": "application/x-www-form-urlencoded"
-                        }, Caml_option.some(urlSearchParams), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return res.json();
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (json) {
-                return Promise.resolve(Curry._1(onSuccess, json));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    return Promise.resolve(Curry._1(onSuccess, json));
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Fetch.$$Response.json(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch(url, Fetch.RequestInit.make(/* Post */2, {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                              }, Caml_option.some(urlSearchParams), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function put(url, body, onSuccess, onFailure) {
-  return fetch(url, Fetch.RequestInit.make(/* Put */3, {
-                          "Content-Type": "application/json"
-                        }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return res.json();
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (json) {
-                return Promise.resolve(Curry._1(onSuccess, json));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    return Promise.resolve(Curry._1(onSuccess, json));
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Fetch.$$Response.json(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch(url, Fetch.RequestInit.make(/* Put */3, {
+                                "Content-Type": "application/json"
+                              }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function putWithToken(url, body) {
   var accessToken = Curry._1(LocalStorageHooks.AccessToken.get, undefined);
-  return fetch(url, Fetch.RequestInit.make(/* Put */3, {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + accessToken
-                    }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return res.json();
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Fetch.$$Response.json(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Put */3, {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken + ""
+                      }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function putWithFormData(url, formData, onSuccess, onFailure) {
-  return fetch(url, Fetch.RequestInit.make(/* Put */3, undefined, Caml_option.some(formData), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return Promise.resolve(res);
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (res) {
-                return Promise.resolve(Curry._1(onSuccess, res));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (res) {
+                    return Promise.resolve(Curry._1(onSuccess, res));
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Promise.resolve(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch(url, Fetch.RequestInit.make(/* Put */3, undefined, Caml_option.some(formData), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function putWithFile(url, file) {
-  return fetch(url, Fetch.RequestInit.make(/* Put */3, undefined, Caml_option.some(file), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return Promise.resolve(res);
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Promise.resolve(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Put */3, undefined, Caml_option.some(file), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function putWithFileAsAttachment(url, file) {
-  return fetch(url, Fetch.RequestInit.make(/* Put */3, [[
-                        "Content-Disposition",
-                        "attachment"
-                      ]], Caml_option.some(file), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return Promise.resolve(res);
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Promise.resolve(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Put */3, [[
+                          "Content-Disposition",
+                          "attachment"
+                        ]], Caml_option.some(file), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function fetcher(url) {
   var accessToken = Curry._1(LocalStorageHooks.AccessToken.get, undefined);
-  return fetch(url, Fetch.RequestInit.make(/* Get */0, {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + accessToken
-                    }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return res.json();
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Fetch.$$Response.json(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Get */0, {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken + ""
+                      }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function getWithToken(url, _body) {
   var accessToken = Curry._1(LocalStorageHooks.AccessToken.get, undefined);
-  return fetch(url, Fetch.RequestInit.make(/* Get */0, {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + accessToken
-                    }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return res.json();
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Fetch.$$Response.json(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Get */0, {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken + ""
+                      }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function getWithTokenForExcel(url, _body) {
   var accessToken = Curry._1(LocalStorageHooks.AccessToken.get, undefined);
-  return fetch(url, Fetch.RequestInit.make(/* Get */0, {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + accessToken
-                    }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return Promise.resolve(res);
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Promise.resolve(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Get */0, {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken + ""
+                      }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function getProcessedImage(url, _body) {
-  return fetch(url, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return Promise.resolve(res);
-              } else {
-                return Promise.reject(Js_exn.raiseError("처리된 이미지를 찾을 수 없습니다."));
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Promise.resolve(res);
+                } else {
+                  return Promise.reject(Js_exn.raiseError("처리된 이미지를 찾을 수 없습니다."));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Get */0, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function postWithToken(url, body) {
@@ -347,55 +348,55 @@ function postWithToken(url, body) {
       }) : ({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "Bearer " + accessToken
+        Authorization: "Bearer " + accessToken + ""
       });
-  return fetch(url, Fetch.RequestInit.make(/* Post */2, Caml_option.some(headers), Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                if (res.status === 201 || res.status === 204) {
-                  return Promise.resolve(null);
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  if (res.status === 201 || res.status === 204) {
+                    return Promise.resolve(null);
+                  } else {
+                    return Fetch.$$Response.json(res);
+                  }
                 } else {
-                  return res.json();
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
                 }
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+              }), fetch(url, Fetch.RequestInit.make(/* Post */2, Caml_option.some(headers), Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function postWithTokenForExcel(url, body) {
   var accessToken = Curry._1(LocalStorageHooks.AccessToken.get, undefined);
-  return fetch(url, Fetch.RequestInit.make(/* Post */2, {
-                      "Content-Type": "application/json",
-                      Authorization: "Bearer " + accessToken
-                    }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                return Promise.resolve(res);
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  return Promise.resolve(res);
+                } else {
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
+                }
+              }), fetch(url, Fetch.RequestInit.make(/* Post */2, {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken + ""
+                      }, Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function patchWithToken(url, body) {
@@ -406,30 +407,30 @@ function patchWithToken(url, body) {
       }) : ({
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: "Bearer " + accessToken
+        Authorization: "Bearer " + accessToken + ""
       });
-  return fetch(url, Fetch.RequestInit.make(/* Patch */8, Caml_option.some(headers), Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-              if (res.ok) {
-                if (res.status === 201 || res.status === 204) {
-                  return Promise.resolve(null);
+  return Js_promise.then_((function (res) {
+                if (res.ok) {
+                  if (res.status === 201 || res.status === 204) {
+                    return Promise.resolve(null);
+                  } else {
+                    return Fetch.$$Response.json(res);
+                  }
                 } else {
-                  return res.json();
+                  return Js_promise.$$catch((function (err) {
+                                return Promise.reject(err);
+                              }), Js_promise.then_((function (errJson) {
+                                    var error = new Error("요청에 실패했습니다.");
+                                    error.status = res.status;
+                                    error.info = errJson;
+                                    var errJson$p = errJson_decode(errJson);
+                                    if (errJson$p.TAG === /* Ok */0) {
+                                      error.message = errJson$p._0.message;
+                                    }
+                                    return Promise.reject(error);
+                                  }), Fetch.$$Response.json(res)));
                 }
-              } else {
-                return res.json().then(function (errJson) {
-                              var error = new Error("요청에 실패했습니다.");
-                              error.status = res.status;
-                              error.info = errJson;
-                              var errJson$p = errJson_decode(errJson);
-                              if (errJson$p.TAG === /* Ok */0) {
-                                error.message = errJson$p._0.message;
-                              }
-                              return Promise.reject(error);
-                            }).catch(function (err) {
-                            return Promise.reject(err);
-                          });
-              }
-            });
+              }), fetch(url, Fetch.RequestInit.make(/* Patch */8, Caml_option.some(headers), Caml_option.some(body), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)));
 }
 
 function responseToken_encode(v) {
@@ -499,49 +500,48 @@ function refreshToken(param) {
             rt
           ]
         ]).toString();
-  return fetch(Env.restApiUrl + "/user/token", Fetch.RequestInit.make(/* Post */2, {
-                          "Content-Type": "application/x-www-form-urlencoded"
-                        }, Caml_option.some(urlSearchParams), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)).then(function (res) {
-                  if (res.ok) {
-                    return res.json();
-                  } else {
-                    return res.json().then(function (errJson) {
-                                  var error = new Error("요청에 실패했습니다.");
-                                  error.status = res.status;
-                                  error.info = errJson;
-                                  var errJson$p = errJson_decode(errJson);
-                                  if (errJson$p.TAG === /* Ok */0) {
-                                    error.message = errJson$p._0.message;
-                                  }
-                                  return Promise.reject(error);
-                                }).catch(function (err) {
-                                return Promise.reject(err);
-                              });
-                  }
-                }).then(function (res) {
-                var result = responseToken_decode(res);
-                if (result.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("토큰 갱신에 실패하였습니다."));
+  return Js_promise.$$catch((function (err) {
+                if (err.status === 400) {
+                  Curry._1(LocalStorageHooks.AccessToken.remove, undefined);
+                  Curry._1(LocalStorageHooks.RefreshToken.remove, undefined);
                 }
-                var res$1 = result._0;
-                Curry._1(LocalStorageHooks.AccessToken.set, res$1.token);
-                Curry._1(LocalStorageHooks.RefreshToken.set, res$1.refreshToken);
-                return Promise.resolve(undefined);
-              }).catch(function (err) {
-              if (err.status === 400) {
-                Curry._1(LocalStorageHooks.AccessToken.remove, undefined);
-                Curry._1(LocalStorageHooks.RefreshToken.remove, undefined);
-              }
-              return Promise.reject(Js_exn.raiseError("토큰 갱신에 실패하였습니다."));
-            });
+                return Promise.reject(Js_exn.raiseError("토큰 갱신에 실패하였습니다."));
+              }), Js_promise.then_((function (res) {
+                    var result = responseToken_decode(res);
+                    if (result.TAG !== /* Ok */0) {
+                      return Promise.reject(Js_exn.raiseError("토큰 갱신에 실패하였습니다."));
+                    }
+                    var res$1 = result._0;
+                    Curry._1(LocalStorageHooks.AccessToken.set, res$1.token);
+                    Curry._1(LocalStorageHooks.RefreshToken.set, res$1.refreshToken);
+                    return Promise.resolve(undefined);
+                  }), Js_promise.then_((function (res) {
+                        if (res.ok) {
+                          return Fetch.$$Response.json(res);
+                        } else {
+                          return Js_promise.$$catch((function (err) {
+                                        return Promise.reject(err);
+                                      }), Js_promise.then_((function (errJson) {
+                                            var error = new Error("요청에 실패했습니다.");
+                                            error.status = res.status;
+                                            error.info = errJson;
+                                            var errJson$p = errJson_decode(errJson);
+                                            if (errJson$p.TAG === /* Ok */0) {
+                                              error.message = errJson$p._0.message;
+                                            }
+                                            return Promise.reject(error);
+                                          }), Fetch.$$Response.json(res)));
+                        }
+                      }), fetch("" + Env.restApiUrl + "/user/token", Fetch.RequestInit.make(/* Post */2, {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                              }, Caml_option.some(urlSearchParams), undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)(undefined)))));
 }
 
 function wait(ms) {
   return new Promise((function (resolve, reject) {
                 setTimeout((function (param) {
-                        return resolve(true);
+                        resolve(true);
                       }), ms);
-                
               }));
 }
 
@@ -550,27 +550,26 @@ function retry(errOpt, fn, count, interval) {
   if (count <= 0) {
     Belt_Option.forEach(err, (function (err) {
             Nextjs.captureException(err);
-            
           }));
     return Promise.reject(Belt_Option.getWithDefault(err, Js_exn.raiseError("요청 재시도를 실패하였습니다.")));
   } else {
-    return Curry._1(fn, undefined).catch(function (err) {
-                if (err.status === 401) {
-                  return refreshToken(undefined).then(function (param) {
-                                return wait(interval).then(function (param) {
-                                            return retry(Caml_option.some(undefined), fn, count - 1 | 0, interval);
-                                          });
-                              }).catch(function (err) {
-                              return wait(interval).then(function (param) {
-                                          return retry(Caml_option.some(err), fn, count - 1 | 0, interval);
-                                        });
-                            });
-                } else {
-                  return wait(interval).then(function (param) {
-                              return retry(Caml_option.some(err), fn, count - 1 | 0, interval);
-                            });
-                }
-              });
+    return Js_promise.$$catch((function (err) {
+                  if (err.status === 401) {
+                    return Js_promise.$$catch((function (err) {
+                                  return Js_promise.then_((function (param) {
+                                                return retry(Caml_option.some(err), fn, count - 1 | 0, interval);
+                                              }), wait(interval));
+                                }), Js_promise.then_((function (param) {
+                                      return Js_promise.then_((function (param) {
+                                                    return retry(Caml_option.some(undefined), fn, count - 1 | 0, interval);
+                                                  }), wait(interval));
+                                    }), refreshToken(undefined)));
+                  } else {
+                    return Js_promise.then_((function (param) {
+                                  return retry(Caml_option.some(err), fn, count - 1 | 0, interval);
+                                }), wait(interval));
+                  }
+                }), Curry._1(fn, undefined));
   }
 }
 
@@ -734,64 +733,64 @@ function checkResponseErrorForSentry(relayResponse, body) {
           var resultObj = Belt_Option.flatMap(Garter_Array.first(Object.keys(obj$1)), (function (firstKey) {
                   return Js_dict.get(obj$1, firstKey);
                 }));
-          return Belt_Option.forEach(resultObj, (function (obj) {
-                        var relayResponse = relayResponseData_decode(obj);
-                        if (relayResponse.TAG !== /* Ok */0) {
-                          return ;
-                        }
-                        var relayResponse$1 = relayResponse._0;
-                        return Belt_Option.forEach(relayResponse$1.__typename, (function (__typename$p) {
-                                      if (Belt_Option.mapWithDefault(Js_json.decodeString(__typename$p), false, (function (s) {
-                                                return s === "Error";
-                                              }))) {
-                                        return Sentry.CaptureException.makeWithRelayError("RelayResponseResultError", relayResponse$1.message, body);
-                                      }
-                                      
-                                    }));
-                      }));
+          Belt_Option.forEach(resultObj, (function (obj) {
+                  var relayResponse = relayResponseData_decode(obj);
+                  if (relayResponse.TAG !== /* Ok */0) {
+                    return ;
+                  }
+                  var relayResponse$1 = relayResponse._0;
+                  Belt_Option.forEach(relayResponse$1.__typename, (function (__typename$p) {
+                          if (Belt_Option.mapWithDefault(Js_json.decodeString(__typename$p), false, (function (s) {
+                                    return s === "Error";
+                                  }))) {
+                            return Sentry.CaptureException.makeWithRelayError("RelayResponseResultError", relayResponse$1.message, body);
+                          }
+                          
+                        }));
+                }));
         }));
-  return Belt_Option.forEach(Belt_Option.map(relayResponse.errors, (function (errors) {
-                    return Belt_Array.keep(errors, (function (error) {
-                                  return error.message !== "Unauthorized";
-                                }));
-                  })), (function (errors) {
-                if (errors.length !== 0) {
-                  return Sentry.CaptureException.makeWithRelayError("RelayError", errors, body);
-                }
-                
-              }));
+  Belt_Option.forEach(Belt_Option.map(relayResponse.errors, (function (errors) {
+              return Belt_Array.keep(errors, (function (error) {
+                            return error.message !== "Unauthorized";
+                          }));
+            })), (function (errors) {
+          if (errors.length !== 0) {
+            return Sentry.CaptureException.makeWithRelayError("RelayError", errors, body);
+          }
+          
+        }));
 }
 
 function fetchWithRetryForRelay(fetcher, url, body, count) {
   var fn = function (param) {
-    return Curry._2(fetcher, url, body).then(function (json) {
-                var relayResponse$p = relayResponse_decode(json);
-                if (relayResponse$p.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("Cannot parse Relay response"));
-                }
-                var relayResponse$p$1 = relayResponse$p._0;
-                if (Belt_Option.isSome(Belt_Option.flatMap(relayResponse$p$1.errors, (function (errors$p) {
-                              return Belt_Array.getBy(errors$p, (function (error) {
-                                            return error.message === "Unauthorized";
-                                          }));
-                            })))) {
-                  var error = new Error("릴레이 Unauthorized");
-                  error.status = 401;
-                  return Promise.reject(error);
-                }
-                checkResponseErrorForSentry(relayResponse$p$1, body);
-                return Promise.resolve(json);
-              });
+    return Js_promise.then_((function (json) {
+                  var relayResponse$p = relayResponse_decode(json);
+                  if (relayResponse$p.TAG !== /* Ok */0) {
+                    return Promise.reject(Js_exn.raiseError("Cannot parse Relay response"));
+                  }
+                  var relayResponse$p$1 = relayResponse$p._0;
+                  if (Belt_Option.isSome(Belt_Option.flatMap(relayResponse$p$1.errors, (function (errors$p) {
+                                return Belt_Array.getBy(errors$p, (function (error) {
+                                              return error.message === "Unauthorized";
+                                            }));
+                              })))) {
+                    var error = new Error("릴레이 Unauthorized");
+                    error.status = 401;
+                    return Promise.reject(error);
+                  }
+                  checkResponseErrorForSentry(relayResponse$p$1, body);
+                  return Promise.resolve(json);
+                }), Curry._2(fetcher, url, body));
   };
   return retry(Caml_option.some(undefined), fn, count, 0);
 }
 
 function requestWithRetry(fetcher, url, body, count, onSuccess, onFailure) {
-  return fetchWithRetry(fetcher, url, body, count).then(function (json) {
-                return Promise.resolve(Curry._1(onSuccess, json));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    return Promise.resolve(Curry._1(onSuccess, json));
+                  }), fetchWithRetry(fetcher, url, body, count)));
 }
 
 export {
@@ -826,6 +825,5 @@ export {
   checkResponseErrorForSentry ,
   fetchWithRetryForRelay ,
   requestWithRetry ,
-  
 }
 /* Env Not a pure module */

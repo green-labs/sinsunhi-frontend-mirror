@@ -43,28 +43,28 @@ function Buyer_Transaction_Detail_Button_Admin$Summary$Amount(Props) {
       var tmp$1;
       switch (kind) {
         case /* OrderComplete */0 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.orderComplete, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.orderComplete, 0) + "원";
             break;
         case /* CashRefund */1 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.cashRefund, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.cashRefund, 0) + "원";
             break;
         case /* ImwebPay */2 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.imwebPay, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.imwebPay, 0) + "원";
             break;
         case /* ImwebCancel */3 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.imwebCancel, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.imwebCancel, 0) + "원";
             break;
         case /* OrderCancel */4 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.orderCancel, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.orderCancel, 0) + "원";
             break;
         case /* OrderRefund */5 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.orderRefund, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.orderRefund, 0) + "원";
             break;
         case /* Deposit */6 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.deposit, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.deposit, 0) + "원";
             break;
         case /* SinsunCash */7 :
-            tmp$1 = Locale.Float.show(undefined, response$p$1.data.sinsunCash, 0) + "원";
+            tmp$1 = "" + Locale.Float.show(undefined, response$p$1.data.sinsunCash, 0) + "원";
             break;
         
       }
@@ -186,9 +186,9 @@ function Buyer_Transaction_Detail_Button_Admin$List(Props) {
                           total: transactions$p$1.count,
                           onChangePage: (function (qs) {
                               console.log("!!");
-                              return setPaginationQueryString(function (param) {
-                                          return qs;
-                                        });
+                              setPaginationQueryString(function (param) {
+                                    return qs;
+                                  });
                             })
                         })));
     }
@@ -224,7 +224,7 @@ function Buyer_Transaction_Detail_Button_Admin(Props) {
                       className: "flex p-5"
                     }, React.createElement("h3", {
                           className: "text-lg font-bold"
-                        }, buyerName + " 거래내역"), React.createElement(ReactDialog.Close, {
+                        }, "" + buyerName + " 거래내역"), React.createElement(ReactDialog.Close, {
                           children: React.createElement(IconClose.make, {
                                 height: "24",
                                 width: "24",
@@ -245,6 +245,5 @@ export {
   Summary ,
   List ,
   make ,
-  
 }
 /* react Not a pure module */

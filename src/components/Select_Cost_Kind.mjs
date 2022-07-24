@@ -61,8 +61,7 @@ function Select_Cost_Kind(Props) {
   var onChange = function (e) {
     var isOnlyNull = e.target.value;
     router.query["only-null"] = isOnlyNull;
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var tmp = {};
   if (className !== undefined) {
@@ -109,6 +108,5 @@ export {
   getIsOnlyNull ,
   displayKind ,
   make ,
-  
 }
 /* react Not a pure module */

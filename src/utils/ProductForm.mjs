@@ -42,6 +42,5 @@ export {
   makeCategoryId ,
   makeDisplayCategoryIds ,
   makeNoticeDate ,
-  
 }
 /* No side effect */

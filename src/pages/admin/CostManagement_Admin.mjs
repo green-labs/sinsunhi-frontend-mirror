@@ -84,9 +84,9 @@ function CostManagement_Admin$Costs(Props) {
       return ;
     }
     var newDate$p = Caml_option.valFromOption(newDate);
-    return setStartDate(function (param) {
-                return newDate$p;
-              });
+    setStartDate(function (param) {
+          return newDate$p;
+        });
   };
   var handleOnChangeEffectiveDate = function (sku, dateAsValue) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
@@ -94,165 +94,163 @@ function CostManagement_Admin$Costs(Props) {
           return newSkusToSave;
         });
     console.log("date", dateAsValue.toISOString());
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: prevCost.rawCost,
-                                          workingCost: prevCost.workingCost,
-                                          deliveryCost: prevCost.deliveryCost,
-                                          effectiveDate: Caml_option.some(dateAsValue),
-                                          price: prevCost.price,
-                                          contractType: prevCost.contractType,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost) {
-                              return Belt_MapString.set(prevCosts, sku, newCost);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: prevCost.rawCost,
+                                    workingCost: prevCost.workingCost,
+                                    deliveryCost: prevCost.deliveryCost,
+                                    effectiveDate: Caml_option.some(dateAsValue),
+                                    price: prevCost.price,
+                                    contractType: prevCost.contractType,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost) {
+                        return Belt_MapString.set(prevCosts, sku, newCost);
+                      }));
+        });
   };
   var handleOnChangePrice = function (sku, newPrice) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
     setSkusToSave(function (param) {
           return newSkusToSave;
         });
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: prevCost.rawCost,
-                                          workingCost: prevCost.workingCost,
-                                          deliveryCost: prevCost.deliveryCost,
-                                          effectiveDate: prevCost.effectiveDate,
-                                          price: newPrice,
-                                          contractType: prevCost.contractType,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost) {
-                              return Belt_MapString.set(prevCosts, sku, newCost);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: prevCost.rawCost,
+                                    workingCost: prevCost.workingCost,
+                                    deliveryCost: prevCost.deliveryCost,
+                                    effectiveDate: prevCost.effectiveDate,
+                                    price: newPrice,
+                                    contractType: prevCost.contractType,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost) {
+                        return Belt_MapString.set(prevCosts, sku, newCost);
+                      }));
+        });
   };
   var handleOnChangeRawCost = function (sku, newCost) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
     setSkusToSave(function (param) {
           return newSkusToSave;
         });
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: newCost,
-                                          workingCost: prevCost.workingCost,
-                                          deliveryCost: prevCost.deliveryCost,
-                                          effectiveDate: prevCost.effectiveDate,
-                                          price: prevCost.price,
-                                          contractType: prevCost.contractType,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost$p) {
-                              return Belt_MapString.set(prevCosts, sku, newCost$p);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: newCost,
+                                    workingCost: prevCost.workingCost,
+                                    deliveryCost: prevCost.deliveryCost,
+                                    effectiveDate: prevCost.effectiveDate,
+                                    price: prevCost.price,
+                                    contractType: prevCost.contractType,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost$p) {
+                        return Belt_MapString.set(prevCosts, sku, newCost$p);
+                      }));
+        });
   };
   var handleOnChangeDeliveryCost = function (sku, newCost) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
     setSkusToSave(function (param) {
           return newSkusToSave;
         });
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: prevCost.rawCost,
-                                          workingCost: prevCost.workingCost,
-                                          deliveryCost: newCost,
-                                          effectiveDate: prevCost.effectiveDate,
-                                          price: prevCost.price,
-                                          contractType: prevCost.contractType,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost$p) {
-                              return Belt_MapString.set(prevCosts, sku, newCost$p);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: prevCost.rawCost,
+                                    workingCost: prevCost.workingCost,
+                                    deliveryCost: newCost,
+                                    effectiveDate: prevCost.effectiveDate,
+                                    price: prevCost.price,
+                                    contractType: prevCost.contractType,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost$p) {
+                        return Belt_MapString.set(prevCosts, sku, newCost$p);
+                      }));
+        });
   };
   var handleOnChangeWorkingCost = function (sku, newCost) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
     setSkusToSave(function (param) {
           return newSkusToSave;
         });
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: prevCost.rawCost,
-                                          workingCost: newCost,
-                                          deliveryCost: prevCost.deliveryCost,
-                                          effectiveDate: prevCost.effectiveDate,
-                                          price: prevCost.price,
-                                          contractType: prevCost.contractType,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost$p) {
-                              return Belt_MapString.set(prevCosts, sku, newCost$p);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: prevCost.rawCost,
+                                    workingCost: newCost,
+                                    deliveryCost: prevCost.deliveryCost,
+                                    effectiveDate: prevCost.effectiveDate,
+                                    price: prevCost.price,
+                                    contractType: prevCost.contractType,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost$p) {
+                        return Belt_MapString.set(prevCosts, sku, newCost$p);
+                      }));
+        });
   };
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var costs$p = CustomHooks.Costs.costs_decode(status._0);
     count = costs$p.TAG === /* Ok */0 ? String(costs$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   var handleOnChangeContractType = function (sku, typeAsValue) {
     var newSkusToSave = Belt_SetString.add(skusToSave, sku);
     setSkusToSave(function (param) {
           return newSkusToSave;
         });
-    return setNewCosts(function (prevCosts) {
-                return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
-                                  return {
-                                          rawCost: prevCost.rawCost,
-                                          workingCost: prevCost.workingCost,
-                                          deliveryCost: prevCost.deliveryCost,
-                                          effectiveDate: prevCost.effectiveDate,
-                                          price: prevCost.price,
-                                          contractType: typeAsValue,
-                                          producerName: prevCost.producerName,
-                                          productName: prevCost.productName,
-                                          optionName: prevCost.optionName,
-                                          producerId: prevCost.producerId,
-                                          productId: prevCost.productId,
-                                          sku: prevCost.sku
-                                        };
-                                })), prevCosts, (function (newCost$p) {
-                              return Belt_MapString.set(prevCosts, sku, newCost$p);
-                            }));
-              });
+    setNewCosts(function (prevCosts) {
+          return Belt_Option.mapWithDefault(Belt_Option.map(Belt_MapString.get(prevCosts, sku), (function (prevCost) {
+                            return {
+                                    rawCost: prevCost.rawCost,
+                                    workingCost: prevCost.workingCost,
+                                    deliveryCost: prevCost.deliveryCost,
+                                    effectiveDate: prevCost.effectiveDate,
+                                    price: prevCost.price,
+                                    contractType: typeAsValue,
+                                    producerName: prevCost.producerName,
+                                    productName: prevCost.productName,
+                                    optionName: prevCost.optionName,
+                                    producerId: prevCost.producerId,
+                                    productId: prevCost.productId,
+                                    sku: prevCost.sku
+                                  };
+                          })), prevCosts, (function (newCost$p) {
+                        return Belt_MapString.set(prevCosts, sku, newCost$p);
+                      }));
+        });
   };
   var handleOnCheckCost = function (productSku, e) {
     var checked = e.target.checked;
@@ -263,9 +261,9 @@ function CostManagement_Admin$Costs(Props) {
                 });
     }
     var newSkusToSave$1 = Belt_SetString.remove(skusToSave, productSku);
-    return setSkusToSave(function (param) {
-                return newSkusToSave$1;
-              });
+    setSkusToSave(function (param) {
+          return newSkusToSave$1;
+        });
   };
   var check = function (productSku) {
     return Belt_SetString.has(skusToSave, productSku);
@@ -288,9 +286,9 @@ function CostManagement_Admin$Costs(Props) {
     allOrderProductNo = costs$p.TAG === /* Ok */0 ? Belt_SetString.fromArray(Garter_Array.map(costs$p._0.data, (function (cost) {
                   return cost.sku;
                 }))) : undefined;
-    return setSkusToSave(function (param) {
-                return allOrderProductNo;
-              });
+    setSkusToSave(function (param) {
+          return allOrderProductNo;
+        });
   };
   var countOfChecked = Belt_SetString.size(skusToSave);
   var handleOnSave = function (param) {
@@ -329,54 +327,53 @@ function CostManagement_Admin$Costs(Props) {
                                                   };
                                           }))
                                   }), (function (body) {
-                                  FetchHelper.requestWithRetry(FetchHelper.postWithToken, Env.restApiUrl + "/settlement/cost", body, 3, (function (param) {
+                                  FetchHelper.requestWithRetry(FetchHelper.postWithToken, "" + Env.restApiUrl + "/settlement/cost", body, 3, (function (param) {
                                           setShowSuccessToSave(function (param) {
                                                 return /* Show */0;
                                               });
-                                          mutate(Env.restApiUrl + "/settlement/cost?" + new URLSearchParams(router.query).toString(), undefined, true);
-                                          return setSkusToSave(function (param) {
-                                                      
-                                                    });
+                                          mutate("" + Env.restApiUrl + "/settlement/cost?" + new URLSearchParams(router.query).toString() + "", undefined, true);
+                                          setSkusToSave(function (param) {
+                                                
+                                              });
                                         }), (function (param) {
-                                          return addToast(React.createElement("div", {
-                                                          className: "flex items-center"
-                                                        }, React.createElement(IconError.make, {
-                                                              width: "24",
-                                                              height: "24",
-                                                              className: "mr-2"
-                                                            }), "저장 실패"), {
-                                                      appearance: "error"
-                                                    });
+                                          addToast(React.createElement("div", {
+                                                    className: "flex items-center"
+                                                  }, React.createElement(IconError.make, {
+                                                        width: "24",
+                                                        height: "24",
+                                                        className: "mr-2"
+                                                      }), "저장 실패"), {
+                                                appearance: "error"
+                                              });
                                         }));
-                                  
                                 }));
                   }
                 }), param);
   };
   var handleChangeAllEffectiveDate = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setNewCosts(function (prevCosts) {
-                              return Belt_MapString.mapWithKey(prevCosts, (function (k, v) {
-                                            if (Belt_SetString.has(skusToSave, k)) {
-                                              return {
-                                                      rawCost: v.rawCost,
-                                                      workingCost: v.workingCost,
-                                                      deliveryCost: v.deliveryCost,
-                                                      effectiveDate: Caml_option.some(startDate),
-                                                      price: v.price,
-                                                      contractType: v.contractType,
-                                                      producerName: v.producerName,
-                                                      productName: v.productName,
-                                                      optionName: v.optionName,
-                                                      producerId: v.producerId,
-                                                      productId: v.productId,
-                                                      sku: v.sku
-                                                    };
-                                            } else {
-                                              return v;
-                                            }
-                                          }));
-                            });
+                  setNewCosts(function (prevCosts) {
+                        return Belt_MapString.mapWithKey(prevCosts, (function (k, v) {
+                                      if (Belt_SetString.has(skusToSave, k)) {
+                                        return {
+                                                rawCost: v.rawCost,
+                                                workingCost: v.workingCost,
+                                                deliveryCost: v.deliveryCost,
+                                                effectiveDate: Caml_option.some(startDate),
+                                                price: v.price,
+                                                contractType: v.contractType,
+                                                producerName: v.producerName,
+                                                productName: v.productName,
+                                                optionName: v.optionName,
+                                                producerId: v.producerId,
+                                                productId: v.productId,
+                                                sku: v.sku
+                                              };
+                                      } else {
+                                        return v;
+                                      }
+                                    }));
+                      });
                 }), param);
   };
   React.useEffect((function () {
@@ -391,9 +388,9 @@ function CostManagement_Admin$Costs(Props) {
             
           }
           return (function (param) {
-                    return setNewCosts(function (param) {
-                                
-                              });
+                    setNewCosts(function (param) {
+                          
+                        });
                   });
         }), [status]);
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
@@ -412,7 +409,7 @@ function CostManagement_Admin$Costs(Props) {
                                   className: "text-lg font-bold"
                                 }, "내역", React.createElement("span", {
                                       className: "text-base text-primary font-normal ml-1"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex"
                                 }, React.createElement(Select_CountPerPage.make, {
                                       className: "mr-2"
@@ -461,9 +458,9 @@ function CostManagement_Admin$Costs(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "저장할 상품 항목을 선택해주세요"),
                   onCancel: (function (param) {
-                      return setShowNothingToSave(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowNothingToSave(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -472,9 +469,9 @@ function CostManagement_Admin$Costs(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "입력하신 변경원가시작일과 변경원가,변경바이어판매가를 확인해주세요."),
                   onCancel: (function (param) {
-                      return setShowInvalidCost(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowInvalidCost(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }), React.createElement(Dialog.make, {
@@ -483,9 +480,9 @@ function CostManagement_Admin$Costs(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "선택한 변경원가,변경바이어판매가,변경원가시작일이 저장되었습니다."),
                   onCancel: (function (param) {
-                      return setShowSuccessToSave(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccessToSave(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "확인"
                 }));
@@ -515,6 +512,5 @@ export {
   convertCost ,
   Costs ,
   make ,
-  
 }
 /* Env Not a pure module */

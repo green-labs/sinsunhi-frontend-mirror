@@ -7,12 +7,13 @@ import * as Dialog from "./common/Dialog.mjs";
 import * as Locale from "../utils/Locale.mjs";
 import * as IconClose from "./svgs/IconClose.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import Format from "date-fns/format";
-import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
@@ -20,7 +21,7 @@ import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactEr
 import * as VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql from "../__generated__/VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -29,7 +30,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -47,38 +48,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -95,14 +95,12 @@ var Query_paymentStatus_decode = VirtualAccountPaymentConfirmationButtonBuyerQue
 
 var Query_paymentStatus_fromString = VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Utils.paymentStatus_fromString;
 
-var Query_makeVariables = VirtualAccountPaymentConfirmationButtonBuyerQuery_graphql.Utils.makeVariables;
-
 var Query = {
   paymentMethod_decode: Query_paymentMethod_decode,
   paymentMethod_fromString: Query_paymentMethod_fromString,
   paymentStatus_decode: Query_paymentStatus_decode,
   paymentStatus_fromString: Query_paymentStatus_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -152,7 +150,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer$TitleAndCloseButton(P
                 }, "가상계좌 결제 확인"), React.createElement("button", {
                   className: "cursor-pointer border-none",
                   onClick: (function (param) {
-                      return Curry._1(close, undefined);
+                      Curry._1(close, undefined);
                     })
                 }, React.createElement(IconClose.make, {
                       height: "1.5rem",
@@ -171,7 +169,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer$TableHead(Props) {
             }, Belt_Array.map(columnsWithWidth, (function (param) {
                     var column = param[0];
                     return React.createElement("div", {
-                                key: "head-" + column,
+                                key: "head-" + column + "",
                                 className: Cx.cx([
                                       "mr-5 first:ml-5 last:mr-0 py-1 md:py-2 text-center break-all",
                                       param[1]
@@ -193,8 +191,6 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer$TableRow(Props) {
       return "완료";
     } else if (status === "FAILURE") {
       return "만료";
-    } else if (status === "PENDING") {
-      return "대기";
     } else {
       return "대기";
     }
@@ -217,7 +213,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer$TableRow(Props) {
                   className: "ml-1 md:ml-0"
                 }, virtualAccount.accountNo)), React.createElement("div", {
               className: "mr-5 md:text-right md:w-32 py-1 md:py-2"
-            }, React.createElement("p", undefined, Locale.Int.show(undefined, Belt_Option.getWithDefault(rowData.amount, 0)) + " 원")), React.createElement("div", {
+            }, React.createElement("p", undefined, "" + Locale.Int.show(undefined, Belt_Option.getWithDefault(rowData.amount, 0)) + " 원")), React.createElement("div", {
               className: "mr-5 md:text-center md:w-20 py-1 md:py-2"
             }, React.createElement("div", {
                   className: "flex md:flex-col"
@@ -236,7 +232,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer$TableRow(Props) {
                 }, Belt_Array.map(columnsWithWidth, (function (param) {
                         var column = param[0];
                         return React.createElement("p", {
-                                    key: id + "-" + column,
+                                    key: "" + id + "-" + column + "",
                                     className: "py-1 md:py-2"
                                   }, column);
                       }))), tmp);
@@ -290,9 +286,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -330,7 +324,7 @@ function Virtual_Account_Payment_Confirmation_Button_Buyer(Props) {
                       className: "md:hidden"
                     }, React.createElement(Dialog.ButtonBox.make, {
                           onCancel: (function (param) {
-                              return close(undefined);
+                              close(undefined);
                             }),
                           textOnCancel: "닫기"
                         }))));
@@ -349,6 +343,5 @@ export {
   ContentsSkeleton ,
   List ,
   make ,
-  
 }
 /* react Not a pure module */

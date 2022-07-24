@@ -6,10 +6,10 @@ import * as Locale from "../utils/Locale.mjs";
 import * as Checkbox from "./common/Checkbox.mjs";
 import * as Skeleton from "./Skeleton.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import Format from "date-fns/format";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as BulkSale_Product_Update_Button from "./BulkSale_Product_Update_Button.mjs";
 import * as Select_BulkSale_Campaign_Status from "./Select_BulkSale_Campaign_Status.mjs";
@@ -30,27 +30,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProductAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProductAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use(fRef) {
-  var data = Hooks.useFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProductAdminFragment_bulkSaleCampaign_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -72,6 +72,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use,
   useOpt: useOpt,
   makeRefetchVariables: makeRefetchVariables
@@ -96,13 +97,13 @@ function BulkSale_Product_Admin$Item$Table(Props) {
                           refetchSummary: refetchSummary
                         })), React.createElement("div", {
                       className: "h-full flex flex-col justify-center px-4 py-2"
-                    }, product.productCategory.crop.name + " > " + product.productCategory.name), React.createElement("div", {
+                    }, "" + product.productCategory.crop.name + " > " + product.productCategory.name + ""), React.createElement("div", {
                       className: "h-full flex flex-col justify-center px-4 py-2"
-                    }, Locale.Float.show(undefined, product.estimatedPurchasePriceMin, 0) + "원~" + Locale.Float.show(undefined, product.estimatedPurchasePriceMax, 0) + "원"), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, product.estimatedPurchasePriceMin, 0) + "원~" + Locale.Float.show(undefined, product.estimatedPurchasePriceMax, 0) + "원"), React.createElement("div", {
                       className: "h-full flex flex-col justify-center px-4 py-2"
-                    }, product.preferredGrade + " " + product.preferredQuantity.display), React.createElement("div", {
+                    }, "" + product.preferredGrade + " " + product.preferredQuantity.display + ""), React.createElement("div", {
                       className: "h-full flex flex-col justify-center px-4 py-2"
-                    }, String(product.estimatedSellerEarningRate) + "%"), React.createElement("div", {
+                    }, "" + String(product.estimatedSellerEarningRate) + "%"), React.createElement("div", {
                       className: "h-full flex justify-center items-center px-4 py-1"
                     }, React.createElement(BulkSale_Product_Update_Button.make, {
                           product: product,
@@ -167,6 +168,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

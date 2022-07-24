@@ -113,7 +113,7 @@ function TossPaymentsFail_Buyer(Props) {
           var exit = 0;
           if (productId !== undefined && productOptionId !== undefined && quantity !== undefined) {
             setRedirect(function (param) {
-                  return "/buyer/web-order/" + productId + "/" + productOptionId + "?quantity=" + String(quantity);
+                  return "/buyer/web-order/" + productId + "/" + productOptionId + "?quantity=" + String(quantity) + "";
                 });
           } else {
             exit = 1;
@@ -165,6 +165,5 @@ export {
   codeToString ,
   ErrorDialog ,
   make ,
-  
 }
 /* react Not a pure module */

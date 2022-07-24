@@ -12,10 +12,12 @@ import * as DS_Toast from "./common/container/DS_Toast.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
 import * as DatePicker from "./DatePicker.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../utils/CustomHooks.mjs";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as IconNotFound from "./svgs/IconNotFound.mjs";
 import * as DS_InputField from "./common/container/DS_InputField.mjs";
@@ -25,7 +27,6 @@ import * as DS_BottomDrawer from "./common/container/DS_BottomDrawer.mjs";
 import Format from "date-fns/format";
 import AddDays from "date-fns/addDays";
 import * as RfqShipping_Buyer from "../pages/buyer/rfq/RfqShipping_Buyer.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
@@ -36,7 +37,7 @@ import * as TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_gr
 import * as TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql from "../__generated__/TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -45,7 +46,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -63,38 +64,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -103,10 +103,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var TradematchDeliveryPolicy_makeVariables = TradematchAskToBuyApplyStepsBuyer_TradematchDeliveryPolicy_Query_graphql.Utils.makeVariables;
-
 var TradematchDeliveryPolicy = {
-  makeVariables: TradematchDeliveryPolicy_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -140,14 +138,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -155,13 +153,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -184,10 +182,6 @@ var CreateTradematchDemand_tradematchPackageQuantityUnit_decode = TradematchAskT
 
 var CreateTradematchDemand_tradematchPackageQuantityUnit_fromString = TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Utils.tradematchPackageQuantityUnit_fromString;
 
-var CreateTradematchDemand_make_tradematchDemandCreateInput = TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Utils.make_tradematchDemandCreateInput;
-
-var CreateTradematchDemand_makeVariables = TradematchAskToBuyApplyStepsBuyer_CreateTradematchDemand_Mutation_graphql.Utils.makeVariables;
-
 var CreateTradematchDemand = {
   errorCode_decode: CreateTradematchDemand_errorCode_decode,
   errorCode_fromString: CreateTradematchDemand_errorCode_fromString,
@@ -195,14 +189,11 @@ var CreateTradematchDemand = {
   tradematchDemandStatus_fromString: CreateTradematchDemand_tradematchDemandStatus_fromString,
   tradematchPackageQuantityUnit_decode: CreateTradematchDemand_tradematchPackageQuantityUnit_decode,
   tradematchPackageQuantityUnit_fromString: CreateTradematchDemand_tradematchPackageQuantityUnit_fromString,
-  make_tradematchDemandCreateInput: CreateTradematchDemand_make_tradematchDemandCreateInput,
-  makeVariables: CreateTradematchDemand_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
 };
-
-var makeVariables = TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Utils.makeVariables;
 
 function commitMutation$1(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -223,14 +214,14 @@ function commitMutation$1(environment, variables, optimisticUpdater, optimisticR
               optimisticResponse: optimisticResponse !== undefined ? TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$2(param) {
-  var match = Hooks.useMutation(TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -238,13 +229,13 @@ function use$2(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -267,8 +258,6 @@ var PartialUpdateTradematchDemand_tradematchPackageQuantityUnit_decode = Tradema
 
 var PartialUpdateTradematchDemand_tradematchPackageQuantityUnit_fromString = TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Utils.tradematchPackageQuantityUnit_fromString;
 
-var PartialUpdateTradematchDemand_make_tradematchDemandPartialUpdateInput = TradematchAskToBuyApplyStepsBuyer_PartialUpdateTradematchDemand_Mutation_graphql.Utils.make_tradematchDemandPartialUpdateInput;
-
 var PartialUpdateTradematchDemand = {
   errorCode_decode: PartialUpdateTradematchDemand_errorCode_decode,
   errorCode_fromString: PartialUpdateTradematchDemand_errorCode_fromString,
@@ -276,8 +265,7 @@ var PartialUpdateTradematchDemand = {
   tradematchDemandStatus_fromString: PartialUpdateTradematchDemand_tradematchDemandStatus_fromString,
   tradematchPackageQuantityUnit_decode: PartialUpdateTradematchDemand_tradematchPackageQuantityUnit_decode,
   tradematchPackageQuantityUnit_fromString: PartialUpdateTradematchDemand_tradematchPackageQuantityUnit_fromString,
-  make_tradematchDemandPartialUpdateInput: PartialUpdateTradematchDemand_make_tradematchDemandPartialUpdateInput,
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation$1,
   use: use$2
@@ -317,25 +305,28 @@ function getUpdateMutateVariables(id, deliveryAddress1Opt, deliveryAddress2Opt, 
   var status = statusOpt !== undefined ? Caml_option.valFromOption(statusOpt) : undefined;
   var tradeCycle = tradeCycleOpt !== undefined ? Caml_option.valFromOption(tradeCycleOpt) : undefined;
   var wantedPricePerPackage = wantedPricePerPackageOpt !== undefined ? Caml_option.valFromOption(wantedPricePerPackageOpt) : undefined;
-  return Curry._2(makeVariables, id, {
-              deliveryAddress1: deliveryAddress1,
-              deliveryAddress2: deliveryAddress2,
-              deliveryDate: deliveryDate,
-              deliveryRegion: deliveryRegion,
-              deliveryZipCode: deliveryZipCode,
-              numberOfPackagesPerTrade: numberOfPackagesPerTrade,
-              packageQuantityUnit: packageQuantityUnit,
-              priceGroup: priceGroup,
-              productCategoryCode: productCategoryCode,
-              productId: productId,
-              productProcess: productProcess,
-              productRequirements: productRequirements,
-              productSize: productSize,
-              quantityPerPackage: quantityPerPackage,
-              status: status,
-              tradeCycle: tradeCycle,
-              wantedPricePerPackage: wantedPricePerPackage
-            });
+  return {
+          id: id,
+          input: {
+            deliveryAddress1: deliveryAddress1,
+            deliveryAddress2: deliveryAddress2,
+            deliveryDate: deliveryDate,
+            deliveryRegion: deliveryRegion,
+            deliveryZipCode: deliveryZipCode,
+            numberOfPackagesPerTrade: numberOfPackagesPerTrade,
+            packageQuantityUnit: packageQuantityUnit,
+            priceGroup: priceGroup,
+            productCategoryCode: productCategoryCode,
+            productId: productId,
+            productProcess: productProcess,
+            productRequirements: productRequirements,
+            productSize: productSize,
+            quantityPerPackage: quantityPerPackage,
+            status: status,
+            tradeCycle: tradeCycle,
+            wantedPricePerPackage: wantedPricePerPackage
+          }
+        };
 }
 
 function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$Layout(Props) {
@@ -410,9 +401,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$CalendarListitem(Props) {
     id: "date",
     onChange: (function (e) {
         var newDate = e.detail.valueAsDate;
-        return handleChangeDate(function (param) {
-                    return newDate;
-                  });
+        handleChangeDate(function (param) {
+              return newDate;
+            });
       }),
     maxDate: Format(maxDate, "yyyy-MM-dd"),
     minDate: Format(minDate, "yyyy-MM-dd"),
@@ -425,10 +416,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$CalendarListitem(Props) {
         }
       }),
     onFocus: (function (param) {
-        return Belt_Option.forEach(Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById("date")), Webapi__Dom__Element.asHtmlElement), (function (inputEl$p) {
-                      inputEl$p.blur();
-                      
-                    }));
+        Belt_Option.forEach(Belt_Option.flatMap(Caml_option.nullable_to_opt(document.getElementById("date")), Webapi__Dom__Element.asHtmlElement), (function (inputEl$p) {
+                inputEl$p.blur();
+              }));
       })
   };
   if (currentDate !== undefined) {
@@ -491,7 +481,7 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$AddressDrawer(Props) {
   return React.createElement(DS_BottomDrawer.Root.make, {
               isShow: isShow,
               onClose: (function (param) {
-                  return Curry._1(closeDrawer, undefined);
+                  Curry._1(closeDrawer, undefined);
                 }),
               children: null,
               full: true
@@ -538,10 +528,10 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
   var match$2 = use$1(undefined);
   var createMutate = match$2[0];
   var match$3 = use$2(undefined);
-  var productCategoryCodeId = product.category.productCategoryCodeId;
+  var representativeWeight = product.representativeWeight;
   var recentMarketPrice = product.recentMarketPrice;
   var match$4 = product.qualityStandard;
-  var representativeWeight = product.representativeWeight;
+  var productCategoryCodeId = product.category.productCategoryCodeId;
   var updateMutate = match$3[0];
   var match$5 = Js_dict.get(router.query, "grade");
   var defaultSelectedGrade;
@@ -636,14 +626,14 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
         undefined
       ];
     }
-    return DataGtm.push({
-                event: "click_intention_grade",
-                product_id: pid,
-                category_id: productCategoryCodeId,
-                grade_avg_price: match[1],
-                grade_min_price: match[2],
-                grade_max_price: match[0]
-              });
+    DataGtm.push({
+          event: "click_intention_grade",
+          product_id: pid,
+          category_id: productCategoryCodeId,
+          grade_avg_price: match[1],
+          grade_min_price: match[2],
+          grade_max_price: match[0]
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -657,9 +647,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
       var arg$2 = Caml_option.some(pid);
       Curry.app(updateMutate, [
             (function (err) {
-                return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                            appearance: "error"
-                          });
+                addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                      appearance: "error"
+                    });
               }),
             (function (param, param$1) {
                 var variant = param.partialUpdateTradematchDemand.NAME;
@@ -670,7 +660,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
                 } else {
                   Curry._1(navigateToNextStep, undefined);
                 }
-                
               }),
             undefined,
             undefined,
@@ -697,9 +686,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
     }
     Curry.app(createMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.createTradematchDemand.NAME;
@@ -710,7 +699,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -740,7 +728,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var tmp;
   if (recentMarketPrice !== undefined) {
@@ -837,9 +824,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Grade(Props) {
                               return x;
                             })),
                       onValueChange: (function (v) {
-                          return setSelectedGrade(function (param) {
-                                      return v;
-                                    });
+                          setSelectedGrade(function (param) {
+                                return v;
+                              });
                         }),
                       name: "tradematch-grade",
                       className: "flex flex-col gap-8"
@@ -874,11 +861,11 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
   var updateMutate = match$3[0];
   var trackData = function (param) {
     var demandId = currentDemand !== undefined ? currentDemand.id : "";
-    return DataGtm.push({
-                event: "click_intention_quantity",
-                tradematch_demand_id: demandId,
-                quantity_per_trade: count
-              });
+    DataGtm.push({
+          event: "click_intention_quantity",
+          tradematch_demand_id: demandId,
+          quantity_per_trade: count
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -893,9 +880,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
     var arg$1 = Caml_option.some(product.representativeWeight);
     Curry.app(updateMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.partialUpdateTradematchDemand.NAME;
@@ -906,7 +893,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -933,7 +919,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement("div", undefined, React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$Title, {
                   text: "납품 1회당 구매량을\n작성해주세요"
@@ -952,13 +937,13 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
                         }, React.createElement("button", {
                               className: "w-10 h-10 rounded-full bg-div-shape-L2 font-bold text-lg select-none",
                               onClick: (function (param) {
-                                  return setcount(function (prev) {
-                                              if (prev === 1) {
-                                                return prev;
-                                              } else {
-                                                return prev - 1 | 0;
-                                              }
-                                            });
+                                  setcount(function (prev) {
+                                        if (prev === 1) {
+                                          return prev;
+                                        } else {
+                                          return prev - 1 | 0;
+                                        }
+                                      });
                                 })
                             }, "-"), React.createElement("div", {
                               className: "mx-3 text-center w-[60px]"
@@ -969,9 +954,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Count(Props) {
                                 }, " 박스"), React.createElement("span", undefined)), React.createElement("button", {
                               className: "w-10 h-10 rounded-full bg-div-shape-L2 font-bold text-lg select-none",
                               onClick: (function (param) {
-                                  return setcount(function (prev) {
-                                              return prev + 1 | 0;
-                                            });
+                                  setcount(function (prev) {
+                                        return prev + 1 | 0;
+                                      });
                                 })
                             }, "+"))), React.createElement("div", undefined, React.createElement("span", {
                           className: "text-gray-500 text-sm"
@@ -995,8 +980,8 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
   var currentDemandPriceGroup = Belt_Option.mapWithDefault(currentDemand !== undefined ? currentDemand.priceGroup : undefined, "", (function (x) {
           return x;
         }));
-  var recentMarketPrice = product.recentMarketPrice;
   var representativeWeight = product.representativeWeight;
+  var recentMarketPrice = product.recentMarketPrice;
   var titleText;
   switch (currentDemandPriceGroup) {
     case "HIGH" :
@@ -1109,11 +1094,11 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
   var updateMutate = match$6[0];
   var trackData = function (param) {
     var demandId = currentDemand !== undefined ? currentDemand.id : "";
-    return DataGtm.push({
-                event: "click_intention_price",
-                tradematch_demand_id: demandId,
-                price_per_trade: price
-              });
+    DataGtm.push({
+          event: "click_intention_price",
+          tradematch_demand_id: demandId,
+          price_per_trade: price
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -1127,9 +1112,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
     var arg = Caml_option.some(price);
     Curry.app(updateMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.partialUpdateTradematchDemand.NAME;
@@ -1140,7 +1125,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -1170,11 +1154,8 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
           undefined,
           undefined
         ]);
-    
   };
-  var estimatedTotalPriceText = price !== undefined ? (
-      numberOfPackagesPerTrade !== undefined ? "예상 " + Locale.Float.show(undefined, price * numberOfPackagesPerTrade, 0) + "원" : ""
-    ) : "";
+  var estimatedTotalPriceText = price !== undefined && numberOfPackagesPerTrade !== undefined ? "예상 " + Locale.Float.show(undefined, price * numberOfPackagesPerTrade, 0) + "원" : "";
   return React.createElement("div", undefined, React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$Title, {
                   text: titleText,
                   subText: "시장 평균가 이하면 생산자와\n매칭 확률이 낮아질 수 있습니다"
@@ -1185,17 +1166,17 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Price(Props) {
                         value: price !== undefined ? Locale.Float.show(undefined, price, 0) : "",
                         onChange: (function (e) {
                             var value = e.target.value;
-                            return setPrice(function (param) {
-                                        return Belt_Int.fromString(convertNumberInputValue(value));
-                                      });
+                            setPrice(function (param) {
+                                  return Belt_Int.fromString(convertNumberInputValue(value));
+                                });
                           }),
                         autoFocus: true,
                         inputMode: "decimal",
                         isClear: true,
                         fnClear: (function (param) {
-                            return setPrice(function (param) {
-                                        
-                                      });
+                            setPrice(function (param) {
+                                  
+                                });
                           }),
                         unit: "원",
                         underLabel: averagePriceText,
@@ -1253,11 +1234,11 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Cycle(Props) {
   var updateMutate = match$3[0];
   var trackData = function (param) {
     var demandId = currentDemand !== undefined ? currentDemand.id : "";
-    return DataGtm.push({
-                event: "click_intention_cycle",
-                tradematch_demand_id: demandId,
-                trade_cycle: selectedCycle
-              });
+    DataGtm.push({
+          event: "click_intention_cycle",
+          tradematch_demand_id: demandId,
+          trade_cycle: selectedCycle
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -1271,9 +1252,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Cycle(Props) {
     var arg = Caml_option.some(selectedCycle);
     Curry.app(updateMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.partialUpdateTradematchDemand.NAME;
@@ -1284,7 +1265,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Cycle(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -1313,7 +1293,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Cycle(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement("div", undefined, React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$Title, {
                   text: "원하시는 납품주기를\n선택해주세요"
@@ -1345,9 +1324,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Cycle(Props) {
                               return x;
                             })),
                       onValueChange: (function (v) {
-                          return setSelectedCycle(function (param) {
-                                      return v;
-                                    });
+                          setSelectedCycle(function (param) {
+                                return v;
+                              });
                         }),
                       name: "tradematch-cycle"
                     })), React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$FloatingButton, {
@@ -1391,13 +1370,13 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
   var updateMutate = match$5[0];
   var trackData = function (param) {
     var demandId = currentDemand !== undefined ? currentDemand.id : "";
-    return DataGtm.push({
-                event: "click_intention_requirements",
-                tradematch_demand_id: demandId,
-                product_size: size,
-                product_process: $$process,
-                product_requirements: requirement
-              });
+    DataGtm.push({
+          event: "click_intention_requirements",
+          tradematch_demand_id: demandId,
+          product_size: size,
+          product_process: $$process,
+          product_requirements: requirement
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -1413,9 +1392,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
     var arg$2 = Caml_option.some(size);
     Curry.app(updateMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.partialUpdateTradematchDemand.NAME;
@@ -1426,7 +1405,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -1452,7 +1430,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement("div", undefined, React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$Title, {
                   text: "기타 요청사항을\n남겨주세요"
@@ -1467,9 +1444,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
                           value: size,
                           onChange: (function (e) {
                               var value = e.target.value;
-                              return setSize(function (param) {
-                                          return value;
-                                        });
+                              setSize(function (param) {
+                                    return value;
+                                  });
                             }),
                           maxLength: 10000
                         })), React.createElement(DS_InputField.Line1.Root.make, {
@@ -1483,9 +1460,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
                           value: $$process,
                           onChange: (function (e) {
                               var value = e.target.value;
-                              return setProcess(function (param) {
-                                          return value;
-                                        });
+                              setProcess(function (param) {
+                                    return value;
+                                  });
                             }),
                           maxLength: 10000
                         })), React.createElement(DS_InputField.Line1.Root.make, {
@@ -1499,9 +1476,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Requirement(Props) {
                           value: requirement,
                           onChange: (function (e) {
                               var value = e.target.value;
-                              return setRequirement(function (param) {
-                                          return value;
-                                        });
+                              setRequirement(function (param) {
+                                    return value;
+                                  });
                             }),
                           maxLength: 10000
                         }))), React.createElement(Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Common$FloatingButton, {
@@ -1575,19 +1552,17 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
               });
           Belt_Option.forEach(Caml_option.nullable_to_opt(deliveryAddressDetailInput.current), (function (input) {
                   input.focus();
-                  
                 }));
-          
         }), [deliveryAddress]);
   var toggleDrawer = function (param) {
-    return setIsAddressDrawerShow(function (prev) {
-                return !prev;
-              });
+    setIsAddressDrawerShow(function (prev) {
+          return !prev;
+        });
   };
   var onCompleteAddressDrawer = function (data) {
     var zonecode = data.zonecode;
     var deliveryAddress = data.addressType === "R" ? data.address : data.autoRoadAddress;
-    var deliveryRegion = (data.sido + " " + data.sigungu + " " + data.bname).replace(/[ ]{2,}/, " ").trim();
+    var deliveryRegion = ("" + data.sido + " " + data.sigungu + " " + data.bname + "").replace(/[ ]{2,}/, " ").trim();
     setDeliveryRegion(function (param) {
           return deliveryRegion;
         });
@@ -1597,9 +1572,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
     setDeliveryAddressZipcode(function (param) {
           return zonecode;
         });
-    return setIsAddressDrawerShow(function (prev) {
-                return !prev;
-              });
+    setIsAddressDrawerShow(function (prev) {
+          return !prev;
+        });
   };
   var updateDemand = function (param) {
     if (currentDemand === undefined) {
@@ -1619,9 +1594,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
     };
     Curry.app(updateMutate, [
           (function (err) {
-              return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                          appearance: "error"
-                        });
+              addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                    appearance: "error"
+                  });
             }),
           (function (param, param$1) {
               var variant = param.partialUpdateTradematchDemand.NAME;
@@ -1632,7 +1607,6 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
               } else {
                 Curry._1(navigateToNextStep, undefined);
               }
-              
             }),
           undefined,
           undefined,
@@ -1656,14 +1630,13 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
           undefined,
           undefined
         ]);
-    
   };
   var trackData = function (param) {
     var demandId = currentDemand !== undefined ? currentDemand.id : "";
-    return DataGtm.push({
-                event: "click_intention_address",
-                tradematch_demand_id: demandId
-              });
+    DataGtm.push({
+          event: "click_intention_address",
+          tradematch_demand_id: demandId
+        });
   };
   var handleClickButton = function (param) {
     trackData(undefined);
@@ -1672,9 +1645,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
     } else {
       Curry.app(updateTermAgreement, [
             (function (param) {
-                return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                            appearance: "error"
-                          });
+                addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                      appearance: "error"
+                    });
               }),
             (function (param, param$1) {
                 var variant = param.createTerm.NAME;
@@ -1749,9 +1722,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
                               value: deliveryAddressDetail,
                               onChange: (function (e) {
                                   var value = e.target.value;
-                                  return setDeliveryAddressDetail(function (param) {
-                                              return value;
-                                            });
+                                  setDeliveryAddressDetail(function (param) {
+                                        return value;
+                                      });
                                 })
                             }))), isTermAgree ? null : React.createElement(React.Fragment, undefined, React.createElement("div", {
                             className: "h-3 bg-border-default-L2"
@@ -1759,9 +1732,9 @@ function Tradematch_Ask_To_Buy_Apply_Steps_Buyer$Shipping(Props) {
                             className: "my-7 mx-5"
                           }, React.createElement("button", {
                                 onClick: (function (param) {
-                                    return setIsAgreedPrivacyPolicy(function (prev) {
-                                                return !prev;
-                                              });
+                                    setIsAgreedPrivacyPolicy(function (prev) {
+                                          return !prev;
+                                        });
                                   })
                               }, React.createElement("div", undefined, React.createElement("div", {
                                         className: "flex items-center space-x-2 mb-3"
@@ -1810,6 +1783,5 @@ export {
   Cycle ,
   Requirement ,
   Shipping ,
-  
 }
 /* react Not a pure module */

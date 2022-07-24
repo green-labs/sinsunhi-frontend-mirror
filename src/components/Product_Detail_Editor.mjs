@@ -6,10 +6,10 @@ import * as Editor from "./Editor.mjs";
 import * as Js_json from "rescript/lib/es6/js_json.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as ReactHookForm from "../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ReactHookForm$1 from "react-hook-form";
-import * as Hooks from "react-relay/hooks";
 import * as UploadFileToS3PresignedUrl from "../utils/UploadFileToS3PresignedUrl.mjs";
 import * as ProductDetailEditorMutation_graphql from "../__generated__/ProductDetailEditorMutation_graphql.mjs";
 
@@ -32,14 +32,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? ProductDetailEditorMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, ProductDetailEditorMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, ProductDetailEditorMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(ProductDetailEditorMutation_graphql.node);
+  var match = ReactRelay.useMutation(ProductDetailEditorMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -47,13 +47,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, ProductDetailEditorMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, ProductDetailEditorMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? ProductDetailEditorMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, ProductDetailEditorMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, ProductDetailEditorMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: ProductDetailEditorMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -64,10 +64,8 @@ function use(param) {
         ];
 }
 
-var Mutation_makeVariables = ProductDetailEditorMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -82,14 +80,14 @@ function Product_Detail_Editor(Props) {
   var mutate = match[0];
   var handleImageUpload = function (blobInfo, success, failure, _progress, param) {
     var onFailWithRemove = function (param) {
-      return failure("업로드 실패하였습니다.", {
-                  remove: true
-                });
+      failure("업로드 실패하였습니다.", {
+            remove: true
+          });
     };
     Curry.app(mutate, [
           (function (err) {
               console.log(err);
-              return onFailWithRemove(err);
+              onFailWithRemove(err);
             }),
           (function (param, param$1) {
               var res = param.createPresignedUrlForImage;
@@ -102,9 +100,7 @@ function Product_Detail_Editor(Props) {
               var res$p = res.VAL;
               UploadFileToS3PresignedUrl.uploadImage(Curry._1(blobInfo.blob, undefined), res$p.url, res$p.image.thumb1920x1920, (function (param) {
                       Curry._1(success, res$p.image.thumb1920x1920);
-                      
                     }), onFailWithRemove, undefined);
-              
             }),
           undefined,
           undefined,
@@ -116,7 +112,6 @@ function Product_Detail_Editor(Props) {
           undefined,
           undefined
         ]);
-    
   };
   return React.createElement(ReactHookForm$1.Controller, {
               name: name,
@@ -181,7 +176,7 @@ function Product_Detail_Editor(Props) {
                     plugins: Editor.basicPlugins,
                     value: Belt_Option.getWithDefault(Js_json.decodeString(match.value), ""),
                     onEditorChange: (function (value, param) {
-                        return Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, value));
+                        Curry._1(onChange, Curry._1(ReactHookForm.Controller.OnChangeArg.value, value));
                       })
                   };
                   if (disabled !== undefined) {
@@ -199,6 +194,5 @@ var make = Product_Detail_Editor;
 export {
   Mutation ,
   make ,
-  
 }
 /* react Not a pure module */

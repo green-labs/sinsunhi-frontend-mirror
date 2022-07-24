@@ -41,7 +41,7 @@ function Cost_Admin$Item$Table(Props) {
             }, React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement(Checkbox.make, {
-                      id: "checkbox-" + cost.sku,
+                      id: "checkbox-" + cost.sku + "",
                       checked: Curry._1(check, cost.sku),
                       onChange: Curry._1(onCheckCost, cost.sku)
                     })), React.createElement("div", {
@@ -69,18 +69,18 @@ function Cost_Admin$Item$Table(Props) {
                 }, React.createElement("span", {
                       className: "whitespace-nowrap text-center"
                     }, Belt_Option.mapWithDefault(cost.cost, "- / ", (function (cost) {
-                            return Locale.Float.show(undefined, cost, 0) + "원 / ";
+                            return "" + Locale.Float.show(undefined, cost, 0) + "원 / ";
                           })), Belt_Option.mapWithDefault(cost.rawCost, "- / ", (function (cost) {
-                            return Locale.Float.show(undefined, cost, 0) + "원 / ";
+                            return "" + Locale.Float.show(undefined, cost, 0) + "원 / ";
                           })), Belt_Option.mapWithDefault(cost.workingCost, "- / ", (function (cost) {
-                            return Locale.Float.show(undefined, cost, 0) + "원 / ";
+                            return "" + Locale.Float.show(undefined, cost, 0) + "원 / ";
                           })), Belt_Option.mapWithDefault(cost.deliveryCost, "-", (function (cost) {
-                            return Locale.Float.show(undefined, cost, 0) + "원";
+                            return "" + Locale.Float.show(undefined, cost, 0) + "원";
                           })))), React.createElement("div", {
                   className: "h-full flex flex-col pl-8 pr-4 py-2"
                 }, React.createElement("span", {
                       className: "block"
-                    }, Locale.Float.show(undefined, cost.price, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, cost.price, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2 relative"
                 }, React.createElement(Select_ContractType_Admin.make, {
                       contractType: newCost.contractType,
@@ -231,6 +231,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* Input Not a pure module */

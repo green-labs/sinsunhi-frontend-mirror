@@ -154,6 +154,5 @@ export {
   stringifyMarket ,
   displayMarket ,
   convertOnlineMarket ,
-  
 }
 /* No side effect */

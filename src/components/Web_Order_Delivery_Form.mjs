@@ -38,6 +38,5 @@ var make = Web_Order_Delivery_Form;
 export {
   Form ,
   make ,
-  
 }
 /* react Not a pure module */

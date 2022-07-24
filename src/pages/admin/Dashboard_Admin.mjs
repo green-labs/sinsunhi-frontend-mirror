@@ -26,19 +26,19 @@ function Dashboard_Admin$Item(Props) {
                   className: "block"
                 }, "최근신규발주"), React.createElement("span", {
                   className: "block mt-2 font-bold"
-                }, String(summary$p$1.data.newOrders) + "건")), React.createElement("li", {
+                }, "" + String(summary$p$1.data.newOrders) + "건")), React.createElement("li", {
               className: "flex-1 text-center"
             }, React.createElement("span", {
                   className: "block"
                 }, "자동처리완료"), React.createElement("span", {
                   className: "block mt-2 font-bold"
-                }, String(summary$p$1.data.ordersSuccess) + "건")), React.createElement("li", {
+                }, "" + String(summary$p$1.data.ordersSuccess) + "건")), React.createElement("li", {
               className: "flex-1 text-center"
             }, React.createElement("span", {
                   className: "block"
                 }, "처리실패"), React.createElement("span", {
                   className: "block mt-2 font-bold"
-                }, String(summary$p$1.data.ordersFail) + "건")));
+                }, "" + String(summary$p$1.data.ordersFail) + "건")));
   } else {
     tmp = React.createElement("div", undefined, "오류가 발생하였습니다.");
   }
@@ -58,13 +58,13 @@ function Dashboard_Admin$Item(Props) {
                   className: "block"
                 }, "입력완료"), React.createElement("span", {
                   className: "block mt-2 font-bold"
-                }, String(summary$p$3.data.invoiceUpdated) + "건")), React.createElement("li", {
+                }, "" + String(summary$p$3.data.invoiceUpdated) + "건")), React.createElement("li", {
               className: "flex-1 text-center"
             }, React.createElement("span", {
                   className: "block"
                 }, "입력미완료"), React.createElement("span", {
                   className: "block mt-2 font-bold"
-                }, String(summary$p$3.data.invoiceNotUpdated) + "건")));
+                }, "" + String(summary$p$3.data.invoiceNotUpdated) + "건")));
   } else {
     tmp$1 = React.createElement("div", undefined, "오류가 발생하였습니다.");
   }
@@ -109,6 +109,5 @@ var make = Dashboard_Admin;
 export {
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

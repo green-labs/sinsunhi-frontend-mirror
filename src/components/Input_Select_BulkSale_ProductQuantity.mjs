@@ -90,6 +90,5 @@ export {
   decodePackageUnit ,
   stringifyPackageUnit ,
   make ,
-  
 }
 /* Input Not a pure module */

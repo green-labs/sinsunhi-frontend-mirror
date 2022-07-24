@@ -4,19 +4,20 @@ import * as Env from "../constants/Env.mjs";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as RelayEnv from "../constants/RelayEnv.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ChannelTalk from "../bindings/ChannelTalk.mjs";
 import * as CustomHooks from "./CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as DeviceDetect from "../bindings/DeviceDetect.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ChannelTalkHelper_channelIO_Query_graphql from "../__generated__/ChannelTalkHelper_channelIO_Query_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(ChannelTalkHelper_channelIO_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(ChannelTalkHelper_channelIO_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -25,7 +26,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(ChannelTalkHelper_channelIO_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(ChannelTalkHelper_channelIO_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -43,38 +44,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, ChannelTalkHelper_channelIO_Query_graphql.node, ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, ChannelTalkHelper_channelIO_Query_graphql.node, ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: ChannelTalkHelper_channelIO_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: ChannelTalkHelper_channelIO_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, ChannelTalkHelper_channelIO_Query_graphql.node, ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, ChannelTalkHelper_channelIO_Query_graphql.node, ChannelTalkHelper_channelIO_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(ChannelTalkHelper_channelIO_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(ChannelTalkHelper_channelIO_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(ChannelTalkHelper_channelIO_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(ChannelTalkHelper_channelIO_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(ChannelTalkHelper_channelIO_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -83,10 +83,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = ChannelTalkHelper_channelIO_Query_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -97,39 +95,37 @@ var Query = {
 };
 
 function bootWithProfile(param) {
-  fetchPromised(RelayEnv.envSinsunMarket, undefined, undefined, undefined, undefined).then(function (res) {
-        return Promise.resolve(Belt_Option.forEach(res.channelIO, (function (param) {
-                          return Belt_Option.forEach(param.bootEvent, (function (bootEvent) {
-                                        return window.ChannelIO("boot", {
-                                                    pluginKey: Env.channelTalkKey,
-                                                    memberId: bootEvent.memberId,
-                                                    profile: bootEvent.profile
-                                                  });
-                                      }));
-                        })));
-      });
-  
+  Js_promise.then_((function (res) {
+          return Promise.resolve(Belt_Option.forEach(res.channelIO, (function (param) {
+                            Belt_Option.forEach(param.bootEvent, (function (bootEvent) {
+                                    window.ChannelIO("boot", {
+                                          pluginKey: Env.channelTalkKey,
+                                          memberId: bootEvent.memberId,
+                                          profile: bootEvent.profile
+                                        });
+                                  }));
+                          })));
+        }), fetchPromised(RelayEnv.envSinsunMarket, undefined, undefined, undefined, undefined));
 }
 
 function updateProfile(param) {
-  fetchPromised(RelayEnv.envSinsunMarket, undefined, undefined, undefined, undefined).then(function (res) {
-        return Promise.resolve(Belt_Option.forEach(res.channelIO, (function (param) {
-                          return Belt_Option.forEach(param.bootEvent, (function (param) {
-                                        return window.ChannelIO("updateUser", {
-                                                    language: "ko",
-                                                    profile: param.profile
-                                                  });
-                                      }));
-                        })));
-      });
-  
+  Js_promise.then_((function (res) {
+          return Promise.resolve(Belt_Option.forEach(res.channelIO, (function (param) {
+                            Belt_Option.forEach(param.bootEvent, (function (param) {
+                                    window.ChannelIO("updateUser", {
+                                          language: "ko",
+                                          profile: param.profile
+                                        });
+                                  }));
+                          })));
+        }), fetchPromised(RelayEnv.envSinsunMarket, undefined, undefined, undefined, undefined));
 }
 
 function logout(param) {
-  return window.ChannelIO("boot", {
-              pluginKey: Env.channelTalkKey,
-              hideChannelButtonOnBoot: true
-            });
+  window.ChannelIO("boot", {
+        pluginKey: Env.channelTalkKey,
+        hideChannelButtonOnBoot: true
+      });
 }
 
 function useBoot(param) {
@@ -150,9 +146,7 @@ function useBoot(param) {
           } else {
             updateProfile(undefined);
           }
-          
         }), [user]);
-  
 }
 
 function use$1(viewModeOpt, trackData, param) {
@@ -185,7 +179,6 @@ function use$1(viewModeOpt, trackData, param) {
           }
           
         }), [trackData]);
-  
 }
 
 var Hook = {
@@ -199,6 +192,5 @@ export {
   updateProfile ,
   logout ,
   Hook ,
-  
 }
 /* Env Not a pure module */

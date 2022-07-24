@@ -135,15 +135,14 @@ function Web_Order_Inputs_Buyer$ReceiverAddressInput(Props) {
                     var option = {
                       oncomplete: (function (data) {
                           Curry._1(changeFn, Curry._1(ReactHookForm.Controller.OnChangeArg.value, data.zonecode));
-                          return setValue(Web_Order_Buyer_Form.names.receiverAddress, data.address);
+                          setValue(Web_Order_Buyer_Form.names.receiverAddress, data.address);
                         })
                     };
                     var daumPostCode = new (daum.Postcode)(option);
                     var openOption = {
-                      popupName: "\xec\x9a\xb0\xed\x8e\xb8\xeb\xb2\x88\xed\x98\xb8 \xea\xb2\x80\xec\x83\x89"
+                      popupName: "우편번호 검색"
                     };
                     daumPostCode.open(openOption);
-                    
                   }), param);
     };
   };
@@ -245,7 +244,7 @@ function Web_Order_Inputs_Buyer$DeliveryMessageInput(Props) {
             }, React.createElement("label", {
                   className: "xl:w-1/4 block font-bold",
                   htmlFor: name
-                }, (
+                }, "" + (
                   selfMode ? "수령시" : "배송"
                 ) + " 요청사항"), React.createElement("div", {
                   className: "w-full xl:w-3/4"
@@ -254,7 +253,7 @@ function Web_Order_Inputs_Buyer$DeliveryMessageInput(Props) {
                       className: "w-full xl:w-3/4 xl:min-w-[20rem] h-13 xl:h-9 px-3 border border-gray-300 rounded-lg",
                       id: name,
                       name: name,
-                      placeholder: (
+                      placeholder: "" + (
                         selfMode ? "수령" : "배송"
                       ) + "시 요청사항을 입력해주세요 (최대 100자)",
                       onBlur: match$1.onBlur,
@@ -294,7 +293,7 @@ function Web_Order_Inputs_Buyer$DeliveryDesiredDateSelection(Props) {
               className: "flex flex-col xl:flex-row gap-2 xl:gap-0 w-80 xl:w-full xl:items-baseline"
             }, React.createElement("label", {
                   className: "xl:w-1/4 block font-bold"
-                }, (
+                }, "" + (
                   selfMode ? "수령" : "배송"
                 ) + " 희망일"), React.createElement("div", {
                   className: "flex flex-col gap-1 xl:w-3/4"
@@ -415,6 +414,5 @@ export {
   DeliveryMessageInput ,
   DeliveryDesiredDateSelection ,
   PaymentMethodSelection ,
-  
 }
 /* react Not a pure module */

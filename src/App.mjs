@@ -45,7 +45,6 @@ function $$default(props) {
             Braze.changeUser(user._0, braze);
             braze.requestPushPermission();
           }
-          
         }), [
         braze,
         user,
@@ -56,7 +55,6 @@ function $$default(props) {
           if (Global.$$window !== undefined) {
             Caml_option.valFromOption(Global.$$window).nextRouterPush = (function (url) {
                 router$1.push(url);
-                
               });
           }
           
@@ -140,6 +138,5 @@ export {
   PageComponent ,
   $$default ,
   $$default as default,
-  
 }
 /* Braze Not a pure module */

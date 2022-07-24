@@ -56,6 +56,5 @@ export {
   List ,
   Users ,
   make ,
-  
 }
 /* react Not a pure module */

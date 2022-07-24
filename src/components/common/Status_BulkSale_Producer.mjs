@@ -127,8 +127,7 @@ function handleOnClickStatus(router, status, param) {
                     Js_dict.unsafeDeleteKey(newQueries, "status");
                   }
                   var newQueryString = new URLSearchParams(newQueries).toString();
-                  router.push(router.pathname + "?" + newQueryString);
-                  
+                  router.push("" + router.pathname + "?" + newQueryString + "");
                 }), param);
   };
 }
@@ -141,7 +140,7 @@ function queriedStyle(router, status, param) {
                         return s$p;
                       }));
         }));
-  var match = Caml_obj.caml_equal(status, queried);
+  var match = Caml_obj.equal(status, queried);
   if (match) {
     return "py-1 px-2 flex justify-between border border-green-gl text-green-gl sm:border-0 sm:flex-1 sm:flex-col sm:p-4 bg-green-gl-light sm:rounded-lg";
   }
@@ -181,21 +180,21 @@ function queriedFill(router, status, param) {
 function displayCount(status, data) {
   switch (status) {
     case /* APPLIED */0 :
-        return String(data.progressAppliedCount) + "건";
+        return "" + String(data.progressAppliedCount) + "건";
     case /* UNDER_DISCUSSION */1 :
-        return String(data.progressUnderDiscussionCount) + "건";
+        return "" + String(data.progressUnderDiscussionCount) + "건";
     case /* ON_SITE_MEETING_SCHEDULED */2 :
-        return String(data.progressOnSiteMeetingScheduledCount) + "건";
+        return "" + String(data.progressOnSiteMeetingScheduledCount) + "건";
     case /* SAMPLE_REQUESTED */3 :
-        return String(data.progressSampleRequestedCount) + "건";
+        return "" + String(data.progressSampleRequestedCount) + "건";
     case /* SAMPLE_REVIEWING */4 :
-        return String(data.progressSampleReviewingCount) + "건";
+        return "" + String(data.progressSampleReviewingCount) + "건";
     case /* REJECTED */5 :
-        return String(data.progressRejectedCount) + "건";
+        return "" + String(data.progressRejectedCount) + "건";
     case /* CONFIRMED */6 :
-        return String(data.progressConfirmedCount) + "건";
+        return "" + String(data.progressConfirmedCount) + "건";
     case /* WITHDRAWN */7 :
-        return String(data.progressWithdrawnCount) + "건";
+        return "" + String(data.progressWithdrawnCount) + "건";
     
   }
 }
@@ -216,7 +215,7 @@ var Skeleton$1 = {
 function Status_BulkSale_Producer$Total(Props) {
   var data = Props.data;
   var router = Router.useRouter();
-  var totalCount = String(data.count) + "건";
+  var totalCount = "" + String(data.count) + "건";
   return React.createElement("li", {
               className: queriedStyle(router, undefined, undefined),
               onClick: handleOnClickStatus(router, undefined, undefined)
@@ -277,6 +276,5 @@ export {
   displayCount ,
   Total ,
   Item ,
-  
 }
 /* react Not a pure module */

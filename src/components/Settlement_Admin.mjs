@@ -36,17 +36,17 @@ function Settlement_Admin$Item$Table(Props) {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "whitespace-nowrap"
-                    }, Locale.Float.show(undefined, settlement.invoiceUpdatedSum, 0) + "원"), React.createElement("span", {
+                    }, "" + Locale.Float.show(undefined, settlement.invoiceUpdatedSum, 0) + "원"), React.createElement("span", {
                       className: "whitespace-nowrap"
-                    }, Locale.Float.show(undefined, settlement.falseExcludedSum, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, settlement.falseExcludedSum, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "block"
-                    }, Locale.Float.show(undefined, settlement.completeSum, 0) + "원")), React.createElement("div", {
+                    }, "" + Locale.Float.show(undefined, settlement.completeSum, 0) + "원")), React.createElement("div", {
                   className: "h-full flex flex-col px-4 py-2"
                 }, React.createElement("span", {
                       className: "block"
-                    }, Locale.Float.show(undefined, settlement.completeTax, 0) + "원")));
+                    }, "" + Locale.Float.show(undefined, settlement.completeTax, 0) + "원")));
 }
 
 function Settlement_Admin$Item$Table$Loading(Props) {
@@ -101,6 +101,5 @@ export {
   formatDate ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

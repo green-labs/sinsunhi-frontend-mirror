@@ -6,17 +6,18 @@ import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as IconError from "../../../components/svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ReactEvents from "../../../utils/ReactEvents.mjs";
 import * as Router from "next/router";
 import Script from "next/script";
+import * as ReactRelay from "react-relay";
 import * as Authorization from "../../../utils/Authorization.mjs";
 import * as ReactHookForm from "../../../bindings/ReactHookForm/ReactHookForm.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as ReactHookForm$1 from "react-hook-form";
-import * as Hooks from "react-relay/hooks";
 import * as Web_Order_Buyer_Form from "../../../components/Web_Order_Buyer_Form.mjs";
 import * as Web_Order_Item_Buyer from "../../../components/Web_Order_Item_Buyer.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
@@ -26,7 +27,7 @@ import * as WebOrderBuyerQuery_graphql from "../../../__generated__/WebOrderBuye
 import * as WebOrderBuyerMutation_graphql from "../../../__generated__/WebOrderBuyerMutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(WebOrderBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(WebOrderBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(WebOrderBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(WebOrderBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -35,7 +36,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(WebOrderBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(WebOrderBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -53,38 +54,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, WebOrderBuyerQuery_graphql.node, WebOrderBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, WebOrderBuyerQuery_graphql.node, WebOrderBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: WebOrderBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: WebOrderBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, WebOrderBuyerQuery_graphql.node, WebOrderBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, WebOrderBuyerQuery_graphql.node, WebOrderBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(WebOrderBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(WebOrderBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(WebOrderBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(WebOrderBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(WebOrderBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -93,10 +93,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var Query_makeVariables = WebOrderBuyerQuery_graphql.Utils.makeVariables;
-
 var Query = {
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -105,8 +103,6 @@ var Query = {
   usePreloaded: usePreloaded,
   retain: retain
 };
-
-var make_wosProductOptionInput = WebOrderBuyerMutation_graphql.Utils.make_wosProductOptionInput;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -127,14 +123,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? WebOrderBuyerMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, WebOrderBuyerMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, WebOrderBuyerMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(WebOrderBuyerMutation_graphql.node);
+  var match = ReactRelay.useMutation(WebOrderBuyerMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -142,13 +138,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, WebOrderBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, WebOrderBuyerMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? WebOrderBuyerMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, WebOrderBuyerMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, WebOrderBuyerMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: WebOrderBuyerMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -167,15 +163,12 @@ var Mutation_wosErrorCode_decode = WebOrderBuyerMutation_graphql.Utils.wosErrorC
 
 var Mutation_wosErrorCode_fromString = WebOrderBuyerMutation_graphql.Utils.wosErrorCode_fromString;
 
-var Mutation_makeVariables = WebOrderBuyerMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   wosDeliveryType_decode: Mutation_wosDeliveryType_decode,
   wosDeliveryType_fromString: Mutation_wosDeliveryType_fromString,
   wosErrorCode_decode: Mutation_wosErrorCode_decode,
   wosErrorCode_fromString: Mutation_wosErrorCode_fromString,
-  make_wosProductOptionInput: make_wosProductOptionInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -204,7 +197,7 @@ function Web_Order_Buyer$Dialog(Props) {
                                 className: "w-1/2 rounded-xl h-13 bg-primary text-inverted font-bold",
                                 onClick: (function (param) {
                                     return ReactEvents.interceptingHandler((function (param) {
-                                                  return Curry._1(confirmFn, undefined);
+                                                  Curry._1(confirmFn, undefined);
                                                 }), param);
                                   })
                               }, "결제")))),
@@ -217,30 +210,43 @@ var Dialog = {
 };
 
 function makeProductOption(d) {
-  return Curry.app(make_wosProductOptionInput, [
-              d.deliveryCost,
-              d.deliveryDesiredDate,
-              d.deliveryMessage,
-              d.deliveryType,
-              d.grade,
-              d.isTaxFree,
-              d.ordererName,
-              d.ordererPhone,
-              d.price,
-              d.productId,
-              d.productName,
-              d.productOptionName,
-              d.quantity,
-              Belt_Option.getWithDefault(d.receiverAddress, "") + Belt_Option.mapWithDefault(d.receiverDetailAddress, "", (function (str) {
-                      return " " + str;
-                    })),
-              d.receiverName,
-              d.receiverPhone,
-              d.receiverZipCode,
-              d.stockSku,
-              undefined,
-              undefined
-            ]);
+  var tmp = {
+    deliveryType: d.deliveryType,
+    isTaxFree: d.isTaxFree,
+    ordererName: d.ordererName,
+    ordererPhone: d.ordererPhone,
+    price: d.price,
+    productId: d.productId,
+    productName: d.productName,
+    productOptionName: d.productOptionName,
+    quantity: d.quantity,
+    receiverAddress: Belt_Option.getWithDefault(d.receiverAddress, "") + Belt_Option.mapWithDefault(d.receiverDetailAddress, "", (function (str) {
+            return " " + str + "";
+          })),
+    stockSku: d.stockSku
+  };
+  if (d.deliveryCost !== undefined) {
+    tmp.deliveryCost = d.deliveryCost;
+  }
+  if (d.deliveryDesiredDate !== undefined) {
+    tmp.deliveryDesiredDate = d.deliveryDesiredDate;
+  }
+  if (d.deliveryMessage !== undefined) {
+    tmp.deliveryMessage = d.deliveryMessage;
+  }
+  if (d.grade !== undefined) {
+    tmp.grade = d.grade;
+  }
+  if (d.receiverName !== undefined) {
+    tmp.receiverName = d.receiverName;
+  }
+  if (d.receiverPhone !== undefined) {
+    tmp.receiverPhone = d.receiverPhone;
+  }
+  if (d.receiverZipCode !== undefined) {
+    tmp.receiverZipCode = d.receiverZipCode;
+  }
+  return tmp;
 }
 
 function paymentMethodToTossValue(c) {
@@ -298,11 +304,11 @@ function Web_Order_Buyer$Container(Props) {
                   setFreightDialogShow(function (param) {
                         return false;
                       });
-                  return setConfirmFn(function (param) {
-                              return function (prim) {
-                                
-                              };
-                            });
+                  setConfirmFn(function (param) {
+                        return function (prim) {
+                          
+                        };
+                      });
                 }), param);
   };
   var handleError = function (message, param) {
@@ -311,15 +317,15 @@ function Web_Order_Buyer$Container(Props) {
             
           };
         });
-    return addToast(React.createElement("div", {
-                    className: "flex items-center w-full whitespace-pre-wrap"
-                  }, React.createElement(IconError.make, {
-                        width: "24",
-                        height: "24",
-                        className: "mr-2"
-                      }), "결제가 실패하였습니다. " + Belt_Option.getWithDefault(message, "")), {
-                appearance: "error"
-              });
+    addToast(React.createElement("div", {
+              className: "flex items-center w-full whitespace-pre-wrap"
+            }, React.createElement(IconError.make, {
+                  width: "24",
+                  height: "24",
+                  className: "mr-2"
+                }), "결제가 실패하였습니다. " + Belt_Option.getWithDefault(message, "") + ""), {
+          appearance: "error"
+        });
   };
   var match$5 = queryData.productNode;
   var methods = ReactHookForm$1.useForm({
@@ -362,7 +368,7 @@ function Web_Order_Buyer$Container(Props) {
             });
         Curry.app(mutate, [
               (function (err) {
-                  return handleError(err.message, undefined);
+                  handleError(err.message, undefined);
                 }),
               (function (param, param$1) {
                   var createWosOrder = param.createWosOrder;
@@ -388,11 +394,7 @@ function Web_Order_Buyer$Container(Props) {
                     }
                   }
                   if (variant !== "CreateWosOrderResult") {
-                    if (variant === "Error") {
-                      return handleError("주문 생성 에러", undefined);
-                    } else {
-                      return handleError("주문 생성 에러", undefined);
-                    }
+                    return handleError("주문 생성 에러", undefined);
                   }
                   var match = createWosOrder.VAL;
                   var tempOrderId = match.tempOrderId;
@@ -409,7 +411,7 @@ function Web_Order_Buyer$Container(Props) {
                   var orderName = match$1[0];
                   Curry.app(requestPaymentMutate, [
                         (function (err) {
-                            return handleError(err.message, undefined);
+                            handleError(err.message, undefined);
                           }),
                         (function (param, param$1) {
                             var requestPayment = param.requestPayment;
@@ -422,38 +424,37 @@ function Web_Order_Buyer$Container(Props) {
                             var variant = requestPayment.NAME;
                             if (variant === "Error") {
                               return Belt_Option.forEach(requestPayment.VAL.message, (function (message) {
-                                            return handleError(message, undefined);
+                                            handleError(message, undefined);
                                           }));
                             }
                             if (variant !== "RequestPaymentTossPaymentsResult") {
                               return handleError("주문 생성에 실패하였습니다.", undefined);
                             }
                             var tossPaymentResult = requestPayment.VAL;
-                            return window.tossPayments.requestPayment(paymentMethodToTossValue(data$p.paymentMethod), {
-                                        amount: data$p.totalOrderPrice,
-                                        orderId: orderNo,
-                                        orderName: orderName,
-                                        customerName: tossPaymentResult.customerName,
-                                        successUrl: window.location.origin + "/buyer/toss-payments/success?product-id=" + productId + "&product-option-id=" + productOptionId + "&quantity=" + String(quantity) + "&payment-id=" + String(tossPaymentResult.paymentId) + "&temp-order-id=" + String(tempOrderId),
-                                        failUrl: window.location.origin + "/buyer/toss-payments/fail?product-id=" + productId + "&product-option-id=" + productOptionId + "&quantity=" + String(quantity),
-                                        taxFreeAmount: isTaxFree ? data$p.totalOrderPrice : 0,
-                                        validHours: tossPaymentsValidHours(data$p.paymentMethod),
-                                        cashReceipt: tossPaymentsCashReceipt(data$p.paymentMethod)
-                                      });
+                            window.tossPayments.requestPayment(paymentMethodToTossValue(data$p.paymentMethod), {
+                                  amount: data$p.totalOrderPrice,
+                                  orderId: orderNo,
+                                  orderName: orderName,
+                                  customerName: tossPaymentResult.customerName,
+                                  successUrl: "" + window.location.origin + "/buyer/toss-payments/success?product-id=" + productId + "&product-option-id=" + productOptionId + "&quantity=" + String(quantity) + "&payment-id=" + String(tossPaymentResult.paymentId) + "&temp-order-id=" + String(tempOrderId) + "",
+                                  failUrl: "" + window.location.origin + "/buyer/toss-payments/fail?product-id=" + productId + "&product-option-id=" + productOptionId + "&quantity=" + String(quantity) + "",
+                                  taxFreeAmount: isTaxFree ? data$p.totalOrderPrice : 0,
+                                  validHours: tossPaymentsValidHours(data$p.paymentMethod),
+                                  cashReceipt: tossPaymentsCashReceipt(data$p.paymentMethod)
+                                });
                           }),
                         undefined,
                         undefined,
                         undefined,
                         undefined,
                         {
-                          paymentMethod: data$p.paymentMethod,
                           amount: data$p.totalOrderPrice,
+                          paymentMethod: data$p.paymentMethod,
                           purpose: "ORDER"
                         },
                         undefined,
                         undefined
                       ]);
-                  
                 }),
               undefined,
               undefined,
@@ -469,7 +470,6 @@ function Web_Order_Buyer$Container(Props) {
               undefined,
               undefined
             ]);
-        
       };
       var match = Belt_Array.get(data$p.productOptions, 0);
       if (match !== undefined) {
@@ -489,7 +489,7 @@ function Web_Order_Buyer$Container(Props) {
     }
     var msg$1 = msg._0;
     console.log(msg$1);
-    return handleError(msg$1.message, undefined);
+    handleError(msg$1.message, undefined);
   };
   return React.createElement(React.Fragment, undefined, React.createElement(Web_Order_Buyer$Dialog, {
                   show: match$2[0],
@@ -559,6 +559,5 @@ export {
   tossPaymentsCashReceipt ,
   Container ,
   make ,
-  
 }
 /* react Not a pure module */

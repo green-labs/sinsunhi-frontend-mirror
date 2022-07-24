@@ -8,10 +8,10 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../../utils/CustomHooks.mjs";
 import * as Router from "next/router";
 import ReactNl2br from "react-nl2br";
+import * as ReactRelay from "react-relay";
 import * as Footer_Buyer from "../../../../components/Footer_Buyer.mjs";
 import * as Header_Buyer from "../../../../components/Header_Buyer.mjs";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as PDP_Matching_Title from "./PDP_Matching_Title.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as PDP_Matching_Image_Buyer from "./PDP_Matching_Image_Buyer.mjs";
@@ -24,13 +24,13 @@ import * as PDP_Matching_DemeterTable_Buyer from "./PDP_Matching_DemeterTable_Bu
 import * as PDPMatchingBuyer_fragment_graphql from "../../../../__generated__/PDPMatchingBuyer_fragment_graphql.mjs";
 
 function use(fRef) {
-  var data = Hooks.useFragment(PDPMatchingBuyer_fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(PDPMatchingBuyer_fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PDPMatchingBuyer_fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(PDPMatchingBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(PDPMatchingBuyer_fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -42,6 +42,7 @@ function useOpt(opt_fRef) {
 
 var Fragment = {
   Types: undefined,
+  Operation: undefined,
   use: use,
   useOpt: useOpt
 };
@@ -115,7 +116,7 @@ function PDP_Matching_Buyer$MO(Props) {
               }, React.createElement("div", {
                     className: "text-center mb-4"
                   }, ReactNl2br("회원 로그인 후\n전국 도매시장 주간 시세를 확인해보세요")), React.createElement(Link, {
-                    href: "/buyer/signin?redirect=" + router.asPath,
+                    href: "/buyer/signin?redirect=" + router.asPath + "",
                     children: React.createElement("a", undefined, React.createElement("span", {
                               className: "mt-2 px-3 py-2 rounded-xl border border-primary text-primary"
                             }, "로그인하고 시세 확인하기"))
@@ -171,11 +172,11 @@ function PDP_Matching_Buyer$MO(Props) {
                           className: "px-4 pt-4 pb-16"
                         }, React.createElement(PDP_Matching_Buyer$MO$GradeCard, {
                               onClick: (function (param) {
-                                  return setShowModal(function (param) {
-                                              return /* Show */{
-                                                      _0: /* GradeGuide */0
-                                                    };
-                                            });
+                                  setShowModal(function (param) {
+                                        return /* Show */{
+                                                _0: /* GradeGuide */0
+                                              };
+                                      });
                                 })
                             }))), React.createElement(PDP_Matching_Submit_Buyer.MO.make, {
                       setShowModal: setShowModal,
@@ -211,6 +212,5 @@ export {
   Fragment ,
   MO ,
   make ,
-  
 }
 /* react Not a pure module */

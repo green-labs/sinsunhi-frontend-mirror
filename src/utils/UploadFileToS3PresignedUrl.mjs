@@ -5,6 +5,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Spice from "@greenlabs/ppx-spice/src/rescript/Spice.mjs";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Js_json from "rescript/lib/es6/js_json.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as FetchHelper from "./FetchHelper.mjs";
 
@@ -104,52 +105,52 @@ function upload(userId, kind, file, onSuccess, onFailure, param) {
   if (userId !== undefined) {
     switch (kind) {
       case /* Seller */0 :
-          url = Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + "&user-id=" + userId;
+          url = "" + Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + "&user-id=" + userId + "";
           break;
       case /* Buyer */1 :
-          url = Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId;
+          url = "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId + "";
           break;
       case /* AfterPay */2 :
-          url = Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId + "&pay-type=AFTER_PAY";
+          url = "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&user-id=" + userId + "&pay-type=AFTER_PAY";
           break;
       case /* Admin */3 :
-          url = Env.restApiUrl + "/offlineOrder/upload-url?file-name=" + filename + "&user-id=" + userId;
+          url = "" + Env.restApiUrl + "/offlineOrder/upload-url?file-name=" + filename + "&user-id=" + userId + "";
           break;
       
     }
   } else {
     switch (kind) {
       case /* Seller */0 :
-          url = Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename;
+          url = "" + Env.restApiUrl + "/order/delivery/upload-url?file-name=" + filename + "";
           break;
       case /* Buyer */1 :
-          url = Env.restApiUrl + "/order/upload-url?file-name=" + filename;
+          url = "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "";
           break;
       case /* AfterPay */2 :
-          url = Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&pay-type=AFTER_PAY";
+          url = "" + Env.restApiUrl + "/order/upload-url?file-name=" + filename + "&pay-type=AFTER_PAY";
           break;
       case /* Admin */3 :
-          url = Env.restApiUrl + "/offline-order/upload-url?file-name=" + filename;
+          url = "" + Env.restApiUrl + "/offline-order/upload-url?file-name=" + filename + "";
           break;
       
     }
   }
-  return FetchHelper.fetchWithRetry(FetchHelper.getWithToken, url, undefined, 3).then(function (json) {
-                var response = response_decode(json);
-                if (response.TAG === /* Ok */0) {
-                  return FetchHelper.fetchWithRetry(FetchHelper.putWithFile, response._0.data.url, file, 3).then(function (res) {
-                                return Promise.resolve(Curry._1(onSuccess, res));
-                              }).catch(function (err) {
-                              return Promise.resolve(Curry._1(onFailure, err));
-                            });
-                }
-                var err = response._0;
+  return Js_promise.$$catch((function (err) {
                 console.log(err);
-                return Promise.resolve(Curry._1(onFailure, err.message));
-              }).catch(function (err) {
-              console.log(err);
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    var response = response_decode(json);
+                    if (response.TAG === /* Ok */0) {
+                      return Js_promise.$$catch((function (err) {
+                                    return Promise.resolve(Curry._1(onFailure, err));
+                                  }), Js_promise.then_((function (res) {
+                                        return Promise.resolve(Curry._1(onSuccess, res));
+                                      }), FetchHelper.fetchWithRetry(FetchHelper.putWithFile, response._0.data.url, file, 3)));
+                    }
+                    var err = response._0;
+                    console.log(err);
+                    return Promise.resolve(Curry._1(onFailure, err.message));
+                  }), FetchHelper.fetchWithRetry(FetchHelper.getWithToken, url, undefined, 3)));
 }
 
 function responseDataBulkSale_encode(v) {
@@ -209,38 +210,38 @@ function responseDataBulkSale_decode(v) {
 
 function uploadBulkSale(file, farmmorningUserId, onSuccess, onFailure, param) {
   var filename = file.name;
-  var url = Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/product-sale-ledger/issue-s3-put-url?filename=" + filename + "&farmmorning-user-id=" + farmmorningUserId;
-  return FetchHelper.fetchWithRetry(FetchHelper.getWithToken, url, undefined, 3).then(function (json) {
-                var response = responseDataBulkSale_decode(json);
-                if (response.TAG === /* Ok */0) {
-                  var response$1 = response._0;
-                  return FetchHelper.fetchWithRetry(FetchHelper.putWithFileAsAttachment, response$1.url, file, 3).then(function (_res) {
-                                return Promise.resolve(Curry._1(onSuccess, response$1.path));
-                              }).catch(function (err) {
-                              return Promise.resolve(Curry._1(onFailure, err));
-                            });
-                }
-                var err = response._0;
+  var url = "" + Env.restApiUrl + "/farmmorning-bridge/api/bulk-sale/product-sale-ledger/issue-s3-put-url?filename=" + filename + "&farmmorning-user-id=" + farmmorningUserId + "";
+  return Js_promise.$$catch((function (err) {
                 console.log(err);
-                return Promise.resolve(Curry._1(onFailure, err.message));
-              }).catch(function (err) {
-              console.log(err);
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (json) {
+                    var response = responseDataBulkSale_decode(json);
+                    if (response.TAG === /* Ok */0) {
+                      var response$1 = response._0;
+                      return Js_promise.$$catch((function (err) {
+                                    return Promise.resolve(Curry._1(onFailure, err));
+                                  }), Js_promise.then_((function (_res) {
+                                        return Promise.resolve(Curry._1(onSuccess, response$1.path));
+                                      }), FetchHelper.fetchWithRetry(FetchHelper.putWithFileAsAttachment, response$1.url, file, 3)));
+                    }
+                    var err = response._0;
+                    console.log(err);
+                    return Promise.resolve(Curry._1(onFailure, err.message));
+                  }), FetchHelper.fetchWithRetry(FetchHelper.getWithToken, url, undefined, 3)));
 }
 
 function uploadImage(file, original, thumb1920, onSuccess, onFailure, param) {
-  return FetchHelper.fetchWithRetry(FetchHelper.putWithFile, original, file, 3).then(function (_res) {
-                  return FetchHelper.fetchWithIntervalRetry(FetchHelper.getProcessedImage, thumb1920, "", 10, 3000).then(function (res) {
-                                return Promise.resolve(res);
-                              }).catch(function (err) {
-                              return Promise.reject(err);
-                            });
-                }).then(function (res) {
-                return Promise.resolve(Curry._1(onSuccess, res));
-              }).catch(function (err) {
-              return Promise.resolve(Curry._1(onFailure, err));
-            });
+  return Js_promise.$$catch((function (err) {
+                return Promise.resolve(Curry._1(onFailure, err));
+              }), Js_promise.then_((function (res) {
+                    return Promise.resolve(Curry._1(onSuccess, res));
+                  }), Js_promise.then_((function (_res) {
+                        return Js_promise.$$catch((function (err) {
+                                      return Promise.reject(err);
+                                    }), Js_promise.then_((function (res) {
+                                          return Promise.resolve(res);
+                                        }), FetchHelper.fetchWithIntervalRetry(FetchHelper.getProcessedImage, thumb1920, "", 10, 3000)));
+                      }), FetchHelper.fetchWithRetry(FetchHelper.putWithFile, original, file, 3))));
 }
 
 export {
@@ -253,6 +254,5 @@ export {
   responseDataBulkSale_decode ,
   uploadBulkSale ,
   uploadImage ,
-  
 }
 /* Env Not a pure module */

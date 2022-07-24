@@ -24,7 +24,7 @@ function Product_Detail_Display_Categories(Props) {
                             className: "flex gap-2"
                           }, React.createElement("div", undefined, React.createElement(Select_Display_Categories.make, {
                                     control: control,
-                                    name: name + "." + String(index),
+                                    name: "" + name + "." + String(index) + "",
                                     disabled: disabled,
                                     key: field.id
                                   })), disabled ? null : (
@@ -32,7 +32,7 @@ function Product_Detail_Display_Categories(Props) {
                                       type: "button",
                                       onClick: (function (param) {
                                           return ReactEvents.interceptingHandler((function (param) {
-                                                        return remove(index);
+                                                        remove(index);
                                                       }), param);
                                         })
                                     }, React.createElement(IconCloseInput.make, {
@@ -44,7 +44,7 @@ function Product_Detail_Display_Categories(Props) {
                                       type: "button",
                                       onClick: (function (param) {
                                           return ReactEvents.interceptingHandler((function (param) {
-                                                        return append(Select_Display_Categories.Form.defaultDisplayCategory(/* ShowCase */1), {}, undefined);
+                                                        append(Select_Display_Categories.Form.defaultDisplayCategory(/* ShowCase */1), {}, undefined);
                                                       }), param);
                                         })
                                     }, "전시카테고리 추가")
@@ -56,6 +56,5 @@ var make = Product_Detail_Display_Categories;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

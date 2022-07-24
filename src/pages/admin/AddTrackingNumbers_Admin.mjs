@@ -9,6 +9,7 @@ import * as Helper from "../../utils/Helper.mjs";
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as DatePicker from "../../components/DatePicker.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../utils/CustomHooks.mjs";
@@ -47,48 +48,47 @@ function AddTrackingNumbers_Admin$QueryFarmerPresenter(Props) {
             setSelectedFarmer(function (param) {
                   return /* Selected */{
                           value: String(id),
-                          label: name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(phone), Helper.PhoneNumber.format), phone) + ")"
+                          label: "" + name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(phone), Helper.PhoneNumber.format), phone) + ")"
                         };
                 });
           }
           return (function (param) {
-                    return setSelectedFarmer(function (param) {
-                                return /* NotSelected */0;
-                              });
+                    setSelectedFarmer(function (param) {
+                          return /* NotSelected */0;
+                        });
                   });
         }), [farmer]);
   var handleLoadOptions = function (inputValue) {
-    var __x = FetchHelper.fetchWithRetry(FetchHelper.getWithToken, Env.restApiUrl + "/user?name=" + inputValue + "&role=farmer", "", 3);
-    return __x.then(function (result) {
-                var users$p = Curry._1(CustomHooks.QueryUser.Farmer.users_decode, result);
-                if (users$p.TAG !== /* Ok */0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$1 = users$p._0;
-                if (users$p$1.data.length === 0) {
-                  return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
-                }
-                var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
-                        return /* Selected */{
-                                value: String(user.id),
-                                label: user.name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(user.phone), Helper.PhoneNumber.format), user.phone) + ")"
-                              };
-                      }));
-                return Promise.resolve(users$p$p);
-              });
+    var __x = FetchHelper.fetchWithRetry(FetchHelper.getWithToken, "" + Env.restApiUrl + "/user?name=" + inputValue + "&role=farmer", "", 3);
+    return Js_promise.then_((function (result) {
+                  var users$p = Curry._1(CustomHooks.QueryUser.Farmer.users_decode, result);
+                  if (users$p.TAG !== /* Ok */0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$1 = users$p._0;
+                  if (users$p$1.data.length === 0) {
+                    return Promise.reject(Js_exn.raiseError("유저 검색 에러"));
+                  }
+                  var users$p$p = Garter_Array.map(users$p$1.data, (function (user) {
+                          return /* Selected */{
+                                  value: String(user.id),
+                                  label: "" + user.name + "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(user.phone), Helper.PhoneNumber.format), user.phone) + ")"
+                                };
+                        }));
+                  return Promise.resolve(users$p$p);
+                }), __x);
   };
   var handleChangeFarmer = function (selection) {
     if (selection) {
       var cleaned = removeQueriesFarmerName(router.query);
       cleaned["farmer-id"] = selection.value;
       var newQueryString = new URLSearchParams(cleaned).toString();
-      router.push(router.pathname + "?" + newQueryString);
+      router.push("" + router.pathname + "?" + newQueryString + "");
       return ;
     }
     var cleaned$1 = removeQueriesFarmerName(router.query);
     var newQueryString$1 = new URLSearchParams(cleaned$1).toString();
-    router.push(router.pathname + "?" + newQueryString$1);
-    
+    router.push("" + router.pathname + "?" + newQueryString$1 + "");
   };
   return React.createElement("div", {
               className: "w-80 relative"
@@ -197,7 +197,6 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                         to_: to_
                       };
               });
-          
         }), [router.query]);
   var handleOnChangeDate = function (t, e) {
     var newDate = e.detail.valueAsDate;
@@ -217,20 +216,19 @@ function AddTrackingNumbers_Admin$Orders(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnClickQuery = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   router.query["from"] = Format(query.from, "yyyyMMdd");
                   router.query["to"] = Format(query.to_, "yyyyMMdd");
                   var newQueryString = new URLSearchParams(router.query).toString();
-                  router.push(router.pathname + "?" + newQueryString);
-                  
+                  router.push("" + router.pathname + "?" + newQueryString + "");
                 }), param);
   };
   var dictSet = function (dict, key, val) {
@@ -263,19 +261,19 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                                       bodyOption: dictSet(router.query, "status", "PACKING")
                                     }))), React.createElement(Upload_Delivery_Admin.make, {
                               onSuccess: (function (param) {
-                                  return setShowSuccessUpload(function (param) {
-                                              return /* Show */0;
-                                            });
+                                  setShowSuccessUpload(function (param) {
+                                        return /* Show */0;
+                                      });
                                 }),
                               onFailure: (function (param) {
-                                  return setShowErrorUpload(function (param) {
-                                              return /* Show */0;
-                                            });
+                                  setShowErrorUpload(function (param) {
+                                        return /* Show */0;
+                                      });
                                 })
                             })), React.createElement(UploadStatus_Admin_Seller.make, {
                           kind: /* Admin */2,
                           onChangeLatestUpload: (function (param) {
-                              return mutate(Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString(), undefined, true);
+                              mutate("" + Env.restApiUrl + "/order?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                             })
                         })), React.createElement("div", {
                       className: "p-7 m-4 shadow-gl overflow-auto overflow-x-scroll bg-white rounded"
@@ -325,9 +323,9 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "상품준비중 변경에 성공하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowPackingSuccess(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingSuccess(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$5[0],
@@ -335,9 +333,9 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "상품준비중 변경에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowPackingError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowPackingError(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$2[0],
@@ -345,9 +343,9 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "업로드에 성공하였습니다."),
                   onConfirm: (function (param) {
-                      return setShowSuccessUpload(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowSuccessUpload(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }), React.createElement(Dialog.make, {
                   isShow: match$3[0],
@@ -355,9 +353,9 @@ function AddTrackingNumbers_Admin$Orders(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "업로드에 실패하였습니다.\n다시 시도하시기 바랍니다."),
                   onConfirm: (function (param) {
-                      return setShowErrorUpload(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErrorUpload(function (param) {
+                            return /* Hide */1;
+                          });
                     })
                 }));
 }
@@ -389,6 +387,5 @@ export {
   QueryFarmer ,
   Orders ,
   make ,
-  
 }
 /* Env Not a pure module */

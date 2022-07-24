@@ -44,6 +44,5 @@ var make = Guide_Upload_Seller;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

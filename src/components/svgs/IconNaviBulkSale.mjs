@@ -30,6 +30,5 @@ var make = IconNaviBulkSale;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

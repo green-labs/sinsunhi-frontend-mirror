@@ -960,6 +960,5 @@ var defaultOptionName = "1톤(1~2PT)";
 export {
   defaultOptionName ,
   freightDeliveryCostData ,
-  
 }
 /* freightDeliveryCostData Not a pure module */

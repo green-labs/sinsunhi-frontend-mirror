@@ -130,6 +130,5 @@ export {
   DeliveryCompany ,
   Urls ,
   make ,
-  
 }
 /* react Not a pure module */

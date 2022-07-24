@@ -72,6 +72,5 @@ var make = Order_List_Admin_Uncompleted;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

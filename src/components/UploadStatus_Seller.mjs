@@ -90,12 +90,12 @@ function UploadStatus_Seller(Props) {
                                       }, displayStatus(d.status, d.successCount, d.failCount)), React.createElement("span", {
                                         className: "whitespace-nowrap ml-1 text-gray-400 underline",
                                         onClick: (function (param) {
-                                            return setFailDetail(function (param) {
-                                                        return {
-                                                                failCodes: d.failDataJson,
-                                                                isShow: /* Show */0
-                                                              };
-                                                      });
+                                            setFailDetail(function (param) {
+                                                  return {
+                                                          failCodes: d.failDataJson,
+                                                          isShow: /* Show */0
+                                                        };
+                                                });
                                           })
                                       }, match !== undefined ? "자세히보기" : null))));
               }));
@@ -122,12 +122,12 @@ function UploadStatus_Seller(Props) {
                   isShow: failDetail.isShow,
                   children: null,
                   onCancel: (function (param) {
-                      return setFailDetail(function (param) {
-                                  return {
-                                          failCodes: undefined,
-                                          isShow: /* Hide */1
-                                        };
-                                });
+                      setFailDetail(function (param) {
+                            return {
+                                    failCodes: undefined,
+                                    isShow: /* Hide */1
+                                  };
+                          });
                     }),
                   textOnCancel: "확인"
                 }, React.createElement("p", {
@@ -171,6 +171,5 @@ export {
   styleStatus ,
   displayStatus ,
   make ,
-  
 }
 /* react Not a pure module */

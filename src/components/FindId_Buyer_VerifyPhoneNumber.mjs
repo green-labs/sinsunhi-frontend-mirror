@@ -150,42 +150,41 @@ function FindId_Buyer_VerifyPhoneNumber(Props) {
     setSMS(function (param) {
           return /* SendingSMS */1;
         });
-    var phoneNumber = param.state.values.phoneNumber.replace(new RegExp("\\-", "g"), "");
+    var phoneNumber = param.state.values.phoneNumber.replace(new RegExp("\-", "g"), "");
     Belt_Option.map(JSON.stringify({
               "recipient-no": phoneNumber
             }), (function (body) {
-            return FetchHelper.post(Env.restApiUrl + "/user/sms", body, (function (param) {
+            return FetchHelper.post("" + Env.restApiUrl + "/user/sms", body, (function (param) {
                           setSMS(function (param) {
                                 return /* SuccessToSendSMS */2;
                               });
-                          return ReactUtil.focusElementByRef(inputVerificationCodeRef);
+                          ReactUtil.focusElementByRef(inputVerificationCodeRef);
                         }), (function (_err) {
-                          return setSMS(function (param) {
-                                      return /* FailureToSendSMS */3;
-                                    });
+                          setSMS(function (param) {
+                                return /* FailureToSendSMS */3;
+                              });
                         }));
           }));
-    
   };
   var verifyPhoneNumberForm = Curry._7(VerifyPhoneNumberForm.use, initialStateVerifyPhoneNumber, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(VerifyPhoneNumberForm.ReSchema.Validation.regExp, "휴대전화 번호를 다시 확인해주세요.", "^\\d{3}-\\d{3,4}-\\d{4}$", undefined, /* PhoneNumber */0)])
+        _0: Belt_Array.concatMany([Curry._4(VerifyPhoneNumberForm.ReSchema.Validation.regExp, "휴대전화 번호를 다시 확인해주세요.", "^\d{3}-\d{3,4}-\d{4}$", undefined, /* PhoneNumber */0)])
       }, onSubmitVerifyPhoneNumber, undefined, undefined, /* OnChange */0, undefined);
   var onSubmitVerificationCode = function (param) {
     setVerificationCode(function (param) {
           return /* SendingVerificationCode */1;
         });
-    var phoneNumber = verifyPhoneNumberForm.values.phoneNumber.replace(new RegExp("\\-", "g"), "");
+    var phoneNumber = verifyPhoneNumberForm.values.phoneNumber.replace(new RegExp("\-", "g"), "");
     var code = param.state.values.verificationCode;
     Belt_Option.map(JSON.stringify({
               "recipient-no": phoneNumber,
               "confirmed-no": code,
               role: "buyer"
             }), (function (body) {
-            return FetchHelper.post(Env.restApiUrl + "/user/sms/check", body, (function (param) {
+            return FetchHelper.post("" + Env.restApiUrl + "/user/sms/check", body, (function (param) {
                           setVerificationCode(function (param) {
                                 return /* SuccessToVerifyCode */2;
                               });
-                          return Curry._3(onVerified, phoneNumber, undefined, /* NotExisted */1);
+                          Curry._3(onVerified, phoneNumber, undefined, /* NotExisted */1);
                         }), (function (err) {
                           if (err.status === 409) {
                             setVerificationCode(function (param) {
@@ -201,12 +200,11 @@ function FindId_Buyer_VerifyPhoneNumber(Props) {
                           setVerificationCode(function (param) {
                                 return /* FailureToVerifyCode */3;
                               });
-                          return setShowVerifyError(function (param) {
-                                      return /* Show */0;
-                                    });
+                          setShowVerifyError(function (param) {
+                                return /* Show */0;
+                              });
                         }));
           }));
-    
   };
   var verificationCodeForm = Curry._7(VerificationCodeForm.use, initialStateVerificationCode, /* Schema */{
         _0: Belt_Array.concatMany([Curry._3(VerificationCodeForm.ReSchema.Validation.nonEmpty, "인증번호를 입력해주세요.", undefined, /* VerificationCode */0)])
@@ -235,16 +233,16 @@ function FindId_Buyer_VerifyPhoneNumber(Props) {
                   setVerificationCode(function (param) {
                         return /* BeforeSendVerificationCode */0;
                       });
-                  return Curry._1(verifyPhoneNumberForm.submit, undefined);
+                  Curry._1(verifyPhoneNumberForm.submit, undefined);
                 }), param);
   };
   var handleOnChangePhoneNumber = function (e) {
     var newValue = formatPhoneNumber(e.currentTarget.value);
-    return Curry._4(verifyPhoneNumberForm.setFieldValue, /* PhoneNumber */0, newValue, true, undefined);
+    Curry._4(verifyPhoneNumberForm.setFieldValue, /* PhoneNumber */0, newValue, true, undefined);
   };
   var handleOnSubmitVerificationCode = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(verificationCodeForm.submit, undefined);
+                  Curry._1(verificationCodeForm.submit, undefined);
                 }), param);
   };
   var isDisabledVerifyPhoneNumberForm = sms === 2 || sms === 1;
@@ -412,9 +410,9 @@ function FindId_Buyer_VerifyPhoneNumber(Props) {
                         className: "text-gray-500 text-center whitespace-pre-wrap"
                       }, "인증번호가 일치하지 않습니다."),
                   onConfirm: (function (param) {
-                      return setShowVerifyError(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowVerifyError(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnConfirm: "확인"
                 }));
@@ -434,6 +432,5 @@ export {
   resendBtnStyle ,
   formatPhoneNumber ,
   make ,
-  
 }
 /* VerifyPhoneNumberForm Not a pure module */

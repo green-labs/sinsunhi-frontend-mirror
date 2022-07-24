@@ -6,6 +6,5 @@ var make = CalendarSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

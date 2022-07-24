@@ -8,15 +8,16 @@ import * as DS_Button from "../../../components/common/element/DS_Button.mjs";
 import * as DS_Dialog from "../../../components/common/container/DS_Dialog.mjs";
 import * as IconArrow from "../../../components/svgs/IconArrow.mjs";
 import * as IconError from "../../../components/svgs/IconError.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as CustomHooks from "../../../utils/CustomHooks.mjs";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
@@ -28,7 +29,7 @@ import * as TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql from
 import * as TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql from "../../../__generated__/TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -37,7 +38,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -55,38 +56,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -95,10 +95,8 @@ function retain(environment, variables) {
   return environment.retain(operationDescriptor);
 }
 
-var MatchingProduct_makeVariables = TradematchAskToBuyApplyBuyer_MatchingProduct_Query_graphql.Utils.makeVariables;
-
 var MatchingProduct = {
-  makeVariables: MatchingProduct_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -109,7 +107,7 @@ var MatchingProduct = {
 };
 
 function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -118,7 +116,7 @@ function use$1(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader$1(param) {
-  var match = Hooks.useQueryLoader(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -136,38 +134,37 @@ function useLoader$1(param) {
 }
 
 function $$fetch$1(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised$1(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded$1(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -188,8 +185,6 @@ var TradematchDemands_tradematchDemandStatus_decode = TradematchAskToBuyApplyBuy
 
 var TradematchDemands_tradematchDemandStatus_fromString = TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Utils.tradematchDemandStatus_fromString;
 
-var TradematchDemands_makeVariables = TradematchAskToBuyApplyBuyer_TradematchDemands_Query_graphql.Utils.makeVariables;
-
 var TradematchDemands = {
   orderDirection_decode: TradematchDemands_orderDirection_decode,
   orderDirection_fromString: TradematchDemands_orderDirection_fromString,
@@ -197,7 +192,7 @@ var TradematchDemands = {
   tradematchDemandOrderBy_fromString: TradematchDemands_tradematchDemandOrderBy_fromString,
   tradematchDemandStatus_decode: TradematchDemands_tradematchDemandStatus_decode,
   tradematchDemandStatus_fromString: TradematchDemands_tradematchDemandStatus_fromString,
-  makeVariables: TradematchDemands_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use$1,
   useLoader: useLoader$1,
@@ -228,27 +223,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(TradematchAskToBuyApplyBuyerRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(TradematchAskToBuyApplyBuyerRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use$2(fRef) {
-  var data = Hooks.useFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
+  var data = ReactRelay.useFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -259,7 +254,7 @@ function useOpt(opt_fRef) {
 }
 
 function usePagination(fr) {
-  var p = Hooks.usePaginationFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fr);
+  var p = ReactRelay.usePaginationFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fr);
   var data = RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -290,7 +285,7 @@ function usePagination(fr) {
 }
 
 function useBlockingPagination(fRef) {
-  var p = Hooks.useBlockingPaginationFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
+  var p = ReactRelay.useBlockingPaginationFragment(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.node, fRef);
   var data = RescriptRelay_Internal.internal_useConvertedValue(TradematchAskToBuyApplyBuyer_TradematchDemands_Fragment_graphql.Internal.convertFragment, p.data);
   return {
           data: data,
@@ -337,6 +332,7 @@ var TradematchDemands$1 = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use$2,
   useOpt: useOpt,
   usePagination: usePagination,
@@ -347,8 +343,6 @@ var TradematchDemands$1 = {
 var Fragment = {
   TradematchDemands: TradematchDemands$1
 };
-
-var makeVariables = TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Utils.makeVariables;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -369,14 +363,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$3(param) {
-  var match = Hooks.useMutation(TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -384,13 +378,13 @@ function use$3(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: TradematchAskToBuyApplyBuyer_DeleteTradematchDemand_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -402,7 +396,7 @@ function use$3(param) {
 }
 
 var DeleteTradematchDemand = {
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$3
@@ -430,7 +424,6 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$Header(Props) {
   var handleClickLeftButtonOpt = Props.handleClickLeftButton;
   var handleClickLeftButton = handleClickLeftButtonOpt !== undefined ? handleClickLeftButtonOpt : (function (prim) {
         window.history.back();
-        
       });
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "w-full fixed top-0 left-0 z-10"
@@ -440,7 +433,7 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$Header(Props) {
                           className: "px-5 py-4 flex justify-between"
                         }, React.createElement("button", {
                               onClick: (function (param) {
-                                  return Curry._1(handleClickLeftButton, undefined);
+                                  Curry._1(handleClickLeftButton, undefined);
                                 })
                             }, React.createElement(IconArrow.make, {
                                   height: "24",
@@ -464,7 +457,7 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$ProgressBar(Props) {
   var match = CustomHooks.Tradematch.usePageSteps(undefined);
   var percentage = (match.currentStepIndex + 1 | 0) / (match.totalStepLength + 1 | 0) * 100;
   var style = {
-    width: String(percentage) + "%"
+    width: "" + String(percentage) + "%"
   };
   return React.createElement("div", {
               className: "max-w-3xl fixed h-1 w-full bg-surface z-[10]"
@@ -530,7 +523,6 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$NotFoundProductOrDemand(Props) {
                                         label: "돌아가기",
                                         onClick: (function (param) {
                                             window.history.back();
-                                            
                                           })
                                       }),
                                   asChild: true
@@ -585,18 +577,21 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$StatusChecker(Props) {
                                               if (currentDemand === undefined) {
                                                 return ;
                                               }
-                                              var variables = Curry._2(makeVariables, currentDemand.id, [connectionId]);
+                                              var variables = {
+                                                connections: [connectionId],
+                                                id: currentDemand.id
+                                              };
                                               Curry.app(deleteMutate, [
                                                     (function (err) {
-                                                        return addToast(React.createElement("div", {
-                                                                        className: "flex items-center"
-                                                                      }, React.createElement(IconError.make, {
-                                                                            width: "24",
-                                                                            height: "24",
-                                                                            className: "mr-2"
-                                                                          }), err.message), {
-                                                                    appearance: "error"
-                                                                  });
+                                                        addToast(React.createElement("div", {
+                                                                  className: "flex items-center"
+                                                                }, React.createElement(IconError.make, {
+                                                                      width: "24",
+                                                                      height: "24",
+                                                                      className: "mr-2"
+                                                                    }), err.message), {
+                                                              appearance: "error"
+                                                            });
                                                       }),
                                                     (function (param, param$1) {
                                                         var variant = param.deleteTradematchDemand.NAME;
@@ -619,7 +614,6 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$StatusChecker(Props) {
                                                     undefined,
                                                     undefined
                                                   ]);
-                                              
                                             }),
                                           buttonType: "white"
                                         }),
@@ -685,11 +679,11 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$Content(Props) {
       }, undefined, undefined, undefined, undefined);
   var node = match$1.node;
   var draftStatusTradematchDemands = use$1({
-        productIds: [pid],
-        statuses: ["DRAFT"],
+        first: 100,
         orderBy: "DRAFTED_AT",
         orderDirection: "DESC",
-        first: 100
+        productIds: [pid],
+        statuses: ["DRAFT"]
       }, /* NetworkOnly */3, undefined, undefined, undefined);
   var match$2 = usePagination(draftStatusTradematchDemands.fragmentRefs);
   var data = match$2.data;
@@ -755,7 +749,7 @@ function Tradematch_Ask_To_Buy_Apply_Buyer$Content(Props) {
               connectionId: connectionId,
               children: null
             }, React.createElement(Tradematch_Ask_To_Buy_Apply_Buyer$Header, {
-                  title: node !== undefined ? node.category.name + " 견적 신청" : ""
+                  title: node !== undefined ? "" + node.category.name + " 견적 신청" : ""
                 }), tmp);
 }
 
@@ -797,6 +791,5 @@ export {
   StatusChecker ,
   Content ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -32,6 +32,5 @@ var make = DownloadCenter_Buyer;
 export {
   Layout ,
   make ,
-  
 }
 /* react Not a pure module */

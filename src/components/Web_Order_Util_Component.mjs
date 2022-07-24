@@ -26,7 +26,6 @@ function Web_Order_Util_Component$Tooltip$PC(Props) {
                         src: "/icons/icon_common_tooltip_q_line_20.png",
                         onClick: (function (e) {
                             e.preventDefault();
-                            
                           })
                       })
                 }), React.createElement(ReactTooltip.Content, {
@@ -59,9 +58,9 @@ function Web_Order_Util_Component$Tooltip$Mobile(Props) {
   React.useEffect((function () {
           if (touch) {
             setTimeout((function (param) {
-                    return Curry._1(setTouch, (function (param) {
-                                  return false;
-                                }));
+                    Curry._1(setTouch, (function (param) {
+                            return false;
+                          }));
                   }), 2000);
           }
           
@@ -80,9 +79,9 @@ function Web_Order_Util_Component$Tooltip$Mobile(Props) {
                         src: "/icons/icon_common_tooltip_q_line_20.png",
                         onClick: (function (e) {
                             e.preventDefault();
-                            return Curry._1(setTouch, (function (param) {
-                                          return !touch;
-                                        }));
+                            Curry._1(setTouch, (function (param) {
+                                    return !touch;
+                                  }));
                           })
                       })
                 }), React.createElement(ReactTooltip.Content, {
@@ -123,7 +122,7 @@ function Web_Order_Util_Component$RadioButton(Props) {
   var name = Props.name;
   var value = Props.value;
   var checked = Belt_Option.mapWithDefault(watchValue, false, (function (watch) {
-          return Caml_obj.caml_equal(watch, value);
+          return Caml_obj.equal(watch, value);
         }));
   return React.createElement("span", {
               className: checked ? "w-24 xl:w-32 h-11 pl-1 flex justify-center items-center text-sm xl:text-base text-primary font-bold border border-primary bg-primary-light rounded-xl cursor-pointer" : "w-24 xl:w-32 h-11 flex justify-center items-center text-sm xl:text-base text-text-L1 border border-div-border-L2 rounded-xl cursor-pointer"
@@ -143,6 +142,5 @@ var RadioButton = {
 export {
   Tooltip ,
   RadioButton ,
-  
 }
 /* react Not a pure module */

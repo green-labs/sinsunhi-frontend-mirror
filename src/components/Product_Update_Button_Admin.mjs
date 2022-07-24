@@ -69,9 +69,7 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var prefill = function (isOpen) {
     if (isOpen) {
@@ -94,7 +92,7 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
                             "cut-off-time": cutOffTime,
                             "update-by-product-id": isUpdateByProductId
                           }), (function (body) {
-                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/product/" + String(product.productId) + "/sku/" + product.productSku, body, 3, (function (param) {
+                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/product/" + String(product.productId) + "/sku/" + product.productSku + "", body, 3, (function (param) {
                                         close(undefined);
                                         addToast(React.createElement("div", {
                                                   className: "flex items-center"
@@ -106,20 +104,19 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
                                                     }), "저장되었습니다."), {
                                               appearance: "success"
                                             });
-                                        return mutate(Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString(), undefined, true);
+                                        mutate("" + Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                                       }), (function (param) {
-                                        return addToast(React.createElement("div", {
-                                                        className: "flex items-center"
-                                                      }, React.createElement(IconError.make, {
-                                                            width: "24",
-                                                            height: "24",
-                                                            className: "mr-2"
-                                                          }), "오류가 발생하였습니다."), {
-                                                    appearance: "error"
-                                                  });
+                                        addToast(React.createElement("div", {
+                                                  className: "flex items-center"
+                                                }, React.createElement(IconError.make, {
+                                                      width: "24",
+                                                      height: "24",
+                                                      className: "mr-2"
+                                                    }), "오류가 발생하였습니다."), {
+                                              appearance: "error"
+                                            });
                                       }));
                         }));
-                  
                 }), param);
   };
   return React.createElement(ReactDialog.Root, {
@@ -179,9 +176,9 @@ function Product_Update_Button_Admin$CutOffAndMemo(Props) {
                           }, React.createElement("div", {
                                 className: "flex items-center cursor-pointer w-fit",
                                 onClick: (function (param) {
-                                    return setIsUpdateByProductId(function (prev) {
-                                                return !prev;
-                                              });
+                                    setIsUpdateByProductId(function (prev) {
+                                          return !prev;
+                                        });
                                   })
                               }, React.createElement("img", {
                                     src: isUpdateByProductId ? checkboxCheckedIcon : checkboxUncheckedIcon
@@ -225,9 +222,7 @@ function Product_Update_Button_Admin$Crop(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var save = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -236,7 +231,7 @@ function Product_Update_Button_Admin$Crop(Props) {
                             return Belt_Option.map(JSON.stringify({
                                             "category-id": value$p
                                           }), (function (body) {
-                                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/product/" + String(product.productId) + "/category-id", body, 3, (function (param) {
+                                          return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/product/" + String(product.productId) + "/category-id", body, 3, (function (param) {
                                                         close(undefined);
                                                         addToast(React.createElement("div", {
                                                                   className: "flex items-center"
@@ -248,17 +243,17 @@ function Product_Update_Button_Admin$Crop(Props) {
                                                                     }), "저장되었습니다."), {
                                                               appearance: "success"
                                                             });
-                                                        return mutate(Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString(), undefined, true);
+                                                        mutate("" + Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                                                       }), (function (param) {
-                                                        return addToast(React.createElement("div", {
-                                                                        className: "flex items-center"
-                                                                      }, React.createElement(IconError.make, {
-                                                                            width: "24",
-                                                                            height: "24",
-                                                                            className: "mr-2"
-                                                                          }), "오류가 발생하였습니다."), {
-                                                                    appearance: "error"
-                                                                  });
+                                                        addToast(React.createElement("div", {
+                                                                  className: "flex items-center"
+                                                                }, React.createElement(IconError.make, {
+                                                                      width: "24",
+                                                                      height: "24",
+                                                                      className: "mr-2"
+                                                                    }), "오류가 발생하였습니다."), {
+                                                              appearance: "error"
+                                                            });
                                                       }));
                                         }));
                           }));
@@ -269,9 +264,9 @@ function Product_Update_Button_Admin$Crop(Props) {
                 }), param);
   };
   var handleChangeCrop = function (selection) {
-    return setSelectedCrop(function (param) {
-                return selection;
-              });
+    setSelectedCrop(function (param) {
+          return selection;
+        });
   };
   var init = function (isOpen) {
     if (isOpen) {
@@ -346,9 +341,7 @@ function Product_Update_Button_Admin$Detail(Props) {
     var buttonClose = document.getElementById("btn-close");
     Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
             buttonClose$p.click();
-            
           }));
-    
   };
   var onSubmit = function (param) {
     var state = param.state;
@@ -376,7 +369,7 @@ function Product_Update_Button_Admin$Detail(Props) {
               "per-size-unit": unitSizeUnit,
               "package-type": packageType
             }), (function (body) {
-            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, Env.restApiUrl + "/product/" + String(product.productId) + "/sku/" + product.productSku + "/detail", body, 3, (function (param) {
+            return FetchHelper.requestWithRetry(FetchHelper.putWithToken, "" + Env.restApiUrl + "/product/" + String(product.productId) + "/sku/" + product.productSku + "/detail", body, 3, (function (param) {
                           close(undefined);
                           addToast(React.createElement("div", {
                                     className: "flex items-center"
@@ -388,27 +381,26 @@ function Product_Update_Button_Admin$Detail(Props) {
                                       }), "저장되었습니다."), {
                                 appearance: "success"
                               });
-                          return mutate(Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString(), undefined, true);
+                          mutate("" + Env.restApiUrl + "/product?" + new URLSearchParams(router.query).toString() + "", undefined, true);
                         }), (function (param) {
-                          return addToast(React.createElement("div", {
-                                          className: "flex items-center"
-                                        }, React.createElement(IconError.make, {
-                                              width: "24",
-                                              height: "24",
-                                              className: "mr-2"
-                                            }), "오류가 발생하였습니다."), {
-                                      appearance: "error"
-                                    });
+                          addToast(React.createElement("div", {
+                                    className: "flex items-center"
+                                  }, React.createElement(IconError.make, {
+                                        width: "24",
+                                        height: "24",
+                                        className: "mr-2"
+                                      }), "오류가 발생하였습니다."), {
+                                appearance: "error"
+                              });
                         }));
           }));
-    
   };
   var form = Curry._7(Query_Product_Detail_Form_Admin.Form.use, Query_Product_Detail_Form_Admin.initialState, /* Schema */{
         _0: Belt_Array.concatMany([])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var prefill = function (isOpen) {
@@ -667,6 +659,5 @@ export {
   CutOffAndMemo ,
   Crop ,
   Detail ,
-  
 }
 /* checkboxCheckedIcon Not a pure module */

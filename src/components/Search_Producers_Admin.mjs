@@ -158,8 +158,7 @@ function Search_Producers_Admin(Props) {
     router.query["is-test"] = String(checkTest);
     router.query["staff-id"] = match$2[0];
     router.query["staff-name"] = match$2[1];
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Form.use, initialState, /* Schema */{
         _0: Belt_Array.concatMany([
@@ -169,7 +168,7 @@ function Search_Producers_Admin(Props) {
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -224,15 +223,14 @@ function Search_Producers_Admin(Props) {
                   }
                   
                 }));
-          
         }), [router.query]);
   var handleOnChangePeriod = function (d) {
-    return setQuery(function (prev) {
-                return {
-                        from: d,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: d,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -260,9 +258,9 @@ function Search_Producers_Admin(Props) {
                   setCropId(function (param) {
                         return /* NotSelected */0;
                       });
-                  return setProductCategoryId(function (param) {
-                              return /* NotSelected */0;
-                            });
+                  setProductCategoryId(function (param) {
+                        return /* NotSelected */0;
+                      });
                 }), param);
   };
   var handleOnChangeDate = function (t, e) {
@@ -283,12 +281,12 @@ function Search_Producers_Admin(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnSelect = function (cleanUpFn, setFn, value) {
     setFn(function (param) {
@@ -303,9 +301,9 @@ function Search_Producers_Admin(Props) {
   var partial_arg$1 = Curry._1(form.handleChange, /* BusinessName */1);
   var partial_arg$2 = Curry._1(form.handleChange, /* FarmAddress */2);
   var partial_arg$3 = (function (param) {
-      return setProductCategoryId(function (param) {
-                  return /* NotSelected */0;
-                });
+      setProductCategoryId(function (param) {
+            return /* NotSelected */0;
+          });
     });
   return React.createElement("div", {
               className: "bg-white rounded"
@@ -365,9 +363,9 @@ function Search_Producers_Admin(Props) {
                                         }, "담당자명"), React.createElement(Select_BulkSale_Search.Staff.make, {
                                           staffInfo: selectStaff,
                                           onChange: (function (v) {
-                                              return setSelectStaff(function (param) {
-                                                          return v;
-                                                        });
+                                              setSelectStaff(function (param) {
+                                                    return v;
+                                                  });
                                             }),
                                           key: Uniqid("bulkSaleSearch")
                                         })), React.createElement("div", {
@@ -455,9 +453,9 @@ function Search_Producers_Admin(Props) {
                                   id: "check-all",
                                   checked: checkTest,
                                   onChange: (function (param) {
-                                      return setCheckTest(function (prev) {
-                                                  return !prev;
-                                                });
+                                      setCheckTest(function (prev) {
+                                            return !prev;
+                                          });
                                     })
                                 }), React.createElement("span", {
                                   className: "ml-2"
@@ -487,6 +485,5 @@ export {
   Form ,
   initialState ,
   make ,
-  
 }
 /* Form Not a pure module */

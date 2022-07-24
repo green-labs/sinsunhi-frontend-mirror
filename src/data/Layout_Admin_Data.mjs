@@ -130,7 +130,7 @@ var items = [
         TAG: /* Sub */1,
         title: "오프라인 주문관리",
         anchor: {
-          url: (defaultQueryParams["created-at-from"] = Format(SetDate(new Date(), 1), "yyyy-MM-dd"), defaultQueryParams["created-at-to"] = Format(EndOfMonth(new Date()), "yyyy-MM-dd"), defaultQueryParams["release-due-date-from"] = Format(SetDate(new Date(), 1), "yyyy-MM-dd"), defaultQueryParams["release-due-date-to"] = Format(EndOfMonth(new Date()), "yyyy-MM-dd"), defaultQueryParams["limit"] = "25", "/admin/offline-orders?" + new URLSearchParams(defaultQueryParams).toString()),
+          url: (defaultQueryParams["created-at-from"] = Format(SetDate(new Date(), 1), "yyyy-MM-dd"), defaultQueryParams["created-at-to"] = Format(EndOfMonth(new Date()), "yyyy-MM-dd"), defaultQueryParams["release-due-date-from"] = Format(SetDate(new Date(), 1), "yyyy-MM-dd"), defaultQueryParams["release-due-date-to"] = Format(EndOfMonth(new Date()), "yyyy-MM-dd"), defaultQueryParams["limit"] = "25", "/admin/offline-orders?" + new URLSearchParams(defaultQueryParams).toString() + ""),
           target: "_self"
         },
         slug: undefined
@@ -302,6 +302,5 @@ export {
   naviProductIcon ,
   naviUserIcon ,
   Item ,
-  
 }
 /* naviDashboardIcon Not a pure module */

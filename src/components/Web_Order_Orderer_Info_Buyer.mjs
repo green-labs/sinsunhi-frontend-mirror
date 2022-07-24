@@ -60,6 +60,5 @@ var make = Web_Order_Orderer_Info_Buyer;
 export {
   PlaceHolder ,
   make ,
-  
 }
 /* react Not a pure module */

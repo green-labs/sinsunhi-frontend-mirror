@@ -30,6 +30,5 @@ var make = IconNaviSettlement;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

@@ -6,7 +6,7 @@ import * as React from "react";
 function format(second) {
   var doubleDigit = function (n) {
     if (n < 10) {
-      return "0" + String(n);
+      return "0" + String(n) + "";
     } else {
       return String(n);
     }
@@ -14,10 +14,10 @@ function format(second) {
   var minuteAndSecond = function (second$p) {
     var min = second$p / 60 | 0;
     var sec = second$p - Math.imul(min, 60) | 0;
-    return String(min) + ":" + doubleDigit(sec);
+    return "" + String(min) + ":" + doubleDigit(sec) + "";
   };
   if (second < 0) {
-    return "-" + minuteAndSecond(Math.abs(second));
+    return "-" + minuteAndSecond(Math.abs(second)) + "";
   } else {
     return minuteAndSecond(Math.abs(second));
   }
@@ -42,13 +42,12 @@ function Timer(Props) {
           setStatus$p(function (param) {
                 return status;
               });
-          
         }), [status]);
   React.useEffect((function () {
           var id = setInterval((function (param) {
-                  return setTime(function (time) {
-                              return time - 1 | 0;
-                            });
+                  setTime(function (time) {
+                        return time - 1 | 0;
+                      });
                 }), 1000);
           switch (status$p) {
             case /* Start */0 :
@@ -72,7 +71,6 @@ function Timer(Props) {
           Curry._1(onChangeStatus, status$p);
           return (function (param) {
                     clearInterval(id);
-                    
                   });
         }), [status$p]);
   React.useEffect((function () {
@@ -93,6 +91,5 @@ var make = Timer;
 export {
   format ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -32,7 +32,7 @@ function SignIn_Buyer_Set_Password(Props) {
                             password: init.password
                           });
               })), (function (payload$p) {
-            return FetchHelper.put(Env.restApiUrl + "/user/password/buyer", payload$p, (function (param) {
+            return FetchHelper.put("" + Env.restApiUrl + "/user/password/buyer", payload$p, (function (param) {
                           return onSuccess(function (param) {
                                       return /* Hide */1;
                                     });
@@ -42,21 +42,20 @@ function SignIn_Buyer_Set_Password(Props) {
                                     });
                         }));
           }));
-    
   };
   var form = Curry._7(SignIn_Buyer_Form_SetPassword.Form.use, SignIn_Buyer_Form_SetPassword.initialState, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(SignIn_Buyer_Form_SetPassword.Form.ReSchema.Validation.regExp, "비밀번호가 형식에 맞지 않습니다.", "^(?=.*\\d)(?=.*[a-zA-Z]).{6,15}$", undefined, /* Password */1)])
+        _0: Belt_Array.concatMany([Curry._4(SignIn_Buyer_Form_SetPassword.Form.ReSchema.Validation.regExp, "비밀번호가 형식에 맞지 않습니다.", "^(?=.*\d)(?=.*[a-zA-Z]).{6,15}$", undefined, /* Password */1)])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmitPasswordReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var handleOnChangePasswordConfirm = function (e) {
     var value = e.target.value;
-    return setPasswordConfirm(function (param) {
-                return value;
-              });
+    setPasswordConfirm(function (param) {
+          return value;
+        });
   };
   var isPasswordConfirmed = function (param) {
     var password1 = SignIn_Buyer_Form_SetPassword.FormFields.get(form.values, /* Password */1);
@@ -130,6 +129,5 @@ export {
   FormFields ,
   Form ,
   make ,
-  
 }
 /* Env Not a pure module */

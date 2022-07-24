@@ -22,7 +22,6 @@ function ImageWithPlaceholder$Presenter(Props) {
     setImgSrc(function (param) {
           return placeholder;
         });
-    
   };
   if (imgSrc !== undefined) {
     var tmp = {
@@ -74,6 +73,5 @@ export {
   Placeholder ,
   Presenter ,
   make ,
-  
 }
 /* react Not a pure module */

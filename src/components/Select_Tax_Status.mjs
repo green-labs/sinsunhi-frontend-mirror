@@ -113,6 +113,5 @@ export {
   toBool ,
   defaultStyle ,
   make ,
-  
 }
 /* react Not a pure module */

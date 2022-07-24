@@ -11,6 +11,5 @@ var make = AddProduct_Detail_Basic_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

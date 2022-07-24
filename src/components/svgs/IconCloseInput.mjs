@@ -6,6 +6,5 @@ var make = CloseInputSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

@@ -320,6 +320,5 @@ export {
   SizeStatus ,
   Weight ,
   Size ,
-  
 }
 /* react Not a pure module */

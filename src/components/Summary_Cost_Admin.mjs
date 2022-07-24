@@ -52,15 +52,14 @@ function Summary_Cost_Admin(Props) {
     } else {
       router.query["product-ids"] = productIdsOrSkus;
     }
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Cost_Form_Admin.Form.use, Query_Cost_Form_Admin.initialState, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(Query_Cost_Form_Admin.Form.ReSchema.Validation.regExp, "숫자(Enter 또는 \",\"로 구분 가능)만 입력해주세요", "^([0-9]+([,\n\\s]+)?)*$", undefined, /* ProductIdsOrSkus */2)])
+        _0: Belt_Array.concatMany([Curry._4(Query_Cost_Form_Admin.Form.ReSchema.Validation.regExp, "숫자(Enter 또는 \",\"로 구분 가능)만 입력해주세요", "^([0-9]+([,\n\s]+)?)*$", undefined, /* ProductIdsOrSkus */2)])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -85,13 +84,12 @@ function Summary_Cost_Admin(Props) {
                     return ;
                   }
                 }));
-          
         }), [router.query]);
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   Curry._4(form.setFieldValue, /* ProducerName */0, "", true, undefined);
                   Curry._4(form.setFieldValue, /* ProductName */1, "", true, undefined);
-                  return Curry._4(form.setFieldValue, /* ProductIdsOrSkus */2, "", true, undefined);
+                  Curry._4(form.setFieldValue, /* ProductIdsOrSkus */2, "", true, undefined);
                 }), param);
   };
   var handleKeyDownEnter = function (e) {
@@ -241,6 +239,5 @@ export {
   parseProductIdentifier ,
   stringifyProductIdentifier ,
   make ,
-  
 }
 /* Input Not a pure module */

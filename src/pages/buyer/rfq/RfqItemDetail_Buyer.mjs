@@ -11,13 +11,16 @@ import * as DataGtm from "../../../utils/DataGtm.mjs";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as DS_Title from "../../../components/common/container/DS_Title.mjs";
 import * as DS_Toast from "../../../components/common/container/DS_Toast.mjs";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as DS_Button from "../../../components/common/element/DS_Button.mjs";
 import * as DS_Dialog from "../../../components/common/container/DS_Dialog.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Float from "rescript/lib/es6/belt_Float.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as DS_TitleList from "../../../components/common/element/DS_TitleList.mjs";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as Authorization from "../../../utils/Authorization.mjs";
@@ -26,7 +29,6 @@ import * as RelayRuntime from "relay-runtime";
 import * as DS_BottomDrawer from "../../../components/common/container/DS_BottomDrawer.mjs";
 import Format from "date-fns/format";
 import * as DS_TopNavigation from "../../../components/common/container/DS_TopNavigation.mjs";
-import * as Hooks from "react-relay/hooks";
 import * as DS_ButtonContainer from "../../../components/common/container/DS_ButtonContainer.mjs";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
@@ -34,7 +36,7 @@ import * as RfqItemDetailBuyer_Current_Item_Query_graphql from "../../../__gener
 import * as RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql from "../../../__generated__/RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.mjs";
 
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(RfqItemDetailBuyer_Current_Item_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(RfqItemDetailBuyer_Current_Item_Query_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -43,7 +45,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(RfqItemDetailBuyer_Current_Item_Query_graphql.node);
+  var match = ReactRelay.useQueryLoader(RfqItemDetailBuyer_Current_Item_Query_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -61,38 +63,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, RfqItemDetailBuyer_Current_Item_Query_graphql.node, RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, RfqItemDetailBuyer_Current_Item_Query_graphql.node, RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, RfqItemDetailBuyer_Current_Item_Query_graphql.node, RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, RfqItemDetailBuyer_Current_Item_Query_graphql.node, RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(RfqItemDetailBuyer_Current_Item_Query_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(RfqItemDetailBuyer_Current_Item_Query_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(RfqItemDetailBuyer_Current_Item_Query_graphql.Internal.convertResponse, data);
 }
 
@@ -117,8 +118,6 @@ var Query_rfqRequestItemStatus_decode = RfqItemDetailBuyer_Current_Item_Query_gr
 
 var Query_rfqRequestItemStatus_fromString = RfqItemDetailBuyer_Current_Item_Query_graphql.Utils.rfqRequestItemStatus_fromString;
 
-var Query_makeVariables = RfqItemDetailBuyer_Current_Item_Query_graphql.Utils.makeVariables;
-
 var Query = {
   rfqDeliveryMethod_decode: Query_rfqDeliveryMethod_decode,
   rfqDeliveryMethod_fromString: Query_rfqDeliveryMethod_fromString,
@@ -128,7 +127,7 @@ var Query = {
   rfqMeatStorageMethod_fromString: Query_rfqMeatStorageMethod_fromString,
   rfqRequestItemStatus_decode: Query_rfqRequestItemStatus_decode,
   rfqRequestItemStatus_fromString: Query_rfqRequestItemStatus_fromString,
-  makeVariables: Query_makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -157,14 +156,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use$1(param) {
-  var match = Hooks.useMutation(RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.node);
+  var match = ReactRelay.useMutation(RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -172,13 +171,13 @@ function use$1(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -201,10 +200,6 @@ var CreateRfqOrder_rfqRequestItemStatus_decode = RfqItemDetailBuyer_CreateRfqOrd
 
 var CreateRfqOrder_rfqRequestItemStatus_fromString = RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Utils.rfqRequestItemStatus_fromString;
 
-var CreateRfqOrder_make_rfqOrderCreateInput = RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Utils.make_rfqOrderCreateInput;
-
-var CreateRfqOrder_makeVariables = RfqItemDetailBuyer_CreateRfqOrder_Mutation_graphql.Utils.makeVariables;
-
 var CreateRfqOrder = {
   errorCode_decode: CreateRfqOrder_errorCode_decode,
   errorCode_fromString: CreateRfqOrder_errorCode_fromString,
@@ -212,8 +207,7 @@ var CreateRfqOrder = {
   rfqDeliveryMethod_fromString: CreateRfqOrder_rfqDeliveryMethod_fromString,
   rfqRequestItemStatus_decode: CreateRfqOrder_rfqRequestItemStatus_decode,
   rfqRequestItemStatus_fromString: CreateRfqOrder_rfqRequestItemStatus_fromString,
-  make_rfqOrderCreateInput: CreateRfqOrder_make_rfqOrderCreateInput,
-  makeVariables: CreateRfqOrder_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use$1
@@ -236,12 +230,10 @@ function displayDeleveryMethod(v) {
     return "상관없음";
   } else if (v === "WAREHOUSE_TRANSFER") {
     return "창고배송";
-  } else if (v === "OTHER") {
+  } else if (v === "OTHER" || v !== "WAREHOUSE_PICKUP") {
     return "기타";
-  } else if (v === "WAREHOUSE_PICKUP") {
-    return "창고수령";
   } else {
-    return "기타";
+    return "창고수령";
   }
 }
 
@@ -279,7 +271,7 @@ function displayPackageMethod(v) {
 
 function openCustomerService(param) {
   if (Global.$$window !== undefined) {
-    Caml_option.valFromOption(Global.$$window).open(Env.customerServiceUrl + Env.customerServicePaths.rfqContactManager, undefined, "");
+    Caml_option.valFromOption(Global.$$window).open("" + Env.customerServiceUrl + "" + Env.customerServicePaths.rfqContactManager + "", undefined, "");
     return ;
   }
   
@@ -435,13 +427,13 @@ function RfqItemDetail_Buyer$ItemContent(Props) {
                           })), Belt_Option.mapWithDefault(item.weightKg, null, (function (x) {
                             return React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                                         label: "주문양",
-                                        text: numberToComma(x) + "kg"
+                                        text: "" + numberToComma(x) + "kg"
                                       });
                           })), Garter_Array.isEmpty(item.usages.edges) ? null : React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                             label: "사용용도",
-                            text: Belt_Array.map(item.usages.edges, (function (edge) {
-                                      return edge.node.name;
-                                    })).join(", ")
+                            text: Js_array.joinWith(", ", Belt_Array.map(item.usages.edges, (function (edge) {
+                                        return edge.node.name;
+                                      })))
                           }), Belt_Option.mapWithDefault(item.storageMethod, null, (function (x) {
                             return React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                                         label: "보관상태",
@@ -518,27 +510,27 @@ function RfqItemDetail_Buyer$QuotationContent(Props) {
               className: "mt-9 mb-[22px]"
             }, React.createElement("ul", undefined, React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                       label: "총 금액",
-                      text: numberToComma(String(match.price)) + "원",
+                      text: "" + numberToComma(String(match.price)) + "원",
                       bold: true,
                       highlightContent: Belt_Option.mapWithDefault(lowCostPrice, null, (function (x) {
                               return React.createElement(React.Fragment, undefined, React.createElement("span", undefined, "기존거래가 보다 "), React.createElement("span", {
                                               className: "font-bold"
-                                            }, numberToComma(String(x)) + "만원 저렴"));
+                                            }, "" + numberToComma(String(x)) + "만원 저렴"));
                             }))
                     }), React.createElement(RfqItemDetail_Buyer$Divider$List, {}), React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                       label: "등급",
                       text: match.grade.grade
                     }), React.createElement(RfqItemDetail_Buyer$Divider$List, {}), React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                       label: "단가",
-                      text: numberToComma(pricePerKg) + "원/kg",
+                      text: "" + numberToComma(pricePerKg) + "원/kg",
                       highlightContent: Belt_Option.mapWithDefault(lowCostRate, null, (function (x) {
                               return React.createElement(React.Fragment, undefined, React.createElement("span", undefined, "기존거래가 보다 "), React.createElement("span", {
                                               className: "font-bold"
-                                            }, String(x) + "% 저렴"));
+                                            }, "" + String(x) + "% 저렴"));
                             }))
                     }), React.createElement(RfqItemDetail_Buyer$Listitem$Quotation, {
                       label: "주문양",
-                      text: numberToComma(weightKg) + "kg"
+                      text: "" + numberToComma(weightKg) + "kg"
                     })));
 }
 
@@ -567,9 +559,9 @@ function RfqItemDetail_Buyer$ConfirmButton(Props) {
     if (deliveryMethod !== undefined) {
       Curry.app(mutate, [
             (function (param) {
-                return addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
-                            appearance: "error"
-                          });
+                addToast(DS_Toast.getToastComponent("요청 중 요류가 발생했습니다. 잠시 후 다시 시도해주세요.", "error"), {
+                      appearance: "error"
+                    });
               }),
             (function (param, param$1) {
                 var variant = param.createRfqOrder.NAME;
@@ -606,9 +598,9 @@ function RfqItemDetail_Buyer$ConfirmButton(Props) {
                       children: React.createElement(DS_ButtonContainer.Floating1.make, {
                             label: "주문하기",
                             onClick: (function (param) {
-                                return DataGtm.push({
-                                            event: "Expose_view_RFQ_Livestock_Quotation_Detail_Check_Popup"
-                                          });
+                                DataGtm.push({
+                                      event: "Expose_view_RFQ_Livestock_Quotation_Detail_Check_Popup"
+                                    });
                               })
                           }),
                       asChild: true
@@ -634,7 +626,7 @@ function RfqItemDetail_Buyer$ConfirmButton(Props) {
                                   className: "block"
                                 }, quotation.node.grade.grade), React.createElement("span", {
                                   className: "block"
-                                }, numberToComma(quotation.node.pricePerKg) + "원/kg"), React.createElement("span", {
+                                }, "" + numberToComma(quotation.node.pricePerKg) + "원/kg"), React.createElement("span", {
                                   className: "block"
                                 }, "총 금액:" + numberToComma(String(quotation.node.price)) + "원")), React.createElement(DS_Dialog.Popup.Buttons.make, {
                               children: null
@@ -684,14 +676,14 @@ function RfqItemDetail_Buyer$ConfirmContent$Drawer(Props) {
             event: "Click_Order_RFQ_Livestock_Quotation_Detail"
           });
     }
-    return setDrawerShow(function (param) {
-                return !isDrawerShow;
-              });
+    setDrawerShow(function (param) {
+          return !isDrawerShow;
+        });
   };
   var titleText = Belt_Option.mapWithDefault(item.part, "", (function (part) {
-          return part.name + "/" + (
+          return "" + part.name + "/" + (
                   part.isDomestic ? "국내" : "수입"
-                );
+                ) + "";
         }));
   return React.createElement(React.Fragment, undefined, React.createElement(DS_ButtonContainer.Floating1.make, {
                   label: "주문하기",
@@ -704,7 +696,7 @@ function RfqItemDetail_Buyer$ConfirmContent$Drawer(Props) {
                       children: null
                     }, React.createElement(DS_Title.Normal1.Root.make, {
                           children: React.createElement(DS_Title.Normal1.TextGroup.make, {
-                                title1: titleText + "의",
+                                title1: "" + titleText + "의",
                                 title2: "희망상품을 선택해주세요"
                               }),
                           className: "mb-8"
@@ -713,14 +705,14 @@ function RfqItemDetail_Buyer$ConfirmContent$Drawer(Props) {
                         }, Belt_Array.map(item.selectedQuotations.edges, (function (x) {
                                 return React.createElement(RfqItemDetail_Buyer$Listitem$Radio, {
                                             label: x.node.grade.grade,
-                                            priceText: numberToComma(x.node.pricePerKg) + "원/kg",
+                                            priceText: "" + numberToComma(x.node.pricePerKg) + "원/kg",
                                             isSelected: Belt_Option.flatMap(selectedQuotation, (function (x) {
                                                     return x.node.id;
                                                   })) === x.node.id,
                                             onClick: (function (param) {
-                                                return setSelectedQuotation(function (param) {
-                                                            return x;
-                                                          });
+                                                setSelectedQuotation(function (param) {
+                                                      return x;
+                                                    });
                                               }),
                                             key: x.node.grade.id
                                           });
@@ -741,9 +733,9 @@ var ConfirmContent = {
 function RfqItemDetail_Buyer$Scene$Ordered(Props) {
   var item = Props.item;
   var titleText = Belt_Option.mapWithDefault(item.part, "요청 내용", (function (part) {
-          return part.name + " / " + (
+          return "" + part.name + " / " + (
                   part.isDomestic ? "국내" : "수입"
-                );
+                ) + "";
         }));
   var quotation$p = Garter_Array.first(item.selectedQuotations.edges);
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
@@ -755,7 +747,6 @@ function RfqItemDetail_Buyer$Scene$Ordered(Props) {
                                 className: "cursor-pointer",
                                 onClick: (function (param) {
                                     window.history.back();
-                                    
                                   })
                               }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                     height: "32",
@@ -792,7 +783,7 @@ function RfqItemDetail_Buyer$Scene$Ordered(Props) {
                     }), React.createElement(DS_ButtonContainer.Floating1.make, {
                       label: "담당자에게 문의하기",
                       onClick: (function (param) {
-                          return openCustomerService(undefined);
+                          openCustomerService(undefined);
                         }),
                       buttonType: "white"
                     })));
@@ -806,9 +797,9 @@ function RfqItemDetail_Buyer$Scene$OrderTimeout(Props) {
   var item = Props.item;
   var router = Router.useRouter();
   var titleText = Belt_Option.mapWithDefault(item.part, "요청 내용", (function (part) {
-          return part.name + " / " + (
+          return "" + part.name + " / " + (
                   part.isDomestic ? "국내" : "수입"
-                );
+                ) + "";
         }));
   return React.createElement("div", {
               className: "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-14 pb-[96px] bg-white"
@@ -819,7 +810,6 @@ function RfqItemDetail_Buyer$Scene$OrderTimeout(Props) {
                             className: "cursor-pointer",
                             onClick: (function (param) {
                                 window.history.back();
-                                
                               })
                           }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                 height: "32",
@@ -838,7 +828,6 @@ function RfqItemDetail_Buyer$Scene$OrderTimeout(Props) {
                   label: "신규 견적서 작성하기",
                   onClick: (function (param) {
                       router.push("/buyer/rfq/");
-                      
                     })
                 }));
 }
@@ -865,7 +854,6 @@ function RfqItemDetail_Buyer$Scene$WaitingForOrder(Props) {
                                   className: "cursor-pointer",
                                   onClick: (function (param) {
                                       window.history.back();
-                                      
                                     })
                                 }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                       height: "32",
@@ -907,9 +895,9 @@ function RfqItemDetail_Buyer$Scene$WaitingForOrder(Props) {
                                                     selected: isSelected,
                                                     className: "text-sm",
                                                     onClick: (function (param) {
-                                                        return setCurrentQuotation(function (param) {
-                                                                    return x;
-                                                                  });
+                                                        setCurrentQuotation(function (param) {
+                                                              return x;
+                                                            });
                                                       })
                                                   }),
                                               key: x.node.grade.id
@@ -936,9 +924,9 @@ var WaitingForOrder = {
 function RfqItemDetail_Buyer$Scene$MatchFailed(Props) {
   var item = Props.item;
   var titleText = Belt_Option.mapWithDefault(item.part, "요청 내용", (function (part) {
-          return part.name + " / " + (
+          return "" + part.name + " / " + (
                   part.isDomestic ? "국내" : "수입"
-                );
+                ) + "";
         }));
   return React.createElement("div", {
               className: "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-14 pb-[96px] bg-white"
@@ -949,7 +937,6 @@ function RfqItemDetail_Buyer$Scene$MatchFailed(Props) {
                             className: "cursor-pointer",
                             onClick: (function (param) {
                                 window.history.back();
-                                
                               })
                           }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                 height: "32",
@@ -967,7 +954,7 @@ function RfqItemDetail_Buyer$Scene$MatchFailed(Props) {
                 }), React.createElement(DS_ButtonContainer.Floating1.make, {
                   label: "담당자에게 문의하기",
                   onClick: (function (param) {
-                      return openCustomerService(undefined);
+                      openCustomerService(undefined);
                     }),
                   buttonType: "white"
                 }));
@@ -988,7 +975,6 @@ function RfqItemDetail_Buyer$Scene$WaitingQuotation(Props) {
                             className: "cursor-pointer",
                             onClick: (function (param) {
                                 window.history.back();
-                                
                               })
                           }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                 height: "32",
@@ -1013,13 +999,13 @@ function RfqItemDetail_Buyer$Scene$WaitingQuotation(Props) {
                       })), Belt_Option.mapWithDefault(item.weightKg, null, (function (x) {
                         return React.createElement(RfqItemDetail_Buyer$Listitem$Normal, {
                                     label: "주문양",
-                                    text: numberToComma(x) + "kg"
+                                    text: "" + numberToComma(x) + "kg"
                                   });
                       })), Garter_Array.isEmpty(item.usages.edges) ? null : React.createElement(RfqItemDetail_Buyer$Listitem$Normal, {
                         label: "사용용도",
-                        text: Belt_Array.map(item.usages.edges, (function (edge) {
-                                  return edge.node.name;
-                                })).join(", ")
+                        text: Js_array.joinWith(", ", Belt_Array.map(item.usages.edges, (function (edge) {
+                                    return edge.node.name;
+                                  })))
                       }), Belt_Option.mapWithDefault(item.storageMethod, null, (function (x) {
                         return React.createElement(RfqItemDetail_Buyer$Listitem$Normal, {
                                     label: "보관상태",
@@ -1036,7 +1022,7 @@ function RfqItemDetail_Buyer$Scene$WaitingQuotation(Props) {
                       }), Belt_Option.mapWithDefault(item.prevTradePricePerKg, null, (function (x) {
                         return React.createElement(RfqItemDetail_Buyer$Listitem$Normal, {
                                     label: "기존공급가",
-                                    text: numberToComma(String(x)) + "원/kg"
+                                    text: "" + numberToComma(String(x)) + "원/kg"
                                   });
                       })), item.preferredBrand === "" ? null : React.createElement(RfqItemDetail_Buyer$Listitem$Normal, {
                         label: "선호브랜드",
@@ -1052,9 +1038,9 @@ function RfqItemDetail_Buyer$Scene$Canceled(Props) {
   var item = Props.item;
   var router = Router.useRouter();
   var titleText = Belt_Option.mapWithDefault(item.part, "요청 내용", (function (part) {
-          return part.name + " / " + (
+          return "" + part.name + " / " + (
                   part.isDomestic ? "국내" : "수입"
-                );
+                ) + "";
         }));
   return React.createElement("div", {
               className: "relative container max-w-3xl mx-auto min-h-screen sm:shadow-gl pt-14 pb-[96px] bg-white"
@@ -1065,7 +1051,6 @@ function RfqItemDetail_Buyer$Scene$Canceled(Props) {
                             className: "cursor-pointer",
                             onClick: (function (param) {
                                 window.history.back();
-                                
                               })
                           }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                 height: "32",
@@ -1084,7 +1069,6 @@ function RfqItemDetail_Buyer$Scene$Canceled(Props) {
                   label: "신규 견적서 작성하기",
                   onClick: (function (param) {
                       router.push("/buyer/rfq/");
-                      
                     })
                 }));
 }
@@ -1103,7 +1087,6 @@ function RfqItemDetail_Buyer$Scene$NotFound(Props) {
                               className: "cursor-pointer",
                               onClick: (function (param) {
                                   window.history.back();
-                                  
                                 })
                             }, React.createElement(DS_Icon.Common.ArrowLeftXLarge1.make, {
                                   height: "32",
@@ -1121,7 +1104,6 @@ function RfqItemDetail_Buyer$Scene$NotFound(Props) {
                   label: "신규 견적서 작성하기",
                   onClick: (function (param) {
                       router.push("/buyer/rfq/");
-                      
                     })
                 }));
 }
@@ -1150,7 +1132,6 @@ function RfqItemDetail_Buyer$Detail(Props) {
           DataGtm.push({
                 event: "Expose_view_RFQ_Livestock_Quotation_Detail"
               });
-          
         }), []);
   if (node === undefined) {
     return React.createElement(RfqItemDetail_Buyer$Scene$NotFound, {});
@@ -1205,7 +1186,6 @@ function RfqItemDetail_Buyer(Props) {
   } else {
     React.useEffect((function () {
             router.replace("/buyer/rfq");
-            
           }), []);
     return null;
   }
@@ -1230,6 +1210,5 @@ export {
   Scene ,
   Detail ,
   make ,
-  
 }
 /* Env Not a pure module */

@@ -15,24 +15,21 @@ var SpreadProps = {
 
 function focusElementByRef(ref) {
   var htmlInputElement = Belt_Option.flatMap(Caml_option.nullable_to_opt(ref.current), Webapi__Dom__HtmlInputElement.ofElement);
-  return Belt_Option.forEach(htmlInputElement, (function (prim) {
-                prim.focus();
-                
-              }));
+  Belt_Option.forEach(htmlInputElement, (function (prim) {
+          prim.focus();
+        }));
 }
 
 function setValueElementByRef(ref, value) {
   var htmlInputElement = Belt_Option.flatMap(Caml_option.nullable_to_opt(ref.current), Webapi__Dom__HtmlInputElement.ofElement);
-  return Belt_Option.forEach(htmlInputElement, (function (el) {
-                el.value = value;
-                
-              }));
+  Belt_Option.forEach(htmlInputElement, (function (el) {
+          el.value = value;
+        }));
 }
 
 export {
   SpreadProps ,
   focusElementByRef ,
   setValueElementByRef ,
-  
 }
 /* react Not a pure module */

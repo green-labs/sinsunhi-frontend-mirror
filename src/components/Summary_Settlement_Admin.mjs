@@ -83,20 +83,20 @@ function Summary_Settlement_Admin(Props) {
       return ;
     }
     var newDate$p$1 = Caml_option.valFromOption(newDate);
-    return setQuery(function (prev) {
-                return {
-                        from: newDate$p$1,
-                        to_: prev.to_
-                      };
-              });
+    setQuery(function (prev) {
+          return {
+                  from: newDate$p$1,
+                  to_: prev.to_
+                };
+        });
   };
   var handleOnChangeSettlementCycle = function (f, t) {
-    return setQuery(function (param) {
-                return {
-                        from: f,
-                        to_: t
-                      };
-              });
+    setQuery(function (param) {
+          return {
+                  from: f,
+                  to_: t
+                };
+        });
   };
   var onSubmit = function (param) {
     var state = param.state;
@@ -120,16 +120,15 @@ function Summary_Settlement_Admin(Props) {
     router.query["settlement-cycle"] = tmp;
     router.query["from"] = Format(query.from, "yyyyMMdd");
     router.query["to"] = Format(query.to_, "yyyyMMdd");
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var form = Curry._7(Query_Settlement_Form_Admin.Form.use, Query_Settlement_Form_Admin.initialState, /* Schema */{
-        _0: Belt_Array.concatMany([Curry._4(Query_Settlement_Form_Admin.Form.ReSchema.Validation.regExp, "숫자(Enter 또는 \",\"로 구분 가능)만 입력해주세요", "^(G-[0-9]+([,\n\\s]+)?)*$", undefined, /* ProducerCodes */1)])
+        _0: Belt_Array.concatMany([Curry._4(Query_Settlement_Form_Admin.Form.ReSchema.Validation.regExp, "숫자(Enter 또는 \",\"로 구분 가능)만 입력해주세요", "^(G-[0-9]+([,\n\s]+)?)*$", undefined, /* ProducerCodes */1)])
       }, onSubmit, undefined, undefined, /* OnChange */0, undefined);
   var handleOnSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
                   Curry._1(onQuery, undefined);
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   React.useEffect((function () {
@@ -142,9 +141,9 @@ function Summary_Settlement_Admin(Props) {
                     return Curry._4(form.setFieldValue, /* ProducerCodes */1, v, true, undefined);
                   } else if (k === "settlement-cycle") {
                     return Belt_Option.forEach(parseSettlementCycle(v), (function (settlementCycle$p) {
-                                  return setSettlementCycle(function (param) {
-                                              return settlementCycle$p;
-                                            });
+                                  setSettlementCycle(function (param) {
+                                        return settlementCycle$p;
+                                      });
                                 }));
                   } else if (k === "from") {
                     return setQuery(function (prev) {
@@ -164,7 +163,6 @@ function Summary_Settlement_Admin(Props) {
                     return ;
                   }
                 }));
-          
         }), [router.query]);
   var handleOnReset = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
@@ -174,12 +172,12 @@ function Summary_Settlement_Admin(Props) {
                   setSettlementCycle(function (param) {
                         return /* Week */0;
                       });
-                  return setQuery(function (param) {
-                              return {
-                                      from: SubDays(new Date(), 7),
-                                      to_: new Date()
-                                    };
-                            });
+                  setQuery(function (param) {
+                        return {
+                                from: SubDays(new Date(), 7),
+                                to_: new Date()
+                              };
+                      });
                 }), param);
   };
   var handleKeyDownEnter = function (e) {
@@ -353,6 +351,5 @@ export {
   parseSettlementCycle ,
   stringifySettlementCycle ,
   make ,
-  
 }
 /* Input Not a pure module */

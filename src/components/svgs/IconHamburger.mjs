@@ -6,6 +6,5 @@ var make = HamburgerSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

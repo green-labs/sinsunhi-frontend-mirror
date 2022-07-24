@@ -10,9 +10,9 @@ import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as Select_Delivery_Company from "./Select_Delivery_Company.mjs";
 import * as ReactToastNotifications from "react-toast-notifications";
@@ -38,14 +38,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -53,13 +53,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -74,15 +74,10 @@ var Mutation_onlineMarket_decode = BulkSaleProducerOnlineMarketInfoButtonCreateA
 
 var Mutation_onlineMarket_fromString = BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Utils.onlineMarket_fromString;
 
-var Mutation_make_bulkSaleOnlineSalesInfoCreateInput = BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Utils.make_bulkSaleOnlineSalesInfoCreateInput;
-
-var Mutation_makeVariables = BulkSaleProducerOnlineMarketInfoButtonCreateAdminMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
   onlineMarket_decode: Mutation_onlineMarket_decode,
   onlineMarket_fromString: Mutation_onlineMarket_fromString,
-  make_bulkSaleOnlineSalesInfoCreateInput: Mutation_make_bulkSaleOnlineSalesInfoCreateInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -252,35 +247,35 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Create_Admin$Form(Props) {
                                 Curry.app(mutate, [
                                       (function (err) {
                                           console.log(err);
-                                          return addToast(React.createElement("div", {
-                                                          className: "flex items-center"
-                                                        }, React.createElement(IconError.make, {
-                                                              width: "24",
-                                                              height: "24",
-                                                              className: "mr-2"
-                                                            }), err.message), {
-                                                      appearance: "error"
-                                                    });
+                                          addToast(React.createElement("div", {
+                                                    className: "flex items-center"
+                                                  }, React.createElement(IconError.make, {
+                                                        width: "24",
+                                                        height: "24",
+                                                        className: "mr-2"
+                                                      }), err.message), {
+                                                appearance: "error"
+                                              });
                                         }),
                                       (function (param, param$1) {
-                                          return addToast(React.createElement("div", {
-                                                          className: "flex items-center"
-                                                        }, React.createElement(IconCheck.make, {
-                                                              height: "24",
-                                                              width: "24",
-                                                              fill: "#12B564",
-                                                              className: "mr-2"
-                                                            }), "입력에 성공하였습니다."), {
-                                                      appearance: "success"
-                                                    });
+                                          addToast(React.createElement("div", {
+                                                    className: "flex items-center"
+                                                  }, React.createElement(IconCheck.make, {
+                                                        height: "24",
+                                                        width: "24",
+                                                        fill: "#12B564",
+                                                        className: "mr-2"
+                                                      }), "입력에 성공하였습니다."), {
+                                                appearance: "success"
+                                              });
                                         }),
                                       undefined,
                                       undefined,
                                       undefined,
                                       undefined,
                                       {
-                                        input: input._0,
-                                        connections: [connectionId]
+                                        connections: [connectionId],
+                                        input: input._0
                                       },
                                       undefined,
                                       undefined
@@ -288,9 +283,9 @@ function BulkSale_Producer_OnlineMarketInfo_Button_Create_Admin$Form(Props) {
                                 return ;
                               }
                               var errors = input._0;
-                              return setFormErrors(function (param) {
-                                          return errors;
-                                        });
+                              setFormErrors(function (param) {
+                                    return errors;
+                                  });
                             })
                         }, "저장"))));
 }
@@ -306,6 +301,5 @@ export {
   Mutation ,
   makeInput ,
   Form ,
-  
 }
 /* Input Not a pure module */

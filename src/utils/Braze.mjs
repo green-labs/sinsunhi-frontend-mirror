@@ -2,6 +2,7 @@
 
 import * as Env from "../constants/Env.mjs";
 import * as React from "react";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function use(param) {
@@ -13,34 +14,34 @@ function use(param) {
   React.useEffect((function () {
           var match = window.ReactNativeWebView;
           if (match == null) {
-            import("@braze/web-sdk").then(function (sdk) {
-                    setBraze(function (param) {
-                          if (sdk == null) {
-                            return ;
-                          } else {
-                            return Caml_option.some(sdk);
-                          }
-                        });
+            Js_promise.$$catch((function (err) {
+                    console.log("braze init error: ", err);
                     return Promise.resolve(undefined);
-                  }).catch(function (err) {
-                  console.log("braze init error: ", err);
-                  return Promise.resolve(undefined);
-                });
+                  }), Js_promise.then_((function (sdk) {
+                        setBraze(function (param) {
+                              if (sdk == null) {
+                                return ;
+                              } else {
+                                return Caml_option.some(sdk);
+                              }
+                            });
+                        return Promise.resolve(undefined);
+                      }), import("@braze/web-sdk")));
           }
           
         }), []);
   React.useEffect((function () {
           var match = window.ReactNativeWebView;
           if (match == null) {
-            window.navigator.serviceWorker.register("/service-worker.js").then(function (param) {
-                    if (braze !== undefined) {
-                      braze.openSession();
-                    }
+            Js_promise.$$catch((function (err) {
+                    console.log("Failed to register service worker : ", err);
                     return Promise.resolve(undefined);
-                  }).catch(function (err) {
-                  console.log("Failed to register service worker : ", err);
-                  return Promise.resolve(undefined);
-                });
+                  }), Js_promise.then_((function (param) {
+                        if (braze !== undefined) {
+                          braze.openSession();
+                        }
+                        return Promise.resolve(undefined);
+                      }), window.navigator.serviceWorker.register("/service-worker.js")));
             if (braze !== undefined) {
               braze.initialize(Env.brazeWebApiKey, {
                     baseUrl: "sdk.iad-06.braze.com",
@@ -68,6 +69,5 @@ function changeUser(user, braze) {
 export {
   use ,
   changeUser ,
-  
 }
 /* Env Not a pure module */

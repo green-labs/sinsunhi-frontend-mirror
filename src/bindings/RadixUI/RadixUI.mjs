@@ -174,6 +174,5 @@ export {
   ScrollArea ,
   HoverCard ,
   Tabs ,
-  
 }
 /* No side effect */

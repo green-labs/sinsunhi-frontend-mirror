@@ -24,11 +24,10 @@ function PDP_Quoted_Modals_Buyer$Unauthorized$PC(Props) {
                                   "redirect",
                                   router.asPath
                                 ]])).toString();
-                  router.push("/buyer/signin?" + redirectUrl);
-                  
+                  router.push("/buyer/signin?" + redirectUrl + "");
                 }),
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -58,11 +57,10 @@ function PDP_Quoted_Modals_Buyer$Unauthorized$MO(Props) {
                                   "redirect",
                                   router.asPath
                                 ]])).toString();
-                  router.push("/buyer/signin?" + redirectUrl);
-                  
+                  router.push("/buyer/signin?" + redirectUrl + "");
                 }),
               onCancel: (function (param) {
-                  return Curry._1(closeFn, undefined);
+                  Curry._1(closeFn, undefined);
                 }),
               children: React.createElement("div", {
                     className: "h-18 mt-8 px-8 py-6 flex flex-col items-center justify-center text-lg text-text-L1"
@@ -83,9 +81,9 @@ function PDP_Quoted_Modals_Buyer$PC(Props) {
   var show = Props.show;
   var setShow = Props.setShow;
   var closeFn = function (param) {
-    return setShow(function (param) {
-                return /* Hide */0;
-              });
+    setShow(function (param) {
+          return /* Hide */0;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(PDP_Quoted_Modals_Buyer$Unauthorized$PC, {
                   show: show,
@@ -101,9 +99,9 @@ function PDP_Quoted_Modals_Buyer$MO(Props) {
   var show = Props.show;
   var setShow = Props.setShow;
   var closeFn = function (param) {
-    return setShow(function (param) {
-                return /* Hide */0;
-              });
+    setShow(function (param) {
+          return /* Hide */0;
+        });
   };
   return React.createElement(React.Fragment, undefined, React.createElement(PDP_Quoted_Modals_Buyer$Unauthorized$MO, {
                   show: show,
@@ -119,6 +117,5 @@ export {
   Unauthorized ,
   PC$1 as PC,
   MO$1 as MO,
-  
 }
 /* react Not a pure module */

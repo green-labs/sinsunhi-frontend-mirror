@@ -121,6 +121,5 @@ export {
   displayTransactionKind ,
   displayUserBuyerStatus ,
   getStringFromJsonWithDefault ,
-  
 }
 /* No side effect */

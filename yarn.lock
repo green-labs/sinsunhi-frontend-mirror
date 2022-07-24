@@ -4945,6 +4945,11 @@ detect-indent@^6.0.0:
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-6.1.0.tgz#592485ebbbf6b3b1ab2be175c8393d04ca0d57e6"
   integrity sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==
 
+detect-libc@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-2.0.1.tgz#e1897aa88fa6ad197862937fbc0441ef352ee0cd"
+  integrity sha512-463v3ZeIrcWtdgIg6vI6XUncguvr2TnGl4SzDXinkt9mSLpBJKXT3mW6xT3VQdDN11+WVs29pgvivTc4Lp8v+w==
+
 detect-newline@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-3.1.0.tgz#576f5dfc63ae1a192ff192d8ad3af6308991b651"
@@ -9453,22 +9458,22 @@ rescript-react-update@^3.0.1:
   resolved "https://registry.yarnpkg.com/rescript-react-update/-/rescript-react-update-3.0.2.tgz#8efece4c578110a35fdb1389d890a186dcdf03c6"
   integrity sha512-oOOaeWma6XEhfZwlB/hB6u+UfYtuHjWS4RpoBeE8NbPX60GYLx5BLoVjEqLKoqXFPJv/2ZgghOKBn2LZo0VaJg==
 
-rescript-relay@1.0.0-beta.8:
-  version "1.0.0-beta.8"
-  resolved "https://registry.yarnpkg.com/rescript-relay/-/rescript-relay-1.0.0-beta.8.tgz#6eb46f09b19e753ffdd0c0b6705ad12081567936"
-  integrity sha512-S0BOx3qMH6l7EFc96TXW3PpD7TLpOqSW7kDHO0r7kxwVp4X8H/vsUa0op+821vQWqUiVJ1FE+Hhq568RsClFIw==
+rescript-relay@^1.0.0-beta.25:
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/rescript-relay/-/rescript-relay-1.0.0-beta.25.tgz#b490913acf6702531e32bbd4ee5b6027003583cd"
+  integrity sha512-Zpibll1ytw8ApmgNdtQ9oFyFkQJhNpsFsC+Eo1uz2M5Zgmfw9YlQD0YnWwt8/2K7lMJI37nHoMT420J8XnLWlw==
   dependencies:
-    rescript "^9.1.2"
+    detect-libc "^2.0.1"
 
 rescript-webapi@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/rescript-webapi/-/rescript-webapi-0.6.0.tgz#6d6e7c115388aecf705241666f84b05aabe75e0c"
   integrity sha512-tFSEdsFb91diP/4cspDQEg4pMRw1WXeIAf5bINed6NZpG1Hu/i5BiSHDnmORMgP8unyqBp77UZM3BWCXJpoLWA==
 
-rescript@^9.1.2, rescript@^9.1.4:
-  version "9.1.4"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-9.1.4.tgz#1eb126f98d6c16942c0bf0df67c050198e580515"
-  integrity sha512-aXANK4IqecJzdnDpJUsU6pxMViCR5ogAxzuqS0mOr8TloMnzAjJFu63fjD6LCkWrKAhlMkFFzQvVQYaAaVkFXw==
+rescript@^10.0.0-rc.1:
+  version "10.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-10.0.0-rc.1.tgz#c9b551e95eb85f00ec6cede114ba5fb3eac940ac"
+  integrity sha512-NrB+hr1TcK7ZORw/wu6eAd5J4tu6PwbN5rmcx8NUiVYpuaPAXmX/4DpC0gV2j86cU2QGK/DrEIWeZlchWNDKWg==
 
 resize-observer-polyfill@^1.5.0:
   version "1.5.1"

@@ -5,16 +5,17 @@ import * as React from "react";
 import * as Helper from "../utils/Helper.mjs";
 import * as Locale from "../utils/Locale.mjs";
 import * as Checkbox from "./common/Checkbox.mjs";
+import * as Js_array from "rescript/lib/es6/js_array.js";
 import * as Skeleton from "./Skeleton.mjs";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as Garter_Array from "@greenlabs/garter/src/Garter_Array.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import Format from "date-fns/format";
 import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
-import * as Hooks from "react-relay/hooks";
 import ReactImagesViewer from "react-images-viewer";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as Select_BulkSale_Search from "./Select_BulkSale_Search.mjs";
@@ -39,27 +40,27 @@ function internal_makeRefetchableFnOpts(fetchPolicy, onComplete, param) {
 }
 
 function useRefetchable(fRef) {
-  var match = Hooks.useRefetchableFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fRef);
+  var match = ReactRelay.useRefetchableFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fRef);
   var refetchFn = match[1];
   var data = RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Internal.convertFragment, match[0]);
   return [
           data,
           React.useMemo((function () {
                   return function (param, param$1, param$2, param$3) {
-                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(BulkSaleProducerAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
+                    return Curry._2(refetchFn, RescriptRelay_Internal.internal_removeUndefinedAndConvertNullsRaw(BulkSaleProducerAdminRefetchQuery_graphql.Internal.convertVariables(param)), internal_makeRefetchableFnOpts(param$1, param$2, undefined));
                   };
                 }), [refetchFn])
         ];
 }
 
 function use(fRef) {
-  var data = Hooks.useFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fRef);
+  var data = ReactRelay.useFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fRef);
   return RescriptRelay_Internal.internal_useConvertedValue(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.Internal.convertFragment, data);
 }
 
 function useOpt(opt_fRef) {
   var fr = opt_fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(opt_fRef)) : undefined;
-  var nullableFragmentData = Hooks.useFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
+  var nullableFragmentData = ReactRelay.useFragment(BulkSaleProducerAdminFragment_bulkSaleApplication_graphql.node, fr !== undefined ? Js_null_undefined.fromOption(Caml_option.some(Caml_option.valFromOption(fr))) : null);
   var data = (nullableFragmentData == null) ? undefined : Caml_option.some(nullableFragmentData);
   return RescriptRelay_Internal.internal_useConvertedValue((function (rawFragment) {
                 if (rawFragment !== undefined) {
@@ -135,6 +136,7 @@ var Fragment = {
   Types: undefined,
   internal_makeRefetchableFnOpts: internal_makeRefetchableFnOpts,
   useRefetchable: useRefetchable,
+  Operation: undefined,
   use: use,
   useOpt: useOpt,
   makeRefetchVariables: makeRefetchVariables
@@ -362,7 +364,7 @@ function displaySupplyBeginToEnd(s1, s2) {
             })), "");
   var d1 = displaySupplyDays(s1.dayOfMonth);
   var d2 = displaySupplyDays(s2.dayOfMonth);
-  return m1 + " " + d1 + " ~ " + m2 + " " + d2;
+  return "" + m1 + " " + d1 + " ~ " + m2 + " " + d2 + "";
 }
 
 function BulkSale_Producer_Admin$Gallery(Props) {
@@ -378,9 +380,9 @@ function BulkSale_Producer_Admin$Gallery(Props) {
   return React.createElement(React.Fragment, undefined, React.createElement("span", {
                   className: "underline",
                   onClick: (function (param) {
-                      return setIsOpen(function (param) {
-                                  return true;
-                                });
+                      setIsOpen(function (param) {
+                            return true;
+                          });
                     })
                 }, "사진 보기"), React.createElement(ReactImagesViewer, {
                   imgs: Belt_Array.map(imageUrls, (function (url) {
@@ -390,24 +392,24 @@ function BulkSale_Producer_Admin$Gallery(Props) {
                         })),
                   isOpen: match$1[0],
                   onClickPrev: (function (param) {
-                      return setImageIndex(function (idx) {
-                                  return Math.max(0, idx - 1 | 0);
-                                });
+                      setImageIndex(function (idx) {
+                            return Math.max(0, idx - 1 | 0);
+                          });
                     }),
                   onClickNext: (function (param) {
-                      return setImageIndex(function (idx) {
-                                  return Math.min(idx + 1 | 0, imageUrls.length - 1 | 0);
-                                });
+                      setImageIndex(function (idx) {
+                            return Math.min(idx + 1 | 0, imageUrls.length - 1 | 0);
+                          });
                     }),
                   onClose: (function (param) {
-                      return setIsOpen(function (param) {
-                                  return false;
-                                });
+                      setIsOpen(function (param) {
+                            return false;
+                          });
                     }),
                   onClickThumbnail: (function (idx) {
-                      return setImageIndex(function (param) {
-                                  return idx;
-                                });
+                      setImageIndex(function (param) {
+                            return idx;
+                          });
                     }),
                   showThumbnails: true,
                   currImg: match[0]
@@ -458,12 +460,12 @@ function BulkSale_Producer_Admin$Item$Table(Props) {
                   className: "h-full flex flex-col justify-center px-4 py-2"
                 }, React.createElement("p", {
                       className: "mb-2"
-                    }, campaign !== undefined ? campaign.productCategory.crop.name + " > " + campaign.productCategory.name : application.productCategory.crop.name + " > " + application.productCategory.name), React.createElement(BulkSale_Producer_Sample_Review_Button_Admin.make, {
+                    }, campaign !== undefined ? "" + campaign.productCategory.crop.name + " > " + campaign.productCategory.name + "" : "" + application.productCategory.crop.name + " > " + application.productCategory.name + ""), React.createElement(BulkSale_Producer_Sample_Review_Button_Admin.make, {
                       applicationId: application.id,
                       sampleReview: application.fragmentRefs
                     })), React.createElement("div", {
                   className: "h-full flex flex-col justify-center px-4 py-2"
-                }, React.createElement("p", undefined, campaign$1 !== undefined ? Locale.Float.show(undefined, campaign$1.estimatedPurchasePriceMin, 0) + "원~" + Locale.Float.show(undefined, campaign$1.estimatedPurchasePriceMax, 0) + "원" : null, React.createElement("span", {
+                }, React.createElement("p", undefined, campaign$1 !== undefined ? "" + Locale.Float.show(undefined, campaign$1.estimatedPurchasePriceMin, 0) + "원~" + Locale.Float.show(undefined, campaign$1.estimatedPurchasePriceMax, 0) + "원" : null, React.createElement("span", {
                           className: "text-text-L2"
                         }, Belt_Option.mapWithDefault(application.bulkSaleCampaign, null, (function (campaign) {
                                 return "(" + campaign.preferredGrade + "," + campaign.preferredQuantity.display + ")";
@@ -498,19 +500,15 @@ function BulkSale_Producer_Admin$Item$Table(Props) {
                 }, Belt_Option.mapWithDefault(application.userPccSalesCondition, "", (function (c) {
                         var match = c.supplyBegin;
                         var match$1 = c.supplyEnd;
-                        if (match !== undefined) {
-                          if (match$1 !== undefined) {
-                            return displaySupplyBeginToEnd(match, match$1);
-                          } else {
-                            return "상시 출하";
-                          }
+                        if (match !== undefined && match$1 !== undefined) {
+                          return displaySupplyBeginToEnd(match, match$1);
                         } else {
                           return "상시 출하";
                         }
                       }))), React.createElement("div", {
                   className: "h-full flex flex-row justify-between px-4 py-3"
                 }, Belt_Option.mapWithDefault(application.userPccSalesCondition, "", (function (p) {
-                        return Belt_Array.map(p.deliveryPackages, displayDeliveryPackage).join(", ");
+                        return Js_array.joinWith(", ", Belt_Array.map(p.deliveryPackages, displayDeliveryPackage));
                       }))), React.createElement("div", {
                   className: "h-full flex flex-row justify-between px-4 py-3"
                 }, Belt_Option.mapWithDefault(application.userPccProduction, "", (function (p) {
@@ -518,7 +516,7 @@ function BulkSale_Producer_Admin$Item$Table(Props) {
                       }))), React.createElement("div", {
                   className: "h-full flex flex-row justify-between px-4 py-3"
                 }, Belt_Option.mapWithDefault(application.userPccProduction, "", (function (p) {
-                        return Belt_Array.map(p.certificates, displayCertificate).join(", ");
+                        return Js_array.joinWith(", ", Belt_Array.map(p.certificates, displayCertificate));
                       }))), React.createElement("div", {
                   className: "h-full flex flex-row justify-between px-4 py-3"
                 }, Belt_Option.mapWithDefault(application.userPccProduction, "", (function (p) {
@@ -539,15 +537,15 @@ function BulkSale_Producer_Admin$Item$Table(Props) {
                   className: "h-full flex flex-col justify-center px-4 py-2"
                 }, React.createElement("div", {
                       className: "flex"
-                    }, React.createElement("p", undefined, application.applicantName === "" ? "사용자: " + application.farmmorningUser.name : "사용자: " + application.applicantName), application.farmmorningUser.isDeleted ? React.createElement("span", {
+                    }, React.createElement("p", undefined, application.applicantName === "" ? "사용자: " + application.farmmorningUser.name + "" : "사용자: " + application.applicantName + ""), application.farmmorningUser.isDeleted ? React.createElement("span", {
                             className: "ml-2 py-0.5 px-1.5 text-xs bg-red-100 text-notice rounded"
-                          }, "탈퇴") : null), React.createElement("p", undefined, name === "" ? null : "사업자: " + name), React.createElement("p", undefined, "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(application.farmmorningUser.phoneNumber), Helper.PhoneNumber.format), application.farmmorningUser.phoneNumber) + ")"), React.createElement("p", {
+                          }, "탈퇴") : null), React.createElement("p", undefined, name === "" ? null : "사업자: " + name + ""), React.createElement("p", undefined, "(" + Belt_Option.getWithDefault(Belt_Option.flatMap(Helper.PhoneNumber.parse(application.farmmorningUser.phoneNumber), Helper.PhoneNumber.format), application.farmmorningUser.phoneNumber) + ")"), React.createElement("p", {
                       className: "text-text-L3"
                     }, Belt_Option.getWithDefault(Helper.$$Option.map2(application.farm.address, application.farm.addressDetail, (function (address, addressDetail) {
                                 return address + " " + addressDetail;
                               })), "주소 없음")), React.createElement("p", {
                       className: "text-text-L3"
-                    }, zipCode !== undefined ? "우)" + zipCode : "(우편번호 없음)")), React.createElement("div", {
+                    }, zipCode !== undefined ? "우)" + zipCode + "" : "(우편번호 없음)")), React.createElement("div", {
                   className: "h-full flex flex-row justify-between px-4 py-3"
                 }, Belt_Option.mapWithDefault(Belt_Option.flatMap(application.bulkSaleProducerDetail, (function (d) {
                             return d.handsOn;
@@ -644,6 +642,5 @@ export {
   Gallery ,
   Item ,
   make ,
-  
 }
 /* react Not a pure module */

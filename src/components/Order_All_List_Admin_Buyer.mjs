@@ -112,6 +112,5 @@ export {
   Header ,
   Loading ,
   make ,
-  
 }
 /* react Not a pure module */

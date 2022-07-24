@@ -117,6 +117,5 @@ export {
   basicPlugins ,
   make ,
   Viewer ,
-  
 }
 /* react Not a pure module */

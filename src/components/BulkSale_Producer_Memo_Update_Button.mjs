@@ -8,8 +8,8 @@ import * as IconClose from "./svgs/IconClose.mjs";
 import * as IconError from "./svgs/IconError.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as ReactRelay from "react-relay";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as Webapi__Dom__Element from "rescript-webapi/src/Webapi/Dom/Webapi__Dom__Element.mjs";
 import * as ReactDialog from "@radix-ui/react-dialog";
 import * as ReactToastNotifications from "react-toast-notifications";
@@ -17,8 +17,6 @@ import EditSvg from "../../public/assets/edit.svg";
 import * as BulkSaleProducerMemoUpdateButtonMutation_graphql from "../__generated__/BulkSaleProducerMemoUpdateButtonMutation_graphql.mjs";
 
 var editIcon = EditSvg;
-
-var make_bulkSaleApplicationUpdateInput = BulkSaleProducerMemoUpdateButtonMutation_graphql.Utils.make_bulkSaleApplicationUpdateInput;
 
 function commitMutation(environment, variables, optimisticUpdater, optimisticResponse, updater, onCompleted, onError, uploadables, param) {
   return RelayRuntime.commitMutation(environment, {
@@ -39,14 +37,14 @@ function commitMutation(environment, variables, optimisticUpdater, optimisticRes
               optimisticResponse: optimisticResponse !== undefined ? BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertWrapRawResponse(optimisticResponse) : undefined,
               optimisticUpdater: optimisticUpdater,
               updater: updater !== undefined ? (function (store, r) {
-                    return Curry._2(updater, store, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r));
+                    Curry._2(updater, store, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r));
                   }) : undefined,
               uploadables: uploadables
             });
 }
 
 function use(param) {
-  var match = Hooks.useMutation(BulkSaleProducerMemoUpdateButtonMutation_graphql.node);
+  var match = ReactRelay.useMutation(BulkSaleProducerMemoUpdateButtonMutation_graphql.node);
   var mutate = match[0];
   return [
           React.useMemo((function () {
@@ -54,13 +52,13 @@ function use(param) {
                     return Curry._1(mutate, {
                                 onError: param,
                                 onCompleted: param$1 !== undefined ? (function (r, errors) {
-                                      return Curry._2(param$1, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
+                                      Curry._2(param$1, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r), (errors == null) ? undefined : Caml_option.some(errors));
                                     }) : undefined,
                                 onUnsubscribe: param$2,
                                 optimisticResponse: param$3 !== undefined ? BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertWrapRawResponse(param$3) : undefined,
                                 optimisticUpdater: param$4,
                                 updater: param$5 !== undefined ? (function (store, r) {
-                                      return Curry._2(param$5, store, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r));
+                                      Curry._2(param$5, store, BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertResponse(r));
                                     }) : undefined,
                                 variables: BulkSaleProducerMemoUpdateButtonMutation_graphql.Internal.convertVariables(param$6),
                                 uploadables: param$7
@@ -71,11 +69,8 @@ function use(param) {
         ];
 }
 
-var Mutation_makeVariables = BulkSaleProducerMemoUpdateButtonMutation_graphql.Utils.makeVariables;
-
 var Mutation = {
-  make_bulkSaleApplicationUpdateInput: make_bulkSaleApplicationUpdateInput,
-  makeVariables: Mutation_makeVariables,
+  Operation: undefined,
   Types: undefined,
   commitMutation: commitMutation,
   use: use
@@ -95,10 +90,9 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
   var memo = match$2[0];
   var close = function (param) {
     var buttonClose = document.getElementById("btn-close");
-    return Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
-                  buttonClose$p.click();
-                  
-                }));
+    Belt_Option.forEach(Belt_Option.flatMap((buttonClose == null) ? undefined : Caml_option.some(buttonClose), Webapi__Dom__Element.asHtmlElement), (function (buttonClose$p) {
+            buttonClose$p.click();
+          }));
   };
   return React.createElement(ReactDialog.Root, {
               children: null
@@ -154,7 +148,9 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
                                 className: "py-1.5 px-3 text-sm font-normal rounded-lg bg-primary text-white ml-1",
                                 disabled: match$1[1],
                                 onClick: (function (param) {
-                                    var input_input = Curry._3(make_bulkSaleApplicationUpdateInput, Belt_Option.getWithDefault(memo, ""), undefined, undefined);
+                                    var input_input = {
+                                      memo: Belt_Option.getWithDefault(memo, "")
+                                    };
                                     var input = {
                                       id: applicationId,
                                       input: input_input
@@ -171,7 +167,7 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
                                                           }), err.message), {
                                                     appearance: "error"
                                                   });
-                                              return close(undefined);
+                                              close(undefined);
                                             }),
                                           (function (param, param$1) {
                                               addToast(React.createElement("div", {
@@ -184,7 +180,7 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
                                                           }), "메모를 수정하였습니다."), {
                                                     appearance: "success"
                                                   });
-                                              return close(undefined);
+                                              close(undefined);
                                             }),
                                           undefined,
                                           undefined,
@@ -194,7 +190,6 @@ function BulkSale_Producer_Memo_Update_Button(Props) {
                                           undefined,
                                           undefined
                                         ]);
-                                    
                                   })
                               }, "저장"))),
                   className: "dialog-content-memo overflow-y-auto rounded-xl"
@@ -207,6 +202,5 @@ export {
   editIcon ,
   Mutation ,
   make ,
-  
 }
 /* editIcon Not a pure module */

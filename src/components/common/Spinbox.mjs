@@ -9,9 +9,9 @@ import * as IconSpinnerPlus from "../svgs/IconSpinnerPlus.mjs";
 import * as IconSpinnerMinus from "../svgs/IconSpinnerMinus.mjs";
 
 function setIntInRange(number, min, max) {
-  if (Caml_obj.caml_lessthan(number, min)) {
+  if (Caml_obj.lessthan(number, min)) {
     return min;
-  } else if (Caml_obj.caml_greaterthan(number, max)) {
+  } else if (Caml_obj.greaterthan(number, max)) {
     return max;
   } else {
     return number;
@@ -27,16 +27,16 @@ function Spinbox(Props) {
   var max = maxOpt !== undefined ? maxOpt : 999;
   var increment = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setValue(function (prev) {
-                              return prev + 1 | 0;
-                            });
+                  setValue(function (prev) {
+                        return prev + 1 | 0;
+                      });
                 }), param);
   };
   var decrement = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return setValue(function (prev) {
-                              return prev - 1 | 0;
-                            });
+                  setValue(function (prev) {
+                        return prev - 1 | 0;
+                      });
                 }), param);
   };
   var onChange = function (e) {
@@ -45,11 +45,10 @@ function Spinbox(Props) {
               return setIntInRange(v$p, min, max);
             }));
     Belt_Option.map(parsed, (function (v$p) {
-            return setValue(function (param) {
-                        return v$p;
-                      });
+            setValue(function (param) {
+                  return v$p;
+                });
           }));
-    
   };
   return React.createElement("div", {
               className: "w-[7.5rem] h-10 flex border rounded-xl divide-x"
@@ -79,6 +78,5 @@ var make = Spinbox;
 export {
   setIntInRange ,
   make ,
-  
 }
 /* react Not a pure module */

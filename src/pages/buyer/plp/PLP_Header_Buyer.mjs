@@ -4,19 +4,18 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as React from "react";
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as IconHome from "../../../components/svgs/IconHome.mjs";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Router from "next/router";
+import * as ReactRelay from "react-relay";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Hooks from "react-relay/hooks";
 import * as RescriptRelay_Internal from "rescript-relay/src/RescriptRelay_Internal.mjs";
 import * as RescriptReactErrorBoundary from "@rescript/react/src/RescriptReactErrorBoundary.mjs";
 import * as PLPHeaderBuyerQuery_graphql from "../../../__generated__/PLPHeaderBuyerQuery_graphql.mjs";
 
-var makeVariables = PLPHeaderBuyerQuery_graphql.Utils.makeVariables;
-
 function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
-  var data = Hooks.useLazyLoadQuery(PLPHeaderBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables)), {
+  var data = ReactRelay.useLazyLoadQuery(PLPHeaderBuyerQuery_graphql.node, RescriptRelay_Internal.internal_cleanObjectFromUndefinedRaw(PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables)), {
         fetchKey: fetchKey,
         fetchPolicy: RescriptRelay.mapFetchPolicy(fetchPolicy),
         networkCacheConfig: networkCacheConfig
@@ -25,7 +24,7 @@ function use(variables, fetchPolicy, fetchKey, networkCacheConfig, param) {
 }
 
 function useLoader(param) {
-  var match = Hooks.useQueryLoader(PLPHeaderBuyerQuery_graphql.node);
+  var match = ReactRelay.useQueryLoader(PLPHeaderBuyerQuery_graphql.node);
   var loadQueryFn = match[1];
   var loadQuery = React.useMemo((function () {
           return function (param, param$1, param$2, param$3) {
@@ -43,38 +42,37 @@ function useLoader(param) {
 }
 
 function $$fetch(environment, variables, onResult, networkCacheConfig, fetchPolicy, param) {
-  Hooks.fetchQuery(environment, PLPHeaderBuyerQuery_graphql.node, PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables), {
+  ReactRelay.fetchQuery(environment, PLPHeaderBuyerQuery_graphql.node, PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).subscribe({
         next: (function (res) {
-            return Curry._1(onResult, {
-                        TAG: /* Ok */0,
-                        _0: PLPHeaderBuyerQuery_graphql.Internal.convertResponse(res)
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Ok */0,
+                  _0: PLPHeaderBuyerQuery_graphql.Internal.convertResponse(res)
+                });
           }),
         error: (function (err) {
-            return Curry._1(onResult, {
-                        TAG: /* Error */1,
-                        _0: err
-                      });
+            Curry._1(onResult, {
+                  TAG: /* Error */1,
+                  _0: err
+                });
           })
       });
-  
 }
 
 function fetchPromised(environment, variables, networkCacheConfig, fetchPolicy, param) {
-  var __x = Hooks.fetchQuery(environment, PLPHeaderBuyerQuery_graphql.node, PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables), {
+  var __x = ReactRelay.fetchQuery(environment, PLPHeaderBuyerQuery_graphql.node, PLPHeaderBuyerQuery_graphql.Internal.convertVariables(variables), {
           networkCacheConfig: networkCacheConfig,
           fetchPolicy: RescriptRelay.mapFetchQueryFetchPolicy(fetchPolicy)
         }).toPromise();
-  return __x.then(function (res) {
-              return Promise.resolve(PLPHeaderBuyerQuery_graphql.Internal.convertResponse(res));
-            });
+  return Js_promise.then_((function (res) {
+                return Promise.resolve(PLPHeaderBuyerQuery_graphql.Internal.convertResponse(res));
+              }), __x);
 }
 
 function usePreloaded(queryRef, param) {
-  var data = Hooks.usePreloadedQuery(PLPHeaderBuyerQuery_graphql.node, queryRef);
+  var data = ReactRelay.usePreloadedQuery(PLPHeaderBuyerQuery_graphql.node, queryRef);
   return RescriptRelay_Internal.internal_useConvertedValue(PLPHeaderBuyerQuery_graphql.Internal.convertResponse, data);
 }
 
@@ -84,7 +82,7 @@ function retain(environment, variables) {
 }
 
 var Query = {
-  makeVariables: makeVariables,
+  Operation: undefined,
   Types: undefined,
   use: use,
   useLoader: useLoader,
@@ -96,7 +94,9 @@ var Query = {
 
 function PLP_Header_Buyer$DisplayCategoryName(Props) {
   var displayCategoryId = Props.displayCategoryId;
-  var match = use(Curry._1(makeVariables, displayCategoryId), undefined, undefined, undefined, undefined);
+  var match = use({
+        displayCategoryId: displayCategoryId
+      }, undefined, undefined, undefined, undefined);
   var node = match.node;
   if (node !== undefined) {
     return React.createElement("span", {
@@ -123,7 +123,6 @@ function PLP_Header_Buyer(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "w-full fixed top-0 left-0 z-10 bg-white"
@@ -134,7 +133,6 @@ function PLP_Header_Buyer(Props) {
                         }, React.createElement("button", {
                               onClick: (function (param) {
                                   router.back();
-                                  
                                 })
                             }, React.createElement("img", {
                                   className: "w-6 h-6 rotate-180",
@@ -156,7 +154,6 @@ function PLP_Header_Buyer(Props) {
                               ) : React.createElement("span", undefined)), React.createElement("button", {
                               onClick: (function (param) {
                                   router.push("/buyer");
-                                  
                                 })
                             }, React.createElement(IconHome.make, {
                                   width: "24",
@@ -172,6 +169,5 @@ var make = PLP_Header_Buyer;
 export {
   DisplayCategoryName ,
   make ,
-  
 }
 /* react Not a pure module */

@@ -30,6 +30,5 @@ var make = IconHome;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

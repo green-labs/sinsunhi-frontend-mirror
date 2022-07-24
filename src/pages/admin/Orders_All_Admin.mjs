@@ -126,13 +126,11 @@ function Orders_All_Admin$Orders(Props) {
   var router = Router.useRouter();
   var status = CustomHooks.OrdersAllAdmin.use(new URLSearchParams(router.query).toString());
   var count;
-  if (typeof status === "number") {
+  if (typeof status === "number" || status.TAG !== /* Loaded */0) {
     count = "-";
-  } else if (status.TAG === /* Loaded */0) {
+  } else {
     var orders$p = CustomHooks.OrdersAllAdmin.orders_decode(status._0);
     count = orders$p.TAG === /* Ok */0 ? String(orders$p._0.count) : "-";
-  } else {
-    count = "-";
   }
   return React.createElement(React.Fragment, undefined, React.createElement("div", {
                   className: "max-w-gnb-panel overflow-auto overflow-x-scroll bg-div-shape-L1 min-h-screen"
@@ -150,7 +148,7 @@ function Orders_All_Admin$Orders(Props) {
                                   className: "font-bold"
                                 }, "주문내역", React.createElement("span", {
                                       className: "ml-1 text-green-gl font-normal"
-                                    }, count + "건")), React.createElement("div", {
+                                    }, "" + count + "건")), React.createElement("div", {
                                   className: "flex"
                                 }, React.createElement(Select_CountPerPage.make, {
                                       className: "mr-2"
@@ -182,6 +180,5 @@ export {
   response_decode ,
   Orders ,
   make ,
-  
 }
 /* react Not a pure module */

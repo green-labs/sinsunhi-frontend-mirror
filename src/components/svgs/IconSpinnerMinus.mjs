@@ -6,6 +6,5 @@ var make = SpinnerMinusSvgreact;
 
 export {
   make ,
-  
 }
 /* make Not a pure module */

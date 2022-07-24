@@ -16,6 +16,5 @@ var make = Badge_User_Transaction_Admin;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

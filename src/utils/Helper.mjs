@@ -2,6 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
@@ -57,7 +58,7 @@ function sequence$1(xs) {
 }
 
 function parseFilename(value) {
-  return Belt_Option.flatMap(Belt_Option.flatMap(Belt_Option.map(Caml_option.null_to_opt(new RegExp("filename\\*?=['\"]?(?:UTF-\\d['\"]*)?([^;\r\n\"']*)['\"]?;?").exec(value)), (function (prim) {
+  return Belt_Option.flatMap(Belt_Option.flatMap(Belt_Option.map(Caml_option.null_to_opt(new RegExp("filename\\\*?=['\"]?(?:UTF-\\\d['\"]*)?([^;\r\n\"']*)['\"]?;?").exec(value)), (function (prim) {
                         return prim;
                       })), (function (strings) {
                     return Garter_Array.get(strings, 1);
@@ -88,7 +89,7 @@ var regexOfLocalLine = new RegExp("^(02|031|032|033|041|042|043|044|051|052|053|
 
 var regexOfVoIP = new RegExp("^(070)([0-9]{3,4})([0-9]{4})");
 
-var regexOfONO = new RegExp("^(050\\d|060\\d)([0-9]{3,4})([0-9]{4})");
+var regexOfONO = new RegExp("^(050\d|060\d)([0-9]{3,4})([0-9]{4})");
 
 var regexs = [
   {
@@ -110,7 +111,7 @@ var regexs = [
 ];
 
 function removeDash(phoneNumber) {
-  return phoneNumber.replace(new RegExp("\\-", "g"), "");
+  return phoneNumber.replace(new RegExp("\-", "g"), "");
 }
 
 function extract(regex, s) {
@@ -197,20 +198,17 @@ function make1(fun, $$await) {
     Belt_Option.map(timeoutId.contents, (function (id$p) {
             clearTimeout(id$p);
             timeoutId.contents = undefined;
-            
           }));
     return new Promise((function (resolve, reject) {
                   timeoutId.contents = Caml_option.some(setTimeout((function (param) {
                               var __x = Curry._1(fun, args);
-                              var __x$1 = __x.then(function (res) {
-                                    return Promise.resolve(resolve(res));
-                                  });
-                              __x$1.catch(function (error) {
-                                    return Promise.resolve(reject(new Error(error)));
-                                  });
-                              
+                              var __x$1 = Js_promise.then_((function (res) {
+                                      return Promise.resolve(resolve(res));
+                                    }), __x);
+                              Js_promise.$$catch((function (error) {
+                                      return Promise.resolve(reject(new Error(error)));
+                                    }), __x$1);
                             }), $$await));
-                  
                 }));
   };
 }
@@ -244,6 +242,5 @@ export {
   Invoice ,
   PhoneNumber ,
   Debounce ,
-  
 }
 /* regexOfMobile Not a pure module */

@@ -91,8 +91,7 @@ function handleOnClickStatus(router, status, param) {
                     Js_dict.unsafeDeleteKey(newQueries, "status");
                   }
                   var newQueryString = new URLSearchParams(newQueries).toString();
-                  router.push(router.pathname + "?" + newQueryString);
-                  
+                  router.push("" + router.pathname + "?" + newQueryString + "");
                 }), param);
   };
 }
@@ -105,7 +104,7 @@ function queriedStyle(router, status, param) {
                         return s$p;
                       }));
         }));
-  var match = Caml_obj.caml_equal(status, queried);
+  var match = Caml_obj.equal(status, queried);
   if (match) {
     return "py-1 px-2 flex justify-between border border-green-gl text-green-gl sm:border-0 sm:flex-1 sm:flex-col sm:p-4 bg-green-gl-light sm:rounded-lg";
   }
@@ -147,9 +146,9 @@ function displayCount(status, data) {
   }
   switch (status) {
     case /* OPEN */1 :
-        return String(data.openCount) + "건";
+        return "" + String(data.openCount) + "건";
     case /* ENDED */2 :
-        return String(data.notOpenCount) + "건";
+        return "" + String(data.notOpenCount) + "건";
     case /* CANCELED */3 :
         return "";
     
@@ -179,7 +178,7 @@ function Status_BulkSale_Product$Total(Props) {
                   className: "flex justify-center items-center pb-1 text-sm"
                 }, "전체"), React.createElement("span", {
                   className: "block font-bold sm:text-center"
-                }, String(data.count) + "건"));
+                }, "" + String(data.count) + "건"));
 }
 
 var Total = {
@@ -232,6 +231,5 @@ export {
   displayCount ,
   Total ,
   Item ,
-  
 }
 /* react Not a pure module */

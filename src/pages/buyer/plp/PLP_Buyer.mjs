@@ -18,7 +18,6 @@ function PLP_Buyer(Props) {
           setIsCsr(function (param) {
                 return true;
               });
-          
         }), []);
   return React.createElement(React.Fragment, undefined, React.createElement(Head, {
                   children: React.createElement("title", undefined, "신선하이")
@@ -33,6 +32,5 @@ var make = PLP_Buyer;
 
 export {
   make ,
-  
 }
 /* react Not a pure module */

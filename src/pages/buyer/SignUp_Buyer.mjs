@@ -46,7 +46,7 @@ function makeOnCheckedChange(fn, e) {
 }
 
 function makeTermUrl(termId) {
-  return "https://sinsun-policy.oopy.io/" + termId;
+  return "https://sinsun-policy.oopy.io/" + termId + "";
 }
 
 function SignUp_Buyer(Props) {
@@ -145,12 +145,12 @@ function SignUp_Buyer(Props) {
               password
             ]
           ]).toString();
-    FetchHelper.postWithURLSearchParams(Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
+    FetchHelper.postWithURLSearchParams("" + Env.restApiUrl + "/user/token", urlSearchParams, (function (res) {
             var redirectUrlWithWelcome = Belt_Option.getWithDefault(Belt_Option.map(Js_dict.get(router.query, "redirect"), (function (url) {
                         if (url.includes("?")) {
-                          return url + "&welcome";
+                          return "" + url + "&welcome";
                         } else {
-                          return url + "?welcome";
+                          return "" + url + "?welcome";
                         }
                       })), "/?welcome");
             var res$1 = FetchHelper.responseToken_decode(res);
@@ -166,12 +166,9 @@ function SignUp_Buyer(Props) {
               return Redirect.setHref(redirectUrlWithWelcome);
             }
             router.push("/buyer/signin");
-            
           }), (function (param) {
             router.push("/buyer/signin");
-            
           }));
-    
   };
   var handleSubmit = function (formApi) {
     var state = formApi.state;
@@ -194,7 +191,7 @@ function SignUp_Buyer(Props) {
         terms: payload_terms
       };
       Belt_Option.map(JSON.stringify(payload), (function (body) {
-              return FetchHelper.post(Env.restApiUrl + "/user/register/new-buyer", body, (function (param) {
+              return FetchHelper.post("" + Env.restApiUrl + "/user/register/new-buyer", body, (function (param) {
                             addToast(React.createElement("div", {
                                       className: "flex items-center"
                                     }, React.createElement(IconCheck.make, {
@@ -207,15 +204,15 @@ function SignUp_Buyer(Props) {
                                 });
                             signIn(formApi);
                             var businessRegistrationNumber = SignUp_Buyer_Form.FormFields.get(state.values, /* BusinessRegistrationNumber */5);
-                            return DataGtm.push({
-                                        method: "normal",
-                                        business_number: businessRegistrationNumber,
-                                        marketing: Belt_SetString.has(agreedTerms, "marketing")
-                                      });
+                            DataGtm.push({
+                                  method: "normal",
+                                  business_number: businessRegistrationNumber,
+                                  marketing: Belt_SetString.has(agreedTerms, "marketing")
+                                });
                           }), (function (param) {
-                            return setShowErr(function (param) {
-                                        return /* Show */0;
-                                      });
+                            setShowErr(function (param) {
+                                  return /* Show */0;
+                                });
                           }));
             }));
     }
@@ -224,7 +221,7 @@ function SignUp_Buyer(Props) {
   var form = Curry._7(SignUp_Buyer_Form.Form.use, SignUp_Buyer_Form.initialState, /* Schema */{
         _0: Belt_Array.concatMany([
               Curry._3(SignUp_Buyer_Form.Form.ReSchema.Validation.email, "올바른 이메일 주소를 입력해주세요.", undefined, /* Email */0),
-              Curry._4(SignUp_Buyer_Form.Form.ReSchema.Validation.regExp, "영문, 숫자 조합 6~15자로 입력해 주세요.", "^(?=.*\\d)(?=.*[a-zA-Z]).{6,15}$", undefined, /* Password */1),
+              Curry._4(SignUp_Buyer_Form.Form.ReSchema.Validation.regExp, "영문, 숫자 조합 6~15자로 입력해 주세요.", "^(?=.*\d)(?=.*[a-zA-Z]).{6,15}$", undefined, /* Password */1),
               Curry._3(SignUp_Buyer_Form.Form.ReSchema.Validation.nonEmpty, "회사명을 입력해주세요.", undefined, /* Name */2),
               Curry._3(SignUp_Buyer_Form.Form.ReSchema.Validation.nonEmpty, "담당자명을 입력해주세요.", undefined, /* Manager */3),
               Curry._3(SignUp_Buyer_Form.Form.ReSchema.Validation.nonEmpty, "휴대전화번호를 입력해주세요.", undefined, /* Phone */4),
@@ -251,7 +248,7 @@ function SignUp_Buyer(Props) {
     setPhoneNumberExistedStatus(function (param) {
           return isExisted;
         });
-    return Curry._4(form.setFieldValue, /* Phone */4, phoneNumber, true, undefined);
+    Curry._4(form.setFieldValue, /* Phone */4, phoneNumber, true, undefined);
   };
   var onBusinessNumberChange = function (businessNumber) {
     if (businessNumber !== undefined) {
@@ -270,7 +267,7 @@ function SignUp_Buyer(Props) {
   var isSubmitDisabled = emailExisted !== undefined && emailExisted && !(phoneNumberStatus !== 2 || !(phoneNumberExistedStatus !== undefined && phoneNumberExistedStatus && !(businessNumberStatus || !(isRequiredTermsAgreed && !match$8)))) ? false : true;
   var onSubmit = function (param) {
     return ReactEvents.interceptingHandler((function (param) {
-                  return Curry._1(form.submit, undefined);
+                  Curry._1(form.submit, undefined);
                 }), param);
   };
   var user = CustomHooks.Auth.use(undefined);
@@ -339,9 +336,9 @@ function SignUp_Buyer(Props) {
                                         }), React.createElement("span", {
                                           className: "ml-2",
                                           onClick: (function (param) {
-                                              return setShowPwd(function (prev) {
-                                                          return !prev;
-                                                        });
+                                              setShowPwd(function (prev) {
+                                                    return !prev;
+                                                  });
                                             })
                                         }, "비밀번호 표시")))), React.createElement("div", {
                               className: "mt-7"
@@ -426,7 +423,7 @@ function SignUp_Buyer(Props) {
                                         }, "신선하이 이용약관 (필수)", React.createElement("span", {
                                               className: "ml-0.5 text-notice"
                                             }, "*"))), React.createElement(Link, {
-                                      href: "https://sinsun-policy.oopy.io/" + "a9f5ca47-9dda-4a34-929c-60e1ce1dfbe5",
+                                      href: "https://sinsun-policy.oopy.io/a9f5ca47-9dda-4a34-929c-60e1ce1dfbe5",
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
@@ -450,7 +447,7 @@ function SignUp_Buyer(Props) {
                                         }, "개인정보 수집이용 동의 (필수)", React.createElement("span", {
                                               className: "ml-0.5 text-notice"
                                             }, "*"))), React.createElement(Link, {
-                                      href: "https://sinsun-policy.oopy.io/" + "7d920089-18ba-4ca6-a806-f83ec8f6c335",
+                                      href: "https://sinsun-policy.oopy.io/7d920089-18ba-4ca6-a806-f83ec8f6c335",
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
@@ -472,7 +469,7 @@ function SignUp_Buyer(Props) {
                                         }), React.createElement("span", {
                                           className: "ml-2 text-base"
                                         }, "맞춤 소싱 제안 등 마케팅 정보 수신 (선택)")), React.createElement(Link, {
-                                      href: "https://sinsun-policy.oopy.io/" + "4f08bfe5-9ba7-4d1d-ba34-04281414ee00",
+                                      href: "https://sinsun-policy.oopy.io/4f08bfe5-9ba7-4d1d-ba34-04281414ee00",
                                       children: React.createElement("a", {
                                             target: "_blank"
                                           }, React.createElement(IconArrow.make, {
@@ -501,9 +498,9 @@ function SignUp_Buyer(Props) {
                         className: "text-text-L1 text-center whitespace-pre-wrap"
                       }, "입력한 정보를 확인해주세요.\n\n이미 가입하신 경우\n비밀번호 찾기를 통해 로그인하실 수 있으며\n관련 문의사항은 채널톡으로 문의해주세요."),
                   onCancel: (function (param) {
-                      return setShowErr(function (param) {
-                                  return /* Hide */1;
-                                });
+                      setShowErr(function (param) {
+                            return /* Hide */1;
+                          });
                     }),
                   textOnCancel: "닫기",
                   boxStyle: "rounded-xl"
@@ -517,6 +514,5 @@ export {
   makeOnCheckedChange ,
   makeTermUrl ,
   make ,
-  
 }
 /* Env Not a pure module */

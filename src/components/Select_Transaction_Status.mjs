@@ -27,8 +27,7 @@ function Select_Transaction_Status(Props) {
     var type_ = e.target.value;
     router.query["type"] = type_;
     router.query["offset"] = "0";
-    router.push(router.pathname + "?" + new URLSearchParams(router.query).toString());
-    
+    router.push("" + router.pathname + "?" + new URLSearchParams(router.query).toString() + "");
   };
   var tmp = {};
   if (className !== undefined) {
@@ -73,6 +72,5 @@ var make = Select_Transaction_Status;
 export {
   getKind ,
   make ,
-  
 }
 /* react Not a pure module */
